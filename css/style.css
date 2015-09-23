@@ -1,0 +1,243 @@
+/*********\
+* screens *
+\*********/
+
+#splashscreen
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+	width: 2160px;
+    height: 1440px;
+    background-color: white;
+}
+
+#userSelectScreen,
+#home,
+#playerScreen
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+	width: 2160px;
+    height: 1440px;
+    display: none;
+}
+
+#dashboardScreen,
+#favoriteScreen
+{
+    position: absolute;
+    top: 50px;
+    left: 0px;
+	width: 2160px;
+    height: 1390px;
+    display: none;
+}
+
+/**************\
+* splashscreen *
+\**************/
+#splashLogo
+{
+	position: absolute;
+    top: 515px;
+    left: 780px;
+	width: 600px;
+    height: 410px;
+}
+
+/*********************\
+* user screen element *
+\*********************/
+#userChoice
+{
+	position: absolute;
+    top: 510px;
+    left: 210px;
+	width: 1740px;
+    height: 410px;
+}
+
+.userButton
+{
+	position: relative;
+	top: 0px;
+	width: 380px;
+	height: 410px;
+
+	margin-left: 25px;
+	float: left;
+}
+.userButton img
+{
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    width: 300px;
+    height: 300px
+}
+.userButton div
+{
+    position: absolute;
+    top: 350px;
+    width: 380px;
+    height: 60px;
+    text-align: center;
+    
+    font-size: 30px;
+}
+
+/*********************\
+* home screen element *
+\*********************/
+
+.menuButton
+{
+	position: relative;
+    top: 112px;
+    left: 136px;
+    width: 904px;
+    height: 568px;
+    float: left;
+}
+
+/*************************\
+* favorite screen element *
+\*************************/
+
+.favoriteBackground
+{
+	position: relative;
+    top: 82px;
+    left: 136px;
+    width: 1890px;
+    background-color: #E9E9E9;
+    height: 760px;
+}
+
+/************\
+* favButton *
+\************/
+
+.favButton
+{
+	position: relative;
+	top: 0px;
+	left: 40px;
+	width: 1800px;
+	height: 150px;
+	background-color: white
+}
+
+.favDelete
+{
+	position: relative;
+    width: 130px;
+    height: 150px;
+    float: left;
+}
+
+.favoriteImg
+{
+	position: relative;
+    width: 260px;
+    height: 150px;
+    float: left;
+}
+
+.favoriteInfos
+{
+	position: relative;
+    width: 1310px;
+    height: 150px;
+    float: left;
+}
+
+.favPlay
+{
+	position: relative;
+    width: 100px;
+    height: 150px;
+    float: left;
+}
+
+/**************************\
+* dashboard screen element *
+\**************************/
+
+#dashboardTitle
+{
+	position: absolute;
+    top: 0px;
+    width: 2160px;
+    height: 280px;
+}
+
+#dashboardLeft
+{
+	position: absolute;
+    top: 280px;
+    width: 1020px;
+    height: 990px;
+}
+
+#dashboardRight
+{
+	position: absolute;
+    top: 280px;
+    left: 1140px;
+    width: 1140px;
+    height: 990px;
+}
+
+#playButton
+{
+	position: absolute;
+    left: 96px;
+    width: 871px;
+    height: 490px;
+}
+
+#dashboardTheme
+{
+	position: absolute;
+	top: 520px;
+    left: 96px;
+	width: 880px;
+	height: 450px;
+}
+
+
+
+
+/**************************\
+* player screen element *
+\**************************/
+
+.mainPlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.pipPlayer {
+    position: absolute;
+    top: 38%;
+    right: 0%;
+    width: 128px;
+    height: 128px;
+    z-index: 2147483648;
+}
+
+.audioPlayer {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0px;
+    height: 0px;
+    z-index: 2147483648;
+}
