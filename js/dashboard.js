@@ -26,7 +26,7 @@ function dashboardScreen() {
 		//left part
 		var playButton = createButton("playButton", this.dashboardLeft, "dashboardPlay", 0, 0);
 		createImg(null, playButton, mydashboard.contentInfos.picture);
-		createImg(null, playButton, "media/fav_play_icone.png");	
+		createImg("playButtonIcone", playButton, "media/dashboard/icone_gr_play_video.png");	
 		playButton.setAttribute("tabindex", 1);
 		
 		var dashboardTheme = createDiv("dashboardTheme", this.dashboardLeft);
@@ -52,12 +52,13 @@ function dashboardScreen() {
 		var dashboardResumeContent = dashboardResume.children[1];
 		
 		var dashboardFavoriteControl = createButton("dashboardFavoriteControl", dashboardSocial, "dashboardFavoriteControl", 0, 0);
+		createImg(null, dashboardFavoriteControl, "media/dashboard/icone_favoris_actif.png");
 		dashboardFavoriteControl.setAttribute("tabindex", 5);
 		var dashboardFacebookZone = createDiv("dashboardFacebookZone", dashboardSocial);
-		createImg(null, dashboardFacebookZone, "media/logoFacebook.jpg");
+		createImg(null, dashboardFacebookZone, "media/dashboard/icone_facebook_actif.png");
 		createDiv("dahsboardFacebookLike", dashboardFacebookZone, "16");
 		var dashboardTwitterZone = createDiv("dashboardTwitterZone", dashboardSocial);
-		createImg(null, dashboardTwitterZone, "media/logoTwitter.jpg");
+		createImg(null, dashboardTwitterZone, "media/dashboard/icone_twitter_actif.png");
 		createDiv("dahsboardTwitterFollower", dashboardTwitterZone, "1");
 		
 		dashboardSubtitle.innerHTML = mydashboard.contentInfos.subtitle;

@@ -288,6 +288,13 @@
     height: 490px;
 }
 
+#playButtonIcone
+{
+	position: absolute;
+    left: 340px;
+    top: 140px;
+}
+
 #dashboardTheme
 {
 	position: absolute;
@@ -474,4 +481,169 @@
     width: 0px;
     height: 0px;
     z-index: 2147483648;
+}
+
+#playerUI
+{
+	position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 2160px;
+    height: 1440px;
+    display: block;
+}
+
+#playerTopBanner
+{
+	position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 2160px;
+    height: 160px;
+}
+
+#playerBottomBanner
+{
+	position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 2160px;
+    height: 480px;
+}
+
+#playerTopBanner div
+{
+    width: 140px;
+    height: 140px;
+}
+
+#playerClose
+{
+	position: absolute;
+    left: 10px;
+}
+
+#playerShare
+{
+	position: absolute;
+    left: 870px;
+}
+
+#playerSignet
+{
+	position: absolute;
+    left: 1010px;
+}
+
+#playerFavorite
+{
+	position: absolute;
+    left: 1150px;
+}
+
+#playerSize
+{
+	position: absolute;
+    right: 10px;
+}
+
+#playerOptions
+{
+	position: absolute;
+    bottom: 320px;
+    left: 0px;
+    width: 2160px;
+    height: 160px;
+    display: block;
+}
+
+#playerProgressInfos
+{
+	position: absolute;
+    bottom: 180px;
+    left: 0px;
+    width: 2160px;
+    height: 140px;
+    display: block;
+}
+
+#playerControls
+{
+	position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 2160px;
+    height: 180px;
+    display: block;
+}
+
+#playerOptions div
+{
+	position: relative;
+    top: 20px;
+    width: 320px;
+    height: 120px;
+    display: block;
+    float: left;
+    margin-left: 176px;
+}
+
+#playerProgressCurrent
+{
+	position: absolute;
+	left: 160px;
+	width: 250px;
+    height: 60px;
+}
+
+#playerProgressTotal
+{
+	position: absolute;
+	right: 160px;
+	width: 250px;
+    height: 60px;
+}
+
+#playerProgressBar
+{
+	position: absolute;
+	top: 80px;
+	left: 160px;
+	width: 1840px;
+    height: 5px;
+    background-color: grey;
+}
+
+#playerProgressCursor
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 0px;
+    height: 5px;
+    background-color: orange;
+}
+
+#playerControlVolume
+{
+	position: absolute;
+	left: 0px;
+	width: 700px;
+    height: 180px;
+}
+
+#playerControlTrickMode
+{
+	position: absolute;
+	left: 750px;
+	width: 750px;
+    height: 180px;
+}
+
+#playerControlConfig
+{
+	position: absolute;
+	right: 40px;
+	width: 170px;
+    height: 180px;
 }

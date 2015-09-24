@@ -5,8 +5,63 @@ function playerScreen() {
 	this.videoMain = document.getElementById('videoPlayerMain');
 	this.videoPip =  document.getElementById('videoPlayerPip');
     this.videoAudio = document.getElementById('videoPlayerAudio');
+    this.playerUI = document.getElementById('playerUI');
 	
 	this.init = function() {
+		var playerTopBanner = this.playerUI.children[0];
+		var playerBottomBanner = this.playerUI.children[1];
+
+		//top bar button
+		var btn = createButton("playerClose", playerTopBanner, "playerClose", 0, 0);
+		btn.setAttribute("tabindex", 1);
+		createImg(null, btn, "");
+		btn = createButton("playerShare", playerTopBanner, "playerShare", 1, 0);
+		btn.setAttribute("tabindex", 2);
+		createImg(null, btn, "");
+		btn = createButton("playerSignet", playerTopBanner, "playerSignet", 2, 0);
+		btn.setAttribute("tabindex", 3);
+		createImg(null, btn, "");
+		btn = createButton("playerFavorite", playerTopBanner, "playerFavorite", 3, 0);
+		btn.setAttribute("tabindex", 4);
+		createImg(null, btn, "");
+		btn = createButton("playerSize", playerTopBanner, "playerSize", 4, 0);
+		btn.setAttribute("tabindex", 5);
+		createImg(null, btn, "");
+		
+		var playerOptions = playerBottomBanner.children[0];
+		
+		//button for accessibility
+		btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
+		btn.setAttribute("tabindex", 6);
+		createImg(null, btn, "");
+		var btn = createButton("playerOptionView", playerOptions, "playerOptionView", 1, 0);
+		btn.setAttribute("tabindex", 7);
+		createImg(null, btn, "");
+		var btn = createButton("playerOptionSub", playerOptions, "playerOptionSub", 2, 0);
+		btn.setAttribute("tabindex", 8);
+		createImg(null, btn, "");
+		var btn = createButton("playeroptionDescription", playerOptions, "playeroptionDescription", 3, 0);
+		btn.setAttribute("tabindex", 9);
+		createImg(null, btn, "");
+		
+		var playerControls = playerBottomBanner.children[2];
+		var playerControlTrickMode = playerControls.children[1];
+		
+		// button for trick mode
+		btn = createButton("playerControlRW", playerControlTrickMode, "playerControlRW", 0, 0);
+		btn.setAttribute("tabindex", 10);
+		createImg(null, btn, "");
+		btn = createButton("playerControlPlayPause", playerControlTrickMode, "playerControlPlayPause", 1, 0);
+		btn.setAttribute("tabindex", 11);
+		createImg(null, btn, "");
+		btn = createButton("playerControlFF", playerControlTrickMode, "playerControlFF", 2, 0);
+		btn.setAttribute("tabindex", 12);
+		createImg(null, btn, "");
+		btn = createButton("playerControlStop", playerControlTrickMode, "playerControlStop", 3, 0);
+		btn.setAttribute("tabindex", 13);
+		createImg(null, btn, "");
+		
+		//LANCEMENT DU PLAYER ATTENTION CODE TOUCHY
         var context = new MediaPlayer.di.Context();
 
         var urlMain = "http://m4dp.ateme.com/M4DP_prod/manifest.mpd";

@@ -55,7 +55,7 @@ getContentDashboard = function() {
     	title: "Jardins suspendus de la canopée",
     	subtitle: "DES FORÊTS ET DES HOMMES",
     	detail: "Emission du 15/07/2015 | 50 min",
-    	picture: "media/fav.png",
+    	picture: "media/dashboard/icone_gr_video.png",
     	facebook: 16,
     	twitter: 1,
     	signe: true,
@@ -73,17 +73,17 @@ getContentDashboard = function() {
 	       {
 	    	   title: "Le Monde de Jamy : A couper le souffle.",
 	    	   subtitle: "Des forêts et des hommes",
-	    	   picture: "media/fav.png"
+	    	   picture: "media/dashboard/icone_pt_video_soufle.png"
 	       },
 	       {
 	    	   title: "Le repas des koalas",
 	    	   subtitle: "Des forêts et des hommes",
-	    	   picture: "media/fav.png"
+	    	   picture: "media/dashboard/icone_pt_video_koala.png"
 	       },
 	       {
 	    	   title: "Attention sangsue !",
 	    	   subtitle: "Des forêts et des hommes",
-	    	   picture: "media/fav.png"
+	    	   picture: "media/dashboard/icone_pt_video_sangsue.png"
 	       }
     	]
 	};
