@@ -6,16 +6,19 @@ function favoriteScreen() {
 	
 	this.createFav = function() {
 		var favoriteBackground = createDiv("favoriteBackground", this.favoriteScreen, null, "favoriteBackground");
+		
 		var favoriteBackgroundTitleZone = createDiv("favoriteBackgroundTitleZone", favoriteBackground);
-		createImg(null, favoriteBackgroundTitleZone, "media/fav_icone.png");
+		createImg(null, favoriteBackgroundTitleZone, "media/favoris/favoris_icone_section.png");
 		createDiv("favoriteBackgroundTitle", favoriteBackgroundTitleZone, language.fr.favTitle);
 		
+		var favoriteBackgroundContentZone = createDiv("favoriteBackgroundContentZone", favoriteBackground);
+		
 		favButton = function(index, fav) {
-			var favButton = createButton("fav_" + index, favoriteBackground, "favoriteChoice", 0, index, "favButton");
+			var favButton = createButton("fav_" + index, favoriteBackgroundContentZone, "favoriteChoice", 0, index, "favButton");
 			
 			var favDelete = createButton("favDelete_" + index, favButton, "favoriteDelete", 0, 0, "favDelete");
 			favDelete.setAttribute("tabindex", cpt + 2);
-			createImg(null, favDelete, "media/fav_icone.png");
+			createImg(null, favDelete, "media/favoris/favoris_icone_bloc.png");
 			
 			createImg(null, favButton, fav.picture, "favoriteImg");
 			

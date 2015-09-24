@@ -25,13 +25,13 @@ getFav = function() {
 		    	title: "Jardins suspendus de la canopée",
 		    	subtitle: "DES FORÊTS ET DES HOMMES",
 		    	detail: "Emission du 15/07/2015 | 50 min",
-		    	picture: "media/fav.png"
+		    	picture: "media/favoris/favoris_vignette_jardin_suspendu.png"
 		    },
 		    {
 		    	title: "ALEX HUGO - la mort et la belle vie",
 		    	subtitle: "",
 		    	detail: "film policier | 90 min",
-		    	picture: "media/fav.png"
+		    	picture: "media/favoris/favoris_vignette_alex_hugo.png"
 		    },
 		    {
 		    	title: "Robinsons chouettes - Saison 2 - Episode 59",

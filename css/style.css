@@ -112,22 +112,64 @@
     top: 82px;
     left: 136px;
     width: 1890px;
-    background-color: #E9E9E9;
+    background-color: #1D2935;
     height: 760px;
+    -webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 }
 
-/************\
-* favButton *
-\************/
+#favoriteBackgroundTitleZone
+{
+	position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 1810px;
+    height: 50px;
+}
+
+#favoriteBackgroundTitleZone img
+{
+	position: relative;
+    width: 50px;
+    height: 43px;
+    float: left
+}
+
+#favoriteBackgroundTitleZone div
+{
+	position: relative;
+    left: 20px;
+    width: 1730px;
+    height: 50px;
+    float: left;
+    font-size: 30px;
+    color: #AAAAAA;
+}
+
+
+/* attention la taille de cette div influe sur l'effet bordure grise de son contenue la hauteur doit donc etre dynamique */
+/*TODO ajouter le dynamisme en question */
+#favoriteBackgroundContentZone
+{
+	position: absolute;
+    top: 110px;
+    left: 40px;
+    width: 1802px;
+    height: 605px;
+    background-color: grey;
+}
 
 .favButton
 {
 	position: relative;
 	top: 0px;
-	left: 40px;
+	left: 0px;
 	width: 1800px;
 	height: 150px;
-	background-color: white
+	background-color: #23313E;
+	margin-top: 1px;
+    margin-left: 1px;
 }
 
 .favDelete
@@ -136,6 +178,15 @@
     width: 130px;
     height: 150px;
     float: left;
+}
+
+.favDelete img
+{
+	position: absolute;
+    width: 50px;
+    height: 43px;
+    top: 54px;
+    left: 40px;
 }
 
 .favoriteImg
@@ -149,9 +200,18 @@
 .favoriteInfos
 {
 	position: relative;
+	left: 38px;
     width: 1310px;
     height: 150px;
     float: left;
+}
+
+.favoriteInfos div
+{
+	position: relative;
+    left: 0px;
+    width: 1310px;
+    height: 50px;
 }
 
 .favPlay
@@ -160,6 +220,15 @@
     width: 100px;
     height: 150px;
     float: left;
+}
+
+.favPlay img
+{
+	position: absolute;
+    width: 70px;
+    height: 70px;
+    top: 40px;
+    left: 15px;
 }
 
 /**************************\
