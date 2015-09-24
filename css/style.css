@@ -212,6 +212,7 @@
     left: 0px;
     width: 1310px;
     height: 50px;
+    color: white;
 }
 
 .favPlay
@@ -235,18 +236,37 @@
 * dashboard screen element *
 \**************************/
 
-#dashboardTitle
+#dashboardTop
 {
 	position: absolute;
     top: 0px;
     width: 2160px;
-    height: 280px;
+    height: 200px;
+}
+
+#dashboardtopBack
+{
+	position: absolute;
+    top: 0px;
+    left: 96px;
+    width: 210px;
+    height: 200px;
+}
+
+#dashboardTopTitle
+{
+	position: absolute;
+    top: 0px;
+    left: 306px;
+    width: 1548px;
+    height: 200px;
+    text-align: center;
 }
 
 #dashboardLeft
 {
 	position: absolute;
-    top: 280px;
+    top: 200px;
     width: 1020px;
     height: 990px;
 }
@@ -254,7 +274,7 @@
 #dashboardRight
 {
 	position: absolute;
-    top: 280px;
+    top: 200px;
     left: 1140px;
     width: 1140px;
     height: 990px;
@@ -277,8 +297,153 @@
 	height: 450px;
 }
 
+#dashboardThemeTitle
+{
+	position: absolute;
+	top: 0px;
+    left: 0px;
+	width: 880px;
+	height: 80px;
+}
 
+#dashboardThemeContent
+{
+	position: absolute;
+    top: 80px;
+    left: 0px;
+    width: 880px;
+    height: 250px;
+}
 
+.themeButton
+{
+	position: relative;
+    top: 0px;
+    left: 0px;
+    width: 271px;
+    height: 250px;
+    float: left;
+}
+
+.themeButton div
+{
+	position: relative;
+    top: 10px;
+    left: 0px;
+    width: 271px;
+    height: 50px;	
+}
+
+#dashboardSocial
+{
+	position: relative;
+    top: 0px;
+    left: 0px;
+    width: 1140px;
+    height: 70px;
+}
+
+#dashboardFavoriteControl
+{
+	position: relative;
+    top: 0px;
+    left: 0px;
+    width: 70px;
+    height: 70px;
+    float: left;
+}
+
+#dashboardFacebookZone
+{
+	position: relative;
+    width: 140px;
+    height: 70px;
+    float: left;
+    border-left: solid 1px grey;
+    border-right: solid 1px grey;
+}
+
+#dashboardTwitterZone
+{
+	position: relative;
+    width: 140px;
+    height: 70px;
+    float: left;
+}
+
+#dashboardFacebookZone img,
+#dashboardFacebookZone div,
+#dashboardTwitterZone img,
+#dashboardTwitterZone div
+{
+	position: relative;
+    top: 0px;
+    left: 0px;
+    width: 70px;
+    height: 70px;
+    float: left;
+}
+
+#dashboardSubtitle
+{
+	position: absolute;
+    top: 90px;
+    left: 0px;
+    width: 1140px;
+    height: 70px;
+}
+
+#dashboardDetails
+{
+	position: absolute;
+    top: 160px;
+    left: 0px;
+    width: 1140px;
+    height: 50px;
+}
+
+#dashboardAccessInfo
+{
+	position: absolute;
+    top: 210px;
+    left: 0px;
+    width: 1140px;
+    height: 200px;
+}
+
+#dashboardSynopsis
+{
+	position: absolute;
+    top: 270px;
+    left: 0px;
+    width: 1140px;
+    height: 200px;
+}
+
+#dashboardResume
+{
+	position: absolute;
+    top: 470px;
+    left: 0px;
+    width: 1140px;
+    height: 720px;
+}
+
+#dashboardResumeTitle {
+	position: relative;
+    top: 0px;
+    left: 0px;
+    width: 1140px;
+    height: 50px;
+}
+
+#dashboardResumeContent {
+	position: relative;
+    top: 0px;
+    left: 0px;
+    width: 1140px;
+    height: 670px;
+}
 
 /**************************\
 * player screen element *

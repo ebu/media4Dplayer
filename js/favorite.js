@@ -13,8 +13,8 @@ function favoriteScreen() {
 		
 		var favoriteBackgroundContentZone = createDiv("favoriteBackgroundContentZone", favoriteBackground);
 		
-		favButton = function(index, fav) {
-			var favButton = createButton("fav_" + index, favoriteBackgroundContentZone, "favoriteChoice", 0, index, "favButton");
+		favButton = function(index, parent, fav) {
+			var favButton = createButton("fav_" + index, parent, "favoriteChoice", 0, index, "favButton");
 			
 			var favDelete = createButton("favDelete_" + index, favButton, "favoriteDelete", 0, 0, "favDelete");
 			favDelete.setAttribute("tabindex", cpt + 2);
@@ -37,7 +37,7 @@ function favoriteScreen() {
 		var cpt = 0;
 		var btn = null;
 		for(var i in myFavoriteScreen.userFavList.fav) {
-			btn = favButton(cpt, myFavoriteScreen.userFavList.fav[i]);
+			btn = favButton(cpt, favoriteBackgroundContentZone, myFavoriteScreen.userFavList.fav[i]);
 			btn.setAttribute("tabindex", cpt + 1);
 			cpt = cpt + 3;
 		}

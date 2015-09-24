@@ -3,5 +3,6 @@ var language = {
 		{
 			favTitle: "Mes vidéos favorites",
 			themeTitle: "VIDEOS SUR LE MEME THEME",
+			resumeTitle: "RESUME",
 		}
 };
