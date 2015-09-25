@@ -8,7 +8,11 @@ function favoriteScreen() {
 		var favoriteBackground = createDiv("favoriteBackground", this.favoriteScreen, null, "favoriteBackground");
 		
 		var favoriteBackgroundTitleZone = createDiv("favoriteBackgroundTitleZone", favoriteBackground);
-		createImg(null, favoriteBackgroundTitleZone, "media/favoris/favoris_icone_section.png");
+		var favTitleIcone = createDiv("favoriteBackgroundTitleIcone", favoriteBackgroundTitleZone, null, null);
+		favTitleIcone.innerHTML = '<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"'
+								+'width="50px" height="43px" viewBox="0 0 50 43" style="enable-background:new 0 0 50 43;" xml:space="preserve">'
+								+ '<g><polygon style="fill:#555555;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;" class="st0" points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1"/></g>'
+								+ '</svg>';
 		createDiv("favoriteBackgroundTitle", favoriteBackgroundTitleZone, language.fr.favTitle);
 		
 		var favoriteBackgroundContentZone = createDiv("favoriteBackgroundContentZone", favoriteBackground);
@@ -18,8 +22,12 @@ function favoriteScreen() {
 			
 			var favDelete = createButton("favDelete_" + index, favButton, "favoriteDelete", 0, 0, "favDelete");
 			favDelete.setAttribute("tabindex", cpt + 2);
-			createImg(null, favDelete, "media/favoris/favoris_icone_bloc.png");
-			
+			var favDeleteIcone = createDiv("favoriteDeleteIcone", favDelete, null, null);
+			favDeleteIcone.innerHTML = '<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"'
+								+'width="50px" height="43px" viewBox="0 0 50 43" style="enable-background:new 0 0 50 43;" xml:space="preserve">'
+								+ '<g><polygon class="st0" style="fill:#FFDE00;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;" points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1"/></g>'
+								+ '</svg>';
+
 			createImg(null, favButton, fav.picture, "favoriteImg");
 			
 			var favInfos = createDiv("favInfos", favButton, null, "favoriteInfos");
