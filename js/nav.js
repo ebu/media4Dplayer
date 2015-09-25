@@ -12,8 +12,12 @@ move = function(action, event) {
 		case "dashboardPlay":
 			myDash.validPlay();
 			break;
-		case "topbarZoneAccount":
-			myTopbar.validAccount();
+		case "topBarProfileZone":
+		case "topbarSettingsZone":
+		case "topbarFavorisZone":
+		case "topbarSearchZone":
+		case "topbarHomeZone":
+			console.log("click !");
 			break;
 	}
 };
