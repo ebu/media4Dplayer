@@ -8,13 +8,16 @@ function topbar() {
 		if(!this.alreadyInit) {
 			$(this.topbar).addClass("topbar");
 			
+			var countButton = 1;
 			var createTopbarButton = function(text, URLimg, zone) {
-				var topbarBt = createButton("topbarButton", myTopbar.topbar, zone, 0, 0, "topbarButton");
+				var topbarBt = createButton("topbarButton"+countButton, myTopbar.topbar, zone, 0, 0, "topbarButton");
+				topbarBt.setAttribute("tabindex", countButton);
 				var contentIcoAccount = createDiv("accountContentIco", topbarBt, "", "topbarImg");
 				contentIcoAccount.style.backgroundImage = "url('"+URLimg+"')";
 				var contentAccount = createDiv("accountContent", topbarBt, "", "topbarText");
 				var textAccount = createDiv("accountText", contentAccount, text, "");
 
+				countButton++;
 				return topbarBt;
 			};
 
