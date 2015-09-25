@@ -23,10 +23,9 @@ function userScreen() {
 	};
 
 	this.init = function() {
-		if(myUserScreen.userList == null) {
-			myUserScreen.userList = getUser();
-			myUserScreen.createUser();
-		}
+		myUserScreen.cleanPage();
+		myUserScreen.userList = getUser();
+		myUserScreen.createUser();
 		myUserScreen.show();
 	};
 	
@@ -45,5 +44,10 @@ function userScreen() {
 		myHome.init();
 	};
 	
+	this.cleanPage = function() {
+		emptyElem(myUserScreen.userChoiceDom);
+	};
+
 	return this;
 };
+

@@ -44,10 +44,9 @@ function favoriteScreen() {
 	};
 	
 	this.init = function() {
-		if(myFavoriteScreen.userFavList == null) {
-			myFavoriteScreen.userFavList = getFav();
-			myFavoriteScreen.createFav();
-		}
+		myFavoriteScreen.cleanPage();
+		myFavoriteScreen.userFavList = getFav();
+		myFavoriteScreen.createFav();
 		myFavoriteScreen.show();
 	};
 	
@@ -64,6 +63,10 @@ function favoriteScreen() {
 	this.validFavorite = function() {
 		myDash.init();
 		this.hide();
+	};
+	
+	this.cleanPage = function() {
+		emptyElem(this.favoriteScreen);
 	};
 	
 	return this;

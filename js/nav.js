@@ -15,6 +15,9 @@ move = function(action, event) {
 		case "topbarZoneAccount":
 			myTopbar.validAccount();
 			break;
+		case "playerClose":
+			myPlayer.validClose();
+			break;
 	}
 };
 

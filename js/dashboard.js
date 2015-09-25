@@ -68,10 +68,9 @@ function dashboardScreen() {
 	};
 	
 	this.init = function() {
-		if(mydashboard.contentInfos == null) {
-			mydashboard.contentInfos = getContentDashboard();
-			mydashboard.updateDashboard();
-		}
+		mydashboard.cleanPage();
+		mydashboard.contentInfos = getContentDashboard();
+		mydashboard.updateDashboard();
 		mydashboard.show();
 	};
 	
@@ -88,6 +87,33 @@ function dashboardScreen() {
 	this.validPlay = function() {
 		myPlayer.init();
 		this.hide();
+	};
+	
+	this.cleanPage = function() {
+		//top part
+		var dashboardTitle = this.dashboardTop.children[1];
+		dashboardTitle.innerHTML = "";
+		
+		//left part
+		emptyElem(this.dashboardLeft);
+		
+		//right part
+		var dashboardSocial = this.dashboardRight.children[0];
+		var dashboardSubtitle = this.dashboardRight.children[1];
+		var dashboardDetails = this.dashboardRight.children[2];
+		var dashboardAccessInfo = this.dashboardRight.children[3];
+		var dashboardSynopsis = this.dashboardRight.children[4];
+		var dashboardResume = this.dashboardRight.children[5];
+		var dashboardResumeTitle = dashboardResume.children[0];
+		var dashboardResumeContent = dashboardResume.children[1];
+		
+		emptyElem(dashboardSocial);
+		dashboardSubtitle.innerHTML = "";
+		dashboardDetails.innerHTML = "";
+		emptyElem(dashboardAccessInfo);
+		dashboardSynopsis.innerHTML = "";
+		dashboardResumeTitle.innerHTML = "";
+		dashboardResumeContent.innerHTML = "";
 	};
 	
 	return this;
