@@ -43,9 +43,23 @@ function topbar() {
 	};
 
 	this.validAccount = function() {
-		console.log("validAccount");
+		myUser.init();
+		myFav.hide();
+		myDash.hide();
+		this.hide();
 	};
 	
-
+	this.validFavorite = function() {
+		myDash.hide();
+		myFav.init();
+	};
+	
+	this.validHome = function() {
+		myHome.init();
+		myFav.hide();
+		myDash.hide();
+		this.hide();
+	};
+	
 	return this;
 };

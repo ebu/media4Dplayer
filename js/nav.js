@@ -13,14 +13,21 @@ move = function(action, event) {
 			myDash.validPlay();
 			break;
 		case "topBarProfileZone":
-		case "topbarSettingsZone":
+			myTopbar.validAccount();
+			break;
 		case "topbarFavorisZone":
-		case "topbarSearchZone":
+			myTopbar.validFavorite();
+			break;
 		case "topbarHomeZone":
-			console.log("click !");
+			myTopbar.validHome();
 			break;
 		case "playerClose":
 			myPlayer.validClose();
+			break;
+		case "topbarSearchZone":
+		case "topbarSettingsZone":
+		default:
+			console.log("not yet implemented");
 			break;
 	}
 };
