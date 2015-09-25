@@ -379,13 +379,20 @@
 }
 
 #dashboardFacebookZone img,
-#dashboardFacebookZone div,
-#dashboardTwitterZone img,
-#dashboardTwitterZone div
+#dashboardTwitterZone img
 {
-	position: relative;
+	position: absolute;
     top: 0px;
     left: 0px;
+    float: left;
+}
+
+#dashboardFacebookZone div,
+#dashboardTwitterZone div
+{
+	position: absolute;
+    top: 0px;
+    left: 70px;
     width: 70px;
     height: 70px;
     float: left;
