@@ -24,6 +24,12 @@ move = function(action, event) {
 		case "playerClose":
 			myPlayer.validClose();
 			break;
+		case "playerOptionSigne":
+			myPlayer.validOptionSigne();
+			break;
+		case "playerOptionDescription":
+			myPlayer.validOptionDescription();
+			break;
 		case "topbarSearchZone":
 		case "topbarSettingsZone":
 		default:
