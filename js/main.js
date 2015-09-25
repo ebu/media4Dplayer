@@ -4,6 +4,8 @@ var myFav = new favoriteScreen();
 var myDash = new dashboardScreen();
 var myPlayer = new playerScreen();
 
+var myTopbar = new topbar();
+
 function onLoad() {
 	document.addEventListener("keydown", handleKey, false);
 	createSelecteur();

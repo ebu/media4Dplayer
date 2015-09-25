@@ -35,6 +35,8 @@ function homeScreen() {
 	
 	this.validVideo = function() {
 		myFav.init();
+		myTopbar.init();
+		
 		this.hide();
 	};
 	

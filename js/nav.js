@@ -12,6 +12,9 @@ move = function(action, event) {
 		case "dashboardPlay":
 			myDash.validPlay();
 			break;
+		case "topbarZoneAccount":
+			myTopbar.validAccount();
+			break;
 	}
 };
 
