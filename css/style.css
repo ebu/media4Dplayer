@@ -539,6 +539,7 @@
     width: 2160px;
     height: 1440px;
     display: block;
+    background: url("../media/player/player_ombre_video.png") repeat;
 }
 
 #playerTopBanner
@@ -685,6 +686,38 @@
 	position: absolute;
 	left: 750px;
 	width: 750px;
+    height: 180px;
+}
+
+#playerControlRW
+{
+	position: absolute;
+	left: 0px;
+	width: 170px;
+    height: 180px;
+}
+
+#playerControlPlayPause
+{
+	position: absolute;
+	left: 170px;
+	width: 170px;
+    height: 180px;
+}
+
+#playerControlFF
+{
+	position: absolute;
+	left: 340px;
+	width: 170px;
+    height: 180px;
+}
+
+#playerControlStop
+{
+	position: absolute;
+	left: 560px;
+	width: 170px;
     height: 180px;
 }
 
