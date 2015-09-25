@@ -28,7 +28,7 @@
 #favoriteScreen
 {
     position: absolute;
-    top: 50px;
+    top: 160px;
     left: 0px;
 	width: 2160px;
     height: 1390px;
@@ -107,10 +107,10 @@
 \*********/
 
 .topbar {
-    position: relative;
+    position: absolute;
     top: 0px;
     left: 0px;
-    width: 100%;
+    width: 2160px;
     height: 160px;
 }
 .topbarButton {
