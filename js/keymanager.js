@@ -4,7 +4,7 @@ var VK_BACK = 8;
 handleKey = function handleKey(event) {
 	switch (event.keyCode) {
 		case VK_ENTER:
-			move("enter");
+			move("enter", event);
 			break;
 		case 8:
 		case 27:

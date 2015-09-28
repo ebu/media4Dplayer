@@ -216,6 +216,7 @@ body {
 .topbarImg {
     position: relative;
     float: left;
+    top: 32px;
 }
 
 .topbarText {

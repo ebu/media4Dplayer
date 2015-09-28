@@ -33,7 +33,7 @@ move = function(action, event) {
 		case "topbarSearchZone":
 		case "topbarSettingsZone":
 		default:
-			console.log("not yet implemented");
+			console.log(selecteur.getAttribute("zone"), "not yet implemented");
 			break;
 	}
 };

@@ -10,7 +10,7 @@ function topbar() {
 			var createTopbarButton = function(text, URLimg, zone) {
 				var topbarBt = createButton("topbarButton_"+countButton, myTopbar.topbar, zone, 0, 0, "topbarButton");
 				topbarBt.setAttribute("tabindex", countButton);
-				createImg("accountContentIco", topbarBt, URLimg, "topbarImg");
+				createImg("accountContentIco", topbarBt, URLimg, "topbarImg", "menu");
 				createDiv("accountText", topbarBt, text, "topbarText");
 
 				countButton++;

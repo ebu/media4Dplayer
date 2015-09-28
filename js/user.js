@@ -8,7 +8,7 @@ function userScreen() {
 	this.createUser = function() {
 		userButton = function(index, user) {
 			var userButton = createButton("user_" + index, myUserScreen.userChoiceDom, "userChoice", index, 0, "userButton");
-			createImg(null, userButton, user.picture);
+			createImg(null, userButton, user.picture, null, "Profile de ");
 			createDiv(null, userButton, user.name);
 			return userButton;
 		};
@@ -32,6 +32,12 @@ function userScreen() {
 	this.show = function() {
 		this.userSelectScreen.style.display = "block";
 		this.activeScreen = true;
+
+		var descriptionDiv = createDiv("descriptionScreen", myUserScreen.userSelectScreen, "Choisissez votre profile", null);
+		descriptionDiv.setAttribute("tabindex", 1);
+		moveSelecteur("descriptionScreen");
+		//descriptionDiv.removeAttribute("tabindex");
+		descriptionDiv.remove();
 	};
 	
 	this.hide = function() {

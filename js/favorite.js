@@ -10,7 +10,7 @@ function favoriteScreen() {
 		var favoriteBackgroundTitleZone = createDiv("favoriteBackgroundTitleZone", favoriteBackground);
 		var favTitleIcone = createDiv("favoriteBackgroundTitleIcone", favoriteBackgroundTitleZone, null, null);
 		favTitleIcone.innerHTML = '<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"'
-								+'width="50px" height="43px" viewBox="0 0 50 43" style="enable-background:new 0 0 50 43;" xml:space="preserve">'
+								+ 'width="50px" height="43px" viewBox="0 0 50 43" style="enable-background:new 0 0 50 43;" xml:space="preserve">'
 								+ '<g><polygon style="fill:#555555;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;" class="st0" points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1"/></g>'
 								+ '</svg>';
 		createDiv("favoriteBackgroundTitle", favoriteBackgroundTitleZone, language.fr.favTitle);
@@ -42,7 +42,7 @@ function favoriteScreen() {
 			return favButton;
 		};
 		
-		var cpt = 0;
+		var cpt = 10;
 		var btn = null;
 		for(var i in myFavoriteScreen.userFavList.fav) {
 			btn = favButton(cpt, favoriteBackgroundContentZone, myFavoriteScreen.userFavList.fav[i]);
@@ -61,6 +61,14 @@ function favoriteScreen() {
 	this.show = function() {
 		myFavoriteScreen.favoriteScreen.style.display = "block";
 		this.activeScreen = true;
+
+		var descriptionDiv = createDiv("descriptionScreen", this.favoriteScreen, "Page mes vidéos favorites, avec une barre de navigation", null);
+		descriptionDiv.setAttribute("tabindex", 1);
+		moveSelecteur("descriptionScreen");
+		//descriptionDiv.removeAttribute("tabindex");
+		descriptionDiv.remove();
+
+
 	};
 	
 	this.hide = function() {

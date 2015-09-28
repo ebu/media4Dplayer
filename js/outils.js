@@ -15,12 +15,22 @@ function createDiv(idElement, parent, texte, style){
 	return element;
 }
 
-function createImg(idElement, parent, src, style){
+function createDivAriaDesc(idElement, parent, texte){
+	var element = createDiv(idElement, parent, texte);
+	element.style.display = "none";
+	//element.setAttribute("aria-describedby", idElement);
+	return element;
+}
+
+function createImg(idElement, parent, src, style, alt){
 	var element = document.createElement("img");
 	if(idElement != null)
 		element.id = idElement;
 	if(style != null)
 		element.className = style;
+	if(alt != null)
+		element.alt = alt;
+
 	element.src = src;
 	parent.appendChild(element);
 	return element;
@@ -32,6 +42,7 @@ function createButton(idElement, parent, zone, x, y, style){
 	button.setAttribute("x", x);
 	button.setAttribute("y", y);
 	button.setAttribute("onMouseOver", "moveSelecteur('"+button.id+"');");
+	button.setAttribute("onFocus", "moveSelecteur('"+button.id+"');");
 	button.setAttribute("onClick", "move('enter');");
 	return button;
 }
