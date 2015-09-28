@@ -1,3 +1,28 @@
+@font-face {
+	font-family: 'helveticaNeue-Bold';
+	src: url('../font/HelveticaNeue-Bold.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'helveticaNeue-Light';
+	src: url('../font/HelveticaNeue-Light.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'helveticaNeue-Medium';
+	src: url('../font/HelveticaNeue-Medium.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'helveticaNeue-Regular';
+	src: url('../font/HelveticaNeue-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'helveticaNeue-Thin';
+	src: url('../font/HelveticaNeue-Thin.ttf') format('truetype');
+}
+
+body {
+	Background-color: #f2f2f2;
+}
+
 /*********\
 * screens *
 \*********/
@@ -47,6 +72,49 @@
     height: 410px;
 }
 
+/*pas de loader pour le moment a voir quand les user seront chargé dynamiquement */
+#splashLoader
+{
+	position: absolute;
+    top: 1025px;
+    left: 730px;
+	width: 700px;
+    height: 60px;
+    display: none;
+}
+
+#loadPercent
+{
+	position: absolute;
+    top: 0px;
+    left: 0px;
+	width: 50px;
+    height: 60px;
+    
+    font-size: 40px;
+    color: #005688;
+    font-family: 'helveticaNeue-Medium';
+}
+
+#splashProgress
+{
+	position: absolute;
+	top: 0px;
+    left: 70px;
+	width : 630px;
+	Height : 30px;
+    Background-color : #C2DBEA;
+}
+
+#splashProgressCursor
+{
+	position: absolute;
+    left: 0px;
+	width : 50px;
+	Height : 30px;
+    Background-color : #005688;
+}
+
 /*********************\
 * user screen element *
 \*********************/
@@ -85,7 +153,9 @@
     height: 60px;
     text-align: center;
     
-    font-size: 30px;
+    font-size: 40px;
+    color: #000000;
+    font-family: 'helveticaNeue-Medium';
 }
 
 /*********************\
@@ -106,42 +176,58 @@
 * top bar *
 \*********/
 
-.topbar {
+#topbar {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 2160px;
-    height: 160px;
+    height: 120px;
+    
+    background-color : #192934;
+    border-top : 4px solid #F86623;
+    /*TODO bug avec l'opacity du border bottom*/
+	border-bottom : 1px solid #000000 opacity 15%;
+	
+	display: none
 }
+
 .topbarButton {
     position: relative;
+    top: 4px;
+    left: 80px;
+    width: 410px;
+    height: 116px;
     float: left;
-    width: 20%;
-    height: 100%;
-    text-align: center;
-    background-color: #FFDDDD; 
+    color: #D4D4D4;
+    font-family: 'helveticaNeue-Regular';
 }
+
+.topbarButton.actif {
+    position: relative;
+    top: 4px;
+    width: 410px;
+    height: 116px;
+    float: left;
+    color: #F86623;
+    background-color : #FFFFFF;
+    font-family: 'helveticaNeue-Medium';
+}
+
 .topbarImg {
     position: relative;
     float: left;
-    background-image: url(http://www.fondation-natureetdecouvertes.com/ImagesCss/logo_etoile.png);
-    background-position-x: 95%;
-    background-position-y: 45%;
-    background-repeat-x: no-repeat;
-    background-repeat-y: no-repeat;
-    width: 50%;
-    height: 100%; 
 }
+
 .topbarText {
     position: relative;
+    left: 20px;
+    width: 50%;
+    height: 100%;
     float: left;
     text-align: left;
-    line-height: 10em;
-    width: 50%;
-    height: 100%
+    font-size: 36px;
+    line-height: 116px
 }
-
-
 
 /*************************\
 * favorite screen element *
