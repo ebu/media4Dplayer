@@ -714,9 +714,13 @@ body {
     display: block;
 }
 
-#playerOptions div
+#playerOptionSigne,
+#playerOptionView,
+#playerOptionSub,
+#playeroptionDescription
 {
-	position: relative;
+    position: relative;
+    text-align: center;
     top: 20px;
     width: 320px;
     height: 120px;

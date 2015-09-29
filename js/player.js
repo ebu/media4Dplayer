@@ -49,16 +49,19 @@ function playerScreen() {
 			//button for accessibility
 			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
 			btn.setAttribute("tabindex", 6);
-			createImg(null, btn, "media/dashboard/icone_lsf.png");
+			createIconeLSF(btn, 80, 80);
+
 			var btn = createButton("playerOptionView", playerOptions, "playerOptionView", 1, 0);
 			btn.setAttribute("tabindex", 7);
-			createImg(null, btn, "media/dashboard/icone_ad.png");
+			createIconeAD(btn, 80, 80);
+
 			var btn = createButton("playerOptionSub", playerOptions, "playerOptionSub", 2, 0);
 			btn.setAttribute("tabindex", 8);
-			createImg(null, btn, "media/dashboard/icone_st.png");
+			createIconeST(btn, 80, 80);
+
 			var btn = createButton("playeroptionDescription", playerOptions, "playerOptionDescription", 3, 0);
 			btn.setAttribute("tabindex", 9);
-			createImg(null, btn, "media/dashboard/icone_la.png");
+			createIconeLA(btn, 80, 80);
 			
 			var playerControls = playerBottomBanner.children[2];
 			var playerControlTrickMode = playerControls.children[1];
