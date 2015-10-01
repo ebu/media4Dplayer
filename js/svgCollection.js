@@ -6,8 +6,10 @@
 function createIconeLSF(parent, width, height) {
 
 	var icone = createDiv("iconeLSF", parent, null, null);
+	parent.setAttribute("aria-labelledby", "ariaLabelLSF");
 
 	var ret = '';
+	ret += '<div id="ariaLabelLSF" style="display:none;">Activer langue des signes</div>';
 	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px" height="'+height+'px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">';
 	ret += '<style type="text/css">'; 
 	ret += '<![CDATA[';
@@ -218,7 +220,10 @@ function createIconeLSF(parent, width, height) {
 
 function createIconeAD(parent, width, height) {
 	var icone = createDiv("iconeAD", parent, null, null);
+	parent.setAttribute("aria-labelledby", "ariaLabelAD");
+	
 	var ret = '';
+	ret += '<div id="ariaLabelAD" style="display:none;">Audio Description</div>';
 	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
 	ret += '	 height="'+height+'px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">';
 	ret += '<style type="text/css">';
@@ -429,7 +434,10 @@ function createIconeAD(parent, width, height) {
 
 function createIconeST(parent, width, height) {
 	var icone = createDiv("iconeST", parent, null, null);
+	parent.setAttribute("aria-labelledby", "ariaLabelST");
+	
 	var ret = '';
+	ret += '<div id="ariaLabelST" style="display:none;">Sous Titres</div>';
 	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
 	ret += '	 height="'+height+'px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">';
 	ret += '<style type="text/css">';
@@ -663,7 +671,10 @@ function createIconeST(parent, width, height) {
 
 function createIconeLA(parent, width, height) {
 	var icone = createDiv("iconeLA", parent, null, null);
+	parent.setAttribute("aria-labelledby", "ariaLabelLA");
+	
 	var ret = '';
+	ret += '<div id="ariaLabelLA" style="display:none;">Langue</div>';
 	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
 	ret += '	 height="'+height+'px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">';
 	ret += '<style type="text/css">';

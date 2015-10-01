@@ -2,7 +2,7 @@ var language = {
 		fr:
 		{
 			favTitle: "Mes vidéos favorites",
-			themeTitle: "VIDEOS SUR LE MEME THEME",
-			resumeTitle: "RESUME",
+			themeTitle: "VIDÉOS SUR LE MÊME THEME",
+			resumeTitle: "RÉSUMÉ",
 		}
 };

@@ -19,25 +19,29 @@ function favoriteScreen() {
 		
 		favButton = function(index, parent, fav) {
 			var favButton = createButton("fav_" + index, parent, "favoriteChoice", 0, index, "favButton");
-			
+			var ariaDescription = createDiv("favAriaLabel_"+index, favButton, null, null);
+			ariaDescription.style.display = "none";
+			ariaDescription.innerHTML = "Vidéo : " + fav.title;
+			favButton.setAttribute("aria-labelledby", "favAriaLabel_"+index);
+
 			var favDelete = createButton("favDelete_" + index, favButton, "favoriteDelete", 0, 0, "favDelete");
 			favDelete.setAttribute("tabindex", cpt + 2);
 			var favDeleteIcone = createDiv("favoriteDeleteIcone", favDelete, null, null);
-			favDeleteIcone.innerHTML = '<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"'
+			favDeleteIcone.innerHTML = '<div aria-labelledby="AriaFavori"><svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"'
 								+'width="50px" height="43px" viewBox="0 0 50 43" style="enable-background:new 0 0 50 43;" xml:space="preserve">'
 								+ '<g><polygon class="st0" style="fill:#FFDE00;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;" points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1"/></g>'
-								+ '</svg>';
+								+ '</svg></div><div id="AriaFavori" style="display:none;">Enlever des favoris</div>';
 
-			createImg(null, favButton, fav.picture, "favoriteImg");
+			createImg(null, favButton, fav.picture, "favoriteImg", null, "");
 			
 			var favInfos = createDiv("favInfos", favButton, null, "favoriteInfos");
-			createDiv("favInfosTitle", favInfos, fav.title);
-			createDiv("favInfosSubitle", favInfos, fav.subtitle);
-			createDiv("favInfosDetail", favInfos, fav.detail);
+			createDiv("favInfosTitle", favInfos, fav.title, "favInfosTitle");
+			createDiv("favInfosSubitle", favInfos, fav.subtitle, "favInfosSubitle");
+			createDiv("favInfosDetail", favInfos, fav.detail, "favInfosDetail");
 			
 			var favPlay = createButton("favPlay_" + index, favButton, "favoritePlay", 0, 0, "favPlay");
 			favPlay.setAttribute("tabindex", cpt + 3);
-			createImg(null, favPlay, "media/fav_play_icone.png");	
+			createImg(null, favPlay, "media/fav_play_icone.png", null, "lecture de la vidéo");
 			
 			return favButton;
 		};

@@ -10,7 +10,11 @@ function topbar() {
 			var createTopbarButton = function(text, URLimg, zone) {
 				var topbarBt = createButton("topbarButton_"+countButton, myTopbar.topbar, zone, 0, 0, "topbarButton");
 				topbarBt.setAttribute("tabindex", countButton);
-				createImg("accountContentIco", topbarBt, URLimg, "topbarImg", "menu");
+				var ariaDescription = "menu";
+				if(countButton == 1) {
+					ariaDescription = "Changer utilisateur - profil de";
+				}				
+				createImg("accountContentIco", topbarBt, URLimg, "topbarImg", ariaDescription);
 				createDiv("accountText", topbarBt, text, "topbarText");
 
 				countButton++;

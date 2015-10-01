@@ -24,7 +24,7 @@ getFav = function() {
 			{
 		    	title: "Jardins suspendus de la canopée",
 		    	subtitle: "DES FORÊTS ET DES HOMMES",
-		    	detail: "Emission du 15/07/2015 | 50 min",
+		    	detail: "Emission du 15 Septembre | 50 minutes",
 		    	picture: "media/favoris/favoris_vignette_jardin_suspendu.png"
 		    },
 		    {
@@ -36,13 +36,13 @@ getFav = function() {
 		    {
 		    	title: "Robinsons chouettes - Saison 2 - Episode 59",
 		    	subtitle: "LA CHOUETTE ET CIE",
-		    	detail: "Emission du 17/09/2015 | 07 min",
+		    	detail: "Emission du 17 Septembre | 07 min",
 		    	picture: "media/fav.png"
 		    },
 		    {
 		    	title: "Jt du 20h",
 		    	subtitle: "FRANCE2",
-		    	detail: "Emission du 15/09/2015 | 40 min",
+		    	detail: "Emission du 15 Septembre | 40 min",
 		    	picture: "media/fav.png"
 		    }
 		]

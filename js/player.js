@@ -19,9 +19,12 @@ function playerScreen() {
     	controller: null,
     	audioContext: null,
     	optionSigne: true,
-    	optionDescription: true
+    	optionDescription: true,
+    	optionSub: true
     };
 	
+	var btnPlayPause = null;
+	var isPlaying = null;
 	this.init = function() {
 		if(!this.alreadyInit) {
 			var playerTopBanner = this.playerUI.children[0];
@@ -30,19 +33,19 @@ function playerScreen() {
 			//top bar button
 			var btn = createButton("playerClose", playerTopBanner, "playerClose", 0, 0);
 			btn.setAttribute("tabindex", 1);
-			createImg(null, btn, "media/player/inte_close.png");
+			createImg(null, btn, "media/player/inte_close.png", null, "Fermer");
 			btn = createButton("playerShare", playerTopBanner, "playerShare", 1, 0);
 			btn.setAttribute("tabindex", 2);
-			createImg(null, btn, "media/player/inte_share.png");
+			createImg(null, btn, "media/player/inte_share.png", null, "Partager cette vidéo");
 			btn = createButton("playerSignet", playerTopBanner, "playerSignet", 2, 0);
 			btn.setAttribute("tabindex", 3);
-			createImg(null, btn, "media/player/inte_signet.png");
+			createImg(null, btn, "media/player/inte_signet.png", null, "Mettre un signet");
 			btn = createButton("playerFavorite", playerTopBanner, "playerFavorite", 3, 0);
 			btn.setAttribute("tabindex", 4);
-			createImg(null, btn, "media/favoris/favoris_icone_bloc.png");
+			createImg(null, btn, "media/favoris/favoris_icone_bloc.png", null, "Ajouter aux favoris");
 			btn = createButton("playerSize", playerTopBanner, "playerSize", 4, 0);
 			btn.setAttribute("tabindex", 5);
-			createImg(null, btn, "media/player/inte_exitfullscreen.png");
+			createImg(null, btn, "media/player/inte_exitfullscreen.png", null, "Réduire la taille");
 			
 			var playerOptions = playerBottomBanner.children[0];
 			
@@ -69,16 +72,18 @@ function playerScreen() {
 			// button for trick mode
 			btn = createButton("playerControlRW", playerControlTrickMode, "playerControlRW", 0, 0);
 			btn.setAttribute("tabindex", 10);
-			createImg(null, btn, "media/player/controle_btn_previous.png");
-			btn = createButton("playerControlPlayPause", playerControlTrickMode, "playerControlPlayPause", 1, 0);
-			btn.setAttribute("tabindex", 11);
-			createImg(null, btn, "media/player/controle_btn_play.png");
+			createImg(null, btn, "media/player/controle_btn_previous.png", null, "retour rapide");
+
+			btnPlayPause = createButton("playerControlPlayPause", playerControlTrickMode, "playerControlPlayPause", 1, 0);
+			btnPlayPause.setAttribute("tabindex", 11);
+			createImg(null, btnPlayPause, "media/player/controle_btn_play.png", null, "lecture");
+
 			btn = createButton("playerControlFF", playerControlTrickMode, "playerControlFF", 2, 0);
 			btn.setAttribute("tabindex", 12);
-			createImg(null, btn, "media/player/controle_btn_next.png");
+			createImg(null, btn, "media/player/controle_btn_next.png", null, "avance rapide");
 			btn = createButton("playerControlStop", playerControlTrickMode, "playerControlStop", 3, 0);
 			btn.setAttribute("tabindex", 13);
-			createImg(null, btn, "media/player/controle_btn_stop.png");
+			createImg(null, btn, "media/player/controle_btn_stop.png", null, "stop");
 		
 			//LANCEMENT DU PLAYER ATTENTION CODE TOUCHY
 	        var context = new MediaPlayer.di.Context();
@@ -132,6 +137,14 @@ function playerScreen() {
                 console.debug("# timeupdate,");
                 console.debug("##    delta main vs pip   : "+deltaPip);
                 console.debug("##    delta main vs audio : "+deltaAudio);*/
+            });
+
+
+            this.playerManager.controller.addEventListener('play', function(e) {
+            	myPlayerScreen.onPlay();
+            });
+			this.playerManager.controller.addEventListener('pause', function(e) {
+            	myPlayerScreen.onPause();
             });
 
             /*controller.addEventListener('canplay', function(e) {
@@ -188,6 +201,7 @@ function playerScreen() {
         this.playerManager.playerMain.play();
         this.playerManager.playerPip.play();
         this.playerManager.playerAudio.play();
+        myPlayerScreen.onPlay(); // pas d'évenement lors du play... alors on le force.
 
 		myPlayerScreen.show();
 	};
@@ -202,7 +216,20 @@ function playerScreen() {
 		this.playerScreen.style.display = "none";
 		this.activeScreen = false;
 	};
-	
+
+	this.onPause = function() {
+		console.log("onPause");
+		isPlaying = false;
+		btnPlayPause.children[0].src="media/player/controle_btn_play.png";
+		btnPlayPause.children[0].alt="lecture";
+	}	
+	this.onPlay = function() {
+		console.log("onPlay");
+		isPlaying = true;
+		btnPlayPause.children[0].src="media/player/controle_btn_pause.png";
+		btnPlayPause.children[0].alt="pause";
+	}
+
 	this.validClose = function() {
 		this.playerManager.playerMain.reset();
 		this.playerManager.playerPip.reset();
@@ -252,6 +279,29 @@ function playerScreen() {
             this.playerManager.optionDescription = false;
         }
     };
+	this.validOptionSub = function() {
+        if (!this.playerManager.optionSub) {
+            this.playerManager.optionSub = true;
+        }
+        else {
+            this.playerManager.optionSub = false;
+        }
+	};
+
+
+
+	this.playPause = function() {
+		console.log("playPause : ", isPlaying);
+
+		if(isPlaying == true) {
+			this.playerManager.controller.pause();
+		}
+		else {
+			this.playerManager.controller.play();	
+		}
+		//		this.playerManager.controller.pause();
+
+	}
 	
 	return this;
 };

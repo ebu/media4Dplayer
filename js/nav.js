@@ -30,6 +30,14 @@ move = function(action, event) {
 		case "playerOptionDescription":
 			myPlayer.validOptionDescription();
 			break;
+
+		case "playerControlPlayPause":		
+			myPlayer.playPause();
+			break;
+			
+		case "playerControlRW":
+		case "playerControlFF":
+		case "playerControlStop":
 		case "topbarSearchZone":
 		case "topbarSettingsZone":
 		default:
