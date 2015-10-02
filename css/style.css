@@ -404,6 +404,11 @@ body {
     width: 1548px;
     height: 200px;
     text-align: center;
+
+    font-size: 32pt;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
+
 }
 
 #dashboardLeft
@@ -454,6 +459,11 @@ body {
     left: 0px;
 	width: 880px;
 	height: 80px;
+
+
+    font-size: 14pt;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
 }
 
 #dashboardThemeContent
@@ -481,7 +491,11 @@ body {
     top: 10px;
     left: 0px;
     width: 271px;
-    height: 50px;	
+    height: 50px;
+
+    font-size: 14pt;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';	
 }
 
 #dashboardSocial
@@ -548,6 +562,10 @@ body {
     left: 0px;
     width: 1140px;
     height: 70px;
+
+    font-size: 22pt;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
 }
 
 #dashboardDetails
@@ -575,6 +593,10 @@ body {
     left: 0px;
     width: 1140px;
     height: 200px;
+
+    font-size: 16pt;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
 }
 
 #dashboardResume
@@ -584,6 +606,10 @@ body {
     left: 0px;
     width: 1140px;
     height: 720px;
+
+    font-size: 16pt;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
 }
 
 #dashboardResumeTitle {
@@ -839,3 +865,18 @@ body {
 	width: 170px;
     height: 180px;
 }
+
+
+/*****************\
+* Settings Screen *
+\*****************/
+
+.settingsBackground
+{
+    position: relative;
+    width: 1890px;
+    top: 200px;
+    background-color: #999999;
+
+}
+
