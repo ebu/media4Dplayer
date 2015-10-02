@@ -617,10 +617,10 @@ body {
 
 .pipPlayer {
     position: absolute;
-    top: 38%;
-    right: 0%;
-    width: 128px;
-    height: 128px;
+    top: 27%;
+    right: 1%;
+    width: 400px;
+    height: 300px;
     z-index: 2147483648;
 }
 
@@ -731,7 +731,7 @@ body {
 #playerOptionSigne,
 #playerOptionView,
 #playerOptionSub,
-#playeroptionDescription
+#playerOptionDescription
 {
     position: relative;
     text-align: center;

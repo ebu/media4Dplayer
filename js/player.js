@@ -10,9 +10,9 @@ function playerScreen() {
     this.videoAudio = document.getElementById('videoPlayerAudio');
     
     this.playerManager = {
-    	urlMain: "http://m4dp.ateme.com/M4DP_prod/manifest.mpd",
-    	urlPip: "http://m4dp.ateme.com/M4DP_prod-LSF/manifest-lsf.mpd",
-    	urlAudio: "http://m4dp.ateme.com/M4DP_prod/manifest-audio-only.mpd",
+    	urlMain: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-webvtt.mpd",
+    	urlPip: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-lsf.mpd",
+    	urlAudio: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-ad.mpd",
     	playerMain: null,
     	playerPip: null,
     	playerAudio: null,
@@ -52,19 +52,19 @@ function playerScreen() {
 			//button for accessibility
 			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
 			btn.setAttribute("tabindex", 6);
-			createIconeLSF(btn, 80, 80);
+			createIconeLSF(btn, 120, 120);
 
-			var btn = createButton("playerOptionView", playerOptions, "playerOptionView", 1, 0);
+			var btn = createButton("playerOptionDescription", playerOptions, "playerOptionDescription", 1, 0);
 			btn.setAttribute("tabindex", 7);
-			createIconeAD(btn, 80, 80);
+			createIconeAD(btn, 120, 120);
 
 			var btn = createButton("playerOptionSub", playerOptions, "playerOptionSub", 2, 0);
 			btn.setAttribute("tabindex", 8);
-			createIconeST(btn, 80, 80);
+			createIconeST(btn, 120, 120);
 
-			var btn = createButton("playeroptionDescription", playerOptions, "playerOptionDescription", 3, 0);
+			var btn = createButton("playerOptionView", playerOptions, "playerOptionView", 3, 0);
 			btn.setAttribute("tabindex", 9);
-			createIconeLA(btn, 80, 80);
+			createIconeLA(btn, 120, 120);
 			
 			var playerControls = playerBottomBanner.children[2];
 			var playerControlTrickMode = playerControls.children[1];
@@ -94,15 +94,16 @@ function playerScreen() {
 	       	this.playerManager.playerMain.setAutoPlay(true);
 	       	this.playerManager.playerMain.attachView(this.videoMain);
 	
+
 	        this.playerManager.playerPip = new MediaPlayer(context);
 	        this.playerManager.playerPip.startup();
-	        this.playerManager.playerPip.setAutoPlay(true);
+	        this.playerManager.playerPip.setAutoPlay(false);
 	        this.playerManager.playerPip.attachView(this.videoPip);
 	        //videoPlayerPipMediaElement.style.zIndex = "2147483648"; //pour etre au dessus du 0x7fffffff du player en fullscreen
 	        
 	        this.playerManager.playerAudio = new MediaPlayer(context);
 	        this.playerManager.playerAudio.startup();
-	        this.playerManager.playerAudio.setAutoPlay(true);
+	        this.playerManager.playerAudio.setAutoPlay(false);
 	        this.playerManager.playerAudio.attachView(this.videoAudio);
 	
 	        this.playerManager.controller = new MediaController();
