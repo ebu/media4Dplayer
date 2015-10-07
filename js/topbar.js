@@ -46,12 +46,15 @@ function topbar() {
 		myUser.init();
 		myFav.hide();
 		myDash.hide();
+		mySett.hide();
 		this.hide();
 	};
 	
 	this.validFavorite = function() {
 		myDash.hide();
+		mySett.hide();
 		myFav.init();
+
 	};
 	
 	this.validHome = function() {
@@ -59,7 +62,18 @@ function topbar() {
 		myFav.hide();
 		myDash.hide();
 		this.hide();
+		mySett.hide();
 	};
+
+	this.validSettings = function() {
+		myHome.hide();
+		myFav.hide();
+		myDash.hide();
+		mySett.init();
+		this.show();
+	};
+
+
 	
 	return this;
 };

@@ -84,7 +84,7 @@ function playerScreen() {
 			btn = createButton("playerControlStop", playerControlTrickMode, "playerControlStop", 3, 0);
 			btn.setAttribute("tabindex", 13);
 			createImg(null, btn, "media/player/controle_btn_stop.png", null, "stop");
-		
+
 			//LANCEMENT DU PLAYER ATTENTION CODE TOUCHY
 	        var context = new MediaPlayer.di.Context();
 	       
@@ -194,6 +194,55 @@ function playerScreen() {
 	        */
 			this.alreadyInit = true;
 		}
+
+
+		if(getCookie("LSFPip_position_x") != null) {
+			this.videoPip.style.left = getCookie("LSFPip_position_x") + "%";
+		}
+		if(getCookie("LSFPip_position_y") != null) {
+			this.videoPip.style.top = getCookie("LSFPip_position_y") + "%";
+		}
+		//$(".pipPlayer" ).draggable();
+		$( ".pipPlayer" ).draggable({ 	containment: ".videoPipContainer",
+										scroll:false,
+										stop: function() {
+											console.log("onDrag STOP");
+											$(".videoPipContainer").css("border-style","hidden");
+											$(".pipPlayer").css("border-style","hidden");
+											saveCoordinates();
+										},
+										start: function() {
+											console.log("onDrag START");
+        									$(".videoPipContainer").css("border-style","solid");
+        									$(".pipPlayer").css("border-style","solid");
+      									}
+										});
+
+		function saveCoordinates() {
+
+			var pipTop  = $(".pipPlayer").position().top;
+			var pipLeft = $(".pipPlayer").position().left;
+			var widthContainerString  = $(".videoPipContainer").css("width"); 		// get px here ?!
+			var heightContainerString  = $(".videoPipContainer").css("height");		// get px here ?!
+			var widthContainerPx  = widthContainerString.substring(0,widthContainerString.length-2);
+			var heightContainerPx  = heightContainerString.substring(0,heightContainerString.length-2);
+			
+			var playerScreenWidthString = $("#playerScreen").css("width");
+			var playerScreenWidthPx = playerScreenWidthString.substring(0,playerScreenWidthString.length-2);
+			var playerScreenHeightString = $("#playerScreen").css("height");
+			var playerScreenHeightPx = playerScreenHeightString.substring(0,playerScreenHeightString.length-2);
+
+			var widthPx = (widthContainerPx/100)*playerScreenWidthPx;
+			var heightPx = (heightContainerPx/100)*playerScreenHeightPx;
+
+			var newLeftPercent = (pipLeft/widthContainerPx )*100;
+			var newTopPercent = (pipTop/heightContainerPx)*100;
+
+			console.log("saveCoordinates : (left:"+ newLeftPercent+ ", top:"+newTopPercent);
+
+			setCookie("LSFPip_position_x", newLeftPercent);
+			setCookie("LSFPip_position_y", newTopPercent);
+		}
         
         this.playerManager.playerMain.attachSource(this.playerManager.urlMain);
         this.playerManager.playerPip.attachSource(this.playerManager.urlPip);
@@ -206,6 +255,8 @@ function playerScreen() {
 
 		myPlayerScreen.show();
 	};
+
+
 	
 	this.show = function() {
 		myTopbar.hide();

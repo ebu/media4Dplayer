@@ -645,9 +645,48 @@ body {
     position: absolute;
     top: 27%;
     right: 1%;
-    width: 400px;
-    height: 300px;
+    width: 15%;
+    height: 8%;
+
+    border-style: hidden;
+    border-width: 1px;
+    border-color: #FFFFFF;
+
+    background-color: #FF0000;
     z-index: 2147483648;
+}
+
+.settingsVideoPipLimitScreen {
+    position: absolute;
+    width: 96%;
+    height: 93%;
+    top: 4%;
+    left: 2%;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #FFFFFF;
+
+}
+
+.videoPlayerPip {
+
+    border-style: hidden;
+    border-width: 1px;
+    border-color: #FFFFFF;
+}
+
+.videoPipContainer {
+    position: absolute;
+    width: 96%;
+    height: 93%;
+    top: 4%;
+    left: 2%;
+    border-style: hidden;
+    border-width: 1px;
+    border-color: #FFFFFF;
+
+    z-index: 2147483647;
 }
 
 .audioPlayer {
@@ -874,9 +913,22 @@ body {
 .settingsBackground
 {
     position: relative;
-    width: 1890px;
+    width: 1800px;
+    height: 1200px;
     top: 200px;
+    left: 200px;
     background-color: #999999;
 
 }
+.settingsPipVideo
+{
+    width: 320px;
+    height: 180px;
+    top: 200px;
+    left: 200px;
+    background-color: #000000;
+    border-color: #333333;
+    border-width: 1px;
+}
+
 

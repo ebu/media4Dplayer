@@ -3,6 +3,7 @@ var myHome = new homeScreen();
 var myTopbar = new topbar();
 var myFav = new favoriteScreen();
 var myDash = new dashboardScreen();
+var mySett = new settingsScreen();
 var myPlayer = new playerScreen();
 
 function onLoad() {

@@ -21,6 +21,9 @@ move = function(action, event) {
 		case "topbarHomeZone":
 			myTopbar.validHome();
 			break;
+		case "topbarSettingsZone":
+			myTopbar.validSettings();
+			break;
 		case "playerClose":
 			myPlayer.validClose();
 			break;
@@ -39,7 +42,6 @@ move = function(action, event) {
 		case "playerControlFF":
 		case "playerControlStop":
 		case "topbarSearchZone":
-		case "topbarSettingsZone":
 		default:
 			console.log(selecteur.getAttribute("zone"), "not yet implemented");
 			break;

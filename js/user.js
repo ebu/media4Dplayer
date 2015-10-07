@@ -4,6 +4,9 @@ function userScreen() {
 	this.userSelectScreen = document.getElementById("userSelectScreen");
 	this.userChoiceDom = document.getElementById("userChoice");
 	this.userList = null;
+
+	var versionBuild;
+
 	
 	this.createUser = function() {
 		userButton = function(index, user) {
@@ -27,6 +30,10 @@ function userScreen() {
 		myUserScreen.userList = getUser();
 		myUserScreen.createUser();
 		myUserScreen.show();
+
+		if(versionBuild == null) {
+			versionBuild = createDiv("versionBuild", myUserScreen.userSelectScreen, "v0.3");
+		}
 	};
 	
 	this.show = function() {
