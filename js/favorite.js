@@ -59,6 +59,9 @@ function favoriteScreen() {
 		myFavoriteScreen.cleanPage();
 		myFavoriteScreen.userFavList = getFav();
 		myFavoriteScreen.createFav();
+
+		myFavoriteScreen.setSize(16);
+
 		myFavoriteScreen.show();
 	};
 	
@@ -88,6 +91,25 @@ function favoriteScreen() {
 	this.cleanPage = function() {
 		emptyElem(this.favoriteScreen);
 	};
+
+	// size 
+	this.setSize = function(newSize) {
+		var elementsTab = [	".favInfosTitle",
+							".favInfosDetail",
+							".favInfosSubitle",
+							".favoriteBackgroundTitle"];
+
+		var i;
+		for (i = 0; i < elementsTab.length; i++) { 
+   			myFavoriteScreen.setSizeWithElement(elementsTab[i], newSize);
+		} 
+	}
+	this.setSizeWithElement = function(element, newSize) {
+		$(element).css("font-size", "");
+		if(parseInt($(element).css("font-size"), 10) < newSize) {
+			$(element).css("font-size", newSize+"px");
+		}
+	}
 	
 	return this;
 };

@@ -12,8 +12,25 @@ function settingsScreen() {
 	this.createSettings = function() {
 	}
 
+	function setSize(param) {
+
+	}
+
 	this.init = function() {
 		mySettingsScreen.cleanPage();
+
+		var sizeFontDIV = createDiv("settingsSizeFont", this.settingsScreen, "", "settingsSizeFont");
+		///function createButton(idElement, parent, zone, x, y, style){
+		var sizeFontTiny = createButton("sizeFontTiny", sizeFontDIV, "zoneEnlargeText", 0, 0, "sizeFontTiny");
+		sizeFontTiny.innerHTML = "a";
+		var sizeFontSample = createDiv("settingsSizeFontSample", sizeFontDIV, "", "settingsSizeFontSample");
+		sizeFontSample.innerHTML = "bonjour";
+		var sizeFontBig = createButton("sizeFontBig", sizeFontDIV, "zoneReduceText", 0, 0, "sizeFontBig");
+		sizeFontBig.innerHTML = "A";
+
+		var slideContainer = createDiv("settingsSlideContainer", this.settingsScreen, "", "settingsSlideContainer");
+		slideContainer.innerHTML = '<input class="sizeSlide" type="range" min="16" max="48" value="24" step="8" onchange="mySett.onSizeSlideChangeValue(this.value)"/>'
+
 
 		var videoScreen = createDiv("settingsBackground", this.settingsScreen, "", "settingsBackground");
 		var videoPipLimitScreen = createDiv("settingsVideoPipLimitScreen", videoScreen, "", "settingsVideoPipLimitScreen");
@@ -77,4 +94,9 @@ function settingsScreen() {
 	this.cleanPage = function() {
 		emptyElem(this.settingsScreen);
 	};
+
+	this.onSizeSlideChangeValue = function(newValue) {
+		console.log("onSizeSlideChangeValue: ", newValue);
+		$(".settingsSizeFontSample").css("font-size", newValue+"px");
+	}
 }

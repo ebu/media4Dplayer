@@ -338,20 +338,20 @@ body {
 
 .favoriteInfos .favInfosTitle {
     color: #FF0000;
-    font-size: 30pt;
+    font-size: 40px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
     line-height: 60px;
 
 }
 .favoriteInfos .favInfosSubitle {
-    font-size: 20pt;
+    font-size: 26px;
     color: #000000;
     font-family: 'helveticaNeue-Light';
     line-height: 40px;    
 }
 .favoriteInfos .favInfosDetail {
-    font-size: 20pt;
+    font-size: 26px;
     opacity: 65%;
     color: #000000;
     font-family: 'helveticaNeue-Light';
@@ -405,7 +405,7 @@ body {
     height: 200px;
     text-align: center;
 
-    font-size: 32pt;
+    font-size: 42px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 
@@ -461,7 +461,7 @@ body {
 	height: 80px;
 
 
-    font-size: 14pt;
+    font-size: 19px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -493,7 +493,7 @@ body {
     width: 271px;
     height: 50px;
 
-    font-size: 14pt;
+    font-size: 19px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';	
 }
@@ -563,7 +563,7 @@ body {
     width: 1140px;
     height: 70px;
 
-    font-size: 22pt;
+    font-size: 29px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -594,7 +594,7 @@ body {
     width: 1140px;
     height: 200px;
 
-    font-size: 16pt;
+    font-size: 22px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -607,7 +607,7 @@ body {
     width: 1140px;
     height: 720px;
 
-    font-size: 16pt;
+    font-size: 22px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -645,14 +645,13 @@ body {
     position: absolute;
     top: 27%;
     right: 1%;
-    width: 15%;
-    height: 8%;
+    width: 17%;
+    height: 18%;
 
     border-style: hidden;
     border-width: 1px;
     border-color: #FFFFFF;
 
-    background-color: #FF0000;
     z-index: 2147483648;
 }
 
@@ -918,8 +917,8 @@ body {
     top: 200px;
     left: 200px;
     background-color: #999999;
-
 }
+
 .settingsPipVideo
 {
     width: 320px;
@@ -931,4 +930,69 @@ body {
     border-width: 1px;
 }
 
+.settingsSlideContainer {
+    position: absolute;
+    top: 8%;
+    height: 3%;    
+    width: 25%;
+    left: 44%;
+    background-color: #66dd66;
+}
+
+.sizeSlide {
+    width: 100%;
+    height: 100%;
+}
+
+.settingsSizeFont{
+    position: absolute;
+    top: 140px;
+    left: 20%;
+    width: 20%;
+    height: 3%;
+    background-color: #222222;
+}
+
+.sizeFontTiny {
+    background-color: #FFAAAA;
+    width: 10%;
+    height: 100%;
+    top:0%;
+    left:0%;
+
+    font-size: 25px;
+    color: #000000;
+    font-family: 'helveticaNeue-Medium';
+    text-align: center;
+}
+
+.settingsSizeFontSample {
+    position: absolute;
+    top: 0%;
+    left: 10%;
+    width: 70%;
+    height: 100%;
+
+    background-color: #8888FF;
+
+    font-size: 30px;
+    color: #000000;
+    font-family: 'helveticaNeue-Medium';
+    text-align: center;
+}
+
+.sizeFontBig{
+    right: 0px;
+    position: absolute;
+    top: 0px;
+    width: 20%;
+    height: 100%;
+
+    background-color: #88FF88;
+
+    font-size: 40px;
+    color: #000000;
+    font-family: 'helveticaNeue-Medium';
+    text-align: center;
+}
 
