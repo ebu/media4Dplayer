@@ -32,38 +32,38 @@ function playerScreen() {
 	
 			//top bar button
 			var btn = createButton("playerClose", playerTopBanner, "playerClose", 0, 0);
-			btn.setAttribute("tabindex", 1);
+			btn.setAttribute("tabindex", 11);
 			createImg(null, btn, "media/player/inte_close.png", null, "Fermer");
 			btn = createButton("playerShare", playerTopBanner, "playerShare", 1, 0);
-			btn.setAttribute("tabindex", 2);
+			btn.setAttribute("tabindex", 12);
 			createImg(null, btn, "media/player/inte_share.png", null, "Partager cette vidéo");
 			btn = createButton("playerSignet", playerTopBanner, "playerSignet", 2, 0);
-			btn.setAttribute("tabindex", 3);
+			btn.setAttribute("tabindex", 13);
 			createImg(null, btn, "media/player/inte_signet.png", null, "Mettre un signet");
 			btn = createButton("playerFavorite", playerTopBanner, "playerFavorite", 3, 0);
-			btn.setAttribute("tabindex", 4);
+			btn.setAttribute("tabindex", 14);
 			createImg(null, btn, "media/favoris/favoris_icone_bloc.png", null, "Ajouter aux favoris");
-			btn = createButton("playerSize", playerTopBanner, "playerSize", 4, 0);
-			btn.setAttribute("tabindex", 5);
-			createImg(null, btn, "media/player/inte_exitfullscreen.png", null, "Réduire la taille");
+//			btn = createButton("playerSize", playerTopBanner, "playerSize", 4, 0);
+//			btn.setAttribute("tabindex", 5);
+//			createImg(null, btn, "media/player/inte_exitfullscreen.png", null, "Réduire la taille");
 			
 			var playerOptions = playerBottomBanner.children[0];
 			
 			//button for accessibility
 			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
-			btn.setAttribute("tabindex", 6);
+			btn.setAttribute("tabindex", 21);
 			createIconeLSF(btn, 120, 120);
 
 			var btn = createButton("playerOptionDescription", playerOptions, "playerOptionDescription", 1, 0);
-			btn.setAttribute("tabindex", 7);
+			btn.setAttribute("tabindex", 22);
 			createIconeAD(btn, 120, 120);
 
 			var btn = createButton("playerOptionSub", playerOptions, "playerOptionSub", 2, 0);
-			btn.setAttribute("tabindex", 8);
+			btn.setAttribute("tabindex", 23);
 			createIconeST(btn, 120, 120);
 
 			var btn = createButton("playerOptionView", playerOptions, "playerOptionView", 3, 0);
-			btn.setAttribute("tabindex", 9);
+			btn.setAttribute("tabindex", 24);
 			createIconeLA(btn, 120, 120);
 			
 			var playerControls = playerBottomBanner.children[2];
@@ -71,7 +71,7 @@ function playerScreen() {
 			
 			// button for trick mode
 			btn = createButton("playerControlRW", playerControlTrickMode, "playerControlRW", 0, 0);
-			btn.setAttribute("tabindex", 10);
+			btn.setAttribute("tabindex", 31);
 			createImg(null, btn, "media/player/controle_btn_previous.png", null, "retour rapide");
 
 			btnPlayPause = createButton("playerControlPlayPause", playerControlTrickMode, "playerControlPlayPause", 1, 0);
@@ -79,10 +79,10 @@ function playerScreen() {
 			createImg(null, btnPlayPause, "media/player/controle_btn_play.png", null, "lecture");
 
 			btn = createButton("playerControlFF", playerControlTrickMode, "playerControlFF", 2, 0);
-			btn.setAttribute("tabindex", 12);
+			btn.setAttribute("tabindex", 32);
 			createImg(null, btn, "media/player/controle_btn_next.png", null, "avance rapide");
 			btn = createButton("playerControlStop", playerControlTrickMode, "playerControlStop", 3, 0);
-			btn.setAttribute("tabindex", 13);
+			btn.setAttribute("tabindex", 33);
 			createImg(null, btn, "media/player/controle_btn_stop.png", null, "stop");
 
 			//LANCEMENT DU PLAYER ATTENTION CODE TOUCHY
@@ -254,7 +254,7 @@ function playerScreen() {
 			setCookie("LSFPip_position_x", newLeftPercent);
 			setCookie("LSFPip_position_y", newTopPercent);
 		}
-        
+
         this.playerManager.playerMain.attachSource(this.playerManager.urlMain);
         this.playerManager.playerPip.attachSource(this.playerManager.urlPip);
         this.playerManager.playerAudio.attachSource(this.playerManager.urlAudio);

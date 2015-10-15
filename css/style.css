@@ -685,7 +685,7 @@ body {
     border-width: 1px;
     border-color: #FFFFFF;
 
-    z-index: 2147483647;
+    z-index: 0;
 }
 
 .audioPlayer {
@@ -715,6 +715,7 @@ body {
     left: 0px;
     width: 2160px;
     height: 160px;
+    z-index:100;
 }
 
 #playerBottomBanner
@@ -724,6 +725,7 @@ body {
     left: 0px;
     width: 2160px;
     height: 480px;
+    z-index:100;
 }
 
 #playerTopBanner div
