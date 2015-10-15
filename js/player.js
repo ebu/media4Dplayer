@@ -202,6 +202,17 @@ function playerScreen() {
 		if(getCookie("LSFPip_position_y") != null) {
 			this.videoPip.style.top = getCookie("LSFPip_position_y") + "%";
 		}
+		if(getCookie("LSFPip_size_width") != null) {
+			this.videoPip.style.width = getCookie("LSFPip_size_width") + "%";
+		}
+		if(getCookie("LSFPip_size_height") != null) {
+			this.videoPip.style.height = getCookie("LSFPip_size_height") + "%";
+		}
+
+//style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
+
+
+
 		//$(".pipPlayer" ).draggable();
 		$( ".pipPlayer" ).draggable({ 	containment: ".videoPipContainer",
 										scroll:false,

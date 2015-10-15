@@ -13,6 +13,7 @@ function settingsScreen() {
 	}
 
 	function setSize(param) {
+		console.log("setSize");
 
 	}
 
@@ -39,28 +40,55 @@ function settingsScreen() {
 		var pipLeftPercent = (getCookie("LSFPip_position_x") != null && !isNaN(getCookie("LSFPip_position_x"))) ? getCookie("LSFPip_position_x") : 81;
 		var pipTopPercent = (getCookie("LSFPip_position_y") != null && !isNaN(getCookie("LSFPip_position_y"))) ? getCookie("LSFPip_position_y") : 45;
 
-		var PipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : 320;
-		var PipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : 180;
+		var pipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : 18.63425925925926;
+		var pipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : 16.30824372759857;
 
 		var ret = '';
-		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%;'+'">';
-		ret += '';
-		ret += '	<div class="ui-resizable-handle ui-resizable-e" unselectable="on"></div>';
-		ret += '	<div class="ui-resizable-handle ui-resizable-s" unselectable="on"></div>';
-		ret += '	<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" unselectable="on" style="z-index: 1001;"></div>';
+		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
+		ret += '<div class="ui-icon-gripsmall-center" style="z-index: 1010;"></div>';
 		ret += '</div>';
+
 
 		videoPipLimitScreen.innerHTML = ret;
 
 		$( ".settingsPipVideo" ).draggable({ 	containment: ".settingsVideoPipLimitScreen",
 												scroll:false,
 												stop: function() {
-        											saveCoordinates();
+        											saveLSFCoordinates();
       											}
-      										});
-		//$('.settingsPipVideo').resizable();
+      										}).resizable( {
+      											containment: ".settingsVideoPipLimitScreen",
+      											handles: 'all',
+      											minHeight: 120,
+      											aspectRatio: 16/9,
+      											resize: function() {
+      												mySettingsScreen.updateIconCenterPositionToCenter();
+      											},
+												stop: function() {
+        											saveLSFSize();
+        											saveLSFCoordinates();
+      											}
 
-		function saveCoordinates() {
+      										});
+		$('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
+		$('.ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne');
+		$('.ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw');
+		$('.ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
+
+		function saveLSFSize() {
+			var pipWidth = $(".settingsPipVideo").width();
+			var pipHeight = $(".settingsPipVideo").height();
+			var containerWidth = $(".settingsVideoPipLimitScreen").width();
+			var containerHeight = $(".settingsVideoPipLimitScreen").height();
+
+			var newWidthPercent = (pipWidth/containerWidth)*100;
+			var newHeightPercent = (pipHeight/containerHeight)*100;
+
+			console.log("saveLSFSize :", newWidthPercent, "% et ", newHeightPercent, "%");
+			setCookie("LSFPip_size_width", newWidthPercent);
+			setCookie("LSFPip_size_height", newHeightPercent);
+		}
+		function saveLSFCoordinates() {
 			var pipLeft = $(".settingsPipVideo").position().left;
 			var pipTop = $(".settingsPipVideo").position().top;
 
@@ -72,17 +100,19 @@ function settingsScreen() {
 			var newLeftPercent = (pipLeft/widthContainerPx)*100;
 			var newTopPercent = (pipTop/heightContainerPx)*100;
 
-			console.log("saveCoordinates : (left:"+ newLeftPercent+ ", top:" + newTopPercent);
+			console.log("saveLSFCoordinates : (left:"+ newLeftPercent+ ", top:" + newTopPercent);
 
 			setCookie("LSFPip_position_x", newLeftPercent);
 			setCookie("LSFPip_position_y", newTopPercent);
 		}
 
+		mySettingsScreen.updateIconCenterPositionToCenter();
 		mySettingsScreen.show();
 	};
 	
 	this.show = function() {
 		mySettingsScreen.settingsScreen.style.display = "block";
+		mySettingsScreen.updateIconCenterPositionToCenter();
 		this.activeScreen = true;
 	};
 	
@@ -99,4 +129,14 @@ function settingsScreen() {
 		console.log("onSizeSlideChangeValue: ", newValue);
 		$(".settingsSizeFontSample").css("font-size", newValue+"px");
 	}
+
+	this.updateIconCenterPositionToCenter = function() {
+		console.log("updateIconCenterPositionToCenter");
+		$(".ui-icon-gripsmall-center").css({
+				position:'absolute',
+				left:($(".settingsPipVideo").width() - $(".ui-icon-gripsmall-center").outerWidth()) / 2,
+				top:($(".settingsPipVideo").height() - $(".ui-icon-gripsmall-center").outerHeight()) / 2
+		});
+	}
+
 }

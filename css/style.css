@@ -916,7 +916,7 @@ body {
     height: 1200px;
     top: 200px;
     left: 200px;
-    background-color: #999999;
+    background-color: #000000;
 }
 
 .settingsPipVideo
@@ -925,9 +925,33 @@ body {
     height: 180px;
     top: 200px;
     left: 200px;
-    background-color: #000000;
+    background-color: #777779;
     border-color: #333333;
     border-width: 1px;
+}
+
+.ui-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.ui-icon-gripsmall-center {
+    background-image: url("../media/lsf/lsf_move.png");
+    width: 28px;
+    height: 28px;
+
+}
+.ui-icon-gripsmall-diagonal-sw { 
+    background-image: url("../media/lsf/lsf_size_bg.png");
+}
+.ui-icon-gripsmall-diagonal-nw {
+    background-image: url("../media/lsf/lsf_size_hg.png");
+}
+.ui-icon-gripsmall-diagonal-ne {
+    background-image: url("../media/lsf/lsf_size_hd.png");
+}
+.ui-icon-gripsmall-diagonal-se {
+    background-image: url("../media/lsf/lsf_size_bd.png");
 }
 
 .settingsSlideContainer {
