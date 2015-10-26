@@ -25,6 +25,7 @@ function playerScreen() {
 	
 	var btnPlayPause = null;
 	var isPlaying = null;
+	var currentPipMode = null;
 	this.init = function() {
 		if(!this.alreadyInit) {
 			var playerTopBanner = this.playerUI.children[0];
@@ -90,16 +91,17 @@ function playerScreen() {
 	       
 	       	this.playerManager.playerMain = new MediaPlayer(context);
 	       	this.playerManager.playerMain.startup();
-	        //playerMain.getDebug().setLevel(10);
+	        //this.playerManager.playerMain.getDebug().setLevel(10);
 	       	this.playerManager.playerMain.setAutoPlay(true);
-	       	this.playerManager.playerMain.attachView(this.videoMain);
 	
 
 	        this.playerManager.playerPip = new MediaPlayer(context);
 	        this.playerManager.playerPip.startup();
 	        this.playerManager.playerPip.setAutoPlay(false);
-	        this.playerManager.playerPip.attachView(this.videoPip);
-	        //videoPlayerPipMediaElement.style.zIndex = "2147483648"; //pour etre au dessus du 0x7fffffff du player en fullscreen
+
+			this.playerManager.playerMain.attachView(this.videoMain);
+			this.playerManager.playerPip.attachView(this.videoPip);
+
 	        
 	        this.playerManager.playerAudio = new MediaPlayer(context);
 	        this.playerManager.playerAudio.startup();
@@ -212,8 +214,6 @@ function playerScreen() {
 //style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
 
 
-
-		//$(".pipPlayer" ).draggable();
 		$( ".pipPlayer" ).draggable({ 	containment: ".videoPipContainer",
 										scroll:false,
 										stop: function() {
@@ -255,9 +255,43 @@ function playerScreen() {
 			setCookie("LSFPip_position_y", newTopPercent);
 		}
 
-        this.playerManager.playerMain.attachSource(this.playerManager.urlMain);
-        this.playerManager.playerPip.attachSource(this.playerManager.urlPip);
-        this.playerManager.playerAudio.attachSource(this.playerManager.urlAudio);
+		//JTB
+		if(currentPipMode == null) {
+			currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
+		}
+		console.log("Player - currentPipMode : ", currentPipMode);
+		if(currentPipMode == "PIP_MODE_VIDEO") {
+/*			
+			var pipWidth = $(".pipPlayer").css("width");
+			var pipHeight = $(".pipPlayer").css("height");
+			var pipTop = $(".pipPlayer").css("top");
+			var pipLeft = $(".pipPlayer").css("left");
+			var pipZindex = $(".pipPlayer").css("z-index");
+
+			$(".pipPlayer").css("width", $("#videoPlayerMain").css("width"));
+			$(".pipPlayer").css("height", $("#videoPlayerMain").css("height"));
+			$(".pipPlayer").css("top", $("#videoPlayerMain").position().top);
+			$(".pipPlayer").css("left", $("#videoPlayerMain").position().left);
+			$(".pipPlayer").css("z-index", $("#videoPlayerMain").css("z-index"));
+
+			$("#videoPlayerMain").css("width", pipWidth);
+			$("#videoPlayerMain").css("height", pipHeight);
+			$("#videoPlayerMain").css("top", pipTop);
+			$("#videoPlayerMain").css("left", pipLeft);	
+			$("#videoPlayerMain").css("z-index", pipZindex);	
+*/
+
+			//$("#videoPlayerPip").attr("muted", "false"); // /!\  EFFECT MUTED EVEN "false"
+			this.playerManager.playerMain.attachSource(this.playerManager.urlPip);
+    		this.playerManager.playerPip.attachSource(this.playerManager.urlMain);
+		}
+		else {
+			//$("#videoPlayerPip").attr("muted", "false"); // /!\  EFFECT MUTED EVEN "false"
+			this.playerManager.playerMain.attachSource(this.playerManager.urlMain);
+    		this.playerManager.playerPip.attachSource(this.playerManager.urlPip);
+		}
+
+		this.playerManager.playerAudio.attachSource(this.playerManager.urlAudio);
 
         this.playerManager.playerMain.play();
         this.playerManager.playerPip.play();
