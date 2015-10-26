@@ -12,8 +12,8 @@ function dashboardScreen() {
 		themeButton = function(index, parent, theme) {
 			var themeButton = createButton("theme_" + index, parent, "themeChoice", index, 0, "themeButton");
 			createImg(null, themeButton, theme.picture);
-			createDiv("themeButtonTitle", themeButton, theme.title);
-			createDiv("themeButtonSubtitle", themeButton, theme.subtitle);
+			createDiv("themeButtonTitle", themeButton, theme.title, "themeButtonTitle");
+			createDiv("themeButtonSubtitle", themeButton, theme.subtitle, "themeButtonSubtitle");
 			return themeButton;
 		};
 		
@@ -71,6 +71,11 @@ function dashboardScreen() {
 		mydashboard.cleanPage();
 		mydashboard.contentInfos = getContentDashboard();
 		mydashboard.updateDashboard();
+
+		if(getCookie("settings_min_size") != null) {
+			mydashboard.setSize(getCookie("settings_min_size"));
+		}
+		
 		mydashboard.show();
 	};
 	
@@ -115,6 +120,40 @@ function dashboardScreen() {
 		dashboardResumeTitle.innerHTML = "";
 		dashboardResumeContent.innerHTML = "";
 	};
+
+
+	// size 
+	this.setSize = function(newSize) {
+		var elementsTab = [	
+							".topbarText",
+
+							"#dashboardTopTitle",
+
+							"#dashboardThemeTitle",
+							".themeButtonTitle",
+							".themeButtonSubtitle",
+							
+							"#dahsboardFacebookLike",
+							"#dahsboardTwitterFollower",
+							"#dashboardSubtitle",
+							"#dashboardSynopsis",
+							"#dashboardResumeTitle",
+							"#dashboardResumeContent"
+							];
+
+		var i;
+		for (i = 0; i < elementsTab.length; i++) { 
+   			mydashboard.setSizeWithElement(elementsTab[i], newSize);
+		} 
+	}
+	this.setSizeWithElement = function(element, newSize) {
+		$(element).css("font-size", "");
+		if(parseInt($(element).css("font-size"), 10) < newSize) {
+			$(element).css("font-size", newSize+"px");
+		}
+	}
+
+
 	
 	return this;
 };

@@ -18,6 +18,25 @@
 	font-family: 'helveticaNeue-Thin';
 	src: url('../font/HelveticaNeue-Thin.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'ayuthaya';
+    src: url('../font/Ayuthaya.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Herculanum';
+    src: url('../font/Herculanum.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Georgia';
+    src: url('../font/Georgia.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Times-new-roman';
+    src: url('../font/Times New Roman.ttf') format('truetype');
+}
+
+
+
 
 body {
 	Background-color: #f2f2f2;
@@ -102,8 +121,8 @@ body {
 	top: 0px;
     left: 70px;
 	width : 630px;
-	Height : 30px;
-    Background-color : #C2DBEA;
+	height : 30px;
+    background-color : #C2DBEA;
 }
 
 #splashProgressCursor
@@ -111,8 +130,8 @@ body {
 	position: absolute;
     left: 0px;
 	width : 50px;
-	Height : 30px;
-    Background-color : #005688;
+	height : 30px;
+    background-color : #005688;
 }
 
 /*********************\
@@ -911,13 +930,267 @@ body {
 * Settings Screen *
 \*****************/
 
-.settingsBackground
+#settingsScreen {
+    left: 0px;
+    top: 122px;
+    width: 2160px;
+    height: 1440px;
+}
+
+.settingsContainer {
+    position: relative;
+    left:25%;
+    width: 74%;
+    height: 92%;
+    top: -84%;
+}
+
+.settingsMenu {
+    position: relative;
+    left: 0px;
+    top: 8%;
+    height: 92%;
+    width: 25%;
+    background-color: #E8E8E8;
+}
+
+.settingsMenuButton { 
+    position: relative;
+    top: 30%;
+    left: 0px;
+    height: 5%;
+    width: 85%;
+
+    text-align: left;
+    padding-left: 15%;
+    padding-top: 6%;
+
+    font-size: 32px;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
+
+    background-color: #E8E8E8;
+}
+
+#settingsMenuButtonGeneral { 
+    font-size: 32px;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
+}
+
+#settingsMenuButtonLSF {
+    font-size: 32px;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
+}
+
+.textVoiceControl,
+.textLecture
 {
     position: relative;
-    width: 1800px;
-    height: 1200px;
-    top: 200px;
-    left: 200px;
+    top: 4%;
+    left: 10%;
+
+    font-size: 32px;
+    color: #B1B1B1;
+    font-family: 'helveticaNeue-Regular';
+}
+
+.textVolume,
+.textVitesse,
+.textTimbre
+ {
+    position: relative;
+    top: 5%;
+    left: 10%;
+    font-size: 24px;
+    color: #B1B1B1;
+    font-family: 'helveticaNeue-Regular';
+}
+
+.textCarateresQueLOnTapeContainer
+{
+    position: relative;
+    top: 6%;
+    left: 10%;
+    width: 33%;
+}
+
+.textMotsQueLOnTapeContainer
+{
+    position: relative;
+    top: 11%;
+    left: 10%;
+    width: 33%;
+}
+
+#iconeSwitchOff,
+#iconeSwitchOn {
+    right: 0%;
+    top: 9%;
+    position: absolute;
+}
+
+.textCarateresQueLOnTape,
+.textMotsQueLOnTape
+{
+    position: relative;
+    top: 28%;
+    left: 0%;
+    font-size: 24px;
+    color: #B1B1B1;
+    font-family: 'helveticaNeue-Regular';
+}
+
+.slideVolumeContainer,
+.slideVitesseContainer,
+.slideTimbreContainer {
+    position: relative;
+    width: 32%;
+    height: 5%;
+    top: 5%;
+    left: 10%;
+}
+.slideFontSizeContainer {
+    position: absolute;
+    width: 32%;
+    height: 5%;
+    top: 30%;
+    left: 50%;
+}
+
+.volumeSlide,
+.vitesseSlide,
+.timbreSlide {
+    width: 100%;
+    height: 100%;
+}
+
+.slideRangeVolume,
+.slideRangeVitesse,
+.slideRangeTimbre {
+    position: absolute;
+    left: 15%;
+    top: 26%;
+    width: 68%;
+}
+.slideRangeFontSize {
+    position: absolute;
+    top: -17%;
+    left: 12%;
+    height: 100%;
+    width: 74%;
+}
+
+.activeNarrator {
+    position: relative;
+    top: 10%;
+    left: 10%;
+    width: 32%;
+    height: 10%;
+
+    background-color: #959595;
+}
+.activeNarratorText,
+.activeMagnifyingGlassText {
+    position: relative;
+    top: 38%;
+    left: 40%;
+    width: 62%;
+    height: 70%;
+
+    text-align: left;
+    font-size: 24px;
+    color: #FFFFFF;
+    font-family: 'helveticaNeue-Regular';
+
+}
+.activeMagnifyingGlass {
+    position: relative;
+    top: 0%;
+    left: 50%;
+    width: 32%;
+    height: 10%;
+
+    background-color: #959595;
+}
+#iconeNarrator,
+#iconeMagnifyingGlass
+{
+    top: 12%;
+    left: 10%;
+    position: absolute;
+}
+
+.leftMinus {
+    position: absolute;
+    width: 10%;
+    left: 0%;
+    height: 80%;
+    top:20%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+}
+.rightPlus {
+    position: absolute;
+    width: 10%;
+    height: 80%;
+    top:20%;
+    right:0%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+}
+
+.leftLowercase {
+    position: absolute;
+    width: 10%;
+    left: 0%;
+    height: 80%;
+    top:28%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+}
+.rightUpperCase {
+    position: absolute;
+    width: 10%;
+    height: 80%;
+    top:5%;
+    right:0%;
+
+    text-align: center;
+    font-size: 44px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+}
+
+.textFontSize {
+    position: absolute;
+    top: 24%;
+    left: 50%;
+
+    text-align: left;
+    font-size: 32px;
+    color: #6D6D6D;
+    font-family: 'helveticaNeue-Regular';
+}
+
+
+.settingsVideoBackground
+{
+    position: relative;
+    width: 1400px;
+    height: 787px;
+    top: 38%;
+    left: 6%;
     background-color: #000000;
 }
 
@@ -956,27 +1229,36 @@ body {
     background-image: url("../media/lsf/lsf_size_bd.png");
 }
 
-.settingsSlideContainer {
+.ui-icon-switchVideos {
     position: absolute;
-    top: 8%;
-    height: 3%;    
-    width: 25%;
-    left: 44%;
-    background-color: #66dd66;
+    width: 44px;
+    height: 33px;
+
+    background-color: transparent;
 }
 
-.sizeSlide {
+.settingsSlideContainer {
+    position: absolute;
+    top: 3%;
+    height: 5%;    
+    width: 50%;
+    left: 20%;
+}
+
+.horizontalSizeSlide {
     width: 100%;
     height: 100%;
 }
 
 .settingsSizeFont{
     position: absolute;
-    top: 140px;
+    top: 0%;
     left: 20%;
-    width: 20%;
-    height: 3%;
+    width: 50%;
+    height: 5%;
     background-color: #222222;
+
+    display: none;
 }
 
 .sizeFontTiny {
@@ -995,11 +1277,11 @@ body {
 .settingsSizeFontSample {
     position: absolute;
     top: 0%;
-    left: 10%;
-    width: 70%;
+    left: 0%;
+    width: 100%;
     height: 100%;
 
-    background-color: #8888FF;
+    background-color: #E8E8E8;
 
     font-size: 30px;
     color: #000000;
@@ -1022,3 +1304,195 @@ body {
     text-align: center;
 }
 
+/* settings - sous-titre */
+
+.settingsFontSelection {
+    position: absolute;
+    width: 80%;
+    height: 10%;
+    top: 5%;
+    left: 10%;
+
+    background-color: transparent;
+}
+
+.activeFont {
+    position: absolute;
+    width: 20%;
+    height: 65%;
+    top:35%;
+
+}
+
+.activeTimeNewRomanFont {
+    background-color: transparent;
+    left:0%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+}
+.activeAyuthayaFont {
+    background-color: transparent;
+    left:20%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'ayuthaya';
+}
+.activeHerculanumFont {
+    background-color: transparent;
+    left:40%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'Herculanum';
+}
+.activeHelveticaFont {
+    background-color: transparent;
+    left:60%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+}
+.activeGeorgiaFont {
+    background-color: transparent;
+    left:80%;
+    
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'Georgia';
+}
+
+.settingsFontColorSelection {
+    position: absolute;
+    width: 55%;
+    height: 10%;
+    top: 15%;
+    left: 20%;
+}
+.settingsFontColorSelectionTitle {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    top:0%;
+    left:0%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+}
+.settingsFontColorSelectionCell {
+    float: left;
+    width: 50px;
+    height: 50px;
+
+    margin-left: 45px;
+    margin-top: 50px;
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: #555555;
+}
+.settingsFontColorSelectionCellWhite {
+    background-color: #FFFFFF;
+}
+.settingsFontColorSelectionCellYellow {
+    background-color: #FEBF00;
+}
+.settingsFontColorSelectionCellDarkGrey {
+    background-color: #585858;
+}
+.settingsFontColorSelectionCellGreen {
+    background-color: #599B53;
+}
+.settingsFontColorSelectionCellBlue {
+    background-color: #64D7FF;
+}
+.settingsFontColorSelectionCellPink {
+    background-color: #FD73FF;
+}
+.settingsFontColorSelectionCellRed {
+    background-color: #FD5A58;
+}
+.settingsFontColorSelectionCellGrey {
+    background-color: #AFAFAF;
+}
+.settingsFontColorSelectionCellBlack {
+    background-color: #000000;
+}
+.settingsFontBGColorSelection {
+    position: absolute;
+    width: 35%;
+    height: 10%;
+    top: 25%;
+    left: 30%;
+
+    background-color: transparent;
+}
+.settingsFontBGColorSelectionCell {
+    float: left;
+    width: 80px;
+    height: 50px;
+
+    margin-left: 75px;
+    margin-top: 50px;
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: #555555;
+}
+
+.slideSizeRange {
+    position: absolute;
+    left: 6%;
+    top: 16%;
+    width: 100px;
+    height: 300px;
+    background-color: red;
+}
+.slideLowerCase {
+    position: absolute;
+    top:0%;
+    left:0%;
+    height: 30px;
+    width: 100%;
+
+    text-align: center;
+    font-size: 24px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+
+    background-color: green;
+}
+.slideUpperCase {
+    position: absolute;
+    bottom:0%;
+    left:0%;
+    height: 50px;
+    width: 100%;
+
+    text-align: center;
+    font-size: 44px;
+    color: #959595;
+    font-family: 'helveticaNeue-Regular';
+
+    background-color: orange;
+
+}
+.slideSizeContainer {
+    position: absolute;
+    background-color: transparent;
+    top: 25px;
+    width: 9%;
+    height: 67%;
+    left: 50%;
+
+}

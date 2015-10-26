@@ -913,4 +913,139 @@ function createIconeLA(parent, width, height) {
 }
 
 
+//****************************
+//  Settings - narrator
+//****************************
 
+function createIconeNarrator(parent, width, height) {
+	var icone = createDiv("iconeNarrator", parent, null, null);
+	var ret = '';
+	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
+	ret += '	 height="'+height+'px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">';
+	ret += '<style type="text/css">';
+	ret += '<![CDATA[';
+	ret += '	.iconeNarrator_st0{fill:#FFFFFF;}';
+	ret += ']]>';
+	ret += '</style>';
+	ret += '<g>';
+	ret += '	<g>';
+	ret += '		<path class="iconeNarrator_st0" d="M50,1C22.7,1.2,0.8,23.3,1,50.3C1.2,77.1,23.1,99,50,99h0.3c13.1-0.1,25.4-5.2,34.5-14.6';
+	ret += '			C94,75.1,99.1,62.8,99,49.7C98.8,22.9,76.9,1,50,1z M80.2,79.9c-7.9,8.1-18.6,12.5-29.9,12.6H50c-23.2,0-42.2-18.9-42.3-42.1';
+	ret += '			C7.5,26.9,26.4,7.9,49.8,7.7c23.5,0,42.5,18.9,42.7,42.1C92.5,61.1,88.1,71.8,80.2,79.9z M50,23.7c-1.6,0-2.9,1.3-2.9,2.9v46.7';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9s2.9-1.3,2.9-2.9V26.6C52.9,25,51.6,23.7,50,23.7z M58.8,32.9c-1.6,0-2.9,1.3-2.9,2.9v28.3';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9V35.9C61.8,34.2,60.4,32.9,58.8,32.9z M67.5,38.5c-1.6,0-2.9,1.3-2.9,2.9v17.2';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9V41.4C70.5,39.8,69.2,38.5,67.5,38.5z M76.3,31.2c-1.6,0-2.9,1.3-2.9,2.9v31.7';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9V34.1C79.3,32.5,78,31.2,76.3,31.2z M85.2,42.2c-1.6,0-2.9,1.3-2.9,2.9v9.7';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9v-9.7C88.1,43.5,86.7,42.2,85.2,42.2z M41.2,19.6c-1.6,0-2.9,1.3-2.9,2.9v54.9';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9V22.6C44.1,21,42.8,19.6,41.2,19.6z M32.5,29.8c-1.6,0-2.9,1.3-2.9,2.9v34.5';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9V32.7C35.4,31.1,34.1,29.8,32.5,29.8z M23.7,42.2c-1.6,0-2.9,1.3-2.9,2.9v9.7';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9v-9.7C26.6,43.5,25.3,42.2,23.7,42.2z M14.8,40.7c-1.6,0-2.9,1.3-2.9,2.9v12.7';
+	ret += '			c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9V43.6C17.8,42,16.5,40.7,14.8,40.7z"/>';
+	ret += '	</g>';
+	ret += '</g>';
+	ret += '</svg>';
+
+	icone.innerHTML = ret;
+	return icone;
+}
+
+
+function createIconeMagnifyingGlass(parent, width, height) {
+	var icone = createDiv("iconeMagnifyingGlass", parent, null, null);
+	var ret = '';
+	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
+	ret += '	 height="'+height+'px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">';
+	ret += '<style type="text/css">';
+	ret += '<![CDATA[';
+	ret += '	.IconeMagnifyingGlass_st0{fill:#FFFFFF;}';
+	ret += ']]>';
+	ret += '</style>';
+	ret += '<g>';
+	ret += '	<g>';
+	ret += '		<path class="IconeMagnifyingGlass_st0" d="M89.8,10.2c-12.3-12.3-32.1-12.3-44.4,0c-11.3,11.3-12.2,29.1-2.6,41.4l-8.5,8.5h-5.5L1,87.9L12.1,99';
+	ret += '			l27.7-27.8v-5.5l8.5-8.5c12.3,9.6,30.1,8.7,41.4-2.6C102.1,42.3,102.1,22.5,89.8,10.2z M84.2,49c-9.2,9.2-24.1,9.2-33.3,0';
+	ret += '			c-9.2-9.2-9.2-24.1,0-33.3c9.2-9.2,24.1-9.2,33.3,0C93.4,24.9,93.4,39.8,84.2,49z M70,18.7h-5.8v12.8H51.9v5.5h12.3V50H70V37.1';
+	ret += '			h12.3v-5.5H70V18.7z"/>';
+	ret += '	</g>';
+	ret += '</g>';
+	ret += '</svg>';
+
+
+	icone.innerHTML = ret;
+	return icone;
+}
+
+
+function createIconeSwitchOff(parent, width, height) {
+	var icone = createDiv("iconeSwitchOff", parent, null, null);
+	var ret = '';
+	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
+	ret += '	 height="'+height+'px" viewBox="0 0 100 60" style="enable-background:new 0 0 100 60;" xml:space="preserve">';
+	ret += '<style type="text/css">';
+	ret += '<![CDATA[';
+	ret += '	.SwitchOff_st0{fill:#C9C8C8;}';
+	ret += '	.SwitchOff_st1{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}';
+	ret += ']]>';
+	ret += '</style>';
+	ret += '<g id="off">';
+	ret += '	<path class="SwitchOff_st0" d="M30,1h39.9c16,0,29,13,29,29c0,16-13,29-29,29H30c-16,0-29-13-29-29C1,14,14,1,30,1z"/>';
+	ret += '	<path class="SwitchOff_st1" d="M30,1.9c15.5,0,28,12.5,28,28s-12.5,28-28,28c-15.5,0-28-12.5-28-28S14.6,1.9,30,1.9z"/>';
+	ret += '</g>';
+	ret += '<g id="Reperes">';
+	ret += '</g>';
+	ret += '</svg>';
+
+
+	icone.innerHTML = ret;
+	return icone;
+}
+
+
+function createIconeSwitchOn(parent, width, height) {
+	var icone = createDiv("iconeSwitchOn", parent, null, null);
+	var ret = '';
+	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
+	ret += '	 height="'+height+'px" viewBox="0 0 100 60" style="enable-background:new 0 0 100 60;" xml:space="preserve">';
+	ret += '<style type="text/css">';
+	ret += '<![CDATA[';
+	ret += '	.SwitchOn_st0{fill:#525151;}';
+	ret += '	.SwitchOn_st1{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}';
+	ret += ']]>';
+	ret += '</style>';
+	ret += '<g id="On">';
+	ret += '	<path class="SwitchOn_st0" d="M30,1h39.9c16,0,29,13,29,29c0,16-13,29-29,29H30c-16,0-29-13-29-29C1,14,14,1,30,1z"/>';
+	ret += '	<path class="SwitchOn_st1" d="M70,1.9c15.5,0,28,12.5,28,28s-12.5,28-28,28s-28-12.5-28-28S54.6,1.9,70,1.9z"/>';
+	ret += '</g>';
+	ret += '<g id="Reperes">';
+	ret += '</g>';
+	ret += '</svg>';
+
+	icone.innerHTML = ret;
+	return icone;
+}
+
+
+function createIconeSwitchVideos(parent, width, height) {
+	var icone = createDiv("iconeSwitchVideos", parent, null, null);
+	icone.innerHTML = createIconeSwitchVideosSVGBalise(width, height);
+	return icone;
+}
+function createIconeSwitchVideosSVGBalise(width, height) {
+	var ret = '';
+	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
+	ret += '	 height="'+height+'px" viewBox="0 0 44 33" style="enable-background:new 0 0 44 33;" xml:space="preserve">';
+	ret += '<style type="text/css">';
+	ret += '<![CDATA[';
+	ret += '	.iconeSwitchVideos_st0{fill:#4F4F4F;}';
+	ret += ']]>';
+	ret += '</style>';
+	ret += '<g>';
+	ret += '	<polygon class="iconeSwitchVideos_st0" points="5.9,8 5.9,13.7 13.4,8 	"/>';
+	ret += '	<polygon class="iconeSwitchVideos_st0" points="30.6,22 38.1,22 38.1,16.3 	"/>';
+	ret += '	<polygon class="iconeSwitchVideos_st0" points="15.4,15 15.4,8 1.8,18.5 15.4,29 15.4,22 27.4,22 27.4,15 27.4,15 	"/>';
+	ret += '	<polygon class="iconeSwitchVideos_st0" points="28.6,1 28.6,8 16.6,8 16.6,13.8 28.6,13.8 28.6,22 42.2,11.5 	"/>';
+	ret += '</g>';
+	ret += '</svg>';
+
+	return ret;
+}

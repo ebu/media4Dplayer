@@ -60,8 +60,10 @@ function favoriteScreen() {
 		myFavoriteScreen.userFavList = getFav();
 		myFavoriteScreen.createFav();
 
-		myFavoriteScreen.setSize(16);
-
+		if(getCookie("settings_min_size") != null) {
+			myFavoriteScreen.setSize(getCookie("settings_min_size"));
+		}
+		
 		myFavoriteScreen.show();
 	};
 	
@@ -97,7 +99,9 @@ function favoriteScreen() {
 		var elementsTab = [	".favInfosTitle",
 							".favInfosDetail",
 							".favInfosSubitle",
-							".favoriteBackgroundTitle"];
+							"#favoriteBackgroundTitle",
+							".topbarText"
+							];
 
 		var i;
 		for (i = 0; i < elementsTab.length; i++) { 
