@@ -146,7 +146,7 @@ function settingsScreen() {
 		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
 		ret += '<div class="ui-icon-gripsmall-center" style="z-index: 1010;"></div>';
 		ret += '<div id="ui-icon-switchVideos" zone="settingsSwitchVideos" class="ui-icon-switchVideos" style="z-index: 1011;" onMouseOver="moveSelecteur(\'ui-icon-switchVideos\')" onFocus="moveSelecteur(\'ui-icon-switchVideos\')" onClick="move(\'enter\')">';
-		ret += createIconeSwitchVideosSVGBalise(44, 33);
+		ret += 
 		ret += '</div>';
 		ret += '</div>';
 		videoPipLimitScreen.innerHTML = ret;

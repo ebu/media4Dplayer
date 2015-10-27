@@ -26,6 +26,7 @@ function playerScreen() {
 	var btnPlayPause = null;
 	var isPlaying = null;
 	var currentPipMode = null;
+	var pipControlTimeout = null;
 	this.init = function() {
 		if(!this.alreadyInit) {
 			var playerTopBanner = this.playerUI.children[0];
@@ -199,40 +200,64 @@ function playerScreen() {
 
 
 		if(getCookie("LSFPip_position_x") != null) {
-			this.videoPip.style.left = getCookie("LSFPip_position_x") + "%";
+			$(".pipVideo").css("left", getCookie("LSFPip_position_x") + "%" );
 		}
 		if(getCookie("LSFPip_position_y") != null) {
-			this.videoPip.style.top = getCookie("LSFPip_position_y") + "%";
+			$(".pipVideo").css("top", getCookie("LSFPip_position_y") + "%" );
 		}
 		if(getCookie("LSFPip_size_width") != null) {
-			this.videoPip.style.width = getCookie("LSFPip_size_width") + "%";
+			$(".pipVideo").css("width", getCookie("LSFPip_size_width") + "%" );
 		}
 		if(getCookie("LSFPip_size_height") != null) {
-			this.videoPip.style.height = getCookie("LSFPip_size_height") + "%";
+			$(".pipVideo").css("height", getCookie("LSFPip_size_height") + "%" );
 		}
 
 //style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
 
 
-		$( ".pipPlayer" ).draggable({ 	containment: ".videoPipContainer",
+		$( ".pipVideo" ).draggable({ 	containment: ".videoPipContainer",
 										scroll:false,
+										handle:".ui-icon-gripsmall-center",
 										stop: function() {
 											console.log("onDrag STOP");
-											$(".videoPipContainer").css("border-style","hidden");
-											$(".pipPlayer").css("border-style","hidden");
+											appearPipControls()
 											saveCoordinates();
 										},
 										start: function() {
 											console.log("onDrag START");
+											clearInterval(pipControlTimeout);
         									$(".videoPipContainer").css("border-style","solid");
-        									$(".pipPlayer").css("border-style","solid");
+        									$(".pipVideo").css("border-style","solid");
       									}
-										});
+										})
+						.resizable({
+										containment: ".videoPipContainer",
+										handles: 'all',
+										minHeight: 120,
+										aspectRatio: 16/9,
+										resize: function() {
+											myPlayerScreen.updateIconsPip();
+										},
+										stop: function() {
+											saveLSFSize();
+											saveLSFCoordinates();
+										}
+									})
+						.click( function() {
+							console.log("onClick .pipVideo !!");
+							appearPipControls();
+						});
+
+		$('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
+		$('.ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne');
+		$('.ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw');
+		$('.ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
+		$(".ui-icon").css("display", "none");
 
 		function saveCoordinates() {
 
-			var pipTop  = $(".pipPlayer").position().top;
-			var pipLeft = $(".pipPlayer").position().left;
+			var pipTop  = $(".pipVideo").position().top;
+			var pipLeft = $(".pipVideo").position().left;
 			var widthContainerString  = $(".videoPipContainer").css("width"); 		// get px here ?!
 			var heightContainerString  = $(".videoPipContainer").css("height");		// get px here ?!
 			var widthContainerPx  = widthContainerString.substring(0,widthContainerString.length-2);
@@ -254,6 +279,29 @@ function playerScreen() {
 			setCookie("LSFPip_position_x", newLeftPercent);
 			setCookie("LSFPip_position_y", newTopPercent);
 		}
+		function saveLSFSize() {
+			console.log("!! saveLSFSize TODO !!");
+		}
+
+		function appearPipControls() {
+			console.log("appearPipControls");
+			if(pipControlTimeout != null) clearInterval(pipControlTimeout);
+			pipControlTimeout = setTimeout(disappearPipControls, 3 *1000);
+
+			myPlayerScreen.updateIconsPip(); //debug
+
+			$(".videoPipContainer").css("border-style","solid");
+			$(".pipVideo").css("border-style","solid");
+			$(".ui-icon").css("display", "block");
+		}
+
+		function disappearPipControls() {
+			console.log("disappearPipControls");
+
+			$(".videoPipContainer").css("border-style","hidden");
+			$(".pipVideo").css("border-style","hidden");
+			$(".ui-icon").css("display", "none");
+		}
 
 		//JTB
 		if(currentPipMode == null) {
@@ -262,17 +310,17 @@ function playerScreen() {
 		console.log("Player - currentPipMode : ", currentPipMode);
 		if(currentPipMode == "PIP_MODE_VIDEO") {
 /*			
-			var pipWidth = $(".pipPlayer").css("width");
-			var pipHeight = $(".pipPlayer").css("height");
-			var pipTop = $(".pipPlayer").css("top");
-			var pipLeft = $(".pipPlayer").css("left");
-			var pipZindex = $(".pipPlayer").css("z-index");
+			var pipWidth = $(".pipVideo").css("width");
+			var pipHeight = $(".pipVideo").css("height");
+			var pipTop = $(".pipVideo").css("top");
+			var pipLeft = $(".pipVideo").css("left");
+			var pipZindex = $(".pipVideo").css("z-index");
 
-			$(".pipPlayer").css("width", $("#videoPlayerMain").css("width"));
-			$(".pipPlayer").css("height", $("#videoPlayerMain").css("height"));
-			$(".pipPlayer").css("top", $("#videoPlayerMain").position().top);
-			$(".pipPlayer").css("left", $("#videoPlayerMain").position().left);
-			$(".pipPlayer").css("z-index", $("#videoPlayerMain").css("z-index"));
+			$(".pipVideo").css("width", $("#videoPlayerMain").css("width"));
+			$(".pipVideo").css("height", $("#videoPlayerMain").css("height"));
+			$(".pipVideo").css("top", $("#videoPlayerMain").position().top);
+			$(".pipVideo").css("left", $("#videoPlayerMain").position().left);
+			$(".pipVideo").css("z-index", $("#videoPlayerMain").css("z-index"));
 
 			$("#videoPlayerMain").css("width", pipWidth);
 			$("#videoPlayerMain").css("height", pipHeight);
@@ -298,6 +346,8 @@ function playerScreen() {
         this.playerManager.playerAudio.play();
         myPlayerScreen.onPlay(); // pas d'évenement lors du play... alors on le force.
 
+
+        myPlayerScreen.updateIconsPip();
 		myPlayerScreen.show();
 	};
 
@@ -385,8 +435,6 @@ function playerScreen() {
         }
 	};
 
-
-
 	this.playPause = function() {
 		console.log("playPause : ", isPlaying);
 
@@ -398,6 +446,31 @@ function playerScreen() {
 		}
 		//		this.playerManager.controller.pause();
 
+	}
+
+
+	this.updateIconsPip = function() {
+		this.updateIconCenterPositionToCenter();
+		this.updateIconSwitchPositionToTopCenter();
+	}
+
+	this.updateIconSwitchPositionToTopCenter = function() {
+		console.log("updateIconSwitchPositionToTopCenter");
+/*
+		$(".ui-icon-switchVideos").css({
+			position:'absolute',
+			top:'-30px',
+			left:($(".settingsPipVideo").width() - $(".ui-icon-switchVideos").outerWidth()) / 2
+		});
+*/
+	}
+	this.updateIconCenterPositionToCenter = function() {
+		console.log("updateIconCenterPositionToCenter");
+		$(".ui-icon-gripsmall-center").css({
+			position:'absolute',
+			left:($(".pipVideo").width() - $(".ui-icon-gripsmall-center").outerWidth()) / 2,
+			top:($(".pipVideo").height() - $(".ui-icon-gripsmall-center").outerHeight()) / 2
+		});
 	}
 	
 	return this;

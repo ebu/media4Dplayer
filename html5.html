@@ -8,6 +8,7 @@
 	<link type="text/css" rel="stylesheet" href="js/lib/jquery-ui.css" />
 </head>
 <body>
+	<script language="javascript" type="text/javascript" src="js/svgCollection.js"></script>
 	<div id="splashscreen">
 		<img id="splashLogo" src="media/logo.png" alt=""></img>
 		<div id="splashLoader">
@@ -64,8 +65,20 @@
 				</div>
 			</div>
 			<div id="pipContainer" class="player videoPipContainer">
-			<video id="videoPlayerPip" class="player pipPlayer" autoplay></video>
-		</div>
+				<div id="pipVideo" class="pipVideo ui-draggable ui-resizable">
+					<video id="videoPlayerPip" class="player pipPlayer" autoplay></video>
+					<div class="ui-icon ui-icon-gripsmall-center" style="width:60px;height:60px;z-index: 1010;"></div>
+					<div id="ui-icon-switchVideos" zone="settingsSwitchVideos" class="ui-icon-switchVideos" style="z-index: 1011;"
+							onMouseOver="moveSelecteur(\'ui-icon-switchVideos\')"
+							onFocus="moveSelecteur(\'ui-icon-switchVideos\')"
+							onClick="move(\'enter\')">
+							<script language="javascript" type="text/javascript">
+								createIconeSwitchVideosSVGBalise(44, 33);
+							</script>
+					</div>
+
+				</div>
+			</div>
 
 		</div>
 	</div>
@@ -96,6 +109,5 @@
 <script language="javascript" type="text/javascript" src="js/player.js"></script>
 <script language="javascript" type="text/javascript" src="js/nav.js"></script>
 <script language="javascript" type="text/javascript" src="js/topbar.js"></script>
-<script language="javascript" type="text/javascript" src="js/svgCollection.js"></script>
 <script language="javascript" type="text/javascript" src="js/main.js"></script>
 </html>
