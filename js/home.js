@@ -45,8 +45,9 @@ function homeScreen() {
 	};
 	
 	this.validVideo = function() {
-		myFav.init();
 		myTopbar.init();
+		//myFav.init();
+		myTopbar.validFavorite();
 		
 		this.hide();
 	};

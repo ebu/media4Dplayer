@@ -4,9 +4,9 @@ function topbar() {
 	this.alreadyInit = false;
 	this.topbar = document.getElementById("topbar");
 
+	var countButton = 1;
 	this.init = function() {
 		if(!this.alreadyInit) {
-			var countButton = 1;
 			var createTopbarButton = function(text, URLimg, zone) {
 				var topbarBt = createButton("topbarButton_"+countButton, myTopbar.topbar, zone, 0, 0, "topbarButton");
 				topbarBt.setAttribute("tabindex", countButton);
@@ -43,6 +43,7 @@ function topbar() {
 	};
 
 	this.validAccount = function() {
+		myTopbar.selectButton(1);
 		myUser.init();
 		myFav.hide();
 		myDash.hide();
@@ -51,6 +52,7 @@ function topbar() {
 	};
 	
 	this.validFavorite = function() {
+		myTopbar.selectButton(3);
 		myDash.hide();
 		mySett.hide();
 		myFav.init();
@@ -58,6 +60,7 @@ function topbar() {
 	};
 	
 	this.validHome = function() {
+		myTopbar.selectButton(4);
 		myHome.init();
 		myFav.hide();
 		myDash.hide();
@@ -66,12 +69,23 @@ function topbar() {
 	};
 
 	this.validSettings = function() {
+		myTopbar.selectButton(2);
 		myHome.hide();
 		myFav.hide();
 		myDash.hide();
 		mySett.init();
 		this.show();
 	};
+
+	this.selectButton = function(index) {
+		console.log("Topbar - selectButton");
+		var i;
+		for (i = 1 ; i < countButton; i++) {
+			$("#topbarButton_"+i).css("background-color", "transparent");
+		}
+
+		$("#topbarButton_"+index).css("background-color", "#C8C8C8");
+	}
 
 
 	
