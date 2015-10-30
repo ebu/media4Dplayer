@@ -6,6 +6,14 @@ move = function(action, event) {
 		case "homeMenu":
 			myHome.validVideo();
 			break;
+
+		case "homeMenuComingSoon":
+			myComingSoon.displayScreenFrom(myHome);
+			break;
+		case "comingSoonBackBT":
+			myComingSoon.backToPreviousScreen();
+			break;
+
 		case "favoriteChoice":
 			myFav.validFavorite();
 			break;

@@ -77,6 +77,35 @@ body {
     display: none;
 }
 
+/*************\
+* coming soon *
+\*************/
+#comingSoonTitle
+{
+    text-align: center;
+    top: 400px;
+    position: relative;
+
+    font-size: 40px;
+    color: #AAAAAA;
+    font-family: 'helveticaNeue-Regular';
+    line-height: 60px;
+}
+#comingSoonBackBT
+{
+    position: relative;
+    top: 450px;
+
+    text-align: center;
+    font-size: 30px;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
+    line-height: 60px;
+}
+    
+
+
+
 /**************\
 * splashscreen *
 \**************/

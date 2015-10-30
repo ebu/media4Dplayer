@@ -5,6 +5,7 @@ var myFav = new favoriteScreen();
 var myDash = new dashboardScreen();
 var mySett = new settingsScreen();
 var myPlayer = new playerScreen();
+var myComingSoon = new comingSoonScreen();
 
 function onLoad() {
 	document.addEventListener("keydown", handleKey, false);

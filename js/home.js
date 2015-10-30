@@ -10,7 +10,7 @@ function homeScreen() {
 			menuButton.style.margin = "0px 25px 25px 0px";
 			menuButton.setAttribute("tabindex", 5);
 			createImg(null, menuButton, "media/home/baddp.png", null, "Appplication BABDP");
-			menuButton = createButton("homePluzz", myHomeScreen.homeScreen, "homeMenu", 1, 0, "menuButton homePluzz");
+			menuButton = createButton("homePluzz", myHomeScreen.homeScreen, "homeMenuComingSoon", 1, 0, "menuButton homePluzz");
 			menuButton.style.margin = "0px 0px 25px 0px";
 			menuButton.setAttribute("tabindex", 6);
 			createImg(null, menuButton, "media/home/pluzz.png", null, "Appplication Pluzz");
@@ -25,16 +25,16 @@ function homeScreen() {
 			menuButton.setAttribute("tabindex", 6);
 			createImg(null, menuButton, "", null, "Lecture de la vidéo : La chouette et la compagnie");
 */
-			menuButton = createButton("homeLeSite", myHomeScreen.homeScreen, "homeMenu", 0, 1, "menuButton");
+			menuButton = createButton("homeLeSite", myHomeScreen.homeScreen, "homeMenuComingSoon", 0, 1, "menuButton");
 			menuButton.style.margin = "425px 0px 0px -825px";
 			menuButton.setAttribute("tabindex", 7);
 			createImg(null, menuButton, "media/home/lesitetv.png", null, "Section lesite.tv");
-			menuButton = createButton("homeMediatheque", myHomeScreen.homeScreen, "homeMenu", 1, 1, "menuButton");
+			menuButton = createButton("homeMediatheque", myHomeScreen.homeScreen, "homeMenuComingSoon", 1, 1, "menuButton");
 			menuButton.style.margin = "425px 0px 0px -400px";
 			menuButton.setAttribute("tabindex", 8);
 			createImg(null, menuButton, "media/home/media.png", null, "Médiathèque");
 
-			myHomeScreen.homeScreen.style.padding = "200px 0px 0px 500px";
+			myHomeScreen.homeScreen.style.padding = "200px 0px 0px 500px"
 			
 			this.alreadyInit = true;
 		}
