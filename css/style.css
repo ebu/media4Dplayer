@@ -9,7 +9,7 @@
 @font-face {
 	font-family: 'helveticaNeue-Medium';
 	src: url('../font/HelveticaNeue-Medium.ttf') format('truetype');
-}
+}x
 @font-face {
 	font-family: 'helveticaNeue-Regular';
 	src: url('../font/HelveticaNeue-Regular.ttf') format('truetype');
@@ -36,10 +36,8 @@
 }
 
 
-
-
 body {
-	Background-color: #f2f2f2;
+	background-color: #f2f2f2;
 }
 
 /*********\
@@ -184,11 +182,41 @@ body {
 .menuButton
 {
 	position: relative;
-    top: 112px;
-    left: 136px;
-    width: 904px;
-    height: 568px;
+    top: 100px;
+    left: 100px;
+    width: 400px;
+    height: 400px;
     float: left;
+
+    font-size: 49px;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';
+
+    background-color: #c9c9c9;
+}
+.doubleMenuButton {
+    position: relative;
+    top: 100px;
+    left: 100px;
+    width: 820px;
+    height: 400px;
+    float: left;
+
+    background-color: #c9c9c9;
+
+    font-size: 19px;
+    color: #000000;
+    font-family: 'helveticaNeue-Regular';   
+
+}
+
+#homeBabdp {
+}
+#homePluzz {
+}
+#homeLeSite {
+}
+#homeMediatheque {
 }
 
 /*********\
