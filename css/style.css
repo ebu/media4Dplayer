@@ -102,9 +102,6 @@ body {
     font-family: 'helveticaNeue-Regular';
     line-height: 60px;
 }
-    
-
-
 
 /**************\
 * splashscreen *
@@ -729,10 +726,6 @@ body {
     border-color: #FFFFFF;
 
     z-index: 1000;
-
-    background-color: pink;
-    opacity: 0.5;
-  
 }
 
 .pipPlayer {
@@ -741,10 +734,6 @@ body {
     left: 0%;
     width: 100%;
     height: 100%;
-
-    background-color: red;
-    opacity: 0.5;
-
 }
 
 .settingsVideoPipLimitScreen {
@@ -1531,7 +1520,7 @@ body {
     top: 16%;
     width: 100px;
     height: 300px;
-    background-color: red;
+    background-color: transparent;
 }
 .slideLowerCase {
     position: absolute;
@@ -1545,7 +1534,7 @@ body {
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 
-    background-color: green;
+    background-color: transparent;
 }
 .slideUpperCase {
     position: absolute;
@@ -1559,7 +1548,7 @@ body {
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 
-    background-color: orange;
+    background-color: transparent;
 
 }
 .slideSizeContainer {
