@@ -2,6 +2,12 @@ getUser = function() {
 	var userList = {
 		user: [
 			{
+		    	name: "invité",
+		    	picture: "media/avatar/avatar_homme_1.png"
+		    },
+
+/*		
+			{
 		    	name: "Jean-Cristophe",
 		    	picture: "media/avatar/avatar_homme_1.png"
 		    },
@@ -13,6 +19,7 @@ getUser = function() {
 		    	name: "Nicolas",
 		    	picture: "media/avatar/avatar_homme_2.png"
 		    }
+*/		    
 		]
 	};
 	return userList;

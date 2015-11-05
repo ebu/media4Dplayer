@@ -34,7 +34,7 @@ function homeScreen() {
 			menuButton.setAttribute("tabindex", 8);
 			createImg(null, menuButton, "media/home/media.png", null, "Médiathèque");
 
-			myHomeScreen.homeScreen.style.padding = "200px 0px 0px 500px"
+			//myHomeScreen.homeScreen.style.padding = "0px 0px 0px 0px"
 			
 			this.alreadyInit = true;
 		}

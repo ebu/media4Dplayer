@@ -20,6 +20,7 @@ function dashboardScreen() {
 		var dashboardBack = this.dashboardTop.children[0];
 		var dashboardTitle = this.dashboardTop.children[1];
 
+
 		//title
 		dashboardTitle.innerHTML = mydashboard.contentInfos.title;
 		
@@ -65,6 +66,8 @@ function dashboardScreen() {
 		dashboardSynopsis.innerHTML = mydashboard.contentInfos.synopsis;
 		dashboardResumeTitle.innerHTML = language.fr.resumeTitle;
 		dashboardResumeContent.innerHTML = mydashboard.contentInfos.resume;
+
+		createButton("textHelperOnTitle", dashboardTitle, "displayTextHelper", 0, 0, "textHelperButton");
 	};
 	
 	this.init = function() {

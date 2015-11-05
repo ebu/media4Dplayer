@@ -110,11 +110,21 @@ move = function(action, event) {
 			mySett.settingsSwitchVideos();
 			break;
 
+		case "displayTextHelper":
+			myTextHelper.displayTextHelperWithText();
+			break;
+		case "closeTextHelper":
+			myTextHelper.hide();
+			break;
+
+		case "topbarSearchZone":
+			myComingSoon.displayScreenFrom(myHome);
+			break;
+
 			
 		case "playerControlRW":
 		case "playerControlFF":
 		case "playerControlStop":
-		case "topbarSearchZone":
 		default:
 			console.log(selecteur.getAttribute("zone"), "not yet implemented");
 			break;
