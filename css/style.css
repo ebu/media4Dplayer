@@ -988,19 +988,21 @@ body {
 }
 
 .settingsContainer {
-    position: relative;
-    left:25%;
-    width: 74%;
+    position: absolute;
+    left:405px;
+    width: 70%;
+    min-width: 900px;
     height: 92%;
-    top: -84%;
+    top: 14%;
 }
 
 .settingsMenu {
-    position: relative;
+    position: absolute;
     left: 0px;
-    top: 8%;
-    height: 92%;
-    width: 25%;
+    top: 124px;
+    height: 87%;
+    width: 27%;
+    min-width: 400px;
     background-color: #E8E8E8;
 }
 
@@ -1041,7 +1043,7 @@ body {
     top: 4%;
     left: 10%;
 
-    font-size: 32px;
+    font-size: 25px;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1053,7 +1055,7 @@ body {
     position: relative;
     top: 5%;
     left: 10%;
-    font-size: 24px;
+    font-size: 20px;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1087,7 +1089,7 @@ body {
     position: relative;
     top: 28%;
     left: 0%;
-    font-size: 24px;
+    font-size: 18px;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1136,7 +1138,7 @@ body {
     position: relative;
     top: 10%;
     left: 10%;
-    width: 32%;
+    width: 38%;
     height: 10%;
 
     background-color: #959595;
@@ -1145,7 +1147,7 @@ body {
 .activeMagnifyingGlassText {
     position: relative;
     top: 38%;
-    left: 40%;
+    left: 34%;
     width: 62%;
     height: 70%;
 
@@ -1159,7 +1161,7 @@ body {
     position: relative;
     top: 0%;
     left: 50%;
-    width: 32%;
+    width: 38%;
     height: 10%;
 
     background-color: #959595;

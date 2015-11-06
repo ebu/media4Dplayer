@@ -47,12 +47,12 @@ function settingsScreen() {
 		var activeNarratorBT = createButton("activeNarrator", this.settingsContainerDIV, "btActiveNarrator", 0, 0, "activeNarrator");
 		var activeNarratorText = createDiv("activeNarratorText", activeNarratorBT, "", "activeNarratorText");
 		activeNarratorText.innerHTML = "Activer le narrateur";
-		createIconeNarrator(activeNarratorBT, 100, 100);
+		createIconeNarrator(activeNarratorBT, 60, 60);
 
 		var activeMagnifyingGlassBT = createButton("activeMagnifyingGlass", this.settingsContainerDIV, "btActiveMagnifyingGlass", 0, 0, "activeMagnifyingGlass");
 		var activeMagnifyingGlassText = createDiv("activeMagnifyingGlassText", activeMagnifyingGlassBT, "", "activeMagnifyingGlassText");
 		activeMagnifyingGlassText.innerHTML = "Activer le loupe";
-		createIconeMagnifyingGlass(activeMagnifyingGlassBT, 100, 100);
+		createIconeMagnifyingGlass(activeMagnifyingGlassBT, 60, 60);
 
 		var textVoiceControl = createDiv("textVoiceControl", this.settingsContainerDIV, "", "textVoiceControl");
 		textVoiceControl.innerHTML = "Contrôle de la voix";
@@ -98,12 +98,12 @@ function settingsScreen() {
 		var textCarateresQueLOnTapeContainer = createDiv("textCarateresQueLOnTapeContainer", this.settingsContainerDIV, "", "textCarateresQueLOnTapeContainer");
 		var textCarateresQueLOnTape = createDiv("textCarateresQueLOnTape", textCarateresQueLOnTapeContainer, "", "textCarateresQueLOnTape");
 		textCarateresQueLOnTape.innerHTML = "Caractères que l'on tape";
-		createIconeSwitchOff(textCarateresQueLOnTapeContainer, 100, 60);
+		createIconeSwitchOff(textCarateresQueLOnTapeContainer, 60, 40);
 
 		var textMotsQueLOnTapeContainer = createDiv("textMotsQueLOnTapeContainer", this.settingsContainerDIV, "", "textMotsQueLOnTapeContainer");
 		var textMotsQueLOnTape = createDiv("textMotsQueLOnTape", textMotsQueLOnTapeContainer, "", "textMotsQueLOnTape");
 		textMotsQueLOnTape.innerHTML = "Mots que l'on tape";
-		createIconeSwitchOff(textMotsQueLOnTapeContainer, 100, 60);
+		createIconeSwitchOff(textMotsQueLOnTapeContainer, 60, 40);
 
 
 		var textFontSize = createDiv("textFontSize", this.settingsContainerDIV, "", "textFontSize");
