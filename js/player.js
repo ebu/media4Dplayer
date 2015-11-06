@@ -36,7 +36,7 @@ function playerScreen() {
 			var btn = createButton("playerClose", playerTopBanner, "playerClose", 0, 0);
 			btn.setAttribute("tabindex", 11);
 			createImg(null, btn, "media/player/inte_close.png", null, "Fermer");
-			btn = createButton("playerShare", playerTopBanner, "playerShare", 1, 0);
+/*			btn = createButton("playerShare", playerTopBanner, "playerShare", 1, 0);
 			btn.setAttribute("tabindex", 12);
 			createImg(null, btn, "media/player/inte_share.png", null, "Partager cette vidéo");
 			btn = createButton("playerSignet", playerTopBanner, "playerSignet", 2, 0);
@@ -48,6 +48,8 @@ function playerScreen() {
 //			btn = createButton("playerSize", playerTopBanner, "playerSize", 4, 0);
 //			btn.setAttribute("tabindex", 5);
 //			createImg(null, btn, "media/player/inte_exitfullscreen.png", null, "Réduire la taille");
+
+*/
 			
 			var playerOptions = playerBottomBanner.children[0];
 			

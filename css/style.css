@@ -791,8 +791,9 @@ body {
 
 #playerTopBanner div
 {
-    width: 140px;
-    height: 140px;
+    width: 50px;
+    height: 50px;
+    top:10px;
 }
 
 #playerClose
@@ -828,11 +829,10 @@ body {
 #playerOptions
 {
 	position: absolute;
-    bottom: 320px;
+    bottom: 180px;
     left: 0px;
     width: 100%;
     min-width: 1280px;
-
     height: 160px;
     display: block;
 }
@@ -869,11 +869,11 @@ body {
     position: relative;
     text-align: center;
     top: 20px;
-    width: 320px;
+    width: 24%;
     height: 120px;
     display: block;
     float: left;
-    margin-left: 176px;
+    margin-left: 0%;
 }
 
 #playerProgressCurrent
@@ -895,9 +895,9 @@ body {
 #playerProgressBar
 {
 	position: absolute;
-	top: 80px;
-	left: 160px;
-	width: 1840px;
+	top: 90%;
+	left: 13%;
+	width: 70%;
     height: 5px;
     background-color: grey;
 }
@@ -916,14 +916,14 @@ body {
 {
 	position: absolute;
 	left: 0px;
-	width: 700px;
-    height: 180px;
+	width: 20%;
+    height: 100%;
 }
 
 #playerControlTrickMode
 {
 	position: absolute;
-	left: 750px;
+	left: 29%;
 	width: 750px;
     text-align: center;
     height: 80px;

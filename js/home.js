@@ -6,11 +6,11 @@ function homeScreen() {
 
 	this.init = function() {
 		if(!this.alreadyInit) {
-			var menuButton = createButton("homeBabdp", myHomeScreen.homeScreen, "homeMenu", 0, 0, "menuButton homeBabdp");
+			var menuButton = createButton("homeBabdp", myHomeScreen.homeScreen, "homeMenuComingSoon", 0, 0, "menuButton homeBabdp");
 			menuButton.style.margin = "0px 25px 25px 0px";
 			menuButton.setAttribute("tabindex", 5);
 			createImg(null, menuButton, "media/home/baddp.png", null, "Appplication BABDP");
-			menuButton = createButton("homePluzz", myHomeScreen.homeScreen, "homeMenuComingSoon", 1, 0, "menuButton homePluzz");
+			menuButton = createButton("homePluzz", myHomeScreen.homeScreen, "homeMenu", 1, 0, "menuButton homePluzz");
 			menuButton.style.margin = "0px 0px 25px 0px";
 			menuButton.setAttribute("tabindex", 6);
 			createImg(null, menuButton, "media/home/pluzz.png", null, "Appplication Pluzz");

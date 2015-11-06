@@ -33,7 +33,8 @@ function comingSoonScreen() {
 	}
 
 	this.backToPreviousScreen = function() {
-		previousScreen.show();
+		//previousScreen.show();
+		myHome.show();
 		this.hide();
 	}
 

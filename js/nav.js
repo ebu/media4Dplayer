@@ -118,6 +118,9 @@ move = function(action, event) {
 			break;
 
 		case "topbarSearchZone":
+			myTopbar.hide();
+			myFav.hide();
+			mySett.hide();
 			myComingSoon.displayScreenFrom(myHome);
 			break;
 
