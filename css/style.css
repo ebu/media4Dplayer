@@ -1239,9 +1239,10 @@ body {
 .settingsVideoBackground
 {
     position: relative;
-    width: 1400px;
-    height: 787px;
-    top: 38%;
+    width: 86%;
+    height: 34vw;
+    min-height: 435px;
+    top: 5%;
     left: 6%;
     background-color: #000000;
 }
@@ -1383,7 +1384,7 @@ body {
     left:0%;
 
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1392,7 +1393,7 @@ body {
     left:20%;
 
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     color: #959595;
     font-family: 'ayuthaya';
 }
@@ -1401,7 +1402,7 @@ body {
     left:40%;
 
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     color: #959595;
     font-family: 'Herculanum';
 }
@@ -1410,7 +1411,7 @@ body {
     left:60%;
 
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1426,7 +1427,7 @@ body {
 
 .settingsFontColorSelection {
     position: absolute;
-    width: 55%;
+    width: 70%;
     height: 10%;
     top: 15%;
     left: 20%;
@@ -1445,8 +1446,8 @@ body {
 }
 .settingsFontColorSelectionCell {
     float: left;
-    width: 50px;
-    height: 50px;
+    width: 25px;
+    height: 25px;
 
     margin-left: 45px;
     margin-top: 50px;
@@ -1484,19 +1485,19 @@ body {
 }
 .settingsFontBGColorSelection {
     position: absolute;
-    width: 35%;
+    width: 70%;
     height: 10%;
-    top: 25%;
-    left: 30%;
+    top: 30%;
+    left: 20%;
 
     background-color: transparent;
 }
 .settingsFontBGColorSelectionCell {
     float: left;
-    width: 80px;
-    height: 50px;
+    width: 50px;
+    height: 30px;
 
-    margin-left: 75px;
+    margin-left: 120px;
     margin-top: 50px;
 
     border-style: solid;

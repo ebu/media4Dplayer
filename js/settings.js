@@ -160,7 +160,7 @@ function settingsScreen() {
       										}).resizable( {
       											containment: ".settingsVideoPipLimitScreen",
       											handles: 'all',
-      											minHeight: 120,
+      											minHeight: 80,
       											aspectRatio: 16/9,
       											resize: function() {
       												mySettingsScreen.updateIconsPip();
