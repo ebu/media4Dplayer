@@ -26,7 +26,7 @@ function textHelperScreen() {
 		this.show();
 
 		console.log("textHelperScreen - displayTextHelperWithText : ", text);
-		textHelperContainer.innerHTML = "tagueule";
+		textHelperContainer.innerHTML = text;
 
 		$('.textHelperContainer').css({
         	'position' : 'absolute',

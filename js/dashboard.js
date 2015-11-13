@@ -25,7 +25,7 @@ function dashboardScreen() {
 		dashboardTitle.innerHTML = mydashboard.contentInfos.title;
 		
 		//left part
-		var playButton = createButton("playButton", this.dashboardLeft, "dashboardPlay", 0, 0);
+		var playButton = createButton("playButton", this.dashboardLeft, "dashboardPlay", 0, 0, "playButton");
 		createImg(null, playButton, mydashboard.contentInfos.picture, null, "Lire la vidéo " + mydashboard.contentInfos.title);
 		createImg("playButtonIcone", playButton, "media/dashboard/icone_gr_play_video.png", null, "");	
 		playButton.setAttribute("tabindex", 1);
@@ -67,7 +67,8 @@ function dashboardScreen() {
 		dashboardResumeTitle.innerHTML = language.fr.resumeTitle;
 		dashboardResumeContent.innerHTML = mydashboard.contentInfos.resume;
 
-		createButton("textHelperOnTitle", dashboardTitle, "displayTextHelper", 0, 0, "textHelperButton");
+		createButton("textHelperOnSynopsis", dashboardSynopsis, "textHelperOnSynopsis", 0, 0, "textHelperButton");
+		createButton("textHelperOnResumeContent", dashboardResumeContent, "textHelperOnResumeContent", 0, 0, "textHelperButton");
 	};
 	
 	this.init = function() {

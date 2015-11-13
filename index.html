@@ -39,7 +39,9 @@
 	</div>
 	<div id="textHelper"></div>
 	<div id="playerScreen">
-		<video id="videoPlayerMain" class="player mainPlayer" autoplay controls></video>
+		<video id="videoPlayerMain" class="player mainPlayer" autoplay controls>
+			<track label="English" id="videoSubtitle" kind="subtitles" srclang="en" src="samplesVTT/w1_all.vtt" default>
+		</video>
 		<video id="videoPlayerAudio" class="player audioPlayer" autoplay></video>
 		
 		<div id="playerUI">

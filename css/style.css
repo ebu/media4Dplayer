@@ -449,12 +449,12 @@ body {
 {
 	position: absolute;
     top: 0px;
-    left: 306px;
-    width: 1548px;
-    height: 200px;
+    left: 16%;
+    width: 70%;
+    height: 100px;
     text-align: center;
 
-    font-size: 42px;
+    font-size: 32px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 
@@ -463,42 +463,54 @@ body {
 #dashboardLeft
 {
 	position: absolute;
-    top: 200px;
-    width: 1020px;
-    height: 990px;
+    top: 10%;
+    left:5%;
+    width: 45%;
+    height: 65%;
 }
 
 #dashboardRight
 {
 	position: absolute;
-    top: 200px;
-    left: 1140px;
-    width: 1140px;
-    height: 990px;
+    top: 10%;
+    left: 52%;
+    width: 47%;
+    height: 100%;
 }
 
 #playButton
 {
 	position: absolute;
-    left: 96px;
-    width: 871px;
-    height: 490px;
+    left: 0%;
+    width: 100%;
+    height: 100%;
 }
+
+.playButton img
+{
+    width: 100%;
+    height: 25vw;
+    min-height: 320px;
+}
+
 
 #playButtonIcone
 {
-	position: absolute;
-    left: 340px;
-    top: 140px;
+    position: absolute;
+    left: 38%;
+    top: 27%;
+    width:25%;
+    height:auto;
+    min-height: 144px;
 }
 
 #dashboardTheme
 {
 	position: absolute;
-	top: 520px;
-    left: 96px;
-	width: 880px;
-	height: 450px;
+	top: 50%;
+    left: 0%;
+	width: 100%;
+	height: 60%;
 }
 
 #dashboardThemeTitle
@@ -506,8 +518,8 @@ body {
 	position: absolute;
 	top: 0px;
     left: 0px;
-	width: 880px;
-	height: 80px;
+	width: 100%;
+	height: 20%;
 
 
     font-size: 19px;
@@ -520,8 +532,8 @@ body {
 	position: absolute;
     top: 80px;
     left: 0px;
-    width: 880px;
-    height: 250px;
+    width: 100%;
+    height: 80%;
 }
 
 .themeButton
@@ -529,9 +541,10 @@ body {
 	position: relative;
     top: 0px;
     left: 0px;
-    width: 271px;
-    height: 250px;
+    width: 31%;
+    height: 80%;
     float: left;
+    margin-right:1.3%;
 }
 
 .themeButton div
@@ -539,12 +552,18 @@ body {
 	position: relative;
     top: 10px;
     left: 0px;
-    width: 271px;
-    height: 50px;
+    width: 100%;
+    height: auto;
 
-    font-size: 19px;
+    font-size: 15px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';	
+}
+.themeButton img
+{
+    width: 100%;
+    height: 9vw;
+    min-height: 115px;
 }
 
 #dashboardSocial
@@ -552,7 +571,7 @@ body {
 	position: relative;
     top: 0px;
     left: 0px;
-    width: 1140px;
+    width: 100%;
     height: 70px;
 }
 
@@ -609,7 +628,7 @@ body {
 	position: absolute;
     top: 90px;
     left: 0px;
-    width: 1140px;
+    width: 100M;
     height: 70px;
 
     font-size: 29px;
@@ -622,7 +641,7 @@ body {
 	position: absolute;
     top: 160px;
     left: 0px;
-    width: 1140px;
+    width: 100%;
     height: 50px;
 }
 
@@ -631,19 +650,19 @@ body {
 	position: absolute;
     top: 210px;
     left: 0px;
-    width: 1140px;
+    width: 100%;
     height: 200px;
 }
 
 #dashboardSynopsis
 {
 	position: absolute;
-    top: 270px;
+    top: 18%;
     left: 0px;
-    width: 1140px;
-    height: 200px;
+    width: 100%;
+    height: auto;
 
-    font-size: 22px;
+    font-size: 18px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -651,12 +670,12 @@ body {
 #dashboardResume
 {
 	position: absolute;
-    top: 470px;
+    top: 34%;
     left: 0px;
-    width: 1140px;
-    height: 720px;
+    width: 100%;
+    height: auto;
 
-    font-size: 22px;
+    font-size: 17px;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -665,7 +684,7 @@ body {
 	position: relative;
     top: 0px;
     left: 0px;
-    width: 1140px;
+    width: 100%;
     height: 50px;
 }
 
@@ -673,8 +692,8 @@ body {
 	position: relative;
     top: 0px;
     left: 0px;
-    width: 1140px;
-    height: 670px;
+    width: 100%;
+    height: auto;
 }
 
 /**************************\
@@ -973,6 +992,13 @@ body {
     height: 180px;
 }
 
+
+#BTdisplayUI
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
 
 /*****************\
 * Settings Screen *
@@ -1562,8 +1588,8 @@ body {
     background-color: #141414;
     opacity: 0.95;
 
-    width: 2140px;
-    height: 1420px;
+    width: 100%;
+    height: 100%;
     top: 10px;
     left: 10px;
 
@@ -1589,7 +1615,7 @@ body {
     height: 100%;
 */
     text-align: center;
-    font-size: 100px;
+    font-size: 50px;
     color: #FFFFFF;
     font-family: 'helveticaNeue-Regular';
 }

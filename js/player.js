@@ -351,6 +351,8 @@ function playerScreen() {
 
         myPlayerScreen.updateIconsPip();
 		myPlayerScreen.show();
+
+		this.resetTimerHideUI();
 	};
 
 
@@ -359,6 +361,8 @@ function playerScreen() {
 		myTopbar.hide();
 		this.playerScreen.style.display = "block";
 		this.activeScreen = true;
+
+		this.resetTimerHideUI();
 	};
 	
 	this.hide = function() {
@@ -407,6 +411,8 @@ function playerScreen() {
             this.playerManager.playerPip.reset();
             this.playerManager.optionSigne = false;
         }
+
+        this.resetTimerHideUI();
 	};
 	
 	this.validOptionDescription = function()
@@ -427,6 +433,8 @@ function playerScreen() {
             this.playerManager.playerAudio.reset();
             this.playerManager.optionDescription = false;
         }
+
+        this.resetTimerHideUI();
     };
 	this.validOptionSub = function() {
         if (!this.playerManager.optionSub) {
@@ -448,6 +456,7 @@ function playerScreen() {
 		}
 		//		this.playerManager.controller.pause();
 
+		this.resetTimerHideUI();
 	}
 
 
@@ -473,6 +482,24 @@ function playerScreen() {
 			left:($(".pipVideo").width() - $(".ui-icon-gripsmall-center").outerWidth()) / 2,
 			top:($(".pipVideo").height() - $(".ui-icon-gripsmall-center").outerHeight()) / 2
 		});
+	}
+
+	var refreshTimer;
+	this.resetTimerHideUI = function() {
+		if(refreshTimer!= null) {
+			clearInterval(refreshTimer);
+		}
+		refreshTimer = setTimeout(this.hideUI, 4 * 1000);
+	}
+
+	this.diplayUI = function() {
+		document.getElementById("BTdisplayUI").remove();
+		$("#playerUI").css("display","block");
+		this.resetTimerHideUI();	
+	}
+	this.hideUI = function() {
+		$("#playerUI").css("display","none");
+		var btn = createButton("BTdisplayUI", document.getElementById("playerScreen"), "playerDisplayUI", 0, 0);
 	}
 	
 	return this;

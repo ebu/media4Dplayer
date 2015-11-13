@@ -41,6 +41,9 @@ move = function(action, event) {
 		case "playerOptionDescription":
 			myPlayer.validOptionDescription();
 			break;
+		case "playerDisplayUI":
+			myPlayer.diplayUI();
+			break;
 
 		case "playerControlPlayPause":		
 			myPlayer.playPause();
@@ -113,6 +116,14 @@ move = function(action, event) {
 		case "displayTextHelper":
 			myTextHelper.displayTextHelperWithText();
 			break;
+		case "textHelperOnSynopsis":
+			myTextHelper.displayTextHelperWithText($("#dashboardSynopsis").text());
+			break;
+		case "textHelperOnResumeContent":
+			myTextHelper.displayTextHelperWithText($("#dashboardResumeContent").text());
+			break;
+
+			
 		case "closeTextHelper":
 			myTextHelper.hide();
 			break;
