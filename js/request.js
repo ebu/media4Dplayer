@@ -3,7 +3,7 @@ getUser = function() {
 		user: [
 			{
 		    	name: "invité",
-		    	picture: "media/avatar/avatar_homme_1.png"
+		    	picture: "media/avatar/avatar.png"
 		    },
 
 /*		
@@ -28,30 +28,32 @@ getUser = function() {
 getFav = function() {
 	var favList = {
 		fav: [
-			{
+		    {
+		    	title: "Jamy",
+		    	subtitle: "et sans son camion et ses playmobil !",
+		    	detail: "Emission du 31 octobre | 90 min",
+		    	picture: "media/favoris/favoris_vignette_alex_hugo.png"
+		    },
+		    {
+		    	title: "JT de 20h",
+		    	subtitle: "FRANCE2",
+		    	detail: "Emission du 15 Septembre | 40 min",
+		    	picture: "media/fav.png"
+		    },
+		    {
+		    	title: "ALEX HUGO - La mort et la belle vie",
+		    	subtitle: "La Tendresse a besoin de liberté",
+		    	detail: "série et fiction | 92 min",
+				picture: "media/favoris/favoris_vignette_alex_hugo.png"
+		    },
+		    {
 		    	title: "Jardins suspendus de la canopée",
 		    	subtitle: "DES FORÊTS ET DES HOMMES",
 		    	detail: "Emission du 15 Septembre | 50 minutes",
 		    	picture: "media/favoris/favoris_vignette_jardin_suspendu.png"
-		    },
-		    {
-		    	title: "ALEX HUGO - la mort et la belle vie",
-		    	subtitle: "",
-		    	detail: "film policier | 90 min",
-		    	picture: "media/favoris/favoris_vignette_alex_hugo.png"
-		    },
-		    {
-		    	title: "Robinsons chouettes - Saison 2 - Episode 59",
-		    	subtitle: "LA CHOUETTE ET CIE",
-		    	detail: "Emission du 17 Septembre | 07 min",
-		    	picture: "media/fav.png"
-		    },
-		    {
-		    	title: "Jt du 20h",
-		    	subtitle: "FRANCE2",
-		    	detail: "Emission du 15 Septembre | 40 min",
-		    	picture: "media/fav.png"
 		    }
+
+
 		]
 	};
 	return favList;

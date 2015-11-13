@@ -864,7 +864,7 @@ body {
     width: 100%;
     min-width: 1280px;
 
-    height: 140px;
+    height: 40px;
     display: block;
 }
 
@@ -876,7 +876,7 @@ body {
     width: 100%;
     min-width: 1280px;
 
-    height: 180px;
+    height: 145px;
     display: block;
 }
 
@@ -979,7 +979,7 @@ body {
 {
 	position: absolute;
 	left: 560px;
-	width: 170px;
+	width: 160px;
     text-align: center;
     height: 80px;
 }

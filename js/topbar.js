@@ -21,7 +21,7 @@ function topbar() {
 				return topbarBt;
 			};
 
-			createTopbarButton("Invité", "http://www.carolinedaily.com/forum/images/smilies/icon_cry.gif", "topBarProfileZone");
+			createTopbarButton("Invité", "media/topbar/menu_profil.png", "topBarProfileZone");
 			createTopbarButton("Preferences", "media/topbar/menu_reglages.png", "topbarSettingsZone");
 			createTopbarButton("Favoris", "media/topbar/menu_favoris.png", "topbarFavorisZone");
 			createTopbarButton("Recherche", "media/topbar/menu_recherche.png", "topbarSearchZone");

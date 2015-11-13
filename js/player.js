@@ -29,6 +29,11 @@ function playerScreen() {
 	var pipControlTimeout = null;
 	this.init = function() {
 		if(!this.alreadyInit) {
+
+
+			$("#playerScreen").css("background-color", "black");
+
+
 			var playerTopBanner = this.playerUI.children[0];
 			var playerBottomBanner = this.playerUI.children[1];
 	
@@ -494,11 +499,15 @@ function playerScreen() {
 
 	this.diplayUI = function() {
 		document.getElementById("BTdisplayUI").remove();
-		$("#playerUI").css("display","block");
+		$("#playerTopBanner").css("display","block");
+		$("#playerBottomBanner").css("display","block");
+		$("#playerUI").css("background","");
 		this.resetTimerHideUI();	
 	}
 	this.hideUI = function() {
-		$("#playerUI").css("display","none");
+		$("#playerTopBanner").css("display","none");
+		$("#playerBottomBanner").css("display","none");
+		$("#playerUI").css("background","url('../media/player/player_ombre_video.png') repeat");
 		var btn = createButton("BTdisplayUI", document.getElementById("playerScreen"), "playerDisplayUI", 0, 0);
 	}
 	
