@@ -744,6 +744,26 @@ body {
 
 }
 
+.settingsVideoLegende {
+    position: absolute;
+    top: 0px;
+    left: 100px;
+
+    font-size: 20px;
+    color: #A5A5A5;
+    font-family: 'helveticaNeue-Medium';
+
+}
+
+.settingsTitleTexts {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 29px;
+    color: #FFFFFF;
+    font-family: 'helveticaNeue-Regular';
+}
+
 .videoPlayerPip {
 
     border-style: hidden;
@@ -1027,8 +1047,8 @@ body {
     left: 0px;
     top: 124px;
     height: 87%;
-    width: 27%;
-    min-width: 400px;
+    width: 450px;
+    /*min-width: 400px;*/
     background-color: #E8E8E8;
 }
 

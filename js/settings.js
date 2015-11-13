@@ -113,7 +113,7 @@ function settingsScreen() {
 		leftLowercaseDIV.innerHTML = "A";
 		var slideRangeFontSize = createDiv("slideRangeFontSize", slideFontSizeContainer, "", "slideRangeFontSize slideHorizontalInput");
 		var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : 24;
-		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="48" value="'+valueMinSize+'" step="8" onchange="mySett.onSizeSlideChangeValue(this.value)"/>';
+		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="40" value="'+valueMinSize+'" step="8" onchange="mySett.onSizeSlideChangeValue(this.value)"/>';
 		var rightUppercaseDIV = createDiv("rightUpperCase", slideFontSizeContainer, "", "rightUpperCase");
 		rightUppercaseDIV.innerHTML = "A";
 
@@ -135,6 +135,8 @@ function settingsScreen() {
 		var videoScreen = createDiv("settingsVideoBackground", this.settingsContainerDIV, "", "settingsVideoBackground");
 		var videoPipLimitScreen = createDiv("settingsVideoPipLimitScreen", videoScreen, "", "settingsVideoPipLimitScreen");
 
+		var legende = createDiv("settingsVideoLegende", this.settingsContainerDIV, "Placez et redimensionnez la fenêtre vidéo", "settingsVideoLegende");
+
 		// !! using percent !!
 		var pipLeftPercent = (getCookie("LSFPip_position_x") != null && !isNaN(getCookie("LSFPip_position_x"))) ? getCookie("LSFPip_position_x") : 81;
 		var pipTopPercent = (getCookie("LSFPip_position_y") != null && !isNaN(getCookie("LSFPip_position_y"))) ? getCookie("LSFPip_position_y") : 45;
@@ -144,12 +146,17 @@ function settingsScreen() {
 
 		var ret = '';
 		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
+		ret += '<div id="settingsPipText" class="settingsPipText settingsTitleTexts">LSF</div>';
 		ret += '<div class="ui-icon-gripsmall-center" style="z-index: 1010;"></div>';
 		ret += '<div id="ui-icon-switchVideos" zone="settingsSwitchVideos" class="ui-icon-switchVideos" style="z-index: 1011;" onMouseOver="moveSelecteur(\'ui-icon-switchVideos\')" onFocus="moveSelecteur(\'ui-icon-switchVideos\')" onClick="move(\'enter\')">';
 		ret += createIconeSwitchVideosSVGBalise(44, 33);
 		ret += '</div>';
 		ret += '</div>';
 		videoPipLimitScreen.innerHTML = ret;
+
+
+		var videoText = createDiv("settingsVideoText", videoPipLimitScreen, "Vidéo", "settingsVideoText settingsTitleTexts");
+
 
 		$( ".settingsPipVideo" ).draggable({ 	containment: ".settingsVideoPipLimitScreen",
 												scroll:false,
@@ -495,16 +502,20 @@ function settingsScreen() {
 			currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
 		}
 
-		var LSFBackgroundColor = "#777777";
-		var VideoBackgroundColor = "#000000";
+		var LSFBackgroundColor = "#4D4D4D";
+		var VideoBackgroundColor = "#D8D8D8";
 
 		if(currentPipMode == "PIP_MODE_LSF") {
 			$(".settingsPipVideo").css("background-color", LSFBackgroundColor);
 			$(".settingsVideoBackground").css("background-color", VideoBackgroundColor);
+			$("#settingsPipText").text("LSF");
+			$("#settingsVideoText").text("Vidéo");
 		}
 		else if(currentPipMode == "PIP_MODE_VIDEO") {
 			$(".settingsPipVideo").css("background-color", VideoBackgroundColor);	
 			$(".settingsVideoBackground").css("background-color", LSFBackgroundColor);
+			$("#settingsPipText").text("Vidéo");
+			$("#settingsVideoText").text("LSF");			
 		}
 		else {
 			console.log("initVideoAndPipBackgroundColor - case not defined [", currentPipMode);

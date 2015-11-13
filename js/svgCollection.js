@@ -1032,18 +1032,18 @@ function createIconeSwitchVideos(parent, width, height) {
 }
 function createIconeSwitchVideosSVGBalise(width, height) {
 	var ret = '';
-	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
-	ret += '	 height="'+height+'px" viewBox="0 0 44 33" style="enable-background:new 0 0 44 33;" xml:space="preserve">';
+	ret += '<svg version="1.0" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"';
+	ret += 'width="'+width+'px" height="'+height+'px" viewBox="0 0 54 38" style="enable-background:new 0 0 54 38;" xml:space="preserve">';
 	ret += '<style type="text/css">';
 	ret += '<![CDATA[';
-	ret += '	.iconeSwitchVideos_st0{fill:#4F4F4F;}';
+	ret += '	.iconeSwitchVideos_st0{fill:#5B5B5B;stroke:#FFFFFF;stroke-width:0.75;stroke-miterlimit:10;}';
 	ret += ']]>';
 	ret += '</style>';
 	ret += '<g>';
-	ret += '	<polygon class="iconeSwitchVideos_st0" points="5.9,8 5.9,13.7 13.4,8 	"/>';
-	ret += '	<polygon class="iconeSwitchVideos_st0" points="30.6,22 38.1,22 38.1,16.3 	"/>';
-	ret += '	<polygon class="iconeSwitchVideos_st0" points="15.4,15 15.4,8 1.8,18.5 15.4,29 15.4,22 27.4,22 27.4,15 27.4,15 	"/>';
-	ret += '	<polygon class="iconeSwitchVideos_st0" points="28.6,1 28.6,8 16.6,8 16.6,13.8 28.6,13.8 28.6,22 42.2,11.5 	"/>';
+	ret += '	<polygon class="iconeSwitchVideos_st0" points="6,9.8 6,17.4 15.8,9.8 	"/>';
+	ret += '	<polygon class="iconeSwitchVideos_st0" points="38.2,28.2 48,28.2 48,20.6 	"/>';
+	ret += '	<polygon class="iconeSwitchVideos_st0" points="18.4,19 18.4,9.8 0.5,23.6 18.4,37.3 18.4,28.2 34,28.2 34,19 34,19 	"/>';
+	ret += '	<polygon class="iconeSwitchVideos_st0" points="35.6,0.7 35.6,9.8 20,9.8 20,17.4 35.6,17.4 35.6,28.2 53.4,14.4 	"/>';
 	ret += '</g>';
 	ret += '</svg>';
 
