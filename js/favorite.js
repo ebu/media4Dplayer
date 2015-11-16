@@ -18,7 +18,7 @@ function favoriteScreen() {
 		var favoriteBackgroundContentZone = createDiv("favoriteBackgroundContentZone", favoriteBackground);
 		
 		favButton = function(index, parent, fav) {
-			var favButton = createButton("fav_" + index, parent, "favoriteChoice", 0, index, "favButton");
+			var favButton = createButton("fav_" + index, parent, "favoriteChoice"+index, 0, index, "favButton");
 			var ariaDescription = createDiv("favAriaLabel_"+index, favButton, null, null);
 			ariaDescription.style.display = "none";
 			ariaDescription.innerHTML = "Vidéo : " + fav.title;
@@ -85,8 +85,8 @@ function favoriteScreen() {
 		this.activeScreen = false;
 	};
 	
-	this.validFavorite = function() {
-		myDash.init();
+	this.validFavorite = function(index) {
+		myDash.init(index);
 		this.hide();
 	};
 	

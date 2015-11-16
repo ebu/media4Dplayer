@@ -33,7 +33,10 @@ function textHelperScreen() {
         	'left' : '50%',
         	'top' : '50%',
         	'margin-left' : -$('.textHelperContainer').outerWidth()/2,
-        	'margin-top' : -$('.textHelperContainer').outerHeight()/2
+        	'margin-top' : '-23%',
+        	'padding-left' : '14px',
+        	'padding-right' : '14px',
+
         });
 
 

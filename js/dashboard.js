@@ -7,6 +7,7 @@ function dashboardScreen() {
 	this.dashboardRight = this.dashboardScreen.children[2];
 	
 	this.contentInfos = null;
+	this.indexContentDashboard = null;
 	
 	this.updateDashboard = function() {
 		themeButton = function(index, parent, theme) {
@@ -25,7 +26,7 @@ function dashboardScreen() {
 		dashboardTitle.innerHTML = mydashboard.contentInfos.title;
 		
 		//left part
-		var playButton = createButton("playButton", this.dashboardLeft, "dashboardPlay", 0, 0, "playButton");
+		var playButton = createButton("playButton", this.dashboardLeft, "dashboardPlay"+this.indexContentDashboard, 0, 0, "playButton");
 		createImg(null, playButton, mydashboard.contentInfos.picture, null, "Lire la vidéo " + mydashboard.contentInfos.title);
 		createImg("playButtonIcone", playButton, "media/dashboard/icone_gr_play_video.png", null, "");	
 		playButton.setAttribute("tabindex", 1);
@@ -64,16 +65,23 @@ function dashboardScreen() {
 		
 		dashboardSubtitle.innerHTML = mydashboard.contentInfos.subtitle;
 		dashboardSynopsis.innerHTML = mydashboard.contentInfos.synopsis;
-		dashboardResumeTitle.innerHTML = language.fr.resumeTitle;
+		if(mydashboard.contentInfos.resume.length > 0 ) {
+			dashboardResumeTitle.innerHTML = language.fr.resumeTitle;
+		}
+		else {
+			dashboardResumeTitle.innerHTML = "";
+		}
 		dashboardResumeContent.innerHTML = mydashboard.contentInfos.resume;
 
 		createButton("textHelperOnSynopsis", dashboardSynopsis, "textHelperOnSynopsis", 0, 0, "textHelperButton");
 		createButton("textHelperOnResumeContent", dashboardResumeContent, "textHelperOnResumeContent", 0, 0, "textHelperButton");
 	};
 	
-	this.init = function() {
+	this.init = function(index) {
+		this.indexContentDashboard = index;
+
 		mydashboard.cleanPage();
-		mydashboard.contentInfos = getContentDashboard();
+		mydashboard.contentInfos = getContentDashboard(index);
 		mydashboard.updateDashboard();
 
 		if(getCookie("settings_min_size") != null) {
@@ -93,8 +101,8 @@ function dashboardScreen() {
 		this.activeScreen = false;
 	};
 	
-	this.validPlay = function() {
-		myPlayer.init();
+	this.validPlay = function(index) {
+		myPlayer.init(index);
 		this.hide();
 	};
 	

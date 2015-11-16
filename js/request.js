@@ -29,16 +29,16 @@ getFav = function() {
 	var favList = {
 		fav: [
 		    {
-		    	title: "Jamy",
-		    	subtitle: "et sans son camion et ses playmobil !",
-		    	detail: "Emission du 31 octobre | 90 min",
-		    	picture: "media/favoris/favoris_vignette_alex_hugo.png"
+		    	title: "Le monde de Jamy",
+		    	subtitle: "Des volcans et des hommes",
+		    	detail: "ÉMISSION DU 07/05/2014 | 60 min",
+		    	picture: "media/favoris/favoris_vignette_JamyVolcans.png"
 		    },
 		    {
-		    	title: "JT de 20h",
+		    	title: "Le JT de France 2",
 		    	subtitle: "FRANCE2",
-		    	detail: "Emission du 15 Septembre | 40 min",
-		    	picture: "media/fav.png"
+		    	detail: "ÉMISSION DU 15/09/2015 | 40 min",
+		    	picture: "media/favoris/favoris_vignette_JTFR2.png"
 		    },
 		    {
 		    	title: "ALEX HUGO - La mort et la belle vie",
@@ -59,25 +59,30 @@ getFav = function() {
 	return favList;
 };
 
-getContentDashboard = function() {
-	var contentDashboard = {
-    	title: "Jardins suspendus de la canopée",
-    	subtitle: "DES FORÊTS ET DES HOMMES",
-    	detail: "Emission du 15/07/2015 | 50 min",
-    	picture: "media/dashboard/icone_gr_video.png",
+getContentDashboard = function(index) {
+	var contentDashboard = [
+	{
+    	title: "Le monde de jamy",
+    	subtitle: "Des volcans et des hommes",
+    	detail: "ÉMISSION DU 07/05/2014 | 60 min",
+    	picture: "media/dashboard/icone_gr_video_JamyVolcans.png",
     	facebook: 16,
     	twitter: 1,
     	signe: true,
     	view: true,
     	sub: true,
     	audio: true,
-    	synopsis: "Certains grands arbres de la forêt tropicale sont de véritables immeubles. Ils hébergent une multitude d'autres plantes qui vont chercher la lumière à leur sommet, " +
-    			"des lianes mais aussi des épiphytes. Ces plantes vivent accrochées aux branches et forment des jardins suspendus, habités par toute une faune.",
-    	resume: "Les forêts recouvrent un tiers des terres émergées de la Terre. Bien qu'elles soient vitales pour la planète, leur surface ne cesse de se réduire. Jamy Gourmaud propose" +
-    			" de découvrir les pouvoirs méconnus et les richesses de trois forêts exceptionnelles. L'exploration débute par la forêt amazonienne, en Guyane, qui abrite une biodiversité" +
-    			" incroyable. Toujours en Guyane, la mangrove sert, quant à elle, de véritable bouclier contre l'érosion du littoral et les cyclones. On y découvre que le crabe violoniste" +
-    			" constitue un allié de choix dans la préservation de l'environnement. Enfin, sur la côte Est de l'Australie, une immense forêt d'eucalyptus fait obstacle à l'avancée" +
-    			" du désert.",
+    	synopsis: "Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite." +
+    			" Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux." + 
+    			"<br />" +
+    			"Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps." +
+    			"<br />" +
+    			"Toujours attentif pour rendre simple et intelligible les phénomènes les plus complexes, c’est un Jamy impliqué que  nous découvrons au cours de ce voyage plein de surprises et de rebondissements, un Jamy " +
+    			"aventurier aussi qui ne craint pas de s'approcher au plus près  de la lave, d’un spectaculaire volcan d’Éthiopie ou de se poser sur un cratère instable de l’île de Montserrat." +
+    			"<br />" +
+    			"L’Éthiopie, les Antilles, l’Italie du Sud et Hawaï, autant d’étapes sur un parcours exceptionnel qui conjugue passion, émotion et envie d’apprendre et de transmettre. Un véritable tour du monde filmé comme un grand spectacle de la nature."
+    			,
+    	resume: "",
     	link: [
 	       {
 	    	   title: "Le Monde de Jamy : A couper le souffle.",
@@ -95,6 +100,57 @@ getContentDashboard = function() {
 	    	   picture: "media/dashboard/icone_pt_video_sangsue.png"
 	       }
     	]
-	};
-	return contentDashboard;
+	},
+
+	{
+    	title: "Le JT de France 2",
+    	subtitle: "JT du 20h du mercredi 15 septembre 2015",
+    	detail: "ÉMISSION DU 15/09/2015",
+    	picture: "media/dashboard/icone_gr_video_JTFR2.png",
+    	facebook: 16,
+    	twitter: 1,
+    	signe: true,
+    	view: true,
+    	sub: true,
+    	audio: true,
+    	synopsis: "Le journal de 20 Heures est le grand rendez-vous de l'actualité de la journée sur France 2. Du lundi au jeudi, David Pujadas est au commande de ce journal TV de 40 minutes." +
+    			"<br />" +
+    			"Le 20 Heures propose un tour d'horizon complet de l'actualité de la journée, enrichi par les nombreux reportages et duplex des envoyés spéciaux en France et à l’étranger," +
+    			"ainsi que les interventions des correspondants à travers le monde pour raconter et analyser l’actualité internationale." +
+    			"Après la présentation des titres, la rédaction décrypte les événements forts de l’actualité avec des infographies, des chroniques, des invités, et des experts sur le plateau pour expliquer les sujets qui font la Une." +
+    			"Ce programme est disponible ici en direct vidéo ou en replay après sa diffusion pour voir et revoir les précédentes éditions à volonté."
+    			,
+    	resume: "",
+    	link: [
+	       {
+	    	   title: "Le JT de France 3",
+	    	   subtitle: "ÉMISSION DU 15/11/2015",
+	    	   picture: "media/dashboard/icone_pt_video_JTFR3.png"
+	       },
+	       {
+	    	   title: "Le JT de France 2",
+	    	   subtitle: "ÉMISSION DU 14/11/2015",
+	    	   picture: "media/dashboard/icone_pt_video_JTFR2.png"
+	       },
+	       {
+	    	   title: "Le JT de France 2",
+	    	   subtitle: "ÉMISSION DU 13/11/2015",
+	    	   picture: "media/dashboard/icone_pt_video_JTFR2.png"
+	       }
+    	]
+	},
+
+
+
+
+
+
+
+
+
+
+
+
+	];
+	return contentDashboard[index];
 };

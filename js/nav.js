@@ -14,12 +14,20 @@ move = function(action, event) {
 			myComingSoon.backToPreviousScreen();
 			break;
 
-		case "favoriteChoice":
-			myFav.validFavorite();
+		case "favoriteChoice10":
+			myFav.validFavorite(0);
 			break;
-		case "dashboardPlay":
-			myDash.validPlay();
+		case "favoriteChoice13":
+			myFav.validFavorite(1);
+			break;			
+		case "dashboardPlay0":
+			$("#videoSubtitle").attr("src", "samplesVTT/w1_jamy.vtt");
+			myDash.validPlay(0);
 			break;
+		case "dashboardPlay1":
+			$("#videoSubtitle").attr("src", "samplesVTT/w1_20h.vtt");
+			myDash.validPlay(1);
+			break;	
 		case "topBarProfileZone":
 			myTopbar.validAccount();
 			break;

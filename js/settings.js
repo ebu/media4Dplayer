@@ -51,7 +51,7 @@ function settingsScreen() {
 
 		var activeMagnifyingGlassBT = createButton("activeMagnifyingGlass", this.settingsContainerDIV, "btActiveMagnifyingGlass", 0, 0, "activeMagnifyingGlass");
 		var activeMagnifyingGlassText = createDiv("activeMagnifyingGlassText", activeMagnifyingGlassBT, "", "activeMagnifyingGlassText");
-		activeMagnifyingGlassText.innerHTML = "Activer le loupe";
+		activeMagnifyingGlassText.innerHTML = "Activer la loupe";
 		createIconeMagnifyingGlass(activeMagnifyingGlassBT, 60, 60);
 
 		var textVoiceControl = createDiv("textVoiceControl", this.settingsContainerDIV, "", "textVoiceControl");

@@ -10,9 +10,18 @@ function playerScreen() {
     this.videoAudio = document.getElementById('videoPlayerAudio');
     
     this.playerManager = {
-    	urlMain: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-webvtt.mpd",
-    	urlPip: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-lsf.mpd",
-    	urlAudio: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-ad.mpd",
+    	urlMain: null,
+    	urlPip: null,
+    	urlAudio: null,
+
+    	urlMain0: "http://medias2.francetv.fr/innovation/media4D/m4dp-set1-LMDJ/manifest.mpd",
+    	urlPip0: "http://medias2.francetv.fr/innovation/media4D/m4dp-set1-LMDJ/manifest-lsf.mpd",
+    	urlAudio0: "http://medias2.francetv.fr/innovation/media4D/m4dp-set1-LMDJ/manifest-ad.mpd",
+
+    	urlMain1: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-webvtt.mpd",
+    	urlPip1: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-lsf.mpd",
+    	urlAudio1: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-ad.mpd",
+
     	playerMain: null,
     	playerPip: null,
     	playerAudio: null,
@@ -27,12 +36,30 @@ function playerScreen() {
 	var isPlaying = null;
 	var currentPipMode = null;
 	var pipControlTimeout = null;
-	this.init = function() {
-		if(!this.alreadyInit) {
-
+	this.init = function(index) {
+		if(!this.alreadyInit || (currentIndex != index) ) {
 
 			$("#playerScreen").css("background-color", "black");
 
+
+
+
+			currentIndex = index;
+			if(currentIndex == 0) {
+				this.playerManager.urlMain = this.playerManager.urlMain0;
+				this.playerManager.urlPip = this.playerManager.urlPip0;
+				this.playerManager.urlAudio = this.playerManager.urlAudio0;
+
+				//$("#videoSubtitle").attr("src", "samplesVTT/w1_jamy.vtt");
+
+			}
+			else {
+				this.playerManager.urlMain = this.playerManager.urlMain1;
+				this.playerManager.urlPip = this.playerManager.urlPip1;
+				this.playerManager.urlAudio = this.playerManager.urlAudio1;
+
+				//$("#videoSubtitle").attr("src", "samplesVTT/w1_20h.vtt");
+			}
 
 			var playerTopBanner = this.playerUI.children[0];
 			var playerBottomBanner = this.playerUI.children[1];
@@ -57,6 +84,7 @@ function playerScreen() {
 */
 			
 			var playerOptions = playerBottomBanner.children[0];
+			emptyElem(playerOptions);
 			
 			//button for accessibility
 			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
