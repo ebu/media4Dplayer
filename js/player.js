@@ -18,7 +18,8 @@ function playerScreen() {
     	urlPip0: "http://medias2.francetv.fr/innovation/media4D/m4dp-set1-LMDJ/manifest-lsf.mpd",
     	urlAudio0: "http://medias2.francetv.fr/innovation/media4D/m4dp-set1-LMDJ/manifest-ad.mpd",
 
-    	urlMain1: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-webvtt.mpd",
+    	//urlMain1: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-webvtt.mpd",
+    	urlMain1: "http://dash.edgesuite.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd",
     	urlPip1: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-lsf.mpd",
     	urlAudio1: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-ad.mpd",
 
@@ -40,9 +41,6 @@ function playerScreen() {
 		if(!this.alreadyInit || (currentIndex != index) ) {
 
 			$("#playerScreen").css("background-color", "black");
-
-
-
 
 			currentIndex = index;
 			if(currentIndex == 0) {
@@ -123,12 +121,13 @@ function playerScreen() {
 			createImg(null, btn, "media/player/controle_btn_stop.png", null, "stop");
 
 			//LANCEMENT DU PLAYER ATTENTION CODE TOUCHY
-	        var context = new MediaPlayer.di.Context();
+	        //var context = new MediaPlayer.di.Context();
+	        var context = new Dash.di.DashContext();
 	       
 	       	this.playerManager.playerMain = new MediaPlayer(context);
 	       	this.playerManager.playerMain.startup();
 	        //this.playerManager.playerMain.getDebug().setLevel(10);
-	       	this.playerManager.playerMain.setAutoPlay(true);
+	       	this.playerManager.playerMain.setAutoPlay(false);
 	
 
 	        this.playerManager.playerPip = new MediaPlayer(context);
@@ -160,7 +159,7 @@ function playerScreen() {
 	        var audioAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
 	
 	        var audioGainNode = this.playerManager.audioContext.createGain();
-	        audioGainNode.gain.value = -1.;
+	        audioGainNode.gain.value = 1.;
 	        audioAudioSource.connect(audioGainNode);
 	        audioGainNode.connect(this.playerManager.audioContext.destination);
 	
@@ -169,16 +168,6 @@ function playerScreen() {
 	        videoAudioSource.connect(videoGainNode);
 	        videoGainNode.connect(this.playerManager.audioContext.destination);
 
-	        this.playerManager.controller.addEventListener('timeupdate', function(e)
-            {
-                /*deltaPip = Math.abs(videoPlayerPipMediaElement.currentTime - videoPlayerMainMediaElement.currentTime);
-                deltaAudio = Math.abs(videoPlayerAudioMediaElement.currentTime - videoPlayerMainMediaElement.currentTime);
-                console.debug("# timeupdate,");
-                console.debug("##    delta main vs pip   : "+deltaPip);
-                console.debug("##    delta main vs audio : "+deltaAudio);*/
-            });
-
-
             this.playerManager.controller.addEventListener('play', function(e) {
             	myPlayerScreen.onPlay();
             });
@@ -186,36 +175,13 @@ function playerScreen() {
             	myPlayerScreen.onPause();
             });
 
-            /*controller.addEventListener('canplay', function(e) {
-                var textTracks = videoPlayerMainMediaElement.textTracks;
-                var textTrack = textTracks[0];
-                dumpObject(textTrack);
-                dumpObject(textTrack.regions);
-                console.debug("# textTrack.kind = "+textTrack.kind);
-                console.debug("# textTrack.mode = "+textTrack.mode);
-                //textTrack.mode = "hidden";
-                var cues = textTrack.cues;
-                
-                var region = new VTTRegion();
-                region.width = 80;
-                region.id = "regionMain";
-                region.regionAnchorX = 0;
-                region.regionAnchorY = 100;
-                region.viewportAnchorX = 10;
-                region.viewportAnchorY = 90;
-                region.lines = 3;
-                region.scroll = "up";
-                dumpObject(region);
-                textTrack.addRegion(region);
-                
-                for (var i=0;i<cues.length;i++) {
-                    cues[i].regionId = "regionMain";
-                    //cues[i].region = region;
-                    cues[i].onenter = function(e) {
-                        dumpObject(e.target);
-                    }
-                }
-            });*/
+            this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACK_ADDED, function(e) {
+            	console.debug("MediaPlayer.events.TEXT_TRACK_ADDED");
+            });
+            this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(e) {
+            	console.debug("MediaPlayer.events.TEXT_TRACKS_ADDED");
+            	var tracks = this.playerManager.playerMain.getTracksFor("text");
+            });
 	        /*
             function onCheckVideo()
             {
