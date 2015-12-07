@@ -175,9 +175,6 @@ function playerScreen() {
             	myPlayerScreen.onPause();
             });
 
-            this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACK_ADDED, function(e) {
-            	console.debug("MediaPlayer.events.TEXT_TRACK_ADDED");
-            });
             this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(e) {
             	console.debug("MediaPlayer.events.TEXT_TRACKS_ADDED");
             	var tracks = this.playerManager.playerMain.getTracksFor("text");
