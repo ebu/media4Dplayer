@@ -1,27 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Media 4D</title>
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<link type="text/css" rel="stylesheet" href="css/inputRangeSettings.css" />
 	<link type="text/css" rel="stylesheet" href="js/lib/jquery-ui.css" />
-	<style text="text/javascript">
-    		body { }
-			    ::cue {
-			    	color: white;
-			    }
-			    ::cue-region {
-			    	color: blue;
-			    	background-color:rgba(128, 0, 0, 0.7);
-			    }
-			    ::cue(c.cyan) {
-			    	color: cyan;
-			    }
-			    ::cue(c.yellow) {
-			    	color: yellow;
-			    }
-	    </style>
 </head>
 <body>
 	<div id="splashscreen">
@@ -56,7 +40,7 @@
 	<div id="textHelper"></div>
 	<div id="playerScreen">
 		<video id="videoPlayerMain" class="player mainPlayer" autoplay controls>
-<!--			<track label="English" id="videoSubtitle" kind="subtitles" srclang="en" src="samplesVTT/w1_jamy.vtt" default>-->
+			<track label="English" id="videoSubtitle" kind="subtitles" srclang="en" src="samplesVTT/w1_1_color.vtt" default>
 		</video>
 		<video id="videoPlayerAudio" class="player audioPlayer" autoplay></video>
 		
@@ -97,9 +81,8 @@
 
 <script language="javascript" type="text/javascript" src="js/lib/jquery.ui.touch-punch.min.js"></script>
 
-<!--<script language="javascript" type="text/javascript" src="js/lib/hasplayer.js"></script>-->
-<script src="http://cdn.dashjs.org/latest/dash.all.js"></script>
-
+<!-- <script language="javascript" type="text/javascript" src="js/lib/hasplayer.min.js"></script> -->
+<script language="javascript" type="text/javascript" src="js/lib/hasplayer.js"></script>
 <script language="javascript" type="text/javascript" src="js/svgCollection.js"></script>
 <script language="javascript" type="text/javascript" src="js/language.js"></script>
 <script language="javascript" type="text/javascript" src="js/cookie.js"></script>
