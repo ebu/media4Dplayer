@@ -14,9 +14,9 @@ function playerScreen() {
     	urlPip: null,
     	urlAudio: null,
 
-    	urlMain0: "http://medias2.francetv.fr/innovation/media4D/m4dp-set1-LMDJ/manifest.mpd",
-    	urlPip0: "http://medias2.francetv.fr/innovation/media4D/m4dp-set1-LMDJ/manifest-lsf.mpd",
-    	urlAudio0: "http://medias2.francetv.fr/innovation/media4D/m4dp-set1-LMDJ/manifest-ad.mpd",
+    	urlMain0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest.mpd",
+    	urlPip0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest-lsf.mpd",
+    	urlAudio0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest-ad.mpd",
 
     	//urlMain1: "http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-webvtt.mpd",
     	urlMain1: "http://dash.edgesuite.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd",
