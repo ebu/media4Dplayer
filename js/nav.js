@@ -151,7 +151,7 @@ move = function(action, event) {
 			break;
 		case "playerControlStop":
 		default:
-			console.log(selecteur.getAttribute("zone"), "not yet implemented");
+			myPlayer.stop();
 			break;
 	}
 };

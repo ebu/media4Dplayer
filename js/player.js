@@ -475,6 +475,11 @@ function playerScreen() {
 		}
 	};
 
+	this.stop = function(){
+		this.playerManager.controller.pause();
+		this.playerManager.controller.currentTime = 0;
+	};
+
 
 	this.updateIconsPip = function() {
 		this.updateIconCenterPositionToCenter();
