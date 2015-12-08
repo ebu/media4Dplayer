@@ -453,7 +453,27 @@ function playerScreen() {
 		//		this.playerManager.controller.pause();
 
 		this.resetTimerHideUI();
-	}
+	};
+
+	this.ff = function(){
+		
+		var totalTimeSecond =  this.playerManager.controller.duration;	
+		var saut = Math.round(totalTimeSecond*(3/100));
+		var currentPosition = this.playerManager.controller.currentTime;
+		if(currentPosition + saut < totalTimeSecond){
+			this.playerManager.controller.currentTime = currentPosition + saut;
+		}
+	};
+
+	this.rw = function(){
+		
+		var totalTimeSecond =  this.playerManager.controller.duration;	
+		var saut = Math.round(totalTimeSecond*(3/100));
+		var currentPosition = this.playerManager.controller.currentTime;
+		if(currentPosition > 0){
+			this.playerManager.controller.currentTime = currentPosition - saut;
+		}
+	};
 
 
 	this.updateIconsPip = function() {

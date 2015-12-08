@@ -142,10 +142,13 @@ move = function(action, event) {
 			mySett.hide();
 			myComingSoon.displayScreenFrom(myHome);
 			break;
-
 			
-		case "playerControlRW":
 		case "playerControlFF":
+			myPlayer.ff();
+			break;
+		case "playerControlRW":
+			myPlayer.rw();
+			break;
 		case "playerControlStop":
 		default:
 			console.log(selecteur.getAttribute("zone"), "not yet implemented");
