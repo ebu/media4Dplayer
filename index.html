@@ -6,6 +6,22 @@
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<link type="text/css" rel="stylesheet" href="css/inputRangeSettings.css" />
 	<link type="text/css" rel="stylesheet" href="js/lib/jquery-ui.css" />
+	<style type="text/javascript">
+    		body { }
+			    ::cue {
+			    	color: white;
+			    }
+			    ::cue-region {
+			    	color: blue;
+			    	background-color:rgba(128, 0, 0, 0.7);
+			    }
+			    ::cue(c.cyan) {
+			    	color: cyan;
+			    }
+			    ::cue(c.yellow) {
+			    	color: yellow;
+			    }
+	    </style>
 </head>
 <body>
 	<div id="splashscreen">
@@ -39,9 +55,7 @@
 	</div>
 	<div id="textHelper"></div>
 	<div id="playerScreen">
-		<video id="videoPlayerMain" class="player mainPlayer" autoplay controls>
-			<track label="English" id="videoSubtitle" kind="subtitles" srclang="en" src="samplesVTT/w1_1_color.vtt" default>
-		</video>
+		<video id="videoPlayerMain" class="player mainPlayer" autoplay controls></video>
 		<video id="videoPlayerAudio" class="player audioPlayer" autoplay></video>
 		
 		<div id="playerUI">
