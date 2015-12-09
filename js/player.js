@@ -362,6 +362,13 @@ function playerScreen() {
 		var selectedFontColor = getCookie("subtitleFontColor");
 		if(selectedFontColor){
 			$videoPlayer.addClass(selectedFontColor);
+		}	
+		
+		// background color
+		$videoPlayer.removeClass("blackBGColor whiteBGColor");
+		var selectedFontBGColor = getCookie("subtitleBGColor");
+		if(selectedFontBGColor){
+			$videoPlayer.addClass(selectedFontBGColor);
 		}		
 	};
 

@@ -282,11 +282,24 @@ function settingsScreen() {
 
 		var fontBGColorSelectionDIV = createDiv("settingsFontBGColorSelection", this.settingsContainerDIV, "", "settingsFontBGColorSelection");
 		var settingsFontColorSelectionTitleDIV = createDiv("settingsFontBGColorSelectionTitle", fontBGColorSelectionDIV, "", "settingsFontColorSelectionTitle");
-		settingsFontColorSelectionTitleDIV.innerHTML = "Arrière plan";
-		var settingsFontBGColorSelectionCell0DIV = createButton("settingsFontBGColorSelectionCellWhite", fontBGColorSelectionDIV, "selectWhiteBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellWhite");
-		var settingsFontBGColorSelectionCell1DIV = createButton("settingsFontBGColorSelectionCellGrey", fontBGColorSelectionDIV, "selectGreyBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellGrey");
-		var settingsFontBGColorSelectionCell2DIV = createButton("settingsFontBGColorSelectionCellBlack", fontBGColorSelectionDIV, "selectBlackBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellBlack");
-
+		settingsFontColorSelectionTitleDIV.innerHTML = "Couleur d'arrière plan";
+		createButton("settingsFontBGColorSelectionCellWhite", fontBGColorSelectionDIV, "selectWhiteBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellWhite");
+		createButton("settingsFontBGColorSelectionCellBlack", fontBGColorSelectionDIV, "selectBlackBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellBlack");
+		var selectedFontBGColor = getCookie("subtitleBGColor");
+		if(selectedFontBGColor){
+			switch(selectedFontBGColor){
+				case "blackBGColor":
+					mySett.selectBlackBGColor();
+					break;
+					
+				case "whiteBGColor":
+					mySett.selectWhiteBGColor();
+					break;
+			}
+		}else{
+			mySett.selectBlackBGColor();
+		}
+		
 		var slideSizeRangeDIV = createDiv("slideSizeRange", this.settingsContainerDIV, "", "slideSizeRange");
 		var slideLowerCaseDIV = createDiv("slideLowerCase", slideSizeRangeDIV, "", "slideLowerCase");
 		slideLowerCaseDIV.innerHTML = "A";
@@ -417,12 +430,11 @@ function settingsScreen() {
 
 	this.selectWhiteBGColor = function() {
 		mySett.selectBackgroundColorCell("#settingsFontBGColorSelectionCellWhite");
-	}
-	this.selectGreyBGColor = function() {
-		mySett.selectBackgroundColorCell("#settingsFontBGColorSelectionCellGrey");
+		setCookie("subtitleBGColor", "whiteBGColor");
 	}
 	this.selectBlackBGColor = function() {
 		mySett.selectBackgroundColorCell("#settingsFontBGColorSelectionCellBlack");
+		setCookie("subtitleBGColor", "blackBGColor");
 	}		
 	this.selectBackgroundColorCell =  function(cellColorButton) {
 		console.log("selectBackgroundColorCell - ", cellColorButton);
