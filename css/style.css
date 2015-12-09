@@ -1470,32 +1470,26 @@ body {
     border-width: 2px;
     border-color: #555555;
 }
+video.multiColor::cue{
+	color: #FFFFFF;
+}
 .settingsFontColorSelectionCellWhite {
     background-color: #FFFFFF;
+}
+video.whiteColor::cue{
+	color: #FFFFFF;
 }
 .settingsFontColorSelectionCellYellow {
     background-color: #FEBF00;
 }
-.settingsFontColorSelectionCellDarkGrey {
-    background-color: #585858;
-}
-.settingsFontColorSelectionCellGreen {
-    background-color: #599B53;
+video.yellowColor::cue{
+	color: #FEBF00;
 }
 .settingsFontColorSelectionCellBlue {
     background-color: #64D7FF;
 }
-.settingsFontColorSelectionCellPink {
-    background-color: #FD73FF;
-}
-.settingsFontColorSelectionCellRed {
-    background-color: #FD5A58;
-}
-.settingsFontColorSelectionCellGrey {
-    background-color: #AFAFAF;
-}
-.settingsFontColorSelectionCellBlack {
-    background-color: #000000;
+video.blueColor::cue{
+	color: #64D7FF;
 }
 .settingsFontBGColorSelection {
     position: absolute;

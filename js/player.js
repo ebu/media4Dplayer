@@ -351,10 +351,18 @@ function playerScreen() {
 		this.resetTimerHideUI();
 		
 		// subtitles
+		var $videoPlayer = $(document.getElementById("videoPlayerMain")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia");
 		var selectedFont = getCookie("subtitleFont");
 		if(selectedFont){
-			$(document.getElementById("videoPlayerMain")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia").addClass("font"+selectedFont);
+			$videoPlayer.addClass("font"+selectedFont);
 		}
+		
+		// color
+		$videoPlayer.removeClass("multiColor whiteColor yellowColor blueColor");
+		var selectedFontColor = getCookie("subtitleFontColor");
+		if(selectedFontColor){
+			$videoPlayer.addClass(selectedFontColor);
+		}		
 	};
 
 

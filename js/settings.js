@@ -251,15 +251,34 @@ function settingsScreen() {
 
 		var fontColorSelectionDIV = createDiv("settingsFontColorSelection", this.settingsContainerDIV, "", "settingsFontColorSelection");
 		var settingsFontColorSelectionTitleDIV = createDiv("settingsFontColorSelectionTitle", fontColorSelectionDIV, "", "settingsFontColorSelectionTitle");
-		settingsFontColorSelectionTitleDIV.innerHTML = "Texte";
-		var settingsFontColorSelectionCell0DIV = createButton("settingsFontColorSelectionCellMulti", fontColorSelectionDIV, "selectMultiColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellMulti");
-		var settingsFontColorSelectionCell1DIV = createButton("settingsFontColorSelectionCellWhite", fontColorSelectionDIV, "selectWhiteColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellWhite");
-		var settingsFontColorSelectionCell2DIV = createButton("settingsFontColorSelectionCellYellow", fontColorSelectionDIV, "selectYellowColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellYellow");
-		var settingsFontColorSelectionCell3DIV = createButton("settingsFontColorSelectionCellDarkGrey", fontColorSelectionDIV, "selectDarkGreyColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellDarkGrey");
-		var settingsFontColorSelectionCell4DIV = createButton("settingsFontColorSelectionCellGreen", fontColorSelectionDIV, "selectGreenColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellGreen");
-		var settingsFontColorSelectionCell5DIV = createButton("settingsFontColorSelectionCellBlue", fontColorSelectionDIV, "selectBlueColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellBlue");
-		var settingsFontColorSelectionCell6DIV = createButton("settingsFontColorSelectionCellPink", fontColorSelectionDIV, "selectPinkColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellPink");
-		var settingsFontColorSelectionCell7DIV = createButton("settingsFontColorSelectionCellRed", fontColorSelectionDIV, "selectRedColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellRed");
+		settingsFontColorSelectionTitleDIV.innerHTML = "Couleur de texte";
+		createButton("settingsFontColorSelectionCellMulti", fontColorSelectionDIV, "selectMultiColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellMulti");
+		createButton("settingsFontColorSelectionCellWhite", fontColorSelectionDIV, "selectWhiteColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellWhite");
+		createButton("settingsFontColorSelectionCellYellow", fontColorSelectionDIV, "selectYellowColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellYellow");
+		createButton("settingsFontColorSelectionCellBlue", fontColorSelectionDIV, "selectBlueColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellBlue");
+		var selectedFontColor = getCookie("subtitleFontColor");
+		if(selectedFontColor){
+			
+			switch(selectedFontColor){
+				case "multiColor":
+					mySett.selectMultiColor();
+					break;	
+					
+				case "whiteColor":
+					mySett.selectWhiteColor();
+					break;
+				
+				case "yellowColor":
+					mySett.selectYellowColor();
+					break;
+					
+				case "blueColor":
+					mySett.selectBlueColor();
+					break;		
+			}
+		}else{
+			mySett.selectWhiteColor();
+		}		
 
 		var fontBGColorSelectionDIV = createDiv("settingsFontBGColorSelection", this.settingsContainerDIV, "", "settingsFontBGColorSelection");
 		var settingsFontColorSelectionTitleDIV = createDiv("settingsFontBGColorSelectionTitle", fontBGColorSelectionDIV, "", "settingsFontColorSelectionTitle");
@@ -352,26 +371,21 @@ function settingsScreen() {
 		setCookie("subtitleFont", "Lexia");
 	}
 
+	this.selectMultiColor = function() {
+		mySett.selectColorCell("#settingsFontColorSelectionCellMulti");
+		setCookie("subtitleFontColor", "multiColor");
+	}
 	this.selectWhiteColor = function() {
 		mySett.selectColorCell("#settingsFontColorSelectionCellWhite");
+		setCookie("subtitleFontColor", "whiteColor");
 	}
 	this.selectYellowColor = function() {
 		mySett.selectColorCell("#settingsFontColorSelectionCellYellow");
-	}
-	this.selectDarkGreyColor = function() {
-		mySett.selectColorCell("#settingsFontColorSelectionCellDarkGrey");
-	}
-	this.selectGreenColor = function() {
-		mySett.selectColorCell("#settingsFontColorSelectionCellGreen");
+		setCookie("subtitleFontColor", "yellowColor");
 	}
 	this.selectBlueColor = function() {
 		mySett.selectColorCell("#settingsFontColorSelectionCellBlue");
-	}
-	this.selectPinkColor = function() {
-		mySett.selectColorCell("#settingsFontColorSelectionCellPink");
-	}
-	this.selectRedColor = function() {
-		mySett.selectColorCell("#settingsFontColorSelectionCellRed");
+		setCookie("subtitleFontColor", "blueColor");
 	}
 
 	this.selectColorCell =  function(cellColorButton) {
