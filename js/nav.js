@@ -67,19 +67,19 @@ move = function(action, event) {
 			mySett.initSubtitle();
 			break;
 
-		case "btActiveTimeNewRomanFont":
+		case "btActiveArialFont":
 			mySett.selectFont0();
 			break;
-		case "btActiveHerculanumFont":
+		case "btActiveOpenDyslexicFont":
 			mySett.selectFont1();
 			break;
-		case "btActiveAyuthayaFont":
+		case "btActiveAndikaFont":
 			mySett.selectFont2();
 			break;
 		case "btActiveHelveticaFont":
 			mySett.selectFont3();
 			break;
-		case "btActiveGeorgiaFont":
+		case "btActiveLexiaFont":
 			mySett.selectFont4();
 			break;
 

@@ -349,6 +349,12 @@ function playerScreen() {
 		myPlayerScreen.show();
 
 		this.resetTimerHideUI();
+		
+		// subtitles
+		var selectedFont = getCookie("subtitleFont");
+		if(selectedFont){
+			$(document.getElementById("videoPlayerMain")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia").addClass("font"+selectedFont);
+		}
 	};
 
 

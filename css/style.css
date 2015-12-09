@@ -1,8 +1,4 @@
 @font-face {
-	font-family: 'helveticaNeue-Bold';
-	src: url('../font/HelveticaNeue-Bold.ttf') format('truetype');
-}
-@font-face {
 	font-family: 'helveticaNeue-Light';
 	src: url('../font/HelveticaNeue-Light.ttf') format('truetype');
 }
@@ -15,24 +11,20 @@
 	src: url('../font/HelveticaNeue-Regular.ttf') format('truetype');
 }
 @font-face {
-	font-family: 'helveticaNeue-Thin';
-	src: url('../font/HelveticaNeue-Thin.ttf') format('truetype');
-}
-@font-face {
     font-family: 'ayuthaya';
     src: url('../font/Ayuthaya.ttf') format('truetype');
-}
-@font-face {
-    font-family: 'Herculanum';
-    src: url('../font/Herculanum.ttf') format('truetype');
 }
 @font-face {
     font-family: 'Georgia';
     src: url('../font/Georgia.ttf') format('truetype');
 }
 @font-face {
-    font-family: 'Times-new-roman';
-    src: url('../font/Times New Roman.ttf') format('truetype');
+    font-family: 'OpenDyslexic';
+    src: url('../font/OpenDyslexic-Regular.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Andika';
+    src: url('../font/AndBasR.ttf') format('truetype');
 }
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
@@ -1425,57 +1417,26 @@ body {
 }
 
 .activeFont {
-    position: absolute;
+    display: inline-block;
     width: 20%;
     height: 65%;
     top:35%;
-
 }
 
-.activeTimeNewRomanFont {
-    background-color: transparent;
-    left:0%;
-
-    text-align: center;
-    font-size: 18px;
-    color: #959595;
-    font-family: 'helveticaNeue-Regular';
+.fontArial, video.fontArial::cue{
+	font-family: Arial;
 }
-.activeAyuthayaFont {
-    background-color: transparent;
-    left:20%;
-
-    text-align: center;
-    font-size: 18px;
-    color: #959595;
-    font-family: 'ayuthaya';
+.fontOpenDyslexic, video.fontOpenDyslexic::cue{
+	font-family: OpenDyslexic;
 }
-.activeHerculanumFont {
-    background-color: transparent;
-    left:40%;
-
-    text-align: center;
-    font-size: 18px;
-    color: #959595;
-    font-family: 'Herculanum';
+.fontAndika, video.fontAndika::cue{
+	font-family: Andika;
 }
-.activeHelveticaFont {
-    background-color: transparent;
-    left:60%;
-
-    text-align: center;
-    font-size: 18px;
-    color: #959595;
-    font-family: 'helveticaNeue-Regular';
+.fontHelvetica{
+	font-family: Helvetica;
 }
-.activeGeorgiaFont {
-    background-color: transparent;
-    left:80%;
-    
-    text-align: center;
-    font-size: 24px;
-    color: #959595;
-    font-family: 'Georgia';
+.fontLexia{
+	font-family: Lexia;
 }
 
 .settingsFontColorSelection {

@@ -224,17 +224,30 @@ function settingsScreen() {
 		this.selectButton(".settingsMenuButton2");
 
 		var fontSelectionDIV = createDiv("settingsFontSelection", this.settingsContainerDIV, "", "settingsFontSelection");
-		var activeTimeNewRomanFontBT = createButton("activeTimeNewRomanFont", fontSelectionDIV, "btActiveTimeNewRomanFont", 0, 0, "activeFont activeTimeNewRomanFont");
-		activeTimeNewRomanFontBT.innerHTML = "Time new roman";
-		var activeHerculanumFontBT = createButton("activeHerculanumFont", fontSelectionDIV, "btActiveHerculanumFont", 0, 0, "activeFont activeHerculanumFont");
-		activeHerculanumFontBT.innerHTML = "Herculanum";
-		var activeAyuthayaFontBT = createButton("activeAyuthayaFont", fontSelectionDIV, "btActiveAyuthayaFont", 0, 0, "activeFont activeAyuthayaFont");
-		activeAyuthayaFontBT.innerHTML = "Ayuthaya";
-		var activeHelveticaFontBT = createButton("activeHelveticaFont", fontSelectionDIV, "btActiveHelveticaFont", 0, 0, "activeFont activeHelveticaFont");
-		activeHelveticaFontBT.innerHTML = "Helvetica";
-		var activeGeorgiaFontBT = createButton("activeGeorgiaFont", fontSelectionDIV, "btActiveGeorgiaFont", 0, 0, "activeFont activeGeorgiaFont");
-		activeGeorgiaFontBT.innerHTML = "Georgia";
-
+		var fontList = ["Arial","OpenDyslexic","Andika","Helvetica","Lexia"];
+		
+		var font1 = createButton("fontArial", fontSelectionDIV, "btActiveArialFont", 0, 0, "activeFont font" + fontList[0]);
+		font1.innerHTML = fontList[0];
+		
+		var font2 = createButton("fontOpenDyslexic", fontSelectionDIV, "btActiveOpenDyslexicFont", 0, 0, "activeFont font" + fontList[1]);
+		font2.innerHTML = fontList[1];
+		
+		var font3 = createButton("fontAndika", fontSelectionDIV, "btActiveAndikaFont", 0, 0, "activeFont font" + fontList[2]);
+		font3.innerHTML = fontList[2];
+		
+		var font4 = createButton("fontHelvetica", fontSelectionDIV, "btActiveHelveticaFont", 0, 0, "activeFont font" + fontList[3]);
+		font4.innerHTML = fontList[3];
+		
+		var font5 = createButton("fontLexia", fontSelectionDIV, "btActiveLexiaFont", 0, 0, "activeFont font" + fontList[4]);
+		font5.innerHTML = fontList[4];
+		
+		var selectedFont = getCookie("subtitleFont");
+		if(selectedFont && fontList.indexOf(selectedFont) !== -1){
+			this.selectFontButton("font" + selectedFont);
+		}else{
+			setCookie("subtitleFont", fontList[0]);
+			this.selectFontButton("font" + fontList[0]);
+		}
 
 		var fontColorSelectionDIV = createDiv("settingsFontColorSelection", this.settingsContainerDIV, "", "settingsFontColorSelection");
 		var settingsFontColorSelectionTitleDIV = createDiv("settingsFontColorSelectionTitle", fontColorSelectionDIV, "", "settingsFontColorSelectionTitle");
@@ -319,19 +332,24 @@ function settingsScreen() {
 	}
 
 	this.selectFont0 = function() {
-		mySett.selectFontButton(".activeTimeNewRomanFont");
+		mySett.selectFontButton("fontArial");
+		setCookie("subtitleFont", "Arial");
 	}
 	this.selectFont1 = function() {
-		mySett.selectFontButton(".activeHerculanumFont");
+		mySett.selectFontButton("fontOpenDyslexic");
+		setCookie("subtitleFont", "OpenDyslexic");
 	}
 	this.selectFont2 = function() {
-		mySett.selectFontButton(".activeAyuthayaFont");
+		mySett.selectFontButton("fontAndika");
+		setCookie("subtitleFont", "Andika");
 	}
 	this.selectFont3 = function() {
-		mySett.selectFontButton(".activeHelveticaFont");
+		mySett.selectFontButton("fontHelvetica");
+		setCookie("subtitleFont", "Helvetica");
 	}
 	this.selectFont4 = function() {
-		mySett.selectFontButton(".activeGeorgiaFont");
+		mySett.selectFontButton("fontLexia");
+		setCookie("subtitleFont", "Lexia");
 	}
 
 	this.selectWhiteColor = function() {
@@ -418,19 +436,19 @@ function settingsScreen() {
 
 	this.selectFontButton = function(fontButton) {
 		var btsTab = [
-						".activeTimeNewRomanFont",
-						".activeHerculanumFont",
-						".activeAyuthayaFont",
-						".activeHelveticaFont",
-						".activeGeorgiaFont"
+						"fontArial",
+						"fontOpenDyslexic",
+						"fontAndika",
+						"fontHelvetica",
+						"fontLexia"
 						];
 		var i;
 		for (i = 0; i < btsTab.length; i++) { 
-			if(btsTab[i] == fontButton) {
-				$(btsTab[i]).css("color", "#000000");	
+			if(btsTab[i] === fontButton) {
+				$(document.getElementById(btsTab[i])).css("color", "#000000");	
 			}
 			else {
-				$(btsTab[i]).css("color", "#AAAAAA");
+				$(document.getElementById(btsTab[i])).css("color", "#AAAAAA");
 			}
    			
 		} 		
