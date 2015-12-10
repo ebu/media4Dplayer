@@ -285,7 +285,7 @@ function settingsScreen() {
 					break;		
 			}
 		}else{
-			mySett.selectWhiteColor();
+			mySett.selectMultiColor();
 		}		
 
 		var fontBGColorSelectionDIV = createDiv("settingsFontBGColorSelection", this.settingsContainerDIV, "", "settingsFontBGColorSelection");
