@@ -1405,12 +1405,36 @@ body {
 }
 
 /* settings - sous-titre */
-
+#titleSubRubric{
+	text-align: center;
+	font-size: 32px;
+    position: absolute;
+	width: 100%;
+	top: 3%;
+}
+.separator{
+	width: 2px;
+	position: absolute;
+	left: 48%;
+	top: 22%;
+	height: 29%;
+	background-color: grey;
+}
+.chooseFontText{
+    position: absolute;
+    left: 10%;
+    font-size: 20px;
+    color: #000;
+    font-family: 'helveticaNeue-Regular';	
+}
+.chooseFontText{
+    top: 11%;
+}
 .settingsFontSelection {
     position: absolute;
     width: 80%;
     height: 10%;
-    top: 5%;
+    top: 15%;
     left: 10%;
 
     background-color: transparent;
@@ -1443,8 +1467,8 @@ body {
     position: absolute;
     width: 70%;
     height: 10%;
-    top: 15%;
-    left: 20%;
+    top: 22%;
+    left: 50%;
 }
 .settingsFontColorSelectionTitle {
     position: absolute;
@@ -1453,9 +1477,8 @@ body {
     top:0%;
     left:0%;
 
-    text-align: center;
     font-size: 24px;
-    color: #959595;
+    color: #000;
     font-family: 'helveticaNeue-Regular';
 }
 .settingsFontColorSelectionCell {
@@ -1496,8 +1519,8 @@ video.blueColor::cue{
     position: absolute;
     width: 70%;
     height: 10%;
-    top: 30%;
-    left: 20%;
+    top: 22%;
+    left: 10%;
 
     background-color: transparent;
 }
@@ -1531,12 +1554,12 @@ video.blueColor::cue{
 
 .textFontSizeSubtitle {
     position: absolute;
-    top: 46%;
-    left: 10%;
+    top: 40%;
+    left: 50%;
 
     text-align: left;
     font-size: 24px;
-    color: #6D6D6D;
+    color: #000;
     font-family: 'helveticaNeue-Regular';
 }
 
@@ -1544,8 +1567,8 @@ video.blueColor::cue{
     position: absolute;
     width: 32%;
     height: 5%;
-    top: 50%;
-    left: 10%;
+    top: 45%;
+    left: 50%;
 }
 /*.slideLowerCase {
     position: absolute;

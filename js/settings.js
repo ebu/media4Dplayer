@@ -222,6 +222,14 @@ function settingsScreen() {
 	this.initSubtitle = function() {
 		this.cleanContainer();
 		this.selectButton(".settingsMenuButton2");
+		
+		var titleDIV = createDiv("titleSubRubric", this.settingsContainerDIV, "", "titleSubRubric");
+		titleDIV.innerHTML = "Réglez vos sous-titres";
+		
+		createDiv("separator", this.settingsContainerDIV, "", "separator");
+		
+		var chooseFontTextDIV = createDiv("chooseFontText", this.settingsContainerDIV, "", "chooseFontText");
+		chooseFontTextDIV.innerHTML = "Choisir sa police";
 
 		var fontSelectionDIV = createDiv("settingsFontSelection", this.settingsContainerDIV, "", "settingsFontSelection");
 		var fontList = ["Arial","OpenDyslexic","Andika","Helvetica","Lexia"];
