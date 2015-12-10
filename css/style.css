@@ -1527,7 +1527,26 @@ video.blueColor::cue{
     height: 300px;
     background-color: transparent;
 }
-.slideLowerCase {
+
+.textFontSizeSubtitle {
+    position: absolute;
+    top: 46%;
+    left: 10%;
+
+    text-align: left;
+    font-size: 24px;
+    color: #6D6D6D;
+    font-family: 'helveticaNeue-Regular';
+}
+
+.slideFontSizeSubtitleContainer {
+    position: absolute;
+    width: 32%;
+    height: 5%;
+    top: 50%;
+    left: 10%;
+}
+/*.slideLowerCase {
     position: absolute;
     top:0%;
     left:0%;
@@ -1563,7 +1582,7 @@ video.blueColor::cue{
     width: 9%;
     height: 67%;
     left: 50%;
-}
+}*/
 
 /*************\
 * Text Helper *

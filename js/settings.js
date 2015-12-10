@@ -300,14 +300,17 @@ function settingsScreen() {
 			mySett.selectBlackBGColor();
 		}
 		
-		var slideSizeRangeDIV = createDiv("slideSizeRange", this.settingsContainerDIV, "", "slideSizeRange");
-		var slideLowerCaseDIV = createDiv("slideLowerCase", slideSizeRangeDIV, "", "slideLowerCase");
-		slideLowerCaseDIV.innerHTML = "A";
-		var slideUpperCaseDIV = createDiv("slideUpperCase", slideSizeRangeDIV, "", "slideUpperCase");
-		slideUpperCaseDIV.innerHTML = "A";
-		var slideSizeContainerDIV = createDiv("slideSizeContainer", slideSizeRangeDIV, "", "slideSizeContainer slideVerticalInput");
-		slideSizeContainerDIV.innerHTML = '<input type="range" id="verticalRange" orient="vertical" class="" min="0" max="9" step="1" value="3"/>'
-
+		
+		var textFontSize = createDiv("textFontSize", this.settingsContainerDIV, "", "textFontSizeSubtitle");
+		textFontSize.innerHTML = "Régler la taille de ses sous-titres";
+		var slideFontSizeContainer = createDiv("slideFontSizeContainer", this.settingsContainerDIV, "", "slideFontSizeSubtitleContainer");
+		var leftLowercaseDIV = createDiv("leftLowercase", slideFontSizeContainer, "", "leftLowercase");
+		leftLowercaseDIV.innerHTML = "A";
+		var slideRangeFontSize = createDiv("slideRangeFontSize", slideFontSizeContainer, "", "slideRangeFontSize slideHorizontalInput");
+		var valueMinSize = (getCookie("subtitleFontSize") != null) ? getCookie("subtitleFontSize") : 24;
+		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="24" max="44" value="'+valueMinSize+'" step="5" onchange="mySett.onSizeSubtitleSlideChangeValue(this.value)"/>';
+		var rightUppercaseDIV = createDiv("rightUpperCase", slideFontSizeContainer, "", "rightUpperCase");
+		rightUppercaseDIV.innerHTML = "A";
 	}
 	
 	this.show = function() {
@@ -478,6 +481,15 @@ function settingsScreen() {
 			}
    			
 		} 		
+	}
+
+	this.onSizeSubtitleSlideChangeValue = function(newValue) {
+
+		setCookie("subtitleFontSize", newValue);
+		//mySett.setSize(newValue);
+
+		console.log("onSizeSubtitleSlideChangeValue: ", newValue);
+		//$(".settingsSizeFontSample").css("font-size", newValue+"px");
 	}
 
 	this.unSelectFontButtons = function() {
