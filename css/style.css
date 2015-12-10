@@ -1470,8 +1470,9 @@ body {
     border-width: 2px;
     border-color: #555555;
 }
-video.multiColor::cue{
-	color: #FFFFFF;
+.settingsFontColorSelectionCellMulti{
+	background: url("../media/multicolor.png") no-repeat;
+	background-size: contain;
 }
 .settingsFontColorSelectionCellWhite {
     background-color: #FFFFFF;

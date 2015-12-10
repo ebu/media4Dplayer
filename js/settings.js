@@ -407,13 +407,10 @@ function settingsScreen() {
 	this.selectColorCell =  function(cellColorButton) {
 		console.log("selectColorCell - ", cellColorButton);
 		var cellColorBtsTab = [
+								"#settingsFontColorSelectionCellMulti",
 								"#settingsFontColorSelectionCellWhite",
 								"#settingsFontColorSelectionCellYellow",
-								"#settingsFontColorSelectionCellDarkGrey",
-								"#settingsFontColorSelectionCellGreen",
-								"#settingsFontColorSelectionCellBlue",
-								"#settingsFontColorSelectionCellPink",
-								"#settingsFontColorSelectionCellRed"
+								"#settingsFontColorSelectionCellBlue"
 								];
 		var i;
 		for (i = 0; i < cellColorBtsTab.length; i++) { 

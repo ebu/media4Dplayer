@@ -84,7 +84,7 @@ move = function(action, event) {
 			break;
 
 		case "selectMultiColor":
-			mySett.selectYellowColor();
+			mySett.selectMultiColor();
 			break;
 		case "selectWhiteColor":
 			mySett.selectWhiteColor();
