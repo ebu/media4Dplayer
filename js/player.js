@@ -14,7 +14,7 @@ function playerScreen() {
     	urlPip: null,
     	urlAudio: null,
 
-    	urlMain0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest_ttml.mpd",
+    	urlMain0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest_vtt.mpd",
     	urlPip0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest-lsf.mpd",
     	urlAudio0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest-ad.mpd",
 
@@ -364,11 +364,18 @@ function playerScreen() {
 			$videoPlayer.addClass(selectedFontColor);
 		}	
 		
-		// background color
+		// background color & Opacité du background
 		$videoPlayer.removeClass("blackBGColor whiteBGColor");
 		var selectedFontBGColor = getCookie("subtitleBGColor");
 		if(selectedFontBGColor){
 			$videoPlayer.addClass(selectedFontBGColor);
+		}
+		
+		// Opacité du background
+		$videoPlayer.removeClass("opacity_0 opacity_025 opacity_050 opacity_075 opacity_1");
+		var selectedFontBGColor = getCookie("subtitleBackgroundOpacity");
+		if(selectedFontBGColor){
+			$videoPlayer.addClass("opacity_"+selectedFontBGColor.replace(".",""));
 		}
 		
 		// font-size

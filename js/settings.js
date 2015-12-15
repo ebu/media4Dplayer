@@ -228,6 +228,7 @@ function settingsScreen() {
 		
 		createDiv("separator", this.settingsContainerDIV, "", "separator");
 		
+		/* CHOIX DE POLICE */
 		var chooseFontTextDIV = createDiv("chooseFontText", this.settingsContainerDIV, "", "chooseFontText");
 		chooseFontTextDIV.innerHTML = "Choisir sa police";
 
@@ -256,7 +257,8 @@ function settingsScreen() {
 			setCookie("subtitleFont", fontList[0]);
 			this.selectFontButton("font" + fontList[0]);
 		}
-
+		
+		/* COULEUR DE FOND */
 		var fontColorSelectionDIV = createDiv("settingsFontColorSelection", this.settingsContainerDIV, "", "settingsFontColorSelection");
 		var settingsFontColorSelectionTitleDIV = createDiv("settingsFontColorSelectionTitle", fontColorSelectionDIV, "", "settingsFontColorSelectionTitle");
 		settingsFontColorSelectionTitleDIV.innerHTML = "Couleur de texte";
@@ -288,6 +290,7 @@ function settingsScreen() {
 			mySett.selectMultiColor();
 		}		
 
+		/* COULEUR D'ARRIERE PLAN */
 		var fontBGColorSelectionDIV = createDiv("settingsFontBGColorSelection", this.settingsContainerDIV, "", "settingsFontBGColorSelection");
 		var settingsFontColorSelectionTitleDIV = createDiv("settingsFontBGColorSelectionTitle", fontBGColorSelectionDIV, "", "settingsFontColorSelectionTitle");
 		settingsFontColorSelectionTitleDIV.innerHTML = "Couleur d'arrière plan";
@@ -308,7 +311,17 @@ function settingsScreen() {
 			mySett.selectBlackBGColor();
 		}
 		
+		/* OPACITE DE L'ARRIERE PLAN DES SOUS-TITRES */
+		var textOpacity = createDiv("textOpacity", this.settingsContainerDIV, "", "textOpacity");
+		textOpacity.innerHTML = "Régler l'opacité de son arrière plan";
+		var slideOpacityContainer = createDiv("slideOpacityContainer", this.settingsContainerDIV, "", "slideOpacityContainer");
+		createDiv("blackDIV", slideOpacityContainer, "", "blackDIV");
+		var slideRangeOpacity = createDiv("slideRangeOpacity", slideOpacityContainer, "", "slideRangeOpacity slideHorizontalInput");
+		var valueMinOpacity = (getCookie("subtitleBackgroundOpacity") != null) ? getCookie("subtitleBackgroundOpacity") : 1;
+		slideRangeOpacity.innerHTML = '<input class="horizontalOpacitySlide" id="opacitySlide" type="range" min="0" max="1" value="'+valueMinOpacity+'" step="0.25" onchange="mySett.onOpacitySubtitleSlideChangeValue(this.value)"/>';
+		createDiv("transparentUppercaseDIV", slideOpacityContainer, "", "transparentUppercaseDIV");
 		
+		/* TAILLE DES SOUS-TITRES */
 		var textFontSize = createDiv("textFontSize", this.settingsContainerDIV, "", "textFontSizeSubtitle");
 		textFontSize.innerHTML = "Régler la taille de ses sous-titres";
 		var slideFontSizeContainer = createDiv("slideFontSizeContainer", this.settingsContainerDIV, "", "slideFontSizeSubtitleContainer");
@@ -497,6 +510,12 @@ function settingsScreen() {
 		//$(".settingsSizeFontSample").css("font-size", newValue+"px");
 	}
 
+	this.onOpacitySubtitleSlideChangeValue = function(newValue) {
+
+		setCookie("subtitleBackgroundOpacity", newValue);
+		console.log("subtitleBackgroundOpacity: ", newValue);
+	}
+	
 	this.unSelectFontButtons = function() {
 				
 	}
