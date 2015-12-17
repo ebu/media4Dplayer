@@ -1645,6 +1645,35 @@ video.whiteBGColor.opacity_1::cue{
     width: 100%;
     height: 100%;
 }
+
+.settingsVideoBackgroundSubtitles{
+    position: relative;
+    width: 86%;
+    height: 35%;
+    min-height: 35%;
+    top: 55%;
+    left: 6%;
+    background-color: grey;
+}
+
+.settingsVideoPipLimitScreenSubtitles{
+    position: absolute;
+    width: 96%;
+    height: 93%;
+    top: 4%;
+    left: 2%;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+}
+
+.settingsTitleTextsSubtitles {
+    color: gold;
+    font-family: 'helveticaNeue-Regular';
+	text-align: center;
+}
+
 /*.slideLowerCase {
     position: absolute;
     top:0%;

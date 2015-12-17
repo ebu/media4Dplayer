@@ -214,7 +214,7 @@ function settingsScreen() {
 			setCookie("LSFPip_position_y", newTopPercent);
 		}
 
-		mySettingsScreen.initVideoAndPipBackgroundColor();
+		mySettingsScreen.initVideoAndPipBackgroundColor("LSF","Vidéo");
 		mySettingsScreen.updateIconsPip();
 		mySettingsScreen.show();
 	};
@@ -332,6 +332,88 @@ function settingsScreen() {
 		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="24" max="44" value="'+valueMinSize+'" step="5" onchange="mySett.onSizeSubtitleSlideChangeValue(this.value)"/>';
 		var rightUppercaseDIV = createDiv("rightUpperCase", slideFontSizeContainer, "", "rightUpperCase");
 		rightUppercaseDIV.innerHTML = "A";
+		
+		/* LSF */
+		var videoScreen = createDiv("settingsVideoBackgroundSubtitles", this.settingsContainerDIV, "", "settingsVideoBackgroundSubtitles");
+		var videoPipLimitScreen = createDiv("settingsVideoPipLimitScreenSubtitles", videoScreen, "", "settingsVideoPipLimitScreenSubtitles");
+	
+		// !! using percent !!
+		var pipLeftPercent = (getCookie("LSFPipSubtitles_position_x") != null && !isNaN(getCookie("LSFPipSubtitles_position_x"))) ? getCookie("LSFPipSubtitles_position_x") : 81;
+		var pipTopPercent = (getCookie("LSFPipSubtitles_position_y") != null && !isNaN(getCookie("LSFPipSubtitles_position_y"))) ? getCookie("LSFPipSubtitles_position_y") : 45;
+
+		var pipWidthReal = (getCookie("LSFPipSubtitles_size_width") != null) ? getCookie("LSFPipSubtitles_size_width") : 18.63425925925926;
+		var pipHeightReal = (getCookie("LSFPipSubtitles_size_height") != null) ? getCookie("LSFPipSubtitles_size_height") : 16.30824372759857;
+
+		var ret = '';
+		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
+		ret += '<div id="settingsPipText" class="settingsPipText settingsTitleTextsSubtitles"></div>';
+		ret += '<div class="ui-icon-gripsmall-center" style="z-index: 1010;"></div>';
+		ret += '</div>';
+		ret += '</div>';
+		videoPipLimitScreen.innerHTML = ret;
+
+
+		var videoText = createDiv("settingsVideoText", videoPipLimitScreen, "Vidéo", "settingsVideoText settingsTitleTexts");
+
+
+		$( ".settingsPipVideo" ).draggable({ 	containment: ".settingsVideoPipLimitScreenSubtitles",
+												scroll:false,
+												handle:".ui-icon-gripsmall-center",
+												stop: function() {
+        											saveLSFCoordinates();
+      											}
+      										}).resizable( {
+      											containment: ".settingsVideoPipLimitScreenSubtitles",
+      											handles: 'all',
+      											minHeight: 80,
+      											//aspectRatio: 16/9,
+      											resize: function() {
+      												mySettingsScreen.updateIconsPip();
+      											},
+												stop: function() {
+        											saveLSFSize();
+        											saveLSFCoordinates();
+      											}
+
+      										});
+		$('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
+		$('.ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne');
+		$('.ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw');
+		$('.ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
+
+		function saveLSFSize() {
+			var pipWidth = $(".settingsPipVideo").width();
+			var pipHeight = $(".settingsPipVideo").height();
+			var containerWidth = $(".settingsVideoPipLimitScreenSubtitles").width();
+			var containerHeight = $(".settingsVideoPipLimitScreenSubtitles").height();
+
+			var newWidthPercent = (pipWidth/containerWidth)*100;
+			var newHeightPercent = (pipHeight/containerHeight)*100;
+
+			console.log("saveLSFSize :", newWidthPercent, "% et ", newHeightPercent, "%");
+			setCookie("LSFPipSubtitles_size_width", newWidthPercent);
+			setCookie("LSFPipSubtitles_size_height", newHeightPercent);
+		}
+		function saveLSFCoordinates() {
+			var pipLeft = $(".settingsPipVideo").position().left;
+			var pipTop = $(".settingsPipVideo").position().top;
+
+			var widthContainerString = $(".settingsVideoPipLimitScreenSubtitles").css("width");
+			var widthContainerPx = widthContainerString.substring(0, widthContainerString.length-2);
+			var heightContainerString = $(".settingsVideoPipLimitScreenSubtitles").css("height");
+			var heightContainerPx = heightContainerString.substring(0, heightContainerString.length-2);
+
+			var newLeftPercent = (pipLeft/widthContainerPx)*100;
+			var newTopPercent = (pipTop/heightContainerPx)*100;
+
+			console.log("saveLSFCoordinates : (left:"+ newLeftPercent+ ", top:" + newTopPercent);
+
+			setCookie("LSFPipSubtitles_position_x", newLeftPercent);
+			setCookie("LSFPipSubtitles_position_y", newTopPercent);
+		}
+
+		mySettingsScreen.initVideoAndPipBackgroundColor("Texte de sous-titre", "");
+		mySettingsScreen.updateIconsPip();	
 	}
 	
 	this.show = function() {
@@ -577,7 +659,7 @@ function settingsScreen() {
 	}
 
 	var currentPipMode;
-	this.initVideoAndPipBackgroundColor = function() {
+	this.initVideoAndPipBackgroundColor = function(pipText, videoText) {
 		if(currentPipMode == null) {
 			currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
 		}
@@ -588,14 +670,14 @@ function settingsScreen() {
 		if(currentPipMode == "PIP_MODE_LSF") {
 			$(".settingsPipVideo").css("background-color", LSFBackgroundColor);
 			$(".settingsVideoBackground").css("background-color", VideoBackgroundColor);
-			$("#settingsPipText").text("LSF");
-			$("#settingsVideoText").text("Vidéo");
+			$("#settingsPipText").text(pipText);
+			$("#settingsVideoText").text(videoText);
 		}
 		else if(currentPipMode == "PIP_MODE_VIDEO") {
 			$(".settingsPipVideo").css("background-color", VideoBackgroundColor);	
 			$(".settingsVideoBackground").css("background-color", LSFBackgroundColor);
-			$("#settingsPipText").text("Vidéo");
-			$("#settingsVideoText").text("LSF");			
+			$("#settingsPipText").text(pipText);
+			$("#settingsVideoText").text(videoText);			
 		}
 		else {
 			console.log("initVideoAndPipBackgroundColor - case not defined [", currentPipMode);

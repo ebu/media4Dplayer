@@ -564,6 +564,23 @@ function playerScreen() {
 		if(selectedFontSize){
 			$videoPlayer.css("font-size", selectedFontSize+"px");
 		}
+		
+		// Position des sous-titres
+		setTimeout(function(){
+			var $ctn = $("video::-webkit-media-text-track-display");
+			if(getCookie("LSFPipSubtitles_position_x") != null) {
+				$ctn.css("left", getCookie("LSFPipSubtitles_position_x") + "%" );
+			}
+			if(getCookie("LSFPipSubtitles_position_y") != null) {
+				$ctn.css("top", getCookie("LSFPipSubtitles_position_y") + "%" );
+			}
+			if(getCookie("LSFPipSubtitles_size_width") != null) {
+				$ctn.css("width", getCookie("LSFPipSubtitles_size_width") + "%" );
+			}
+			if(getCookie("LSFPipSubtitles_size_height") != null) {
+				$ctn.css("height", getCookie("LSFPipSubtitles_size_height") + "%" );
+			}
+		}, 1000);
 	};
 	
 	return this;
