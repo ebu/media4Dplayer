@@ -713,3 +713,7 @@ function settingsScreen() {
 		setCookie("PIPMode", newPipMode);
 	}
 }
+	
+function pad(thing) {
+	return (thing < 10) ? "0" + String(thing) : thing;
+}

@@ -1,3 +1,4 @@
+var checkPositionVideo;
 function playerScreen() {
 	var myPlayerScreen = this;
 	this.activeScreen = false;
@@ -131,7 +132,7 @@ function playerScreen() {
 
 	this.playPause = function() {
 		console.log("playPause : ", isPlaying);
-
+		
 		if(isPlaying == true) {
 			this.playerManager.controller.pause();
 		}
@@ -166,6 +167,7 @@ function playerScreen() {
 	this.stop = function(){
 		this.playerManager.controller.pause();
 		this.playerManager.controller.currentTime = 0;
+		this.progressBar.reset();
 	};
 
 
@@ -565,6 +567,8 @@ function playerScreen() {
 			$videoPlayer.css("font-size", selectedFontSize+"px");
 		}
 		
+		this.launchCheckPositionVideo();
+		
 		// Position des sous-titres
 		setTimeout(function(){
 			var $ctn = $("video::-webkit-media-text-track-display");
@@ -581,6 +585,100 @@ function playerScreen() {
 				$ctn.css("height", getCookie("LSFPipSubtitles_size_height") + "%" );
 			}
 		}, 1000);
+	};
+	
+
+
+																								/********************************
+																								*	GESTION DE LA PROGRESSBAR	*
+																								********************************/
+
+	/**
+	 * @author Johny EUGENE (DOTSCREEN)
+	 * @description Launches the progress bar updating
+	 */
+
+	this.launchCheckPositionVideo = function(){
+
+		this.stopCheckVideoPosition();
+		var player = this;
+		checkPositionVideo = setInterval(function(){
+
+			//if(this.playerManager.controller.isPlaying){
+			player.progressBar.update(myPlayerScreen.playerManager.controller.currentTime, myPlayerScreen.playerManager.controller.duration);
+
+			/*}else{
+				Main.player.stopCheckVideoPosition();
+			}*/
+
+		}, 500);
+	};
+
+	/**
+	 * @author Johny EUGENE (DOTSCREEN)
+	 * @description Stop the progress bar updating
+	 */
+
+	this.stopCheckVideoPosition = function(){
+		clearInterval(checkPositionVideo);
+	};
+
+																								/************************************************
+																								*	GESTION DE LA BANNIERE VIDEO (PROGRESS BAR)	*
+																								************************************************/
+
+	/**
+	 * @author Johny EUGENE (DOTSCREEN)
+	 * @description Resets the progress bar
+	 */
+	
+	this.progressBar = {};
+	this.progressBar.reset = function(){
+
+		myPlayerScreen.stopCheckVideoPosition();
+		clearInterval(updateProgressBarOfBanner);
+		$(document.getElementById("playerProgressCurrent")).text("-");
+		$(document.getElementById("playerProgressTotal")).text("-");
+		$(document.getElementById("playerProgressCursor")).css("width",0);
+
+		//Main.banner.hidePauseBtn();
+	};
+
+	/**
+	 * @author Johny EUGENE (DOTSCREEN)
+	 * @description Updates the progress bar
+	 * @param {Integer} time The current position inside the video (in milliseconds)
+	 * @param {Integer} tT Total time of the video (in milliseconds)
+	 */
+
+	this.progressBar.update = function(time, tT){
+		
+		time = time * 1000;
+		tT = tT * 1000;
+		var timePercent         = (100 * time) / tT,
+			timeC               = " - ",
+			timeT               = " - ",
+			timeMinute          = 0,   
+			timeSecond          = 0,
+			totalTimeMinute     = 0,   
+			totalTimeSecond     = 0,
+
+		percent = (!isNaN(timePercent)?timePercent:0);
+
+		$(document.getElementById("playerProgressCursor")).css("width", percent + "%");
+
+		//if(myPlayerScreen.playerManager.controller.isPlaying){
+
+			totalTimeMinute = Math.floor(tT / 60000);
+			timeMinute      = Math.floor(time / 60000);                
+			totalTimeSecond = Math.floor((tT % 60000) / 1000);
+			timeSecond      = Math.floor((time % 60000) / 1000);
+			timeC = (!isNaN(timeMinute) && !isNaN(timeSecond)) ? pad(timeMinute) + " : " + pad(timeSecond) : timeC;
+			timeT = (!isNaN(totalTimeMinute) && !isNaN(totalTimeSecond)) ? pad(totalTimeMinute) + " : " + pad(totalTimeSecond) : timeT;
+		//}
+
+		$(document.getElementById("playerProgressCurrent")).text(timeC);
+		$(document.getElementById("playerProgressTotal")).text(timeT);
 	};
 	
 	return this;
