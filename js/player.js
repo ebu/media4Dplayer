@@ -37,27 +37,191 @@ function playerScreen() {
 	var isPlaying = null;
 	var currentPipMode = null;
 	var pipControlTimeout = null;
+	
+
+
+	
+	this.show = function() {
+		myTopbar.hide();
+		this.playerScreen.style.display = "block";
+		this.activeScreen = true;
+
+		this.resetTimerHideUI();
+	};
+	
+	this.hide = function() {
+		this.playerScreen.style.display = "none";
+		this.activeScreen = false;
+	};
+
+	this.onPause = function() {
+		console.log("onPause");
+		isPlaying = false;
+		btnPlayPause.children[0].src="media/player/controle_btn_play.png";
+		btnPlayPause.children[0].alt="lecture";
+	}	
+	this.onPlay = function() {
+		console.log("onPlay");
+		isPlaying = true;
+		btnPlayPause.children[0].src="media/player/controle_btn_pause.png";
+		btnPlayPause.children[0].alt="pause";
+	}
+
+	this.validClose = function() {
+		this.playerManager.playerMain.reset();
+		this.playerManager.playerPip.reset();
+		this.playerManager.playerAudio.reset();
+		
+		myTopbar.show();
+		//pas de init on veux juste rendre visible l'existant
+		myDash.show();
+		this.hide();
+	};
+	
+	this.validOptionSigne = function() {
+        if (!this.playerManager.optionSigne)
+        {
+        	this.playerManager.controller.currentTime = this.videoMain.currentTime;
+            this.videoPip.controller = this.playerManager.controller;
+            this.playerManager.playerPip.startup();
+            this.playerManager.playerPip.setAutoPlay(false);
+            this.playerManager.playerPip.attachView(this.videoPip);
+            this.playerManager.playerPip.attachSource(this.playerManager.urlPip);
+            this.playerManager.optionSigne = true;
+        }
+        else
+        {
+        	this.videoPip.controller = null;
+            this.playerManager.playerPip.reset();
+            this.playerManager.optionSigne = false;
+        }
+
+        this.resetTimerHideUI();
+	};
+	
+	this.validOptionDescription = function()
+    {
+        if (!this.playerManager.optionDescription)
+        {
+        	this.playerManager.controller.currentTime = this.videoMain.currentTime;
+            this.videoAudio.controller = this.playerManager.controller;
+            this.playerManager.playerAudio.startup();
+            this.playerManager.playerAudio.setAutoPlay(false);
+            this.playerManager.playerAudio.attachView(this.videoAudio);
+            this.playerManager.playerAudio.attachSource(this.playerManager.urlAudio);
+            this.playerManager.optionDescription = true;
+        }
+        else
+        {
+            this.videoAudio.controller = null;
+            this.playerManager.playerAudio.reset();
+            this.playerManager.optionDescription = false;
+        }
+
+        this.resetTimerHideUI();
+    };
+	this.validOptionSub = function() {
+        if (!this.playerManager.optionSub) {
+            this.playerManager.optionSub = true;
+        }
+        else {
+            this.playerManager.optionSub = false;
+        }
+	};
+
+	this.playPause = function() {
+		console.log("playPause : ", isPlaying);
+
+		if(isPlaying == true) {
+			this.playerManager.controller.pause();
+		}
+		else {
+			this.playerManager.controller.play();	
+		}
+		//		this.playerManager.controller.pause();
+
+		this.resetTimerHideUI();
+	};
+
+	this.ff = function(){
+		
+		var totalTimeSecond =  this.playerManager.controller.duration;	
+		var saut = Math.round(totalTimeSecond*(5/100));
+		var currentPosition = this.playerManager.controller.currentTime;
+		if(currentPosition + saut < totalTimeSecond){
+			this.playerManager.controller.currentTime = currentPosition + saut;
+		}
+	};
+
+	this.rw = function(){
+		
+		var totalTimeSecond =  this.playerManager.controller.duration;	
+		var saut = Math.round(totalTimeSecond*(5/100));
+		var currentPosition = this.playerManager.controller.currentTime;
+		if(currentPosition > 0){
+			this.playerManager.controller.currentTime = currentPosition - saut;
+		}
+	};
+
+	this.stop = function(){
+		this.playerManager.controller.pause();
+		this.playerManager.controller.currentTime = 0;
+	};
+
+
+	this.updateIconsPip = function() {
+		this.updateIconCenterPositionToCenter();
+		this.updateIconSwitchPositionToTopCenter();
+	}
+
+	this.updateIconSwitchPositionToTopCenter = function() {
+		console.log("updateIconSwitchPositionToTopCenter");
+/*
+		$(".ui-icon-switchVideos").css({
+			position:'absolute',
+			top:'-30px',
+			left:($(".settingsPipVideo").width() - $(".ui-icon-switchVideos").outerWidth()) / 2
+		});
+*/
+	}
+	this.updateIconCenterPositionToCenter = function() {
+		console.log("updateIconCenterPositionToCenter");
+		$(".ui-icon-gripsmall-center").css({
+			position:'absolute',
+			left:($(".pipVideo").width() - $(".ui-icon-gripsmall-center").outerWidth()) / 2,
+			top:($(".pipVideo").height() - $(".ui-icon-gripsmall-center").outerHeight()) / 2
+		});
+	}
+
+	var refreshTimer;
+	this.resetTimerHideUI = function() {
+		if(refreshTimer!= null) {
+			clearInterval(refreshTimer);
+		}
+		refreshTimer = setTimeout(this.hideUI, 4 * 1000);
+	}
+
+	this.diplayUI = function() {
+		document.getElementById("BTdisplayUI").remove();
+		$("#playerTopBanner").css("display","block");
+		$("#playerBottomBanner").css("display","block");
+		$("#playerUI").css("background","");
+		this.resetTimerHideUI();	
+	}
+	this.hideUI = function() {
+		$("#playerTopBanner").css("display","none");
+		$("#playerBottomBanner").css("display","none");
+		$("#playerUI").css("background","url('../media/player/player_ombre_video.png') repeat");
+		var btn = createButton("BTdisplayUI", document.getElementById("playerScreen"), "playerDisplayUI", 0, 0);
+	}
+	
 	this.init = function(index) {
 		if(!this.alreadyInit || (currentIndex != index) ) {
 
 			$("#playerScreen").css("background-color", "black");
 
 			currentIndex = index;
-			if(currentIndex == 0) {
-				this.playerManager.urlMain = this.playerManager.urlMain0;
-				this.playerManager.urlPip = this.playerManager.urlPip0;
-				this.playerManager.urlAudio = this.playerManager.urlAudio0;
-
-				//$("#videoSubtitle").attr("src", "samplesVTT/w1_jamy.vtt");
-
-			}
-			else {
-				this.playerManager.urlMain = this.playerManager.urlMain1;
-				this.playerManager.urlPip = this.playerManager.urlPip1;
-				this.playerManager.urlAudio = this.playerManager.urlAudio1;
-
-				//$("#videoSubtitle").attr("src", "samplesVTT/w1_20h.vtt");
-			}
+			
 
 			var playerTopBanner = this.playerUI.children[0];
 			var playerBottomBanner = this.playerUI.children[1];
@@ -126,32 +290,24 @@ function playerScreen() {
 	       
 	       	this.playerManager.playerMain = new MediaPlayer(context);
 	       	this.playerManager.playerMain.startup();
-	        //this.playerManager.playerMain.getDebug().setLevel(10);
 	       	this.playerManager.playerMain.setAutoPlay(false);
-	
 
 	        this.playerManager.playerPip = new MediaPlayer(context);
 	        this.playerManager.playerPip.startup();
 	        this.playerManager.playerPip.setAutoPlay(false);
-
-			this.playerManager.playerMain.attachView(this.videoMain);
-			this.playerManager.playerPip.attachView(this.videoPip);
-
 	        
 	        this.playerManager.playerAudio = new MediaPlayer(context);
 	        this.playerManager.playerAudio.startup();
 	        this.playerManager.playerAudio.setAutoPlay(false);
-	        this.playerManager.playerAudio.attachView(this.videoAudio);
 	
 	        this.playerManager.controller = new MediaController();
 	
 	        console.debug("controller = " + this.playerManager.controller);
-	        console.debug("videoPlayerMainMediaElement.controller = " + this.videoMain.controller);
 	
-	        this.videoMain.controller = this.playerManager.controller;
-	        this.videoPip.controller = this.playerManager.controller;
-	        this.videoAudio.controller = this.playerManager.controller;
-	
+		    this.videoMain.controller = this.playerManager.controller;
+		    this.videoPip.controller = this.playerManager.controller;
+		    //this.videoAudio.controller = this.playerManager.controller; //TOTO: DDU: try to understand why setting that make the video do not automatically starts
+
 	        this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 	        console.debug("######### audioContext: " + this.playerManager.audioContext);
 	
@@ -195,6 +351,26 @@ function playerScreen() {
 	        */
 			this.alreadyInit = true;
 		}
+
+		if(currentIndex == 0) {
+			this.playerManager.urlMain = this.playerManager.urlMain0;
+			this.playerManager.urlPip = this.playerManager.urlPip0;
+			this.playerManager.urlAudio = this.playerManager.urlAudio0;
+
+			//$("#videoSubtitle").attr("src", "samplesVTT/w1_jamy.vtt");
+
+		}
+		else {
+			this.playerManager.urlMain = this.playerManager.urlMain1;
+			this.playerManager.urlPip = this.playerManager.urlPip1;
+			this.playerManager.urlAudio = this.playerManager.urlAudio1;
+
+			//$("#videoSubtitle").attr("src", "samplesVTT/w1_20h.vtt");
+		}
+		
+		this.playerManager.playerMain.attachView(this.videoMain);
+		this.playerManager.playerPip.attachView(this.videoPip);
+	    this.playerManager.playerAudio.attachView(this.videoAudio);
 
 
 		if(getCookie("LSFPip_position_x") != null) {
@@ -339,11 +515,15 @@ function playerScreen() {
 
 		this.playerManager.playerAudio.attachSource(this.playerManager.urlAudio);
 
-        this.playerManager.playerMain.play();
-        this.playerManager.playerPip.play();
-        this.playerManager.playerAudio.play();
-        myPlayerScreen.onPlay(); // pas d'évenement lors du play... alors on le force.
 
+		this.playerManager.controller.currentTime = 0;
+
+        //this.playerManager.playerMain.play();
+        //this.playerManager.playerPip.play();
+        //this.playerManager.playerAudio.play();
+        //this.playerManager.controller.play();
+
+        myPlayerScreen.onPlay(); // pas d'évenement lors du play... alors on le force.
 
         myPlayerScreen.updateIconsPip();
 		myPlayerScreen.show();
@@ -385,182 +565,6 @@ function playerScreen() {
 			$videoPlayer.css("font-size", selectedFontSize+"px");
 		}
 	};
-
-
-	
-	this.show = function() {
-		myTopbar.hide();
-		this.playerScreen.style.display = "block";
-		this.activeScreen = true;
-
-		this.resetTimerHideUI();
-	};
-	
-	this.hide = function() {
-		this.playerScreen.style.display = "none";
-		this.activeScreen = false;
-	};
-
-	this.onPause = function() {
-		console.log("onPause");
-		isPlaying = false;
-		btnPlayPause.children[0].src="media/player/controle_btn_play.png";
-		btnPlayPause.children[0].alt="lecture";
-	}	
-	this.onPlay = function() {
-		console.log("onPlay");
-		isPlaying = true;
-		btnPlayPause.children[0].src="media/player/controle_btn_pause.png";
-		btnPlayPause.children[0].alt="pause";
-	}
-
-	this.validClose = function() {
-		this.playerManager.playerMain.reset();
-		this.playerManager.playerPip.reset();
-		this.playerManager.playerAudio.reset();
-		
-		myTopbar.show();
-		//pas de init on veux juste rendre visible l'existant
-		myDash.show();
-		this.hide();
-	};
-	
-	this.validOptionSigne = function() {
-        if (!this.playerManager.optionSigne)
-        {
-        	this.playerManager.controller.currentTime = this.videoMain.currentTime;
-            this.videoPip.controller = this.playerManager.controller;
-            this.playerManager.playerPip.startup();
-            this.playerManager.playerPip.setAutoPlay(true);
-            this.playerManager.playerPip.attachView(this.videoPip);
-            this.playerManager.playerPip.attachSource(this.playerManager.urlPip);
-            this.playerManager.optionSigne = true;
-        }
-        else
-        {
-        	this.videoPip.controller = null;
-            this.playerManager.playerPip.reset();
-            this.playerManager.optionSigne = false;
-        }
-
-        this.resetTimerHideUI();
-	};
-	
-	this.validOptionDescription = function()
-    {
-        if (!this.playerManager.optionDescription)
-        {
-        	this.playerManager.controller.currentTime = this.videoMain.currentTime;
-            this.videoAudio.controller = this.playerManager.controller;
-            this.playerManager.playerAudio.startup();
-            this.playerManager.playerAudio.setAutoPlay(true);
-            this.playerManager.playerAudio.attachView(this.videoAudio);
-            this.playerManager.playerAudio.attachSource(this.playerManager.urlAudio);
-            this.playerManager.optionDescription = true;
-        }
-        else
-        {
-            this.videoAudio.controller = null;
-            this.playerManager.playerAudio.reset();
-            this.playerManager.optionDescription = false;
-        }
-
-        this.resetTimerHideUI();
-    };
-	this.validOptionSub = function() {
-        if (!this.playerManager.optionSub) {
-            this.playerManager.optionSub = true;
-        }
-        else {
-            this.playerManager.optionSub = false;
-        }
-	};
-
-	this.playPause = function() {
-		console.log("playPause : ", isPlaying);
-
-		if(isPlaying == true) {
-			this.playerManager.controller.pause();
-		}
-		else {
-			this.playerManager.controller.play();	
-		}
-		//		this.playerManager.controller.pause();
-
-		this.resetTimerHideUI();
-	};
-
-	this.ff = function(){
-		
-		var totalTimeSecond =  this.playerManager.controller.duration;	
-		var saut = Math.round(totalTimeSecond*(5/100));
-		var currentPosition = this.playerManager.controller.currentTime;
-		if(currentPosition + saut < totalTimeSecond){
-			this.playerManager.controller.currentTime = currentPosition + saut;
-		}
-	};
-
-	this.rw = function(){
-		
-		var totalTimeSecond =  this.playerManager.controller.duration;	
-		var saut = Math.round(totalTimeSecond*(5/100));
-		var currentPosition = this.playerManager.controller.currentTime;
-		if(currentPosition > 0){
-			this.playerManager.controller.currentTime = currentPosition - saut;
-		}
-	};
-
-	this.stop = function(){
-		this.playerManager.controller.pause();
-		this.playerManager.controller.currentTime = 0;
-	};
-
-
-	this.updateIconsPip = function() {
-		this.updateIconCenterPositionToCenter();
-		this.updateIconSwitchPositionToTopCenter();
-	}
-
-	this.updateIconSwitchPositionToTopCenter = function() {
-		console.log("updateIconSwitchPositionToTopCenter");
-/*
-		$(".ui-icon-switchVideos").css({
-			position:'absolute',
-			top:'-30px',
-			left:($(".settingsPipVideo").width() - $(".ui-icon-switchVideos").outerWidth()) / 2
-		});
-*/
-	}
-	this.updateIconCenterPositionToCenter = function() {
-		console.log("updateIconCenterPositionToCenter");
-		$(".ui-icon-gripsmall-center").css({
-			position:'absolute',
-			left:($(".pipVideo").width() - $(".ui-icon-gripsmall-center").outerWidth()) / 2,
-			top:($(".pipVideo").height() - $(".ui-icon-gripsmall-center").outerHeight()) / 2
-		});
-	}
-
-	var refreshTimer;
-	this.resetTimerHideUI = function() {
-		if(refreshTimer!= null) {
-			clearInterval(refreshTimer);
-		}
-		refreshTimer = setTimeout(this.hideUI, 4 * 1000);
-	}
-
-	this.diplayUI = function() {
-		document.getElementById("BTdisplayUI").remove();
-		$("#playerTopBanner").css("display","block");
-		$("#playerBottomBanner").css("display","block");
-		$("#playerUI").css("background","");
-		this.resetTimerHideUI();	
-	}
-	this.hideUI = function() {
-		$("#playerTopBanner").css("display","none");
-		$("#playerBottomBanner").css("display","none");
-		$("#playerUI").css("background","url('../media/player/player_ombre_video.png') repeat");
-		var btn = createButton("BTdisplayUI", document.getElementById("playerScreen"), "playerDisplayUI", 0, 0);
-	}
 	
 	return this;
 };
