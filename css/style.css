@@ -1506,19 +1506,19 @@ body {
 .settingsFontColorSelectionCellWhite {
     background-color: #FFFFFF;
 }
-video.whiteColor::cue{
+.whiteColor, video.whiteColor::cue{
 	color: #FFFFFF;
 }
 .settingsFontColorSelectionCellYellow {
     background-color: #FEBF00;
 }
-video.yellowColor::cue{
+.yellowColor, video.yellowColor::cue{
 	color: #FEBF00;
 }
 .settingsFontColorSelectionCellBlue {
     background-color: #64D7FF;
 }
-video.blueColor::cue{
+.blueColor, video.blueColor::cue{
 	color: #64D7FF;
 }
 .settingsFontBGColorSelection {
@@ -1545,37 +1545,37 @@ video.blueColor::cue{
 .settingsFontColorSelectionCellBlack{
 	background-color: rgba(0,0,0,0.8);
 }
-video.blackBGColor.opacity_0::cue{
+.blackBGColor.opacity_0, video.blackBGColor.opacity_0::cue{
 	background-color: rgba(0,0,0,0);
 }
-video.blackBGColor.opacity_025::cue{
+.blackBGColor.opacity_025, video.blackBGColor.opacity_025::cue{
 	background-color: rgba(0,0,0,0.25);
 }
-video.blackBGColor.opacity_05::cue{
+.blackBGColor.opacity_05, video.blackBGColor.opacity_05::cue{
 	background-color: rgba(0,0,0,0.5);
 }
-video.blackBGColor.opacity_075::cue{
+.blackBGColor.opacity_075, video.blackBGColor.opacity_075::cue{
 	background-color: rgba(0,0,0,0.75);
 }
-video.blackBGColor.opacity_1::cue{
+.blackBGColor.opacity_1, video.blackBGColor.opacity_1::cue{
 	background-color: rgba(0,0,0,1);
 }
 .settingsFontColorSelectionCellWhite{
 	background-color: rgba(255,255,255,0.8);
 }
-video.whiteBGColor.opacity_0::cue{
+.whiteBGColor.opacity_0, video.whiteBGColor.opacity_0::cue{
 	background-color: rgba(255,255,255,0);
 }
-video.whiteBGColor.opacity_025::cue{
+.whiteBGColor.opacity_025, video.whiteBGColor.opacity_025::cue{
 	background-color: rgba(255,255,255,0.25);
 }
-video.whiteBGColor.opacity_05::cue{
+.whiteBGColor.opacity_05, video.whiteBGColor.opacity_05::cue{
 	background-color: rgba(255,255,255,0.5);
 }
-video.whiteBGColor.opacity_075::cue{
+.whiteBGColor.opacity_075, video.whiteBGColor.opacity_075::cue{
 	background-color: rgba(255,255,255,0.75);
 }
-video.whiteBGColor.opacity_1::cue{
+.whiteBGColor.opacity_1, video.whiteBGColor.opacity_1::cue{
 	background-color: rgba(255,255,255,1);
 }
 .slideSizeRange {
@@ -1675,8 +1675,6 @@ video.whiteBGColor.opacity_1::cue{
 }
 
 .settingsTitleTextsSubtitles {
-    color: gold;
-    font-family: 'helveticaNeue-Regular';
 	text-align: center;
 }
 

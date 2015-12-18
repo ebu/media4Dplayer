@@ -345,12 +345,40 @@ function settingsScreen() {
 		var pipHeightReal = (getCookie("LSFPipSubtitles_size_height") != null) ? getCookie("LSFPipSubtitles_size_height") : 16.30824372759857;
 
 		var ret = '';
-		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
-		ret += '<div id="settingsPipText" class="settingsPipText settingsTitleTextsSubtitles"></div>';
-		ret += '<div class="ui-icon-gripsmall-center" style="z-index: 1010;"></div>';
+		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%;line-height:5em;text-align:center">';
+		ret += '<div id="settingsPipText" class="settingsPipText settingsTitleTextsSubtitles" style="display:inline-block;vertical-align:middle;line-height:normal;"></div>';
+		ret += '<div class="ui-icon-gripsmall-center" style="z-index: 1010;width:15px;height:15px;background-size:contain"></div>';
 		ret += '</div>';
 		ret += '</div>';
 		videoPipLimitScreen.innerHTML = ret;
+		
+		
+		var selectedFont = getCookie("subtitleFont");
+		var $textCtn = $(document.getElementById("settingsPipText"));
+		if(selectedFont){
+			$textCtn.removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia").addClass("font"+selectedFont);
+		}	
+		
+		var selectedFontColor = getCookie("subtitleFontColor");
+		if(selectedFontColor){
+			$textCtn.addClass(selectedFontColor);
+		}
+		
+		$textCtn.removeClass("blackBGColor whiteBGColor");
+		var selectedFontBGColor = getCookie("subtitleBGColor");
+		if(selectedFontBGColor){
+			$textCtn.addClass(selectedFontBGColor);
+		}
+		$textCtn.removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1");
+		var selectedFontBGColor = getCookie("subtitleBackgroundOpacity");
+		if(selectedFontBGColor){
+			$textCtn.addClass("opacity_"+selectedFontBGColor.replace(".",""));
+		}
+		$textCtn.css("font-size", "inherit");
+		var selectedFontSize = getCookie("subtitleFontSize");
+		if(selectedFontSize){
+			$textCtn.css("font-size", selectedFontSize+"px");
+		}
 
 
 		var videoText = createDiv("settingsVideoText", videoPipLimitScreen, "Vidéo", "settingsVideoText settingsTitleTexts");
@@ -472,39 +500,48 @@ function settingsScreen() {
 	this.selectFont0 = function() {
 		mySett.selectFontButton("fontArial");
 		setCookie("subtitleFont", "Arial");
+		$(document.getElementById("settingsPipText")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia").addClass("fontArial");
 	}
 	this.selectFont1 = function() {
 		mySett.selectFontButton("fontOpenDyslexic");
 		setCookie("subtitleFont", "OpenDyslexic");
+		$(document.getElementById("settingsPipText")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia").addClass("fontOpenDyslexic");
 	}
 	this.selectFont2 = function() {
 		mySett.selectFontButton("fontAndika");
 		setCookie("subtitleFont", "Andika");
+		$(document.getElementById("settingsPipText")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia").addClass("fontAndika");
 	}
 	this.selectFont3 = function() {
 		mySett.selectFontButton("fontHelvetica");
 		setCookie("subtitleFont", "Helvetica");
+		$(document.getElementById("settingsPipText")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia").addClass("fontHelvetica");
 	}
 	this.selectFont4 = function() {
 		mySett.selectFontButton("fontLexia");
 		setCookie("subtitleFont", "Lexia");
+		$(document.getElementById("settingsPipText")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia").addClass("fontLexia");
 	}
 
 	this.selectMultiColor = function() {
 		mySett.selectColorCell("#settingsFontColorSelectionCellMulti");
 		setCookie("subtitleFontColor", "multiColor");
+		$(document.getElementById("settingsPipText")).removeClass("multiColor whiteColor yellowColor blueColor");
 	}
 	this.selectWhiteColor = function() {
 		mySett.selectColorCell("#settingsFontColorSelectionCellWhite");
 		setCookie("subtitleFontColor", "whiteColor");
+		$(document.getElementById("settingsPipText")).removeClass("multiColor whiteColor yellowColor blueColor").addClass("whiteColor");
 	}
 	this.selectYellowColor = function() {
 		mySett.selectColorCell("#settingsFontColorSelectionCellYellow");
 		setCookie("subtitleFontColor", "yellowColor");
+		$(document.getElementById("settingsPipText")).removeClass("multiColor whiteColor yellowColor blueColor").addClass("yellowColor");
 	}
 	this.selectBlueColor = function() {
 		mySett.selectColorCell("#settingsFontColorSelectionCellBlue");
 		setCookie("subtitleFontColor", "blueColor");
+		$(document.getElementById("settingsPipText")).removeClass("multiColor whiteColor yellowColor blueColor").addClass("blueColor");
 	}
 
 	this.selectColorCell =  function(cellColorButton) {
@@ -534,10 +571,12 @@ function settingsScreen() {
 	this.selectWhiteBGColor = function() {
 		mySett.selectBackgroundColorCell("#settingsFontBGColorSelectionCellWhite");
 		setCookie("subtitleBGColor", "whiteBGColor");
+		$(document.getElementById("settingsPipText")).removeClass("blackBGColor whiteBGColor").addClass("whiteBGColor");
 	}
 	this.selectBlackBGColor = function() {
 		mySett.selectBackgroundColorCell("#settingsFontBGColorSelectionCellBlack");
 		setCookie("subtitleBGColor", "blackBGColor");
+		$(document.getElementById("settingsPipText")).removeClass("blackBGColor whiteBGColor").addClass("blackBGColor");
 	}		
 	this.selectBackgroundColorCell =  function(cellColorButton) {
 		console.log("selectBackgroundColorCell - ", cellColorButton);
@@ -586,6 +625,7 @@ function settingsScreen() {
 	this.onSizeSubtitleSlideChangeValue = function(newValue) {
 
 		setCookie("subtitleFontSize", newValue);
+		$(document.getElementById("settingsPipText")).css("font-size", newValue+"px");
 		//mySett.setSize(newValue);
 
 		console.log("onSizeSubtitleSlideChangeValue: ", newValue);
@@ -595,7 +635,7 @@ function settingsScreen() {
 	this.onOpacitySubtitleSlideChangeValue = function(newValue) {
 
 		setCookie("subtitleBackgroundOpacity", newValue);
-		console.log("subtitleBackgroundOpacity: ", newValue);
+		$(document.getElementById("settingsPipText")).removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1").addClass("opacity_"+newValue.replace(".",""));
 	}
 	
 	this.unSelectFontButtons = function() {
