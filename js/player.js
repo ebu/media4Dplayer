@@ -335,7 +335,44 @@ function playerScreen() {
 
             this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(e) {
             	console.debug("MediaPlayer.events.TEXT_TRACKS_ADDED");
-            	var tracks = this.playerManager.playerMain.getTracksFor("text");
+				
+				var xPos = getCookie("LSFPipSubtitles_position_x"),
+					yPos = getCookie("LSFPipSubtitles_position_y"),
+					wSize = getCookie("LSFPipSubtitles_size_width"),
+					hSize = getCookie("LSFPipSubtitles_size_height");
+				if(xPos !== "undefined" && yPos !== "undefined" && wSize !== "undefined" && hSize !== "undefined"){
+
+					var textTracks = myPlayerScreen.videoMain.textTracks;
+
+					var textTrack = textTracks[0];
+					//dumpObject(textTrack);
+					//dumpObject(textTrack.regions);
+					console.debug("# textTrack.kind = "+textTrack.kind);
+					console.debug("# textTrack.mode = "+textTrack.mode);
+					//textTrack.mode = "hidden";
+					var cues = textTrack.cues;
+
+					var region = new VTTRegion();
+					region.width = Math.round(getCookie("LSFPipSubtitles_size_width"));
+					//region.height = Math.round(getCookie("LSFPipSubtitles_size_height"));
+					region.id  = "regionMain";
+					region.regionAnchorX = Math.round(getCookie("LSFPipSubtitles_position_x"));
+					region.regionAnchorY = Math.round(getCookie("LSFPipSubtitles_position_y"));
+					region.viewportAnchorX = Math.round(getCookie("LSFPipSubtitles_position_x"));
+					region.viewportAnchorY = Math.round(getCookie("LSFPipSubtitles_position_y"));
+						//region.lines = 3;
+						//region.scroll = "up";
+					//dumpObject(region);
+					textTrack.addRegion(region);				
+
+					for (var i=0;i<cues.length;i++) {
+						cues[i].regionId = "regionMain";
+						cues[i].region = region;
+						cues[i].onenter = function(e) {
+							//dumpObject(e.target);
+						}
+					}					
+				}
             });
 	        /*
             function onCheckVideo()
@@ -554,7 +591,7 @@ function playerScreen() {
 		}
 		
 		// Opacité du background
-		$videoPlayer.removeClass("opacity_0 opacity_025 opacity_050 opacity_075 opacity_1");
+		$videoPlayer.removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1");
 		var selectedFontBGColor = getCookie("subtitleBackgroundOpacity");
 		if(selectedFontBGColor){
 			$videoPlayer.addClass("opacity_"+selectedFontBGColor.replace(".",""));
@@ -568,23 +605,6 @@ function playerScreen() {
 		}
 		
 		this.launchCheckPositionVideo();
-		
-		// Position des sous-titres
-		setTimeout(function(){
-			var $ctn = $("video::-webkit-media-text-track-display");
-			if(getCookie("LSFPipSubtitles_position_x") != null) {
-				$ctn.css("left", getCookie("LSFPipSubtitles_position_x") + "%" );
-			}
-			if(getCookie("LSFPipSubtitles_position_y") != null) {
-				$ctn.css("top", getCookie("LSFPipSubtitles_position_y") + "%" );
-			}
-			if(getCookie("LSFPipSubtitles_size_width") != null) {
-				$ctn.css("width", getCookie("LSFPipSubtitles_size_width") + "%" );
-			}
-			if(getCookie("LSFPipSubtitles_size_height") != null) {
-				$ctn.css("height", getCookie("LSFPipSubtitles_size_height") + "%" );
-			}
-		}, 1000);
 	};
 	
 
