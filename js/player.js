@@ -338,9 +338,9 @@ function playerScreen() {
 				
 				var xPos = getCookie("LSFPipSubtitles_position_x"),
 					yPos = getCookie("LSFPipSubtitles_position_y"),
-					wSize = getCookie("LSFPipSubtitles_size_width"),
-					hSize = getCookie("LSFPipSubtitles_size_height");
-				if(xPos !== "undefined" && yPos !== "undefined" && wSize !== "undefined" && hSize !== "undefined"){
+					wSize = getCookie("LSFPipSubtitles_size_width");
+					
+				if(xPos !== "undefined" && yPos !== "undefined" && wSize !== "undefined"){
 
 					var textTracks = myPlayerScreen.videoMain.textTracks;
 
@@ -353,13 +353,12 @@ function playerScreen() {
 					var cues = textTrack.cues;
 
 					var region = new VTTRegion();
-					region.width = Math.round(getCookie("LSFPipSubtitles_size_width"));
-					//region.height = Math.round(getCookie("LSFPipSubtitles_size_height"));
+					region.width = Math.round(wSize);
 					region.id  = "regionMain";
-					region.regionAnchorX = Math.round(getCookie("LSFPipSubtitles_position_x"));
-					region.regionAnchorY = Math.round(getCookie("LSFPipSubtitles_position_y"));
-					region.viewportAnchorX = Math.round(getCookie("LSFPipSubtitles_position_x"));
-					region.viewportAnchorY = Math.round(getCookie("LSFPipSubtitles_position_y"));
+					//region.regionAnchorX = Math.round(xPos);
+					//region.regionAnchorY = Math.round(yPos);
+					region.viewportAnchorX = Math.round(xPos);
+					region.viewportAnchorY = Math.round(yPos);
 						//region.lines = 3;
 						//region.scroll = "up";
 					//dumpObject(region);

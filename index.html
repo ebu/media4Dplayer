@@ -11,8 +11,9 @@
 			color: white;
 			font-family: sans-serif;
 		}
-		video::cue-region{
-			background-color: transparent;
+		video::-webkit-media-text-track-region{
+			background: rgba(0,0,0,0);
+			line-height: 59px;
 		}
 		video.multiColor::cue(c.cyan){
 			color: cyan;
@@ -54,7 +55,7 @@
 	</div>
 	<div id="textHelper"></div>
 	<div id="playerScreen">
-		<video id="videoPlayerMain" class="player mainPlayer" autoplay controls></video>
+		<video id="videoPlayerMain" class="player mainPlayer" autoplay></video>
 		<video id="videoPlayerAudio" class="player audioPlayer" autoplay></video>
 		
 		<div id="playerUI">
