@@ -1,0 +1,96 @@
+html, body{
+	height: 100%;
+}
+
+html{
+    font-size: 62.5%; /* Ré-équilibrage du Rem face au Pixel pour des calculs simples */
+	max-width: 2160px;
+	min-width: 1280px;
+	min-height: 853px;
+}
+
+body{
+	font-family: arial, sans-serif;
+	font-size: 2.6rem;
+}
+
+body.splashscreen #splashscreen, body.profils-list #profils-list-container, body.apps-list #apps-list-container{
+	display: block;
+}
+
+body.profils-list nav, body.apps-list nav{
+	display: none;
+}
+
+hr{
+	clear:both;
+	margin:0;
+	visibility:hidden;
+}
+
+#sections-container{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+#sections-container section{
+	height: 100%;
+	width: 100%;
+	display: none;
+}
+body.profils-list #profils-list-container, body.apps-list #apps-list-container{
+	display: table;
+}
+
+section .list{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+/* LISTE DES PROFILS */
+#profils-list .user{
+	display:inline-block;
+	vertical-align:middle;
+	width: 300px;
+	margin-left: 100px;
+}
+
+#profils-list .user:first-child{
+	margin-left: 0;
+}
+
+.user img{
+	width: 100%;
+	height: auto;
+}
+
+/* LISTE DES APPLICATIONS */
+#apps-list .app{
+	display:inline-block;
+	vertical-align:middle;
+	width: 380px;
+	height: 380px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	background-color: #c9c9c9;
+}
+
+.app a{
+	display: block;
+}
+
+.app img{
+	width: 100%;
+	height: auto;	
+}
+
+/* SPLASH SCREEN */
+#splashscreen{
+	background:url("../img/logo.png") no-repeat center center;
+	text-align:center;
+	height: 100%;
+	width: 100%;
+	display: none;
+}

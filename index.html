@@ -1,116 +1,55 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>Media 4D</title>
-	<link type="text/css" rel="stylesheet" href="css/style.css" />
-	<link type="text/css" rel="stylesheet" href="css/inputRangeSettings.css" />
-	<link type="text/css" rel="stylesheet" href="js/lib/jquery-ui.css" />
-	<style type="text/css">
-		::cue{
-			color: white;
-			font-family: sans-serif;
-		}
-		video::cue-region{
-			background-color: transparent;
-		}
-		video.multiColor::cue(c.cyan){
-			color: cyan;
-		}
-		video.multiColor::cue(c.yellow){
-			color: yellow;
-		}
-	</style>
-</head>
-<body>
-	<div id="splashscreen">
-		<img id="splashLogo" src="media/logo.png" alt=""></img>
-	</div>
-	<div id="userSelectScreen">
-		<div id="userChoice"></div>
-	</div>
-	<div id="home"></div>
-	<div id="comingSoon"></div>
-	<div id="topbar"></div>
-	<div id="favoriteScreen"></div>
-	<div id="settingsScreen"></div>
-	<div id="dashboardScreen">
-		<div id="dashboardTop">
-			<div id="dashboardtopBack"></div>
-			<div id="dashboardTopTitle"></div>
-		</div>
-		<div id="dashboardLeft"></div>
-		<div id="dashboardRight">
-			<div id="dashboardSocial"></div>
-			<div id="dashboardSubtitle"></div>
-			<div id="dashboardDetails"></div>
-			<div id="dashboardAccessInfo"></div>
-			<div id="dashboardSynopsis"></div>
-			<div id="dashboardResume">
-				<div id="dashboardResumeTitle"></div>
-				<div id="dashboardResumeContent"></div>
-			</div>
-		</div>
-	</div>
-	<div id="textHelper"></div>
-	<div id="playerScreen">
-		<video id="videoPlayerMain" class="player mainPlayer" autoplay controls></video>
-		<video id="videoPlayerAudio" class="player audioPlayer" autoplay></video>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+	<head>
+		<title>Media 4D</title>
+		<meta charset="UTF-8"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="viewport" content="user-scalable=no"/>
 		
-		<div id="playerUI">
-			<div id="playerTopBanner"></div>
-			<div id="playerBottomBanner">
-				<div id="playerOptions"></div>
-				<div id="playerProgressInfos">
-					<div id="playerProgressCurrent"></div>
-					<div id="playerProgressBar">
-						<div id="playerProgressCursor"></div>
-					</div>
-					<div id="playerProgressTotal"></div>
-				</div>
-				<div id="playerControls">
-					<div id="playerControlVolume"></div>
-					<div id="playerControlTrickMode"></div>
-					<div id="playerControlConfig"></div>
-				</div>
-			</div>
-			<div id="pipContainer" class="player videoPipContainer">
-				<div id="pipVideo" class="pipVideo ui-draggable ui-resizable">
-					<video id="videoPlayerPip" class="player pipPlayer" autoplay></video>
-					<div class="ui-icon ui-icon-gripsmall-center" style="width:60px;height:60px;z-index: 1010;"></div>
-					<div id="ui-icon-switchVideos" zone="settingsSwitchVideos" class="ui-icon-switchVideos" style="z-index: 1011;"
-							onMouseOver="moveSelecteur(\'ui-icon-switchVideos\')"
-							onFocus="moveSelecteur(\'ui-icon-switchVideos\')"
-							onClick="move(\'enter\')">
-					</div>
-				</div>
-			</div>
+		<link type="text/css" rel="stylesheet" href="ressources/css/reset.css"/>
+		<link type="text/css" rel="stylesheet" href="ressources/css/main.css"/>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+	</head>
+	<body class="apps-list">
+		<div id="sections-container">
+			<nav>
+				<ul>
+					<li><a title="Username">Johny</a></li>
+				</ul>
+			</nav>
+			<section id="profils-list-container">
+				<ul id="profils-list" class="list">
+					<li class="user">
+						<img alt="Profile de " src="ressources/img/avatar.png"/>
+						<a title="Invité">Invité</a>
+					</li>
+				</ul>
+			</section>
+			<section id="apps-list-container">
+				<ul id="apps-list" class="list">
+					<li class="app icon">
+						<a title="baddp"><img alt="Icône de l'application baddp" src="ressources/img/temp/home/baddp.png"/></a>
+					</li>
+					<li class="app icon">
+						<a title="pluzz"><img alt="Icône de l'application pluzz" src="ressources/img/temp/home/pluzz.png"/></a>
+					</li>
+					<li class="app icon">
+						<a title="lesitetv"><img alt="Icône de l'application lesitetv" src="ressources/img/temp/home/lesitetv.png"/></a>
+					</li>
+					<li class="app icon">
+						<a title="media"><img alt="Icône de l'application media" src="ressources/img/temp/home/media.png"/></a>
+					</li>
+				</ul>				
+			</section>
+			<section id="in-construction"></section>
+			<section id="my-videos"></section>
+			<section id="dashboard"></section>
+			<section id="settings"></section>
+			<section id="profile"></section>
 		</div>
-	</div>
-</body>
-
-<script language="javascript" type="text/javascript" src="js/lib/jquery.min.1.11.0.js"></script>
-<script language="javascript" type="text/javascript" src="js/lib/jquery-ui.min.1.10.3.js"></script>
-
-<script language="javascript" type="text/javascript" src="js/lib/jquery.ui.touch-punch.min.js"></script>
-
-<!-- <script language="javascript" type="text/javascript" src="js/lib/hasplayer.min.js"></script> -->
-<script src="http://cdn.dashjs.org/latest/dash.all.js"></script>
-<script language="javascript" type="text/javascript" src="js/svgCollection.js"></script>
-<script language="javascript" type="text/javascript" src="js/language.js"></script>
-<script language="javascript" type="text/javascript" src="js/cookie.js"></script>
-<script language="javascript" type="text/javascript" src="js/outils.js"></script>
-<script language="javascript" type="text/javascript" src="js/keymanager.js"></script>
-<script language="javascript" type="text/javascript" src="js/request.js"></script>
-<script language="javascript" type="text/javascript" src="js/user.js"></script>
-<script language="javascript" type="text/javascript" src="js/home.js"></script>
-<script language="javascript" type="text/javascript" src="js/favorite.js"></script>
-<script language="javascript" type="text/javascript" src="js/settings.js"></script>
-<script language="javascript" type="text/javascript" src="js/dashboard.js"></script>
-<script language="javascript" type="text/javascript" src="js/player.js"></script>
-<script language="javascript" type="text/javascript" src="js/comingSoon.js"></script>
-<script language="javascript" type="text/javascript" src="js/textHelper.js"></script>
-<script language="javascript" type="text/javascript" src="js/nav.js"></script>
-<script language="javascript" type="text/javascript" src="js/topbar.js"></script>
-<script language="javascript" type="text/javascript" src="js/main.js"></script>
+		<div id="videoPlayerContainer"></div>
+		<div id="splashscreen"></div>
+	</body>
 </html>
