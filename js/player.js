@@ -355,10 +355,10 @@ function playerScreen() {
 					var region = new VTTRegion();
 					region.width = Math.round(wSize);
 					region.id  = "regionMain";
-					//region.regionAnchorX = Math.round(xPos);
-					//region.regionAnchorY = Math.round(yPos);
-					region.viewportAnchorX = Math.round(xPos);
-					region.viewportAnchorY = Math.round(yPos);
+					region.regionAnchorX = Math.round(xPos);
+					region.regionAnchorY = Math.round(yPos);
+					//region.viewportAnchorX = Math.round(xPos);
+					//region.viewportAnchorY = Math.round(yPos);
 						//region.lines = 3;
 						//region.scroll = "up";
 					//dumpObject(region);

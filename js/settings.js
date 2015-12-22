@@ -435,9 +435,9 @@ function settingsScreen() {
 			var newTopPercent = (pipTop/heightContainerPx)*100;
 
 			console.log("saveLSFCoordinates : (left:"+ newLeftPercent+ ", top:" + newTopPercent);
-
+			
 			setCookie("LSFPipSubtitles_position_x", newLeftPercent);
-			setCookie("LSFPipSubtitles_position_y", newTopPercent);
+			setCookie("LSFPipSubtitles_position_y", newTopPercent<0?0:newTopPercent);
 		}
 
 		mySettingsScreen.initVideoAndPipBackgroundColor("Texte de sous-titre", "");
