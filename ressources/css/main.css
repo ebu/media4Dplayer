@@ -14,11 +14,19 @@ body{
 	font-size: 2.6rem;
 }
 
+.bold{
+	font-weight: bold;
+}
+
+.grey{
+	color:#959595;
+}
+
 body.splashscreen #splashscreen, body.profils-list #profils-list-container, body.apps-list #apps-list-container{
 	display: block;
 }
 
-body.profils-list nav, body.apps-list nav{
+body.profils-list nav, body.apps-list nav, body.in-construction nav{
 	display: none;
 }
 
@@ -39,7 +47,7 @@ hr{
 	width: 100%;
 	display: none;
 }
-body.profils-list #profils-list-container, body.apps-list #apps-list-container{
+body.profils-list #profils-list-container, body.apps-list #apps-list-container, body.in-construction #in-construction{
 	display: table;
 }
 
@@ -53,8 +61,8 @@ section .list{
 #profils-list .user{
 	display:inline-block;
 	vertical-align:middle;
-	width: 300px;
-	margin-left: 100px;
+	width: 240px;
+	margin-left: 180px;
 }
 
 #profils-list .user:first-child{
@@ -70,10 +78,10 @@ section .list{
 #apps-list .app{
 	display:inline-block;
 	vertical-align:middle;
-	width: 380px;
-	height: 380px;
-	margin-right: 20px;
-	margin-bottom: 20px;
+	width: 337px;
+	height: 337px;
+	margin-right: 17px;
+	margin-bottom: 17px;
 	background-color: #c9c9c9;
 }
 
@@ -84,6 +92,32 @@ section .list{
 .app img{
 	width: 100%;
 	height: auto;	
+}
+
+/* EN CONSTRUCTION */
+#in-construction{
+	text-align: center;	
+}
+
+#in-construction .content{
+	display: table-cell;
+	vertical-align: middle;	
+}
+
+#in-construction p{
+	line-height: 35px;
+	margin-bottom: 100px;
+}
+
+#back-button-in-construction-section{
+	width: 622px;
+	height: 107px;
+	line-height: 107px;
+	display: inline-block;
+	background-color: #959595;
+	color: #fff;
+	font-size: 3rem;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 1);
 }
 
 /* SPLASH SCREEN */
