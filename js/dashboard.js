@@ -20,6 +20,7 @@ function dashboardScreen() {
 		
 		var dashboardBack = this.dashboardTop.children[0];
 		var dashboardTitle = this.dashboardTop.children[1];
+		dashboardTitle.setAttribute("tabindex", 10);
 
 
 		//title
@@ -29,17 +30,18 @@ function dashboardScreen() {
 		var playButton = createButton("playButton", this.dashboardLeft, "dashboardPlay"+this.indexContentDashboard, 0, 0, "playButton");
 		createImg(null, playButton, mydashboard.contentInfos.picture, null, "Lire la vidéo " + mydashboard.contentInfos.title);
 		createImg("playButtonIcone", playButton, "media/dashboard/icone_gr_play_video.png", null, "");	
-		playButton.setAttribute("tabindex", 1);
+		playButton.setAttribute("tabindex", 11);
 		
 		var dashboardTheme = createDiv("dashboardTheme", this.dashboardLeft);
-		createDiv("dashboardThemeTitle", dashboardTheme, language.fr.themeTitle);
+		var dashboardThemeTitle = createDiv("dashboardThemeTitle", dashboardTheme, language.fr.themeTitle);
+		dashboardThemeTitle.setAttribute("tabindex", 17);
 		var dashboardThemeContent = createDiv("dashboardThemeContent", dashboardTheme);
 		
-		var cpt = 0;
+		var cpt = 20;
 		var btn = null;
 		for(var i in mydashboard.contentInfos.link) {
 			btn = themeButton(cpt, dashboardThemeContent, mydashboard.contentInfos.link[i]);
-			btn.setAttribute("tabindex", cpt + 2);
+			btn.setAttribute("tabindex", cpt);
 			cpt++;
 		}
 		
@@ -55,15 +57,18 @@ function dashboardScreen() {
 		
 		var dashboardFavoriteControl = createButton("dashboardFavoriteControl", dashboardSocial, "dashboardFavoriteControl", 0, 0);
 		createImg(null, dashboardFavoriteControl, "media/dashboard/icone_favoris_actif.png", null, "Ajouter aux favoris");
-		dashboardFavoriteControl.setAttribute("tabindex", 5);
+		dashboardFavoriteControl.setAttribute("tabindex", 12);
 		var dashboardFacebookZone = createDiv("dashboardFacebookZone", dashboardSocial);
 		createImg(null, dashboardFacebookZone, "media/dashboard/icone_facebook_actif.png", null, "facebook");
+		dashboardFacebookZone.setAttribute("tabindex", 13);
 		createDiv("dahsboardFacebookLike", dashboardFacebookZone, "16");
 		var dashboardTwitterZone = createDiv("dashboardTwitterZone", dashboardSocial);
 		createImg(null, dashboardTwitterZone, "media/dashboard/icone_twitter_actif.png", null, "Tweet");
+		dashboardTwitterZone.setAttribute("tabindex", 14);
 		createDiv("dahsboardTwitterFollower", dashboardTwitterZone, "1");
 		
 		dashboardSubtitle.innerHTML = mydashboard.contentInfos.subtitle;
+		dashboardSubtitle.setAttribute("tabindex", 15);
 		dashboardSynopsis.innerHTML = mydashboard.contentInfos.synopsis;
 		if(mydashboard.contentInfos.resume.length > 0 ) {
 			dashboardResumeTitle.innerHTML = language.fr.resumeTitle;
@@ -73,8 +78,9 @@ function dashboardScreen() {
 		}
 		dashboardResumeContent.innerHTML = mydashboard.contentInfos.resume;
 
-		createButton("textHelperOnSynopsis", dashboardSynopsis, "textHelperOnSynopsis", 0, 0, "textHelperButton");
+		var textHelperOnSynopsis = createButton("textHelperOnSynopsis", dashboardSynopsis, "textHelperOnSynopsis", 0, 0, "textHelperButton");
 		createButton("textHelperOnResumeContent", dashboardResumeContent, "textHelperOnResumeContent", 0, 0, "textHelperButton");
+		textHelperOnSynopsis.setAttribute("tabindex", 16);
 	};
 	
 	this.init = function(index) {

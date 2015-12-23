@@ -30,10 +30,13 @@ function settingsScreen() {
 
 		var menuSettingsGeneralBT = createButton("settingsMenuButtonGeneral", menuSettingsDIV, "btSettingsMenuGeneral", 0, 0,"settingsMenuButton settingsMenuButton0");
 		menuSettingsGeneralBT.innerHTML =  "Géneral";
+		menuSettingsGeneralBT.setAttribute("tabindex", 10);
 		var menuSettingsLSFBT = createButton("settingsMenuButtonLSF", menuSettingsDIV, "btSettingsMenuLSF", 0, 0, "settingsMenuButton settingsMenuButton1");
 		menuSettingsLSFBT.innerHTML =  "Langue des signes";
+		menuSettingsLSFBT.setAttribute("tabindex", 11);
 		var menuSettingsSubtitleFBT = createButton("settingsMenuButtonSubtitle", menuSettingsDIV, "btSettingsMenuSubtitle", 0, 0, "settingsMenuButton settingsMenuButton2");
 		menuSettingsSubtitleFBT.innerHTML =  "Sous-titres";
+		menuSettingsSubtitleFBT.setAttribute("tabindex", 12);
 
 
 		this.initMain();
@@ -47,73 +50,83 @@ function settingsScreen() {
 		var activeNarratorBT = createButton("activeNarrator", this.settingsContainerDIV, "btActiveNarrator", 0, 0, "activeNarrator");
 		var activeNarratorText = createDiv("activeNarratorText", activeNarratorBT, "", "activeNarratorText");
 		activeNarratorText.innerHTML = "Activer le narrateur";
+		activeNarratorText.setAttribute("tabindex", 20);
 		createIconeNarrator(activeNarratorBT, 60, 60);
 
 		var activeMagnifyingGlassBT = createButton("activeMagnifyingGlass", this.settingsContainerDIV, "btActiveMagnifyingGlass", 0, 0, "activeMagnifyingGlass");
 		var activeMagnifyingGlassText = createDiv("activeMagnifyingGlassText", activeMagnifyingGlassBT, "", "activeMagnifyingGlassText");
 		activeMagnifyingGlassText.innerHTML = "Activer la loupe";
 		createIconeMagnifyingGlass(activeMagnifyingGlassBT, 60, 60);
+		activeMagnifyingGlassText.setAttribute("tabindex", 35);
 
 		var textVoiceControl = createDiv("textVoiceControl", this.settingsContainerDIV, "", "textVoiceControl");
 		textVoiceControl.innerHTML = "Contrôle de la voix";
+		textVoiceControl.setAttribute("tabindex", 21);
 		var textVolume = createDiv("textVolume", this.settingsContainerDIV, "", "textVolume");
 		textVolume.innerHTML = "Volume";
+		textVolume.setAttribute("tabindex", 22);
 		var slideVolumeContainer = createDiv("slideVolumeContainer", this.settingsContainerDIV, "", "slideVolumeContainer");
 		var leftMinusDIV = createDiv("leftMinus", slideVolumeContainer, "", "leftMinus");
 		leftMinusDIV.innerHTML = "-";
 		var slideRangeVolume = createDiv("slideRangeVolume", slideVolumeContainer, "", "slideRangeVolume slideHorizontalInput");
 		var volRange = 2; //TODO 
-		slideRangeVolume.innerHTML = '<input class="volumeSlide" type="range" min="0" max="4" value="'+volRange+'" step="1" onchange="mySett.onVolumeSlideChangeValue(this.value)"/>';
+		slideRangeVolume.innerHTML = '<input class="volumeSlide" type="range" min="0" max="4" value="'+volRange+'" step="1" onchange="mySett.onVolumeSlideChangeValue(this.value)" tabindex="23"/>';
 		var rightPlusDIV = createDiv("rightPlus", slideVolumeContainer, "", "rightPlus");
 		rightPlusDIV.innerHTML = "+";
 
 		var textVitesse = createDiv("textVitesse", this.settingsContainerDIV, "", "textVitesse");
 		textVitesse.innerHTML = "Vitesse";
+		textVitesse.setAttribute("tabindex", 24);
 		var slideVitesseContainer = createDiv("slideVitesseContainer", this.settingsContainerDIV, "", "slideVitesseContainer");
 		var leftMinusDIV = createDiv("leftMinus", slideVitesseContainer, "", "leftMinus");
 		leftMinusDIV.innerHTML = "-";
 		var slideRangeVitesse = createDiv("slideRangeVitesse", slideVitesseContainer, "", "slideRangeVitesse slideHorizontalInput");
 		var vitesseRange = 2; //TODO 
-		slideRangeVitesse.innerHTML = '<input class="vitesseSlide" type="range" min="0" max="4" value="'+vitesseRange+'" step="1" onchange="mySett.onVitesseSlideChangeValue(this.value)"/>';
+		slideRangeVitesse.innerHTML = '<input class="vitesseSlide" type="range" min="0" max="4" value="'+vitesseRange+'" step="1" onchange="mySett.onVitesseSlideChangeValue(this.value)" tabindex="25"/>';
 		var rightPlusDIV = createDiv("rightPlus", slideVitesseContainer, "", "rightPlus");
 		rightPlusDIV.innerHTML = "+";
 
 
 		var textTimbre = createDiv("textTimbre", this.settingsContainerDIV, "", "textTimbre");
 		textTimbre.innerHTML = "Timbre";
+		textTimbre.setAttribute("tabindex", 26);
 		var slideTimbreContainer = createDiv("slideTimbreContainer", this.settingsContainerDIV, "", "slideTimbreContainer slideHorizontalInput");
 		var leftMinusDIV = createDiv("leftMinus", slideTimbreContainer, "", "leftMinus");
 		leftMinusDIV.innerHTML = "-";
 		var slideRangeTimbre = createDiv("slideRangeTimbre", slideTimbreContainer, "", "slideRangeTimbre");
 		var timbreRange = 2; //TODO 
-		slideRangeTimbre.innerHTML = '<input class="timbreSlide" type="range" min="0" max="4" value="'+timbreRange+'" step="1" onchange="mySett.onTimbreSlideChangeValue(this.value)"/>';
+		slideRangeTimbre.innerHTML = '<input class="timbreSlide" type="range" min="0" max="4" value="'+timbreRange+'" step="1" onchange="mySett.onTimbreSlideChangeValue(this.value)" tabindex="27"/>';
 		var rightPlusDIV = createDiv("rightPlus", slideTimbreContainer, "", "rightPlus");
 		rightPlusDIV.innerHTML = "+";
 
 
 		var textLecture = createDiv("textLecture", this.settingsContainerDIV, "", "textLecture");
 		textLecture.innerHTML = "Lecture";
+		textLecture.setAttribute("tabindex", 28);
 
 
 		var textCarateresQueLOnTapeContainer = createDiv("textCarateresQueLOnTapeContainer", this.settingsContainerDIV, "", "textCarateresQueLOnTapeContainer");
 		var textCarateresQueLOnTape = createDiv("textCarateresQueLOnTape", textCarateresQueLOnTapeContainer, "", "textCarateresQueLOnTape");
 		textCarateresQueLOnTape.innerHTML = "Caractères que l'on tape";
 		createIconeSwitchOff(textCarateresQueLOnTapeContainer, 60, 40);
+		textCarateresQueLOnTape.setAttribute("tabindex", 29);
 
 		var textMotsQueLOnTapeContainer = createDiv("textMotsQueLOnTapeContainer", this.settingsContainerDIV, "", "textMotsQueLOnTapeContainer");
 		var textMotsQueLOnTape = createDiv("textMotsQueLOnTape", textMotsQueLOnTapeContainer, "", "textMotsQueLOnTape");
 		textMotsQueLOnTape.innerHTML = "Mots que l'on tape";
 		createIconeSwitchOff(textMotsQueLOnTapeContainer, 60, 40);
+		textMotsQueLOnTape.setAttribute("tabindex", 30);
 
 
 		var textFontSize = createDiv("textFontSize", this.settingsContainerDIV, "", "textFontSize");
 		textFontSize.innerHTML = "Taille de la police";
+		textFontSize.setAttribute("tabindex", 36);
 		var slideFontSizeContainer = createDiv("slideFontSizeContainer", this.settingsContainerDIV, "", "slideFontSizeContainer");
 		var leftLowercaseDIV = createDiv("leftLowercase", slideFontSizeContainer, "", "leftLowercase");
 		leftLowercaseDIV.innerHTML = "A";
 		var slideRangeFontSize = createDiv("slideRangeFontSize", slideFontSizeContainer, "", "slideRangeFontSize slideHorizontalInput");
 		var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : 24;
-		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="40" value="'+valueMinSize+'" step="8" onchange="mySett.onSizeSlideChangeValue(this.value)"/>';
+		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="40" value="'+valueMinSize+'" step="8" onchange="mySett.onSizeSlideChangeValue(this.value)" tabindex="37"/>';
 		var rightUppercaseDIV = createDiv("rightUpperCase", slideFontSizeContainer, "", "rightUpperCase");
 		rightUppercaseDIV.innerHTML = "A";
 
@@ -225,30 +238,37 @@ function settingsScreen() {
 		
 		var titleDIV = createDiv("titleSubRubric", this.settingsContainerDIV, "", "titleSubRubric");
 		titleDIV.innerHTML = "Réglez vos sous-titres";
+		titleDIV.setAttribute("tabindex", 20);
 		
 		createDiv("separator", this.settingsContainerDIV, "", "separator");
 		
 		/* CHOIX DE POLICE */
 		var chooseFontTextDIV = createDiv("chooseFontText", this.settingsContainerDIV, "", "chooseFontText");
 		chooseFontTextDIV.innerHTML = "Choisir sa police";
+		chooseFontTextDIV.setAttribute("tabindex", 21);
 
 		var fontSelectionDIV = createDiv("settingsFontSelection", this.settingsContainerDIV, "", "settingsFontSelection");
 		var fontList = ["Arial","OpenDyslexic","Andika","Helvetica","Lexia"];
 		
 		var font1 = createButton("fontArial", fontSelectionDIV, "btActiveArialFont", 0, 0, "activeFont font" + fontList[0]);
 		font1.innerHTML = fontList[0];
+		font1.setAttribute("tabindex", 22);
 		
 		var font2 = createButton("fontOpenDyslexic", fontSelectionDIV, "btActiveOpenDyslexicFont", 0, 0, "activeFont font" + fontList[1]);
 		font2.innerHTML = fontList[1];
+		font2.setAttribute("tabindex", 23);
 		
 		var font3 = createButton("fontAndika", fontSelectionDIV, "btActiveAndikaFont", 0, 0, "activeFont font" + fontList[2]);
 		font3.innerHTML = fontList[2];
+		font3.setAttribute("tabindex", 24);
 		
 		var font4 = createButton("fontHelvetica", fontSelectionDIV, "btActiveHelveticaFont", 0, 0, "activeFont font" + fontList[3]);
 		font4.innerHTML = fontList[3];
+		font4.setAttribute("tabindex", 25);
 		
 		var font5 = createButton("fontLexia", fontSelectionDIV, "btActiveLexiaFont", 0, 0, "activeFont font" + fontList[4]);
 		font5.innerHTML = fontList[4];
+		font5.setAttribute("tabindex", 26);
 		
 		var selectedFont = getCookie("subtitleFont");
 		if(selectedFont && fontList.indexOf(selectedFont) !== -1){
@@ -258,14 +278,19 @@ function settingsScreen() {
 			this.selectFontButton("font" + fontList[0]);
 		}
 		
-		/* COULEUR DE FOND */
+		/* COULEUR DU TEXTE */
 		var fontColorSelectionDIV = createDiv("settingsFontColorSelection", this.settingsContainerDIV, "", "settingsFontColorSelection");
 		var settingsFontColorSelectionTitleDIV = createDiv("settingsFontColorSelectionTitle", fontColorSelectionDIV, "", "settingsFontColorSelectionTitle");
 		settingsFontColorSelectionTitleDIV.innerHTML = "Couleur de texte";
-		createButton("settingsFontColorSelectionCellMulti", fontColorSelectionDIV, "selectMultiColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellMulti");
-		createButton("settingsFontColorSelectionCellWhite", fontColorSelectionDIV, "selectWhiteColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellWhite");
-		createButton("settingsFontColorSelectionCellYellow", fontColorSelectionDIV, "selectYellowColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellYellow");
-		createButton("settingsFontColorSelectionCellBlue", fontColorSelectionDIV, "selectBlueColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellBlue");
+		settingsFontColorSelectionTitleDIV.setAttribute("tabindex", 40);
+		var col1 = createButton("settingsFontColorSelectionCellMulti", fontColorSelectionDIV, "selectMultiColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellMulti");
+		col1.setAttribute("tabindex", 41);
+		var col2 = createButton("settingsFontColorSelectionCellWhite", fontColorSelectionDIV, "selectWhiteColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellWhite");
+		col2.setAttribute("tabindex", 42);
+		var col3 = createButton("settingsFontColorSelectionCellYellow", fontColorSelectionDIV, "selectYellowColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellYellow");
+		col3.setAttribute("tabindex", 43);
+		var col4 = createButton("settingsFontColorSelectionCellBlue", fontColorSelectionDIV, "selectBlueColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellBlue");
+		col4.setAttribute("tabindex", 44);
 		var selectedFontColor = getCookie("subtitleFontColor");
 		if(selectedFontColor){
 			
@@ -294,8 +319,11 @@ function settingsScreen() {
 		var fontBGColorSelectionDIV = createDiv("settingsFontBGColorSelection", this.settingsContainerDIV, "", "settingsFontBGColorSelection");
 		var settingsFontColorSelectionTitleDIV = createDiv("settingsFontBGColorSelectionTitle", fontBGColorSelectionDIV, "", "settingsFontColorSelectionTitle");
 		settingsFontColorSelectionTitleDIV.innerHTML = "Couleur d'arrière plan";
-		createButton("settingsFontBGColorSelectionCellWhite", fontBGColorSelectionDIV, "selectWhiteBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellWhite");
-		createButton("settingsFontBGColorSelectionCellBlack", fontBGColorSelectionDIV, "selectBlackBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellBlack");
+		settingsFontColorSelectionTitleDIV.setAttribute("tabindex", 30);
+		var color1 = createButton("settingsFontBGColorSelectionCellWhite", fontBGColorSelectionDIV, "selectWhiteBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellWhite");
+		color1.setAttribute("tabindex", 31);
+		var color2 = createButton("settingsFontBGColorSelectionCellBlack", fontBGColorSelectionDIV, "selectBlackBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellBlack");
+		color2.setAttribute("tabindex", 32);
 		var selectedFontBGColor = getCookie("subtitleBGColor");
 		if(selectedFontBGColor){
 			switch(selectedFontBGColor){
@@ -314,22 +342,24 @@ function settingsScreen() {
 		/* OPACITE DE L'ARRIERE PLAN DES SOUS-TITRES */
 		var textOpacity = createDiv("textOpacity", this.settingsContainerDIV, "", "textOpacity");
 		textOpacity.innerHTML = "Régler l'opacité de son arrière plan";
+		textOpacity.setAttribute("tabindex", 35);
 		var slideOpacityContainer = createDiv("slideOpacityContainer", this.settingsContainerDIV, "", "slideOpacityContainer");
 		createDiv("blackDIV", slideOpacityContainer, "", "blackDIV");
 		var slideRangeOpacity = createDiv("slideRangeOpacity", slideOpacityContainer, "", "slideRangeOpacity slideHorizontalInput");
 		var valueMinOpacity = (getCookie("subtitleBackgroundOpacity") != null) ? getCookie("subtitleBackgroundOpacity") : 1;
-		slideRangeOpacity.innerHTML = '<input class="horizontalOpacitySlide" id="opacitySlide" type="range" min="0" max="1" value="'+valueMinOpacity+'" step="0.25" onchange="mySett.onOpacitySubtitleSlideChangeValue(this.value)"/>';
+		slideRangeOpacity.innerHTML = '<input class="horizontalOpacitySlide" id="opacitySlide" type="range" min="0" max="1" value="'+valueMinOpacity+'" step="0.25" onchange="mySett.onOpacitySubtitleSlideChangeValue(this.value)" tabindex="36"/>';
 		createDiv("transparentUppercaseDIV", slideOpacityContainer, "", "transparentUppercaseDIV");
 		
 		/* TAILLE DES SOUS-TITRES */
 		var textFontSize = createDiv("textFontSize", this.settingsContainerDIV, "", "textFontSizeSubtitle");
 		textFontSize.innerHTML = "Régler la taille de ses sous-titres";
+		textFontSize.setAttribute("tabindex", 50);
 		var slideFontSizeContainer = createDiv("slideFontSizeContainer", this.settingsContainerDIV, "", "slideFontSizeSubtitleContainer");
 		var leftLowercaseDIV = createDiv("leftLowercase", slideFontSizeContainer, "", "leftLowercase");
 		leftLowercaseDIV.innerHTML = "A";
 		var slideRangeFontSize = createDiv("slideRangeFontSize", slideFontSizeContainer, "", "slideRangeFontSize slideHorizontalInput");
 		var valueMinSize = (getCookie("subtitleFontSize") != null) ? getCookie("subtitleFontSize") : 24;
-		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="24" max="44" value="'+valueMinSize+'" step="5" onchange="mySett.onSizeSubtitleSlideChangeValue(this.value)"/>';
+		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="24" max="44" value="'+valueMinSize+'" step="5" onchange="mySett.onSizeSubtitleSlideChangeValue(this.value)" tabindex="51"/>';
 		var rightUppercaseDIV = createDiv("rightUpperCase", slideFontSizeContainer, "", "rightUpperCase");
 		rightUppercaseDIV.innerHTML = "A";
 		
