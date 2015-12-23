@@ -285,12 +285,16 @@ function settingsScreen() {
 		settingsFontColorSelectionTitleDIV.setAttribute("tabindex", 40);
 		var col1 = createButton("settingsFontColorSelectionCellMulti", fontColorSelectionDIV, "selectMultiColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellMulti");
 		col1.setAttribute("tabindex", 41);
+		col1.setAttribute("title", "Multicouleur");
 		var col2 = createButton("settingsFontColorSelectionCellWhite", fontColorSelectionDIV, "selectWhiteColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellWhite");
 		col2.setAttribute("tabindex", 42);
+		col2.setAttribute("title", "Couleur blanche");
 		var col3 = createButton("settingsFontColorSelectionCellYellow", fontColorSelectionDIV, "selectYellowColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellYellow");
 		col3.setAttribute("tabindex", 43);
+		col3.setAttribute("title", "Couleur jaune");
 		var col4 = createButton("settingsFontColorSelectionCellBlue", fontColorSelectionDIV, "selectBlueColor",0,0, "settingsFontColorSelectionCell settingsFontColorSelectionCellBlue");
 		col4.setAttribute("tabindex", 44);
+		col4.setAttribute("title", "Couleur bleu");
 		var selectedFontColor = getCookie("subtitleFontColor");
 		if(selectedFontColor){
 			
@@ -322,8 +326,10 @@ function settingsScreen() {
 		settingsFontColorSelectionTitleDIV.setAttribute("tabindex", 30);
 		var color1 = createButton("settingsFontBGColorSelectionCellWhite", fontBGColorSelectionDIV, "selectWhiteBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellWhite");
 		color1.setAttribute("tabindex", 31);
+		color1.setAttribute("title", "Couleur blanche");
 		var color2 = createButton("settingsFontBGColorSelectionCellBlack", fontBGColorSelectionDIV, "selectBlackBGColor",0,0, "settingsFontBGColorSelectionCell settingsFontColorSelectionCellBlack");
 		color2.setAttribute("tabindex", 32);
+		color2.setAttribute("title", "Couleur noire");
 		var selectedFontBGColor = getCookie("subtitleBGColor");
 		if(selectedFontBGColor){
 			switch(selectedFontBGColor){
@@ -612,7 +618,6 @@ function settingsScreen() {
 		console.log("selectBackgroundColorCell - ", cellColorButton);
 		var cellColorBtsTab = [
 								"#settingsFontBGColorSelectionCellWhite",
-								"#settingsFontBGColorSelectionCellGrey",
 								"#settingsFontBGColorSelectionCellBlack"
 								];
 		var i;

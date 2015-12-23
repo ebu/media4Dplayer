@@ -70,6 +70,7 @@ function dashboardScreen() {
 		dashboardSubtitle.innerHTML = mydashboard.contentInfos.subtitle;
 		dashboardSubtitle.setAttribute("tabindex", 15);
 		dashboardSynopsis.innerHTML = mydashboard.contentInfos.synopsis;
+		dashboardSynopsis.setAttribute("tabindex", 16);
 		if(mydashboard.contentInfos.resume.length > 0 ) {
 			dashboardResumeTitle.innerHTML = language.fr.resumeTitle;
 		}
@@ -80,7 +81,6 @@ function dashboardScreen() {
 
 		var textHelperOnSynopsis = createButton("textHelperOnSynopsis", dashboardSynopsis, "textHelperOnSynopsis", 0, 0, "textHelperButton");
 		createButton("textHelperOnResumeContent", dashboardResumeContent, "textHelperOnResumeContent", 0, 0, "textHelperButton");
-		textHelperOnSynopsis.setAttribute("tabindex", 16);
 	};
 	
 	this.init = function(index) {
