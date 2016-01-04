@@ -49,6 +49,15 @@ move = function(action, event) {
 		case "playerOptionDescription":
 			myPlayer.validOptionDescription();
 			break;
+		case "playerOptionSub":
+			myPlayer.validOptionSub();
+			break;
+		case "playerOptionAudio":
+			myPlayer.validOptionAudio();
+			break;
+		case "":
+			myPlayer.validOptionAudio();
+			break;
 		case "playerDisplayUI":
 			myPlayer.diplayUI();
 			break;
@@ -150,8 +159,11 @@ move = function(action, event) {
 			myPlayer.rw();
 			break;
 		case "playerControlStop":
-		default:
 			myPlayer.stop();
+			break;
+
+		default:
+			console.log( selecteur.getAttribute("zone") + " not defined");
 			break;
 	}
 };

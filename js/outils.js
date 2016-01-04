@@ -36,6 +36,12 @@ function createImg(idElement, parent, src, style, alt){
 	return element;
 }
 
+function createButtonWithActionFunction(idElement, parent, zone, style, actionFunction) {
+	var bt = createButton(idElement, parent, zone, 0, 0, style);
+	bt.clickAction = actionFunction;
+	return bt;
+} 
+
 function createButton(idElement, parent, zone, x, y, style){
 	var button = createDiv(idElement, parent, null, style);
 	button.setAttribute("zone", zone);
@@ -43,7 +49,15 @@ function createButton(idElement, parent, zone, x, y, style){
 	button.setAttribute("y", y);
 	button.setAttribute("onMouseOver", "moveSelecteur('"+button.id+"');");
 	button.setAttribute("onFocus", "moveSelecteur('"+button.id+"');");
-	button.setAttribute("onClick", "move('enter');");
+	button.onSelect = function() {
+		if(button.clickAction) {
+			button.clickAction();
+		}
+		else {
+			move('enter');
+		}
+	}
+	button.setAttribute("onClick", "this.onSelect();");
 	return button;
 }
 

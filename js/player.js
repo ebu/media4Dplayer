@@ -78,9 +78,128 @@ function playerScreen() {
 		myDash.show();
 		this.hide();
 	};
+
+	var isOptionDropDownMenuDisplayed = false;
+	var currentOptionDropDownMenu = "";
+	var dropDownMenu;
+	this.displayOptionDropDownMenu = function(optionID) {
+
+		if(isOptionDropDownMenuDisplayed && (optionID ==currentOptionDropDownMenu)) {
+			console.log("displayOptionDropDownMenu hide");
+			$(".optionDropDownMenu").addClass("hidden");
+			isOptionDropDownMenuDisplayed = false;
+			return;
+		}
+		else if(isOptionDropDownMenuDisplayed && (optionID ==currentOptionDropDownMenu)) {
+		}
+		else if(!isOptionDropDownMenuDisplayed) {
+			$(".optionDropDownMenu").removeClass("hidden");
+			isOptionDropDownMenuDisplayed = true;
+		}
+		currentOptionDropDownMenu = optionID;
+
+		emptyElem(dropDownMenu);
+
+		var inputsArray = this.getOptionsArrayForOption(optionID);
+		$(".optionDropDownMenu").css("top", this.getOptionsDropDownMenuTop(inputsArray));
+		$(".optionDropDownMenu").css("left", this.getOptionsDropDownMenuLeft(optionID));
+		$(".optionDropDownMenu").css("height", this.getOptionsDropDownMenuHeight(inputsArray));
+
+
+		for (var i = 0; i < inputsArray.length; i++) {
+			//var bt = createButton("opt"+i, dropDownMenu, "optionDropDownMenuButton", 0, 0, "optionDropDownMenuButton");
+			var bt = createButtonWithActionFunction(i, dropDownMenu, "optionDropDownMenuButton", "optionDropDownMenuButton", function() {
+				var optionSelected = this.getAttribute("id");
+				var l = (inputsArray.length-1) + "";
+				if(optionID == "signe") {
+					myPlayerScreen.activeOptionSigne(optionSelected != l);
+				}
+				else if(optionID == "sub") {
+					myPlayerScreen.activeOptionSub(optionSelected != l);
+				}
+				else if(optionID == "description") {
+					myPlayerScreen.activeOptionDescription(optionSelected != l);	
+				}
+				else if(optionID == "audio") {
+					//myPlayerScreen.activeOptionAudio(this.index == length-1);	
+				}
+				else {
+					console.log("pwet");
+				}				
+			});
+			//bt.index = i;
+			bt.innerHTML = inputsArray[i];
+		}
+
+
+
+
+//		var btn = createButton("playerClose", playerTopBanner, "playerClose", 0, 0);
+//		btn.setAttribute("tabindex", 1);
+	}
+
+	this.getOptionsArrayForOption = function(optionID) {
+		var optionsArray;
+
+		switch(optionID) {
+			case "signe":
+				optionsArray = ["Oui", "Aucun"];
+				break;
+			case "description":
+				optionsArray = ["Français", "Aucun"];
+				break;
+			case "sub":
+				optionsArray = ["Français", "Aucun"];
+				break;
+			case "audio":
+				optionsArray = ["Activé"];
+				break;
+		}
+		return optionsArray;
+	}
+
+	this.getOptionsDropDownMenuHeight = function(inputsArray) {
+		return inputsArray.length * (50 + 1); // +1 for border 
+	}
+	this.getOptionsDropDownMenuTop = function(inputsArray) {
+		return 160 - this.getOptionsDropDownMenuHeight(inputsArray); 
+	}
+	this.getOptionsDropDownMenuLeft = function(optionID) {
+
+		var leftOption = 0;
+
+		switch(optionID) {
+			case "signe":
+				leftOption = document.getElementById("playerOptionSigne").offsetLeft;
+				break;
+			case "description":
+				leftOption = document.getElementById("playerOptionDescription").offsetLeft;
+				break;
+			case "sub":
+				leftOption = document.getElementById("playerOptionSub").offsetLeft;
+				break;
+			case "audio":
+				leftOption = document.getElementById("playerOptionAudio").offsetLeft;
+				break;
+			default :
+				console.log("getOptionsDropDownMenuLeft - no optionID defined for " + optionID);
+				leftOption = 0;
+				break;
+		}
+
+		var leftDDM = leftOption + 100 ;
+		return leftDDM + "px";
+	}
+
 	
 	this.validOptionSigne = function() {
-        if (!this.playerManager.optionSigne)
+		this.displayOptionDropDownMenu("signe");
+	}
+	this.activeOptionSigne = function(active) {
+		console.log("activeOptionSigne: " + active);
+		console.log("this.playerManager.optionSigne: " + this.playerManager.optionSigne);
+
+        if (!this.playerManager.optionSigne && active)
         {
         	this.playerManager.controller.currentTime = this.videoMain.currentTime;
             this.videoPip.controller = this.playerManager.controller;
@@ -96,13 +215,15 @@ function playerScreen() {
             this.playerManager.playerPip.reset();
             this.playerManager.optionSigne = false;
         }
-
         this.resetTimerHideUI();
 	};
 	
-	this.validOptionDescription = function()
-    {
-        if (!this.playerManager.optionDescription)
+	this.validOptionDescription = function() {
+		this.displayOptionDropDownMenu("description");
+	}
+	this.activeOptionDescription = function(active) {
+
+        if (!this.playerManager.optionDescription && active)
         {
         	this.playerManager.controller.currentTime = this.videoMain.currentTime;
             this.videoAudio.controller = this.playerManager.controller;
@@ -118,17 +239,26 @@ function playerScreen() {
             this.playerManager.playerAudio.reset();
             this.playerManager.optionDescription = false;
         }
-
-        this.resetTimerHideUI();
+        this.resetTimerHideUI();       
     };
 	this.validOptionSub = function() {
-        if (!this.playerManager.optionSub) {
+		this.displayOptionDropDownMenu("sub");
+	}
+	this.activeOptionSub = function(active) {
+        if (!this.playerManager.optionSub && active) {
             this.playerManager.optionSub = true;
         }
         else {
             this.playerManager.optionSub = false;
         }
 	};
+
+	this.validOptionAudio = function() {
+		this.displayOptionDropDownMenu("audio");
+	}
+	this.activeOptionAudio = function(active) {
+		console.log("activeOptionAudio TODO");
+	}
 
 	this.playPause = function() {
 		console.log("playPause : ", isPlaying);
@@ -197,10 +327,12 @@ function playerScreen() {
 
 	var refreshTimer;
 	this.resetTimerHideUI = function() {
+/*		
 		if(refreshTimer!= null) {
 			clearInterval(refreshTimer);
 		}
 		refreshTimer = setTimeout(this.hideUI, 4 * 1000);
+*/		
 	}
 
 	this.diplayUI = function() {
@@ -263,7 +395,7 @@ function playerScreen() {
 			btn.setAttribute("tabindex", 23);
 			createIconeST(btn, 120, 120);
 
-			var btn = createButton("playerOptionView", playerOptions, "playerOptionView", 3, 0);
+			var btn = createButton("playerOptionAudio", playerOptions, "playerOptionAudio", 3, 0);
 			btn.setAttribute("tabindex", 24);
 			createIconeLA(btn, 120, 120);
 			
@@ -285,6 +417,10 @@ function playerScreen() {
 			btn = createButton("playerControlStop", playerControlTrickMode, "playerControlStop", 3, 0);
 			btn.setAttribute("tabindex", 33);
 			createImg(null, btn, "media/player/controle_btn_stop.png", null, "stop");
+
+
+			dropDownMenu = createDiv("optionDropDownMenu", playerBottomBanner, null, "optionDropDownMenu hidden");
+			isOptionDropDownMenuDisplayed = false;
 
 			//LANCEMENT DU PLAYER ATTENTION CODE TOUCHY
 	        //var context = new MediaPlayer.di.Context();
