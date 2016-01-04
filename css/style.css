@@ -36,8 +36,31 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
   padding: 0;
   vertical-align: baseline;
 }
-body {
+html, body{
+	height: 100%;
+}
+
+html{
+    font-size: 62.5%; /* Ré-équilibrage du Rem face au Pixel pour des calculs simples */
+	width: 1280px;
+}
+
+body{
+	font-family: arial, sans-serif;
+	font-size: 1.6rem;
 	background-color: #f2f2f2;
+}
+
+body > div{
+	font-size: 1em;
+}
+
+.bold{
+	font-weight: bold;
+}
+
+.grey{
+	color:#959595;
 }
 
 /*********\
@@ -104,7 +127,7 @@ body {
     top: 400px;
     position: relative;
 
-    font-size: 40px;
+    font-size: 2.5em;
     color: #AAAAAA;
     font-family: 'helveticaNeue-Regular';
     line-height: 60px;
@@ -115,7 +138,7 @@ body {
     top: 450px;
 
     text-align: center;
-    font-size: 30px;
+    font-size: 1.875em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
     line-height: 60px;
@@ -169,7 +192,7 @@ body {
     height: 60px;
     text-align: center;
     
-    font-size: 40px;
+	font-size: 1.625em;
     color: #000000;
     font-family: 'helveticaNeue-Medium';
 }
@@ -187,7 +210,7 @@ body {
     height: 400px;
     float: left;
 
-    font-size: 49px;
+    font-size: 3.0625em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 
@@ -203,7 +226,7 @@ body {
 
     background-color: #c9c9c9;
 
-    font-size: 19px;
+    font-size: 1.1875em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';   
 
@@ -268,7 +291,7 @@ body {
     height: 100%;
     float: left;
     text-align: left;
-    font-size: 36px;
+    font-size: 2.25em;
     line-height: 116px
 }
 
@@ -309,7 +332,7 @@ body {
     color: #000000;
 
     font-family: 'helveticaNeue-Regular';
-    font-size: 35px;
+    font-size: 2.1875em;
 
     line-height: 38px;
 }
@@ -383,20 +406,20 @@ body {
 
 .favoriteInfos .favInfosTitle {
     color: #FF0000;
-    font-size: 40px;
+    font-size: 2.5em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
     line-height: 60px;
 
 }
 .favoriteInfos .favInfosSubitle {
-    font-size: 26px;
+    font-size: 1.625em;
     color: #000000;
     font-family: 'helveticaNeue-Light';
     line-height: 40px;    
 }
 .favoriteInfos .favInfosDetail {
-    font-size: 26px;
+    font-size: 1.625em;
     opacity: 65%;
     color: #000000;
     font-family: 'helveticaNeue-Light';
@@ -452,7 +475,7 @@ body {
     height: 100px;
     text-align: center;
 
-    font-size: 32px;
+    font-size: 2em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 
@@ -521,7 +544,7 @@ body {
 	height: 20%;
 
 
-    font-size: 19px;
+    font-size: 1.1875em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -554,7 +577,7 @@ body {
     width: 100%;
     height: auto;
 
-    font-size: 15px;
+    font-size: .9375em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';	
 }
@@ -630,7 +653,7 @@ body {
     /*width: 100M;*/
     height: 70px;
 
-    font-size: 29px;
+    font-size: 1.8125em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -661,7 +684,7 @@ body {
     width: 100%;
     height: auto;
 
-    font-size: 18px;
+    font-size: 1.125em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -674,7 +697,7 @@ body {
     width: 100%;
     height: auto;
 
-    font-size: 17px;
+    font-size: 1.0625em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -748,7 +771,7 @@ body {
     top: 0px;
     left: 100px;
 
-    font-size: 20px;
+    font-size: 1.25em;
     color: #A5A5A5;
     font-family: 'helveticaNeue-Medium';
 
@@ -758,7 +781,7 @@ body {
     position: absolute;
     top: 5px;
     left: 5px;
-    font-size: 29px;
+    font-size: 1.8125em;
     color: #FFFFFF;
     font-family: 'helveticaNeue-Regular';
 }
@@ -941,7 +964,7 @@ body {
     background-color: black;
 
     text-align: center;
-    font-size: 30px;
+    font-size: 1.875em;
     color: white;
     line-height: 45px;
     font-family: 'helveticaNeue-Regular';    
@@ -1102,7 +1125,7 @@ body {
     padding-left: 15%;
     padding-top: 6%;
 
-    font-size: 32px;
+    font-size: 2em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 
@@ -1110,13 +1133,13 @@ body {
 }
 
 #settingsMenuButtonGeneral { 
-    font-size: 32px;
+    font-size: 2em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
 
 #settingsMenuButtonLSF {
-    font-size: 32px;
+    font-size: 2em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1128,7 +1151,7 @@ body {
     top: 4%;
     left: 10%;
 
-    font-size: 25px;
+    font-size: 1.5625em;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1140,7 +1163,7 @@ body {
     position: relative;
     top: 5%;
     left: 10%;
-    font-size: 20px;
+    font-size: 1.25em;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1174,7 +1197,7 @@ body {
     position: relative;
     top: 28%;
     left: 0%;
-    font-size: 18px;
+    font-size: 1.125em;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1237,7 +1260,7 @@ body {
     height: 70%;
 
     text-align: left;
-    font-size: 24px;
+    font-size: 1.5em;
     color: #FFFFFF;
     font-family: 'helveticaNeue-Regular';
 
@@ -1267,7 +1290,7 @@ body {
     top:20%;
 
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5em;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1279,7 +1302,7 @@ body {
     right:0%;
 
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5em;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1292,7 +1315,7 @@ body {
     top:28%;
 
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5em;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1304,7 +1327,7 @@ body {
     right:0%;
 
     text-align: center;
-    font-size: 44px;
+    font-size: 2.75em;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1315,7 +1338,7 @@ body {
     left: 50%;
 
     text-align: left;
-    font-size: 32px;
+    font-size: 2em;
     color: #6D6D6D;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1408,7 +1431,7 @@ body {
     top:0%;
     left:0%;
 
-    font-size: 25px;
+    font-size: 1.5625em;
     color: #000000;
     font-family: 'helveticaNeue-Medium';
     text-align: center;
@@ -1423,7 +1446,7 @@ body {
 
     background-color: #E8E8E8;
 
-    font-size: 30px;
+    font-size: 1.875em;
     color: #000000;
     font-family: 'helveticaNeue-Medium';
     text-align: center;
@@ -1438,7 +1461,7 @@ body {
 
     background-color: #88FF88;
 
-    font-size: 40px;
+    font-size: 2.5em;
     color: #000000;
     font-family: 'helveticaNeue-Medium';
     text-align: center;
@@ -1447,7 +1470,7 @@ body {
 /* settings - sous-titre */
 #titleSubRubric{
 	text-align: center;
-	font-size: 32px;
+	font-size: 2em;
     position: absolute;
 	width: 100%;
 	top: 3%;
@@ -1463,7 +1486,7 @@ body {
 .chooseFontText{
     position: absolute;
     left: 10%;
-    font-size: 20px;
+    font-size: 1.25em;
     color: #000;
     font-family: 'helveticaNeue-Regular';	
 }
@@ -1517,7 +1540,7 @@ body {
     top:0%;
     left:0%;
 
-    font-size: 24px;
+    font-size: 1.5em;
     color: #000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1627,7 +1650,7 @@ body {
     left: 50%;
 
     text-align: left;
-    font-size: 24px;
+    font-size: 1.5em;
     color: #000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1645,7 +1668,7 @@ body {
     top: 40%;
     left: 10%;
 
-    font-size: 24px;
+    font-size: 1.5em;
     color: #000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1720,7 +1743,7 @@ body {
     width: 100%;
 
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5em;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 
@@ -1788,7 +1811,7 @@ body {
     height: 100%;
 */
     text-align: center;
-    font-size: 36px;
+    font-size: 2.25em;
     color: #FFFFFF;
     font-family: 'helveticaNeue-Regular';
 }
