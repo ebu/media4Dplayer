@@ -279,9 +279,22 @@ function playerScreen() {
 		var totalTimeSecond =  this.playerManager.controller.duration;	
 		var saut = Math.round(totalTimeSecond*(5/100));
 		var currentPosition = this.playerManager.controller.currentTime;
-		if(currentPosition + saut < totalTimeSecond){
-			this.playerManager.controller.currentTime = currentPosition + saut;
+		var newCurrentPosition = currentPosition + saut;
+		if (newCurrentPosition > totalTimeSecond) {
+			newCurrentPosition = totalTimeSecond;
 		}
+		
+		// check if the new position is seekable
+		console.log("newCurrentPosition = "+newCurrentPosition);
+		for (var i=0; i<this.playerManager.controller.seekable.length; i++) {
+			console.log("check range #" + i + " -> "+this.playerManager.controller.seekable.start(i)+", "+this.playerManager.controller.seekable.end(i));
+			if (this.playerManager.controller.seekable.start(i) <= newCurrentPosition && newCurrentPosition <= this.playerManager.controller.seekable.end(i)) {
+				console.log("   range match, do seek");
+				this.playerManager.controller.currentTime = newCurrentPosition;
+				break;
+			}
+		}
+		//Note: if the newCurrentPosition is not seekable, we do nothing for now. It could be interesting to seek to the last seekable position instead.
 	};
 
 	this.rw = function(){
@@ -289,8 +302,20 @@ function playerScreen() {
 		var totalTimeSecond =  this.playerManager.controller.duration;	
 		var saut = Math.round(totalTimeSecond*(5/100));
 		var currentPosition = this.playerManager.controller.currentTime;
-		if(currentPosition > 0){
-			this.playerManager.controller.currentTime = currentPosition - saut;
+		var newCurrentPosition = currentPosition - saut;
+		if (newCurrentPosition < 0) {
+			newCurrentPosition = 0;
+		}
+		// check if the new position is seekable
+		console.log("newCurrentPosition = "+newCurrentPosition);
+		for (var i=0; i<this.playerManager.controller.seekable.length; i++) {
+			console.log("check range seekable #" + i + " -> "+this.playerManager.controller.seekable.start(i)+", "+this.playerManager.controller.seekable.end(i));
+			console.log("check range buffered #" + i + " -> "+this.playerManager.controller.buffered.start(i)+", "+this.playerManager.controller.buffered.end(i));
+			if (this.playerManager.controller.seekable.start(i) <= newCurrentPosition && newCurrentPosition <= this.playerManager.controller.seekable.end(i)) {
+				console.log("   range match, do seek");
+				this.playerManager.controller.currentTime = newCurrentPosition;
+				break;
+			}
 		}
 	};
 
@@ -437,6 +462,11 @@ function playerScreen() {
 	        this.playerManager.playerAudio = new MediaPlayer(context);
 	        this.playerManager.playerAudio.startup();
 	        this.playerManager.playerAudio.setAutoPlay(false);
+	        
+	        // remove Dash.js logs
+	        this.playerManager.playerMain.getDebug().setLogToBrowserConsole(false);
+	        this.playerManager.playerPip.getDebug().setLogToBrowserConsole(false);
+	        this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);
 	
 	        this.playerManager.controller = new MediaController();
 	
@@ -444,7 +474,7 @@ function playerScreen() {
 	
 		    this.videoMain.controller = this.playerManager.controller;
 		    this.videoPip.controller = this.playerManager.controller;
-		    //this.videoAudio.controller = this.playerManager.controller; //TOTO: DDU: try to understand why setting that make the video do not automatically starts
+		    this.videoAudio.controller = this.playerManager.controller;
 
 	        this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 	        console.debug("######### audioContext: " + this.playerManager.audioContext);
@@ -690,12 +720,12 @@ function playerScreen() {
 		this.playerManager.playerAudio.attachSource(this.playerManager.urlAudio);
 
 
-		this.playerManager.controller.currentTime = 0;
-
-        //this.playerManager.playerMain.play();
-        //this.playerManager.playerPip.play();
-        //this.playerManager.playerAudio.play();
+        this.playerManager.playerMain.play();
+        this.playerManager.playerPip.play();
+        this.playerManager.playerAudio.play();
         //this.playerManager.controller.play();
+
+//this.playerManager.playerMain.seek(0);
 
         myPlayerScreen.onPlay(); // pas d'évenement lors du play... alors on le force.
 
