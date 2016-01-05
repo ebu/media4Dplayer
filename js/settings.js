@@ -497,20 +497,11 @@ function settingsScreen() {
 		emptyElem(this.settingsContainerDIV);
 	};
 	this.clearButtonsSelection = function (){
-				var elementsTab = [	
-							".settingsMenuButton0",							
-							".settingsMenuButton1",
-							".settingsMenuButton2"
-							];
-
-		var i;
-		for (i = 0; i < elementsTab.length; i++) { 
-   			$(elementsTab[i]).css("background-color", "#E8E8E8");
-		} 
+		$(document.getElementById("settingsMenu")).children(".selected").removeClass("selected");
 	}
 	this.selectButton = function(buttonElement) {
 		this.clearButtonsSelection();
-		$(buttonElement).css("background-color", "#616161");
+		$(buttonElement).addClass("selected");
 	}
 
 	this.onSizeSlideChangeValue = function(newValue) {
@@ -590,14 +581,10 @@ function settingsScreen() {
 		var i;
 		for (i = 0; i < cellColorBtsTab.length; i++) { 
 			if(cellColorBtsTab[i] == cellColorButton) {
-				$(cellColorBtsTab[i]).css("width", "80px");
-				$(cellColorBtsTab[i]).css("height", "80px");
-				$(cellColorBtsTab[i]).css("margin-top", "36px");
+				$(cellColorBtsTab[i]).addClass("selected");
 			}
 			else {
-				$(cellColorBtsTab[i]).css("width", "50px");
-				$(cellColorBtsTab[i]).css("height", "50px");
-				$(cellColorBtsTab[i]).css("margin-top", "50px");
+				$(cellColorBtsTab[i]).removeClass("selected");
 			}
 		} 	
 	}
@@ -622,14 +609,10 @@ function settingsScreen() {
 		var i;
 		for (i = 0; i < cellColorBtsTab.length; i++) { 
 			if(cellColorBtsTab[i] == cellColorButton) {
-				$(cellColorBtsTab[i]).css("width", "110px");
-				$(cellColorBtsTab[i]).css("height", "80px");
-				$(cellColorBtsTab[i]).css("margin-top", "35px");
+				$(cellColorBtsTab[i]).addClass("selected");
 			}
 			else {
-				$(cellColorBtsTab[i]).css("width", "80px");
-				$(cellColorBtsTab[i]).css("height", "50px");
-				$(cellColorBtsTab[i]).css("margin-top", "50px");
+				$(cellColorBtsTab[i]).removeClass("selected");
 			}
 		} 	
 	}
@@ -647,12 +630,11 @@ function settingsScreen() {
 		var i;
 		for (i = 0; i < btsTab.length; i++) { 
 			if(btsTab[i] === fontButton) {
-				$(document.getElementById(btsTab[i])).css("color", "#000000");	
+				$(document.getElementById(btsTab[i])).addClass("selected");	
 			}
 			else {
-				$(document.getElementById(btsTab[i])).css("color", "#AAAAAA");
-			}
-   			
+				$(document.getElementById(btsTab[i])).removeClass("selected");
+			}   			
 		} 		
 	}
 

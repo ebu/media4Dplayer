@@ -32,9 +32,14 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
   border: 0 none;
   font-size: 100%;
   margin: 0;
-  outline: 0 none;
+  /*outline: 0 none;*/
   padding: 0;
   vertical-align: baseline;
+}
+hr{
+	clear:both;
+	margin:0;
+	visibility:hidden;
 }
 html, body{
 	height: 100%;
@@ -43,12 +48,14 @@ html, body{
 html{
     font-size: 62.5%; /* Ré-équilibrage du Rem face au Pixel pour des calculs simples */
 	width: 1280px;
+	min-height: 853px;
 }
 
 body{
 	font-family: arial, sans-serif;
 	font-size: 1.6rem;
-	background-color: #f2f2f2;
+	background-color: #fbfcfc;
+	position: relative;
 }
 
 body > div{
@@ -108,12 +115,11 @@ body > div{
 #favoriteScreen
 {
     position: absolute;
-    top: 160px;
+    top: 14%;
     left: 0px;
     width: 100%;
-    height: 100%;
+    height: 790px;
     min-width: 1280px;
-    min-height: 1024px;
 
     display: none;
 }
@@ -251,7 +257,7 @@ body > div{
     left: 0px;
     width: 100%;
     min-width: 1280px;
-    height: 120px;
+    height: 82px;
     
     background-color : #ffffff;
 	border-bottom : 1px solid #bebebe;
@@ -260,14 +266,13 @@ body > div{
 }
 
 .topbarButton {
-    position: relative;
-    top: 0;
-    left: 2%;
     width: 19.5%;
     height: 100%;
     float: left;
     color: #545454;
     font-family: 'helveticaNeue-Regular';
+	line-height: 82px;
+	text-align: center;
 }
 
 .topbarButton.actif {
@@ -278,20 +283,13 @@ body > div{
     font-family: 'helveticaNeue-Medium';
 }
 
-.topbarImg {
-    position: relative;
-    float: left;
-    top: 32px;
+.topbarImg, .topbarText {
+    vertical-align: middle;
+	display: inline-block;
 }
 
-.topbarText {
-    position: relative;
-    left: 5px;
-    width: 50%;
-    height: 100%;
-    float: left;
-    text-align: left;
-    line-height: 116px
+.topbarImg{
+	margin-right: 5%;	
 }
 
 /*************************\
@@ -302,20 +300,17 @@ body > div{
 {
 	position: relative;
     top: 3%;
-    left: 3%;
-    width: 93%;
-    background-color: #e9e9e9;
-    height: 760px;
-    -webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
+    left: 7%;
+    width: 86%;
+    background-color: #f5f5f5;
+    height: 470px;
 }
 
 #favoriteBackgroundTitleZone
 {
 	position: absolute;
-    top: 5%;
-    left: 5%;
+    top: 22px;
+    left: 3%;
     width: 93%;
     height: 50px;
 }
@@ -332,7 +327,7 @@ body > div{
 
     font-family: 'helveticaNeue-Regular';
 
-    line-height: 38px;
+    line-height: 33px;
 }
 
 #favoriteBackgroundTitleZone img
@@ -349,93 +344,83 @@ body > div{
 #favoriteBackgroundContentZone
 {
 	position: absolute;
-    top: 15%;
+    top: 80px;
     left: 3%;
     width: 93%;
-    height: 605px;
     background-color: #ffffff;
 }
 
-.favButton
-{
-	position: relative;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 150px;
-	background-color: #ffffff;
-    border-bottom : 1px solid #e9e9e9;
-	margin-top: 1px;
-    margin-left: 1px;
+.favButton {
+  border-color: rgba(0,0,0,0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-top-width: 0;
+  height: 85px;
+  line-height: 85px;
+}
+.favButton:first-child{
+	border-top-width: 1px;
 }
 
 .favDelete
 {
-	position: relative;
-    width: 6%;
-    height: 66%;
+    width: 77px;
     float: left;
-    top:33%;
+	text-align: center;
 }
 
-.favDelete img
+.favDelete svg
 {
-	position: absolute;
-    top: 54px;
-    left: 40px;
+	display: inline-block;
+	vertical-align: middle;
 }
 
-.favoriteImg
-{
-	position: relative;
-    width: 260px;
-    height: 150px;
-    float: left;
+.favoriteImg {
+  float: left;
+  height: 100%;
 }
 
-.favoriteInfos
-{
-	position: relative;
-	left: 1%;
-    width: 63%;
-    height: 100%;
-    float: left;
+.favoriteInfos {
+  float: left;
+  height: 100%;
+  width: 65%;
+  margin-left: 2.5%;
+}
+
+.favoriteInfos > div{
+	line-height: normal;
 }
 
 .favoriteInfos .favInfosTitle {
-    color: #FF0000;
-    color: #000000;
     font-family: 'helveticaNeue-Regular';
-    line-height: 60px;
+	margin-top: 1%;
 
 }
 .favoriteInfos .favInfosSubitle {
-    color: #000000;
-    font-family: 'helveticaNeue-Light';
-    line-height: 40px;    
+	text-transform: uppercase;
 }
 .favoriteInfos .favInfosDetail {
-    opacity: 65%;
-    color: #000000;
+	color: rgba(0, 0, 0, 0.5);
+	margin-top: 1%;
+}
+.favoriteInfos .favInfosSubitle, .favoriteInfos .favInfosDetail{
     font-family: 'helveticaNeue-Light';
+	font-size: 0.75em;	
 }
 
 
-.favPlay
-{
-	position: relative;
-    width: 4%;
-    left:3%;
-    top: 31%;
-    height: 33%;
-    float: left;
+.favPlay {
+  float: left;
+  height: 100%;
+  margin-left: 3%;
+  width: 4%;
 }
 
 .favPlay img
 {
-	position: absolute;
     width: 100%;
     height: auto;
+	vertical-align: middle;
 }
 
 /**************************\
@@ -449,7 +434,6 @@ body > div{
     width: 100%;
     height: 100%;
     min-width: 1280px;
-    min-height: 1024px;
 }
 
 #dashboardtopBack
@@ -469,10 +453,11 @@ body > div{
     width: 70%;
     height: 100px;
     text-align: center;
+	text-transform: uppercase;
 
     color: #000000;
     font-family: 'helveticaNeue-Regular';
-
+	font-size: 1.7em;
 }
 
 #dashboardLeft
@@ -498,23 +483,21 @@ body > div{
 	position: relative;
     left: 0%;
     width: 100%;
-    height: 25vw;
-    min-height: 300px;
+    height: 328px;
+	text-align: center;
 }
 
 .playButton img
 {
     width: 100%;
-    height: 25vw;
-    min-height: 320px;
 }
 
 
 #playButtonIcone
 {
     position: absolute;
-    left: 41%;
-    top: 29%;
+    left: 37%;
+    top: 28%;
     width:25%;
     height:auto;
     min-height: 144px;
@@ -526,7 +509,6 @@ body > div{
 	top: 7%;
     left: 0%;
 	width: 100%;
-	height: 60%;
 }
 
 #dashboardThemeTitle
@@ -535,7 +517,6 @@ body > div{
 	top: 0px;
     left: 0px;
 	width: 100%;
-	height: 20%;
 
 
     color: #000000;
@@ -548,7 +529,6 @@ body > div{
     top: 5px;
     left: 0px;
     width: 100%;
-    height: 80%;
 }
 
 .themeButton
@@ -556,8 +536,7 @@ body > div{
 	position: relative;
     top: 0px;
     left: 0px;
-    width: 31%;
-    height: 80%;
+    width: 32%;
     float: left;
     margin-right:1.3%;
 }
@@ -565,19 +544,17 @@ body > div{
 .themeButton div
 {
 	position: relative;
-    top: 10px;
     left: 0px;
     width: 100%;
-    height: auto;
 
-    color: #000000;
     font-family: 'helveticaNeue-Regular';	
+}
+.themeButtonTitle{
+	font-weight: bold;
 }
 .themeButton img
 {
     width: 100%;
-    height: 9vw;
-    min-height: 115px;
 }
 
 #dashboardSocial
@@ -647,6 +624,7 @@ body > div{
 
     color: #000000;
     font-family: 'helveticaNeue-Regular';
+	font-size: 1.7em;
 }
 
 #dashboardDetails
@@ -1083,21 +1061,21 @@ body > div{
 
 .settingsContainer {
     position: absolute;
-    left:405px;
-    width: 70%;
+    left:295px;
+    width: 77%;
     min-width: 900px;
     height: 92%;
-    top: 14%;
+    top: 11%;
 }
 
 .settingsMenu {
     position: absolute;
     left: 0px;
-    top: 124px;
+    top: 84px;
     height: 87%;
-    width: 450px;
+    width: 295px;
     /*min-width: 400px;*/
-    background-color: #E8E8E8;
+    background-color: #e7e8e8;
 }
 
 .settingsMenuButton { 
@@ -1105,33 +1083,25 @@ body > div{
     top: 30%;
     left: 0px;
     height: 5%;
-    width: 85%;
 
     text-align: left;
     padding-left: 15%;
     padding-top: 6%;
 
-    color: #000000;
     font-family: 'helveticaNeue-Regular';
 
     background-color: #E8E8E8;
 }
-
-#settingsMenuButtonGeneral { 
-    color: #000000;
-    font-family: 'helveticaNeue-Regular';
-}
-
-#settingsMenuButtonLSF {
-    color: #000000;
-    font-family: 'helveticaNeue-Regular';
+.settingsMenuButton.selected{
+	color: #fff;
+	background-color: #616161;
 }
 
 .textVoiceControl,
 .textLecture
 {
     position: relative;
-    top: 4%;
+    top: 84px;
     left: 10%;
 
     color: #B1B1B1;
@@ -1295,7 +1265,6 @@ body > div{
 
     text-align: center;
     font-size: 1.6rem;
-    color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
 .rightUpperCase {
@@ -1307,7 +1276,6 @@ body > div{
 
     text-align: center;
     font-size: 3rem;
-    color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
 
@@ -1342,6 +1310,7 @@ body > div{
     background-color: #777779;
     border-color: #333333;
     border-width: 1px;
+	color: #fff;
 }
 
 .ui-icon {
@@ -1446,35 +1415,36 @@ body > div{
 }
 
 /* settings - sous-titre */
-#titleSubRubric{
-	text-align: center;
-    position: absolute;
-	width: 100%;
-	top: 3%;
+#titleSubRubric {
+  font-family: "helveticaNeue-Light";
+  font-size: 1.2em;
+  position: absolute;
+  text-align: center;
+  top: 3%;
+  width: 100%;
 }
 .separator{
 	width: 2px;
 	position: absolute;
-	left: 48%;
-	top: 22%;
-	height: 29%;
-	background-color: grey;
+	left: 50%;
+	height: 25%;
+	background-color: #aaa;
 }
 .chooseFontText{
     position: absolute;
-    left: 10%;
+    left: 4%;
     color: #000;
     font-family: 'helveticaNeue-Regular';	
+	font-weight: bold;
 }
 .chooseFontText{
-    top: 11%;
+    top: 9%;
 }
 .settingsFontSelection {
     position: absolute;
-    width: 80%;
-    height: 10%;
-    top: 15%;
-    left: 10%;
+    width: 92%;
+    top: 13%;
+    left: 4%;
 
     background-color: transparent;
 }
@@ -1484,6 +1454,11 @@ body > div{
     width: 20%;
     height: 65%;
     top:35%;
+	color: rgba(0, 0, 0, 0.6);
+}
+.activeFont.selected{
+	text-decoration: underline;
+	color: #000;
 }
 
 .fontArial, video.fontArial::cue{
@@ -1501,13 +1476,14 @@ body > div{
 .fontLexia{
 	font-family: Lexia;
 }
-
+.settingsFontColorSelection, .settingsFontBGColorSelection, #separator{
+	top: 20%;
+}
+.settingsFontColorSelection, .textFontSizeSubtitle{
+    left: 54%;	
+}
 .settingsFontColorSelection {
     position: absolute;
-    width: 70%;
-    height: 10%;
-    top: 22%;
-    left: 50%;
 }
 .settingsFontColorSelectionTitle {
     position: absolute;
@@ -1516,20 +1492,27 @@ body > div{
     top:0%;
     left:0%;
 
-    color: #000;
     font-family: 'helveticaNeue-Regular';
+	font-weight: bold;
 }
 .settingsFontColorSelectionCell {
-    float: left;
-    width: 25px;
-    height: 25px;
-
-    margin-left: 45px;
-    margin-top: 50px;
-
-    border-style: solid;
-    border-width: 2px;
-    border-color: #555555;
+  border-color: #aaa;
+  border-style: solid;
+  border-width: 1px;
+  float: left;
+  height: 28px;
+  margin-left: 20px;
+  margin-top: 50px;
+  width: 28px;
+}
+.settingsFontColorSelectionCell:nth-child(2){
+	margin-left: 0;
+}
+.settingsFontColorSelectionCell.selected{
+	width: 58px;
+	height: 58px;
+	margin-top: 36px;
+	border-color: #000;
 }
 .settingsFontColorSelectionCellMulti{
 	background: url("../media/multicolor.png") no-repeat;
@@ -1553,25 +1536,33 @@ body > div{
 .blueColor, video.blueColor::cue{
 	color: #64D7FF;
 }
+.settingsFontBGColorSelection, .settingsFontColorSelection{
+  width: 46%;	
+}
 .settingsFontBGColorSelection {
-    position: absolute;
-    height: 10%;
-    top: 22%;
-    left: 10%;
-
-    background-color: transparent;
+  left: 4%;
+  position: absolute;
 }
 .settingsFontBGColorSelectionCell {
     float: left;
-    width: 50px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
 
-    margin-left: 120px;
+    margin-left: 20px;
     margin-top: 50px;
 
     border-style: solid;
-    border-width: 2px;
-    border-color: #555555;
+    border-width: 1px;
+    border-color: #aaa;
+}
+.settingsFontBGColorSelectionCell:nth-child(2){
+	margin-left: 0;
+}
+.settingsFontBGColorSelectionCell.selected{
+	width: 58px;
+	height: 58px;
+	margin-top: 36px;
+	border-color: #000;
 }
 .settingsFontColorSelectionCellBlack{
 	background-color: rgba(0,0,0,0.8);
@@ -1619,54 +1610,49 @@ body > div{
 }
 
 .textFontSizeSubtitle {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-
-    text-align: left;
-    color: #000;
-    font-family: 'helveticaNeue-Regular';
+  font-family: "helveticaNeue-Regular";
+  font-weight: bold;
+  position: absolute;
+  text-align: left;
 }
 
 .slideFontSizeSubtitleContainer {
-    position: absolute;
-    width: 32%;
-    height: 5%;
-    top: 45%;
-    left: 50%;
+  height: 5%;
+  left: 53%;
+  position: absolute;
+  width: 42%;
+  top: 40%;
+  color: #000;
 }
-
+.textOpacity, .textFontSizeSubtitle{
+	top: 36%;
+}
 .textOpacity {
-    position: absolute;
-    top: 40%;
-    left: 10%;
-
-    color: #000;
-    font-family: 'helveticaNeue-Regular';
+  font-family: "helveticaNeue-Regular";
+  font-weight: bold;
+  left: 4%;
+  position: absolute;
 }
-
 .slideOpacityContainer {
     position: absolute;
-    width: 32%;
+    width: 42%;
     height: 5%;
-    top: 45%;
-    left: 10%;
+    top: 40%;
+    left: 4%;
 }
-
-.blackDIV {
+.blackDIV, .transparentUppercaseDIV{
     position: absolute;
     width: 10%;
-    left: 0%;
     height: 80%;
     top:5%;
-	border: 2px solid #000;
+	margin-top: 5px;	
+}
+.blackDIV {
+    left: 0;
+	border: 1px solid #000;
 }
 .transparentUppercaseDIV {
-    position: absolute;
-    width: 10%;
-    height: 80%;
-    top:5%;
-    right:0%;
+    right:0;
 	background-color: #000;
 }
 .slideRangeOpacity {
@@ -1683,12 +1669,15 @@ body > div{
 
 .settingsVideoBackgroundSubtitles{
     position: relative;
-    width: 86%;
-    height: 75%;
+    width: 91.5%;
+    height: 38%;
     min-height: 35%;
-    top: 55%;
-    left: 6%;
-    background-color: grey;
+    top: 48%;
+    left: 4%;
+    background-color: #e7e8e8;
+	border-color: #aaa;
+	border-style: solid;
+	border-width: 1px;
 }
 
 .settingsVideoPipLimitScreenSubtitles{

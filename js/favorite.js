@@ -96,17 +96,7 @@ function favoriteScreen() {
 
 	// size 
 	this.setSize = function(newSize) {
-		var elementsTab = [	".favInfosTitle",
-							".favInfosDetail",
-							".favInfosSubitle",
-							"#favoriteBackgroundTitle",
-							".topbarText"
-							];
-
-		var i;
-		for (i = 0; i < elementsTab.length; i++) { 
-   			myFavoriteScreen.setSizeWithElement(elementsTab[i], newSize);
-		} 
+		$("body > div").css("font-size", (newSize / 16) + "em");
 	}
 	this.setSizeWithElement = function(element, newSize) {
 		$(element).css("font-size", "");

@@ -31,13 +31,13 @@ getFav = function() {
 		    {
 		    	title: "Le monde de Jamy",
 		    	subtitle: "Des volcans et des hommes",
-		    	detail: "ÉMISSION DU 07/05/2014 | 60 min",
+		    	detail: "Émission du 07/05/2014 | 60 min",
 		    	picture: "media/favoris/favoris_vignette_JamyVolcans.png"
 		    },
 		    {
 		    	title: "Le JT de France 2",
 		    	subtitle: "FRANCE2",
-		    	detail: "ÉMISSION DU 15/09/2015 | 40 min",
+		    	detail: "Émission du 15/09/2015 | 40 min",
 		    	picture: "media/favoris/favoris_vignette_JTFR2.png"
 		    },
 		    {
@@ -64,7 +64,7 @@ getContentDashboard = function(index) {
 	{
     	title: "Le monde de jamy",
     	subtitle: "Des volcans et des hommes",
-    	detail: "ÉMISSION DU 07/05/2014 | 60 min",
+    	detail: "Émission du 07/05/2014 | 60 min",
     	picture: "media/dashboard/icone_gr_video_JamyVolcans.png",
     	facebook: 16,
     	twitter: 1,
@@ -105,7 +105,7 @@ getContentDashboard = function(index) {
 	{
     	title: "Le JT de France 2",
     	subtitle: "JT du 20h du mercredi 15 septembre 2015",
-    	detail: "ÉMISSION DU 15/09/2015",
+    	detail: "Émission du 15/09/2015",
     	picture: "media/dashboard/icone_gr_video_JTFR2.png",
     	facebook: 16,
     	twitter: 1,
@@ -124,17 +124,17 @@ getContentDashboard = function(index) {
     	link: [
 	       {
 	    	   title: "Le JT de France 3",
-	    	   subtitle: "ÉMISSION DU 15/11/2015",
+	    	   subtitle: "Émission du 15/11/2015",
 	    	   picture: "media/dashboard/icone_pt_video_JTFR3.png"
 	       },
 	       {
 	    	   title: "Le JT de France 2",
-	    	   subtitle: "ÉMISSION DU 14/11/2015",
+	    	   subtitle: "Émission du 14/11/2015",
 	    	   picture: "media/dashboard/icone_pt_video_JTFR2.png"
 	       },
 	       {
 	    	   title: "Le JT de France 2",
-	    	   subtitle: "ÉMISSION DU 13/11/2015",
+	    	   subtitle: "Émission du 13/11/2015",
 	    	   picture: "media/dashboard/icone_pt_video_JTFR2.png"
 	       }
     	]
