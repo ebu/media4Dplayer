@@ -291,7 +291,6 @@ body > div{
     height: 100%;
     float: left;
     text-align: left;
-    font-size: 2.25em;
     line-height: 116px
 }
 
@@ -332,7 +331,6 @@ body > div{
     color: #000000;
 
     font-family: 'helveticaNeue-Regular';
-    font-size: 2.1875em;
 
     line-height: 38px;
 }
@@ -406,20 +404,17 @@ body > div{
 
 .favoriteInfos .favInfosTitle {
     color: #FF0000;
-    font-size: 2.5em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
     line-height: 60px;
 
 }
 .favoriteInfos .favInfosSubitle {
-    font-size: 1.625em;
     color: #000000;
     font-family: 'helveticaNeue-Light';
     line-height: 40px;    
 }
 .favoriteInfos .favInfosDetail {
-    font-size: 1.625em;
     opacity: 65%;
     color: #000000;
     font-family: 'helveticaNeue-Light';
@@ -475,7 +470,6 @@ body > div{
     height: 100px;
     text-align: center;
 
-    font-size: 2em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 
@@ -544,7 +538,6 @@ body > div{
 	height: 20%;
 
 
-    font-size: 1.1875em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -577,7 +570,6 @@ body > div{
     width: 100%;
     height: auto;
 
-    font-size: .9375em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';	
 }
@@ -653,7 +645,6 @@ body > div{
     /*width: 100M;*/
     height: 70px;
 
-    font-size: 1.8125em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -684,7 +675,6 @@ body > div{
     width: 100%;
     height: auto;
 
-    font-size: 1.125em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -697,7 +687,6 @@ body > div{
     width: 100%;
     height: auto;
 
-    font-size: 1.0625em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -771,7 +760,6 @@ body > div{
     top: 0px;
     left: 100px;
 
-    font-size: 1.25em;
     color: #A5A5A5;
     font-family: 'helveticaNeue-Medium';
 
@@ -781,7 +769,6 @@ body > div{
     position: absolute;
     top: 5px;
     left: 5px;
-    font-size: 1.8125em;
     color: #FFFFFF;
     font-family: 'helveticaNeue-Regular';
 }
@@ -964,7 +951,6 @@ body > div{
     background-color: black;
 
     text-align: center;
-    font-size: 1.875em;
     color: white;
     line-height: 45px;
     font-family: 'helveticaNeue-Regular';    
@@ -1125,7 +1111,6 @@ body > div{
     padding-left: 15%;
     padding-top: 6%;
 
-    font-size: 2em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 
@@ -1133,13 +1118,11 @@ body > div{
 }
 
 #settingsMenuButtonGeneral { 
-    font-size: 2em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
 
 #settingsMenuButtonLSF {
-    font-size: 2em;
     color: #000000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1151,7 +1134,6 @@ body > div{
     top: 4%;
     left: 10%;
 
-    font-size: 1.5625em;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1163,7 +1145,6 @@ body > div{
     position: relative;
     top: 5%;
     left: 10%;
-    font-size: 1.25em;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1197,7 +1178,6 @@ body > div{
     position: relative;
     top: 28%;
     left: 0%;
-    font-size: 1.125em;
     color: #B1B1B1;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1260,7 +1240,6 @@ body > div{
     height: 70%;
 
     text-align: left;
-    font-size: 1.5em;
     color: #FFFFFF;
     font-family: 'helveticaNeue-Regular';
 
@@ -1315,7 +1294,7 @@ body > div{
     top:28%;
 
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.6rem;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1327,7 +1306,7 @@ body > div{
     right:0%;
 
     text-align: center;
-    font-size: 2.75em;
+    font-size: 3rem;
     color: #959595;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1338,7 +1317,6 @@ body > div{
     left: 50%;
 
     text-align: left;
-    font-size: 2em;
     color: #6D6D6D;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1470,7 +1448,6 @@ body > div{
 /* settings - sous-titre */
 #titleSubRubric{
 	text-align: center;
-	font-size: 2em;
     position: absolute;
 	width: 100%;
 	top: 3%;
@@ -1486,7 +1463,6 @@ body > div{
 .chooseFontText{
     position: absolute;
     left: 10%;
-    font-size: 1.25em;
     color: #000;
     font-family: 'helveticaNeue-Regular';	
 }
@@ -1540,7 +1516,6 @@ body > div{
     top:0%;
     left:0%;
 
-    font-size: 1.5em;
     color: #000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1580,7 +1555,6 @@ body > div{
 }
 .settingsFontBGColorSelection {
     position: absolute;
-    width: 70%;
     height: 10%;
     top: 22%;
     left: 10%;
@@ -1650,7 +1624,6 @@ body > div{
     left: 50%;
 
     text-align: left;
-    font-size: 1.5em;
     color: #000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1668,7 +1641,6 @@ body > div{
     top: 40%;
     left: 10%;
 
-    font-size: 1.5em;
     color: #000;
     font-family: 'helveticaNeue-Regular';
 }
@@ -1811,7 +1783,6 @@ body > div{
     height: 100%;
 */
     text-align: center;
-    font-size: 2.25em;
     color: #FFFFFF;
     font-family: 'helveticaNeue-Regular';
 }

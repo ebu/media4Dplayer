@@ -126,7 +126,7 @@ function settingsScreen() {
 		leftLowercaseDIV.innerHTML = "A";
 		var slideRangeFontSize = createDiv("slideRangeFontSize", slideFontSizeContainer, "", "slideRangeFontSize slideHorizontalInput");
 		var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : 24;
-		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="40" value="'+valueMinSize+'" step="8" onchange="mySett.onSizeSlideChangeValue(this.value)" tabindex="37"/>';
+		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="30" value="'+valueMinSize+'" step="7" onchange="mySett.onSizeSlideChangeValue(this.value)" tabindex="37"/>';
 		var rightUppercaseDIV = createDiv("rightUpperCase", slideFontSizeContainer, "", "rightUpperCase");
 		rightUppercaseDIV.innerHTML = "A";
 
@@ -410,7 +410,6 @@ function settingsScreen() {
 		if(selectedFontBGColor){
 			$textCtn.addClass("opacity_"+selectedFontBGColor.replace(".",""));
 		}
-		$textCtn.css("font-size", "inherit");
 		var selectedFontSize = getCookie("subtitleFontSize");
 		if(selectedFontSize){
 			$textCtn.css("font-size", selectedFontSize+"px");
@@ -702,7 +701,8 @@ function settingsScreen() {
 
 	// size 
 	this.setSize = function(newSize) {
-		var elementsTab = [	
+		$("body > div").css("font-size", (newSize / 16) + "em");
+		/*var elementsTab = [	
 							".settingsSizeFontSample",							
 							"#settingsMenuButtonGeneral",
 							"#settingsMenuButtonLSF",
@@ -723,8 +723,8 @@ function settingsScreen() {
 
 		var i;
 		for (i = 0; i < elementsTab.length; i++) { 
-   			this.setSizeWithElement(elementsTab[i], newSize);
-		} 
+   			//this.setSizeWithElement(elementsTab[i], newSize);
+		} */
 	}
 	this.setSizeWithElement = function(element, newSize) {
 		$(element).css("font-size", "");
