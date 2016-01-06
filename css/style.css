@@ -41,14 +41,11 @@ hr{
 	margin:0;
 	visibility:hidden;
 }
-html, body{
-	height: 100%;
-}
 
 html{
     font-size: 62.5%; /* Ré-équilibrage du Rem face au Pixel pour des calculs simples */
 	width: 1280px;
-	min-height: 853px;
+	height: 720px;
 }
 
 body{
@@ -56,6 +53,7 @@ body{
 	font-size: 1.6rem;
 	background-color: #fbfcfc;
 	position: relative;
+	height: 100%;
 }
 
 body > div{
@@ -111,17 +109,12 @@ body > div{
     text-align: center;
 }
 
-#dashboardScreen,
-#favoriteScreen
-{
-    position: absolute;
-    top: 14%;
-    left: 0px;
-    width: 100%;
-    height: 790px;
-    min-width: 1280px;
-
-    display: none;
+#dashboardScreen, #favoriteScreen {
+  display: none;
+  height: 606px;
+  position: absolute;
+  top: 114px;
+  width: 100%;
 }
 
 /*************\
@@ -271,7 +264,7 @@ body > div{
     float: left;
     color: #545454;
     font-family: 'helveticaNeue-Regular';
-	line-height: 82px;
+	line-height: 80px;
 	text-align: center;
 }
 
@@ -451,7 +444,6 @@ body > div{
     top: 0px;
     left: 16%;
     width: 70%;
-    height: 100px;
     text-align: center;
 	text-transform: uppercase;
 
@@ -648,7 +640,7 @@ body > div{
 #dashboardSynopsis
 {
 	position: absolute;
-    top: 18%;
+    top: 25%;
     left: 0px;
     width: 100%;
     height: auto;
@@ -1051,31 +1043,29 @@ body > div{
 \*****************/
 
 #settingsScreen {
-    left: 0px;
-    top: 122px;
-    width: 100%;
-    height: 100%;
-    min-width: 1280px;
-    min-height: 1024px;
+  height: 606px;
+  left: 0;
+  min-width: 1280px;
+  position: absolute;
+  top: 83px;
+  width: 100%;
+  display: none;
 }
 
 .settingsContainer {
-    position: absolute;
-    left:295px;
-    width: 77%;
-    min-width: 900px;
-    height: 92%;
-    top: 11%;
+  height: 100%;
+  left: 295px;
+  min-width: 900px;
+  position: absolute;
+  width: 77%;
 }
 
 .settingsMenu {
-    position: absolute;
-    left: 0px;
-    top: 84px;
-    height: 87%;
-    width: 295px;
-    /*min-width: 400px;*/
-    background-color: #e7e8e8;
+  background-color: #e7e8e8;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  width: 295px;
 }
 
 .settingsMenuButton { 
@@ -1443,7 +1433,7 @@ body > div{
 .settingsFontSelection {
     position: absolute;
     width: 92%;
-    top: 13%;
+    top: 14%;
     left: 4%;
 
     background-color: transparent;
@@ -1615,17 +1605,18 @@ body > div{
   position: absolute;
   text-align: left;
 }
-
+.slideFontSizeSubtitleContainer, .slideOpacityContainer{
+    position: absolute;
+    top: 44%;	
+    height: 5%;
+    width: 42%;
+}
 .slideFontSizeSubtitleContainer {
-  height: 5%;
   left: 53%;
-  position: absolute;
-  width: 42%;
-  top: 40%;
   color: #000;
 }
 .textOpacity, .textFontSizeSubtitle{
-	top: 36%;
+	top: 39%;
 }
 .textOpacity {
   font-family: "helveticaNeue-Regular";
@@ -1634,10 +1625,6 @@ body > div{
   position: absolute;
 }
 .slideOpacityContainer {
-    position: absolute;
-    width: 42%;
-    height: 5%;
-    top: 40%;
     left: 4%;
 }
 .blackDIV, .transparentUppercaseDIV{
@@ -1672,7 +1659,7 @@ body > div{
     width: 91.5%;
     height: 38%;
     min-height: 35%;
-    top: 48%;
+    top: 55%;
     left: 4%;
     background-color: #e7e8e8;
 	border-color: #aaa;
