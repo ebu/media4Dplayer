@@ -1032,6 +1032,20 @@ body > div{
     height: 100%;
 }
 
+/*#video-caption{
+	top: -83% !important;
+}*/
+
+#video-caption *{
+	font-size: inherit !important;
+	text-align: center !important;
+}
+
+#video-caption div{
+	width: 100%;
+	display: block;
+}
+
 /*****************\
 * Settings Screen *
 \*****************/
@@ -1297,6 +1311,10 @@ body > div{
 	color: #fff;
 }
 
+.settingsPipVideo{
+	line-height: 60px !important;
+}
+
 .ui-icon {
     width: 28px;
     height: 28px;
@@ -1445,20 +1463,20 @@ body > div{
 	color: #000;
 }
 
-.fontArial, video.fontArial::cue{
-	font-family: Arial;
+#settingsPipText.fontArial, #video-caption.fontArial span{
+	font-family: Arial !important;
 }
-.fontOpenDyslexic, video.fontOpenDyslexic::cue{
-	font-family: OpenDyslexic;
+#settingsPipText.fontOpenDyslexic, #video-caption.fontOpenDyslexic span{
+	font-family: OpenDyslexic !important;
 }
-.fontAndika, video.fontAndika::cue{
-	font-family: Andika;
+#settingsPipText.fontAndika, #video-caption.fontAndika span{
+	font-family: Andika !important;
 }
-.fontHelvetica{
-	font-family: Helvetica;
+#settingsPipText.fontHelvetica, #video-caption.fontHelvetica span{
+	font-family: Helvetica !important;
 }
-.fontLexia{
-	font-family: Lexia;
+#settingsPipText.fontLexia, #video-caption.fontLexia span{
+	font-family: Lexia !important;
 }
 .settingsFontColorSelection, .settingsFontBGColorSelection, #separator{
 	top: 20%;
@@ -1505,20 +1523,20 @@ body > div{
 .settingsFontColorSelectionCellWhite {
     background-color: #FFFFFF;
 }
-.whiteColor, video.whiteColor::cue{
-	color: #FFFFFF;
-}
 .settingsFontColorSelectionCellYellow {
     background-color: #FEBF00;
-}
-.yellowColor, video.yellowColor::cue{
-	color: #FEBF00;
 }
 .settingsFontColorSelectionCellBlue {
     background-color: #64D7FF;
 }
-.blueColor, video.blueColor::cue{
-	color: #64D7FF;
+#settingsPipText.whiteColor, #video-caption.whiteColor span{
+	color: #FFFFFF !important;
+}
+#settingsPipText.yellowColor, #video-caption.yellowColor span{
+	color: #FEBF00 !important;
+}
+#settingsPipText.blueColor, #video-caption.blueColor span{
+	color: #64D7FF !important;
 }
 .settingsFontBGColorSelection, .settingsFontColorSelection{
   width: 46%;	
@@ -1551,38 +1569,38 @@ body > div{
 .settingsFontColorSelectionCellBlack{
 	background-color: rgba(0,0,0,0.8);
 }
-.blackBGColor.opacity_0, video.blackBGColor.opacity_0::cue{
-	background-color: rgba(0,0,0,0);
-}
-.blackBGColor.opacity_025, video.blackBGColor.opacity_025::cue{
-	background-color: rgba(0,0,0,0.25);
-}
-.blackBGColor.opacity_05, video.blackBGColor.opacity_05::cue{
-	background-color: rgba(0,0,0,0.5);
-}
-.blackBGColor.opacity_075, video.blackBGColor.opacity_075::cue{
-	background-color: rgba(0,0,0,0.75);
-}
-.blackBGColor.opacity_1, video.blackBGColor.opacity_1::cue{
-	background-color: rgba(0,0,0,1);
-}
 .settingsFontColorSelectionCellWhite{
 	background-color: rgba(255,255,255,0.8);
 }
-.whiteBGColor.opacity_0, video.whiteBGColor.opacity_0::cue{
-	background-color: rgba(255,255,255,0);
+#settingsPipText.blackBGColor.opacity_0, #video-caption.blackBGColor.opacity_0 span{
+	background-color: rgba(0,0,0,0) !important;
 }
-.whiteBGColor.opacity_025, video.whiteBGColor.opacity_025::cue{
-	background-color: rgba(255,255,255,0.25);
+#settingsPipText.blackBGColor.opacity_025, #video-caption.blackBGColor.opacity_025 span{
+	background-color: rgba(0,0,0,0.25) !important;
 }
-.whiteBGColor.opacity_05, video.whiteBGColor.opacity_05::cue{
-	background-color: rgba(255,255,255,0.5);
+#settingsPipText.blackBGColor.opacity_05, #video-caption.blackBGColor.opacity_05 span{
+	background-color: rgba(0,0,0,0.5) !important;
 }
-.whiteBGColor.opacity_075, video.whiteBGColor.opacity_075::cue{
-	background-color: rgba(255,255,255,0.75);
+#settingsPipText.blackBGColor.opacity_075, #video-caption.blackBGColor.opacity_075 span{
+	background-color: rgba(0,0,0,0.75) !important;
 }
-.whiteBGColor.opacity_1, video.whiteBGColor.opacity_1::cue{
-	background-color: rgba(255,255,255,1);
+#settingsPipText.blackBGColor.opacity_1, #video-caption.blackBGColor.opacity_1 span{
+	background-color: rgba(0,0,0,1) !important;
+}
+#settingsPipText.whiteBGColor.opacity_0, #video-caption.whiteBGColor.opacity_0 span{
+	background-color: rgba(255,255,255,0) !important;
+}
+#settingsPipText.whiteBGColor.opacity_025, #video-caption.whiteBGColor.opacity_025 span{
+	background-color: rgba(255,255,255,0.25) !important;
+}
+#settingsPipText.whiteBGColor.opacity_05, #video-caption.whiteBGColor.opacity_05 span{
+	background-color: rgba(255,255,255,0.5) !important;
+}
+#settingsPipText.whiteBGColor.opacity_075, #video-caption.whiteBGColor.opacity_075 span{
+	background-color: rgba(255,255,255,0.75) !important;
+}
+#settingsPipText.whiteBGColor.opacity_1, #video-caption.whiteBGColor.opacity_1 span{
+	background-color: rgba(255,255,255,1) !important;
 }
 .slideSizeRange {
     position: absolute;

@@ -428,7 +428,10 @@ function settingsScreen() {
       										}).resizable( {
       											containment: ".settingsVideoPipLimitScreenSubtitles",
       											handles: 'all',
-      											minHeight: 80,
+      											minHeight: 60,
+      											maxHeight: 60,
+												minWidth:866,
+												maxWidth:866,
       											//aspectRatio: 16/9,
       											resize: function() {
       												mySettingsScreen.updateIconsPip();
