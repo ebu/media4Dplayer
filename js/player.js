@@ -511,7 +511,15 @@ function playerScreen() {
 					hSize = getCookie("LSFPipSubtitles_size_height");
 
 				if(xPos !== "undefined" && yPos !== "undefined" && wSize !== "undefined" && hSize !== "undefined"){
-					$(ttmlDiv).css("top", ((0-83) + Math.round(yPos) + (hSize/2))+"%")
+					var top = Math.round(yPos);
+					if(top <= 0){
+						top = 0;
+					}else if(top>= 65){
+						top = 65 / 2;
+					}else{
+						top = top / 2;
+					}
+					$(ttmlDiv).css("top", top + "%")
 						.css("left", xPos + "%")
 						.css("width", wSize + "%");
 				}

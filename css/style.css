@@ -1032,9 +1032,9 @@ body > div{
     height: 100%;
 }
 
-/*#video-caption{
-	top: -83% !important;
-}*/
+#video-caption{
+	height: 66% !important;
+}
 
 #video-caption *{
 	font-size: inherit !important;
