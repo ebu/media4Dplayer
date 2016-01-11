@@ -15,7 +15,7 @@ function playerScreen() {
     	urlPip: null,
     	urlAudio: null,
 
-    	urlMain0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest_vtt.mpd",
+    	urlMain0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest_ttml.mpd",
     	urlPip0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest-lsf.mpd",
     	urlAudio0: "http://videos-pmd.francetv.fr/innovation/media4D/m4dp-set1-LMDJ-ondemand/manifest-ad.mpd",
 
@@ -283,6 +283,7 @@ function playerScreen() {
 		if (newCurrentPosition > totalTimeSecond) {
 			newCurrentPosition = totalTimeSecond;
 		}
+		//this.playerManager.playerMain.seek(newCurrentPosition);
 		
 		// check if the new position is seekable
 		console.log("newCurrentPosition = "+newCurrentPosition);
@@ -306,6 +307,8 @@ function playerScreen() {
 		if (newCurrentPosition < 0) {
 			newCurrentPosition = 0;
 		}
+		//this.playerManager.playerMain.seek(newCurrentPosition);
+		
 		// check if the new position is seekable
 		console.log("newCurrentPosition = "+newCurrentPosition);
 		for (var i=0; i<this.playerManager.controller.seekable.length; i++) {
@@ -352,12 +355,12 @@ function playerScreen() {
 
 	var refreshTimer;
 	this.resetTimerHideUI = function() {
-/*		
+		
 		if(refreshTimer!= null) {
 			clearInterval(refreshTimer);
 		}
 		refreshTimer = setTimeout(this.hideUI, 4 * 1000);
-*/		
+		
 	}
 
 	this.diplayUI = function() {
@@ -501,42 +504,24 @@ function playerScreen() {
 
             this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(e) {
             	console.debug("MediaPlayer.events.TEXT_TRACKS_ADDED");
-				
+		
 				var xPos = getCookie("LSFPipSubtitles_position_x"),
 					yPos = getCookie("LSFPipSubtitles_position_y"),
-					wSize = getCookie("LSFPipSubtitles_size_width");
-					
-				if(xPos !== "undefined" && yPos !== "undefined" && wSize !== "undefined"){
+					wSize = getCookie("LSFPipSubtitles_size_width"),
+					hSize = getCookie("LSFPipSubtitles_size_height");
 
-					var textTracks = myPlayerScreen.videoMain.textTracks;
-
-					var textTrack = textTracks[0];
-					//dumpObject(textTrack);
-					//dumpObject(textTrack.regions);
-					console.debug("# textTrack.kind = "+textTrack.kind);
-					console.debug("# textTrack.mode = "+textTrack.mode);
-					//textTrack.mode = "hidden";
-					var cues = textTrack.cues;
-
-					var region = new VTTRegion();
-					region.width = Math.round(wSize);
-					region.id  = "regionMain";
-					region.regionAnchorX = Math.round(xPos);
-					region.regionAnchorY = Math.round(yPos);
-					//region.viewportAnchorX = Math.round(xPos);
-					//region.viewportAnchorY = Math.round(yPos);
-						//region.lines = 3;
-						//region.scroll = "up";
-					//dumpObject(region);
-					textTrack.addRegion(region);				
-
-					for (var i=0;i<cues.length;i++) {
-						cues[i].regionId = "regionMain";
-						cues[i].region = region;
-						cues[i].onenter = function(e) {
-							//dumpObject(e.target);
-						}
-					}					
+				if(xPos !== "undefined" && yPos !== "undefined" && wSize !== "undefined" && hSize !== "undefined"){
+					var top = Math.round(yPos);
+					if(top <= 0){
+						top = 0;
+					}else if(top>= 65){
+						top = 65 / 2;
+					}else{
+						top = top / 2;
+					}
+					$(ttmlDiv).css("top", top + "%")
+						.css("left", xPos + "%")
+						.css("width", wSize + "%");
 				}
             });
 	        /*
@@ -573,6 +558,11 @@ function playerScreen() {
 		}
 		
 		this.playerManager.playerMain.attachView(this.videoMain);
+		this.playerManager.playerMain.attachVideoContainer(document.getElementById("playerScreen"));
+
+		// Add HTML-rendered TTML subtitles
+		ttmlDiv = document.querySelector("#video-caption");
+		this.playerManager.playerMain.attachTTMLRenderingDiv(ttmlDiv);
 		this.playerManager.playerPip.attachView(this.videoPip);
 	    this.playerManager.playerAudio.attachView(this.videoAudio);
 
@@ -735,7 +725,7 @@ function playerScreen() {
 		this.resetTimerHideUI();
 		
 		// subtitles
-		var $videoPlayer = $(document.getElementById("videoPlayerMain")).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia");
+		var $videoPlayer = $(ttmlDiv).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia");
 		var selectedFont = getCookie("subtitleFont");
 		if(selectedFont){
 			$videoPlayer.addClass("font"+selectedFont);
@@ -821,7 +811,7 @@ function playerScreen() {
 	this.progressBar.reset = function(){
 
 		myPlayerScreen.stopCheckVideoPosition();
-		clearInterval(updateProgressBarOfBanner);
+		clearInterval(checkPositionVideo);
 		$(document.getElementById("playerProgressCurrent")).text("-");
 		$(document.getElementById("playerProgressTotal")).text("-");
 		$(document.getElementById("playerProgressCursor")).css("width",0);

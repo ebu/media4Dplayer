@@ -179,9 +179,9 @@ MediaPlayer.utils.TextTrackExtensions = function () {
                     actualVideoTop = realVideoSize.y;
                     actualVideoWidth = newVideoWidth;
                     actualVideoHeight = newVideoHeight;
-                    captionContainer.style.left = actualVideoLeft + "px";
-                    captionContainer.style.top = actualVideoTop + "px";
-                    captionContainer.style.width = actualVideoWidth + "px";
+                    //captionContainer.style.left = actualVideoLeft + "px";
+                    //captionContainer.style.top = actualVideoTop + "px";
+                    //captionContainer.style.width = actualVideoWidth + "px";
                     captionContainer.style.height = actualVideoHeight + "px";
 
                     // Video view has changed size, so resize all active cues
@@ -319,9 +319,9 @@ MediaPlayer.utils.TextTrackExtensions = function () {
                     cue.lineHeight = currentItem.lineHeight;
                     cue.linePadding = currentItem.linePadding;
                     cue.scaleCue = this.scaleCue;
-                    captionContainer.style.left = actualVideoLeft + "px";
-                    captionContainer.style.top = actualVideoTop + "px";
-                    captionContainer.style.width = actualVideoWidth + "px";
+                    //captionContainer.style.left = actualVideoLeft + "px";
+                    //captionContainer.style.top = actualVideoTop + "px";
+                    //captionContainer.style.width = actualVideoWidth + "px";
                     captionContainer.style.height = actualVideoHeight + "px";
 
                     cue.onenter =  function () {
