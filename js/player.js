@@ -283,10 +283,10 @@ function playerScreen() {
 		if (newCurrentPosition > totalTimeSecond) {
 			newCurrentPosition = totalTimeSecond;
 		}
-		this.playerManager.playerMain.seek(newCurrentPosition);
+		//this.playerManager.playerMain.seek(newCurrentPosition);
 		
 		// check if the new position is seekable
-		/*console.log("newCurrentPosition = "+newCurrentPosition);
+		console.log("newCurrentPosition = "+newCurrentPosition);
 		for (var i=0; i<this.playerManager.controller.seekable.length; i++) {
 			console.log("check range #" + i + " -> "+this.playerManager.controller.seekable.start(i)+", "+this.playerManager.controller.seekable.end(i));
 			if (this.playerManager.controller.seekable.start(i) <= newCurrentPosition && newCurrentPosition <= this.playerManager.controller.seekable.end(i)) {
@@ -294,7 +294,7 @@ function playerScreen() {
 				this.playerManager.controller.currentTime = newCurrentPosition;
 				break;
 			}
-		}*/
+		}
 		//Note: if the newCurrentPosition is not seekable, we do nothing for now. It could be interesting to seek to the last seekable position instead.
 	};
 
@@ -307,10 +307,10 @@ function playerScreen() {
 		if (newCurrentPosition < 0) {
 			newCurrentPosition = 0;
 		}
-		this.playerManager.playerMain.seek(newCurrentPosition);
+		//this.playerManager.playerMain.seek(newCurrentPosition);
 		
 		// check if the new position is seekable
-		/*console.log("newCurrentPosition = "+newCurrentPosition);
+		console.log("newCurrentPosition = "+newCurrentPosition);
 		for (var i=0; i<this.playerManager.controller.seekable.length; i++) {
 			console.log("check range seekable #" + i + " -> "+this.playerManager.controller.seekable.start(i)+", "+this.playerManager.controller.seekable.end(i));
 			console.log("check range buffered #" + i + " -> "+this.playerManager.controller.buffered.start(i)+", "+this.playerManager.controller.buffered.end(i));
@@ -319,7 +319,7 @@ function playerScreen() {
 				this.playerManager.controller.currentTime = newCurrentPosition;
 				break;
 			}
-		}*/
+		}
 	};
 
 	this.stop = function(){
