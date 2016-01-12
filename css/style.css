@@ -1020,9 +1020,9 @@ body > div{
 #playerControlConfig
 {
 	position: absolute;
-	right: 40px;
-	width: 170px;
-    height: 180px;
+	right: -91px;
+	bottom: 0;
+	width: 100px;
 }
 
 

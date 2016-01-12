@@ -162,7 +162,21 @@ move = function(action, button, event) {
 		case "playerControlStop":
 			myPlayer.stop();
 			break;
-
+		case "playerControlConfig":
+			backToPlayerFromSettings = true;
+			myPlayer.playerManager.controller.pause();
+			myPlayer.hide();			
+			myTopbar.validSettings();
+			break;
+		case "BackToPlayer":
+			mySett.hide();
+			myTopbar.selectButton(3);
+			myPlayer.setPIP();
+			myPlayer.initSubtitlesParams();
+			myPlayer.playerManager.controller.play();
+			myPlayer.show();			
+			break;
+			
 		default:
 			console.log( selecteur.getAttribute("zone") + " not defined");
 			break;

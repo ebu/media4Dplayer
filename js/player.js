@@ -374,10 +374,10 @@ function playerScreen() {
 	var refreshTimer;
 	this.resetTimerHideUI = function() {
 		
-		/*if(refreshTimer!= null) {
+		if(refreshTimer!= null) {
 			clearInterval(refreshTimer);
 		}
-		refreshTimer = setTimeout(this.hideUI, 4 * 1000);*/
+		refreshTimer = setTimeout(this.hideUI, 4 * 1000);
 		
 	}
 
@@ -410,26 +410,11 @@ function playerScreen() {
 			var btn = createButton("playerClose", playerTopBanner, "playerClose", 0, 0);
 			btn.setAttribute("tabindex", 11);
 			createImg(null, btn, "media/player/inte_close.png", null, "Fermer");
-/*			btn = createButton("playerShare", playerTopBanner, "playerShare", 1, 0);
-			btn.setAttribute("tabindex", 12);
-			createImg(null, btn, "media/player/inte_share.png", null, "Partager cette vidéo");
-			btn = createButton("playerSignet", playerTopBanner, "playerSignet", 2, 0);
-			btn.setAttribute("tabindex", 13);
-			createImg(null, btn, "media/player/inte_signet.png", null, "Mettre un signet");
-			btn = createButton("playerFavorite", playerTopBanner, "playerFavorite", 3, 0);
-			btn.setAttribute("tabindex", 14);
-			createImg(null, btn, "media/favoris/favoris_icone_bloc.png", null, "Ajouter aux favoris");
-//			btn = createButton("playerSize", playerTopBanner, "playerSize", 4, 0);
-//			btn.setAttribute("tabindex", 5);
-//			createImg(null, btn, "media/player/inte_exitfullscreen.png", null, "Réduire la taille");
-
-*/
 			
 			var playerOptions = playerBottomBanner.children[0];
 			emptyElem(playerOptions);
 			
 			//button for accessibility
-
 			var btn = createButton("playerOptionAudio", playerOptions, "playerOptionAudio", 3, 0);
 			btn.setAttribute("tabindex", 21);
 			createIconeLA(btn, 57, 42);
@@ -468,7 +453,10 @@ function playerScreen() {
 			btn = createButton("playerControlStop", playerControlTrickMode, "playerControlStop", 3, 0);
 			btn.setAttribute("tabindex", 33);
 			createImg(null, btn, "media/player/controle_btn_stop.png", null, "stop");
-
+			
+			btn = createButton("playerControlConfig", playerControlTrickMode, "playerControlConfig", 4, 0);
+			btn.setAttribute("tabindex", 34);
+			createImg(null, btn, "media/topbar/menu_reglages.png", null, "settings");
 
 			dropDownMenu = createDiv("optionDropDownMenu", playerBottomBanner, null, "optionDropDownMenu hidden");
 			isOptionDropDownMenuDisplayed = false;
@@ -589,110 +577,7 @@ function playerScreen() {
 		this.playerManager.playerPip.attachView(this.videoPip);
 	    this.playerManager.playerAudio.attachView(this.videoAudio);
 
-
-		if(getCookie("LSFPip_position_x") != null) {
-			$(".pipVideo").css("left", getCookie("LSFPip_position_x") + "%" );
-		}
-		if(getCookie("LSFPip_position_y") != null) {
-			$(".pipVideo").css("top", getCookie("LSFPip_position_y") + "%" );
-		}
-		if(getCookie("LSFPip_size_width") != null) {
-			$(".pipVideo").css("width", getCookie("LSFPip_size_width") + "%" );
-		}
-		if(getCookie("LSFPip_size_height") != null) {
-			$(".pipVideo").css("height", getCookie("LSFPip_size_height") + "%" );
-		}
-
-//style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
-
-
-		$( ".pipVideo" ).draggable({ 	containment: ".videoPipContainer",
-										scroll:false,
-										handle:".ui-icon-gripsmall-center",
-										stop: function() {
-											console.log("onDrag STOP");
-											appearPipControls()
-											saveCoordinates();
-										},
-										start: function() {
-											console.log("onDrag START");
-											clearInterval(pipControlTimeout);
-        									$(".videoPipContainer").css("border-style","solid");
-        									$(".pipVideo").css("border-style","solid");
-      									}
-										})
-						.resizable({
-										containment: ".videoPipContainer",
-										handles: 'all',
-										minHeight: 120,
-										aspectRatio: 16/9,
-										resize: function() {
-											myPlayerScreen.updateIconsPip();
-										},
-										stop: function() {
-											saveLSFSize();
-											saveLSFCoordinates();
-										}
-									})
-						.click( function() {
-							console.log("onClick .pipVideo !!");
-							appearPipControls();
-						});
-
-		$('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
-		$('.ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne');
-		$('.ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw');
-		$('.ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
-		$(".ui-icon").css("display", "none");
-
-		function saveCoordinates() {
-
-			var pipTop  = $(".pipVideo").position().top;
-			var pipLeft = $(".pipVideo").position().left;
-			var widthContainerString  = $(".videoPipContainer").css("width"); 		// get px here ?!
-			var heightContainerString  = $(".videoPipContainer").css("height");		// get px here ?!
-			var widthContainerPx  = widthContainerString.substring(0,widthContainerString.length-2);
-			var heightContainerPx  = heightContainerString.substring(0,heightContainerString.length-2);
-			
-			var playerScreenWidthString = $("#playerScreen").css("width");
-			var playerScreenWidthPx = playerScreenWidthString.substring(0,playerScreenWidthString.length-2);
-			var playerScreenHeightString = $("#playerScreen").css("height");
-			var playerScreenHeightPx = playerScreenHeightString.substring(0,playerScreenHeightString.length-2);
-
-			var widthPx = (widthContainerPx/100)*playerScreenWidthPx;
-			var heightPx = (heightContainerPx/100)*playerScreenHeightPx;
-
-			var newLeftPercent = (pipLeft/widthContainerPx )*100;
-			var newTopPercent = (pipTop/heightContainerPx)*100;
-
-			console.log("saveCoordinates : (left:"+ newLeftPercent+ ", top:"+newTopPercent);
-
-			setCookie("LSFPip_position_x", newLeftPercent);
-			setCookie("LSFPip_position_y", newTopPercent);
-		}
-		function saveLSFSize() {
-			console.log("!! saveLSFSize TODO !!");
-		}
-
-		function appearPipControls() {
-			console.log("appearPipControls");
-			if(pipControlTimeout != null) clearInterval(pipControlTimeout);
-			pipControlTimeout = setTimeout(disappearPipControls, 3 *1000);
-
-			myPlayerScreen.updateIconsPip(); //debug
-
-			$(".videoPipContainer").css("border-style","solid");
-			$(".pipVideo").css("border-style","solid");
-			$(".ui-icon").css("display", "block");
-		}
-
-		function disappearPipControls() {
-			console.log("disappearPipControls");
-
-			$(".videoPipContainer").css("border-style","hidden");
-			$(".pipVideo").css("border-style","hidden");
-			$(".ui-icon").css("display", "none");
-		}
+		this.setPIP();
 
 		//JTB
 		if(currentPipMode == null) {
@@ -747,6 +632,114 @@ function playerScreen() {
 
 		this.resetTimerHideUI();
 		
+		this.initSubtitlesParams();
+		
+		this.launchCheckPositionVideo();
+	},
+	this.setPIP = function(){
+		if(getCookie("LSFPip_position_x") != null) {
+			$(".pipVideo").css("left", getCookie("LSFPip_position_x") + "%" );
+		}
+		if(getCookie("LSFPip_position_y") != null) {
+			$(".pipVideo").css("top", getCookie("LSFPip_position_y") + "%" );
+		}
+		if(getCookie("LSFPip_size_width") != null) {
+			$(".pipVideo").css("width", getCookie("LSFPip_size_width") + "%" );
+		}
+		if(getCookie("LSFPip_size_height") != null) {
+			$(".pipVideo").css("height", getCookie("LSFPip_size_height") + "%" );
+		}
+
+		$( ".pipVideo" ).draggable({ 	containment: ".videoPipContainer",
+										scroll:false,
+										handle:".ui-icon-gripsmall-center",
+										stop: function() {
+											console.log("onDrag STOP");
+											appearPipControls()
+											saveCoordinates();
+										},
+										start: function() {
+											console.log("onDrag START");
+											clearInterval(pipControlTimeout);
+        									$(".videoPipContainer").css("border-style","solid");
+        									$(".pipVideo").css("border-style","solid");
+      									}
+										})
+						.resizable({
+										containment: ".videoPipContainer",
+										handles: 'all',
+										minHeight: 120,
+										aspectRatio: 16/9,
+										resize: function() {
+											myPlayerScreen.updateIconsPip();
+										},
+										stop: function() {
+											saveLSFSize();
+											saveLSFCoordinates();
+										}
+									})
+						.click( function() {
+							console.log("onClick .pipVideo !!");
+							appearPipControls();
+						});
+
+		$('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
+		$('.ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne');
+		$('.ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw');
+		$('.ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
+		$(".ui-icon").css("display", "none");
+		
+		function saveCoordinates() {
+
+			var pipTop  = $(".pipVideo").position().top;
+			var pipLeft = $(".pipVideo").position().left;
+			var widthContainerString  = $(".videoPipContainer").css("width"); 		// get px here ?!
+			var heightContainerString  = $(".videoPipContainer").css("height");		// get px here ?!
+			var widthContainerPx  = widthContainerString.substring(0,widthContainerString.length-2);
+			var heightContainerPx  = heightContainerString.substring(0,heightContainerString.length-2);
+			
+			var playerScreenWidthString = $("#playerScreen").css("width");
+			var playerScreenWidthPx = playerScreenWidthString.substring(0,playerScreenWidthString.length-2);
+			var playerScreenHeightString = $("#playerScreen").css("height");
+			var playerScreenHeightPx = playerScreenHeightString.substring(0,playerScreenHeightString.length-2);
+
+			var widthPx = (widthContainerPx/100)*playerScreenWidthPx;
+			var heightPx = (heightContainerPx/100)*playerScreenHeightPx;
+
+			var newLeftPercent = (pipLeft/widthContainerPx )*100;
+			var newTopPercent = (pipTop/heightContainerPx)*100;
+
+			console.log("saveCoordinates : (left:"+ newLeftPercent+ ", top:"+newTopPercent);
+
+			setCookie("LSFPip_position_x", newLeftPercent);
+			setCookie("LSFPip_position_y", newTopPercent);
+		}
+		function saveLSFSize() {
+			console.log("!! saveLSFSize TODO !!");
+		}
+
+		function appearPipControls() {
+			console.log("appearPipControls");
+			if(pipControlTimeout != null) clearInterval(pipControlTimeout);
+			pipControlTimeout = setTimeout(disappearPipControls, 3 *1000);
+
+			myPlayerScreen.updateIconsPip(); //debug
+
+			$(".videoPipContainer").css("border-style","solid");
+			$(".pipVideo").css("border-style","solid");
+			$(".ui-icon").css("display", "block");
+		}
+
+		function disappearPipControls() {
+			console.log("disappearPipControls");
+
+			$(".videoPipContainer").css("border-style","hidden");
+			$(".pipVideo").css("border-style","hidden");
+			$(".ui-icon").css("display", "none");
+		}		
+	},
+	this.initSubtitlesParams = function(){
+		
 		// subtitles
 		var $videoPlayer = $(ttmlDiv).removeClass("fontArial fontOpenDyslexic fontAndika fontHelvetica fontLexia");
 		var selectedFont = getCookie("subtitleFont");
@@ -780,10 +773,8 @@ function playerScreen() {
 		var selectedFontSize = getCookie("subtitleFontSize");
 		if(selectedFontSize){
 			$videoPlayer.css("font-size", selectedFontSize+"px");
-		}
-		
-		this.launchCheckPositionVideo();
-	};
+		}		
+	},
 	
 
 

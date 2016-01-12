@@ -7,6 +7,7 @@ var mySett = new settingsScreen();
 var myPlayer = new playerScreen();
 var myComingSoon = new comingSoonScreen();
 var myTextHelper = new textHelperScreen();
+var backToPlayerFromSettings = false;
 
 function onLoad() {
 	top.resizeTo(window.screen.availWidth, window.screen.availHeight);

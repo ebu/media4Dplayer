@@ -37,7 +37,13 @@ function settingsScreen() {
 		var menuSettingsSubtitleFBT = createButton("settingsMenuButtonSubtitle", menuSettingsDIV, "btSettingsMenuSubtitle", 0, 0, "settingsMenuButton settingsMenuButton2");
 		menuSettingsSubtitleFBT.innerHTML =  "Sous-titres";
 		menuSettingsSubtitleFBT.setAttribute("tabindex", 12);
-
+		
+		if(backToPlayerFromSettings){
+			backToPlayerFromSettings = false;
+			var menuSettingsBackToPlayer = createButton("settingsMenuButtonBackToPlayer", menuSettingsDIV, "BackToPlayer", 0, 0, "settingsMenuButton settingsMenuButtonBack");
+			menuSettingsBackToPlayer.innerHTML =  "Retourner à la vidéo";
+			menuSettingsBackToPlayer.setAttribute("tabindex", 13);			
+		}
 
 		this.initMain();
 		this.show();
