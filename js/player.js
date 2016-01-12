@@ -143,16 +143,16 @@ function playerScreen() {
 
 		switch(optionID) {
 			case "signe":
-				optionsArray = ["Oui", "Aucun"];
+				optionsArray = ["Fr", "Aucun"];
 				break;
 			case "description":
-				optionsArray = ["Français", "Aucun"];
+				optionsArray = ["Aucun"];
 				break;
 			case "sub":
-				optionsArray = ["Français", "Aucun"];
+				optionsArray = ["Fr", "Aucun"];
 				break;
 			case "audio":
-				optionsArray = ["Activé"];
+				optionsArray = ["Fr", "Aucun"];
 				break;
 		}
 		return optionsArray;
@@ -162,7 +162,7 @@ function playerScreen() {
 		return inputsArray.length * (50 + 1); // +1 for border 
 	}
 	this.getOptionsDropDownMenuTop = function(inputsArray) {
-		return 160 - this.getOptionsDropDownMenuHeight(inputsArray); 
+		return 120; 
 	}
 	this.getOptionsDropDownMenuLeft = function(optionID) {
 
@@ -187,7 +187,7 @@ function playerScreen() {
 				break;
 		}
 
-		var leftDDM = leftOption + 100 ;
+		var leftDDM = leftOption + 57;
 		return leftDDM + "px";
 	}
 
@@ -241,6 +241,24 @@ function playerScreen() {
         }
         this.resetTimerHideUI();       
     };
+	this.validOption = function(button, zone){
+		if($(button).length && !$(button).hasClass("hidden")){
+			switch(zone){
+				case "playerOptionSigne":
+					myPlayer.validOptionSigne();
+					break;
+				case "playerOptionDescription":
+					myPlayer.validOptionDescription();
+					break;
+				case "playerOptionSub":
+					myPlayer.validOptionSub();
+					break;
+				case "playerOptionAudio":
+					myPlayer.validOptionAudio();
+					break;
+			}
+		}
+	},
 	this.validOptionSub = function() {
 		this.displayOptionDropDownMenu("sub");
 	}
@@ -356,10 +374,10 @@ function playerScreen() {
 	var refreshTimer;
 	this.resetTimerHideUI = function() {
 		
-		if(refreshTimer!= null) {
+		/*if(refreshTimer!= null) {
 			clearInterval(refreshTimer);
 		}
-		refreshTimer = setTimeout(this.hideUI, 4 * 1000);
+		refreshTimer = setTimeout(this.hideUI, 4 * 1000);*/
 		
 	}
 
@@ -411,21 +429,26 @@ function playerScreen() {
 			emptyElem(playerOptions);
 			
 			//button for accessibility
-			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
-			btn.setAttribute("tabindex", 21);
-			createIconeLSF(btn, 120, 120);
-
-			var btn = createButton("playerOptionDescription", playerOptions, "playerOptionDescription", 1, 0);
-			btn.setAttribute("tabindex", 22);
-			createIconeAD(btn, 120, 120);
-
-			var btn = createButton("playerOptionSub", playerOptions, "playerOptionSub", 2, 0);
-			btn.setAttribute("tabindex", 23);
-			createIconeST(btn, 120, 120);
 
 			var btn = createButton("playerOptionAudio", playerOptions, "playerOptionAudio", 3, 0);
+			btn.setAttribute("tabindex", 21);
+			createIconeLA(btn, 57, 42);
+			createDiv("playerOptionAudioCurrentValue", btn, "Fr", "playerOptionValue");
+
+			btn = createButton("playerOptionSub", playerOptions, "playerOptionSub", 2, 0);
+			btn.setAttribute("tabindex", 22);
+			createIconeST(btn, 57, 42);
+			createDiv("playerOptionSubCurrentValue", btn, "Fr", "playerOptionValue");
+
+			btn = createButton("playerOptionDescription", playerOptions, "playerOptionDescription", 1, 0, "hidden");
+			//btn.setAttribute("tabindex", 23);
+			createIconeAD(btn, 57, 42);
+			createDiv("playerOptionDescriptionCurrentValue", btn, "Aucun", "playerOptionValue");
+			
+			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
 			btn.setAttribute("tabindex", 24);
-			createIconeLA(btn, 120, 120);
+			createIconeLSF(btn, 57, 42);
+			createDiv("playerOptionSigneCurrentValue", btn, "Aucun", "playerOptionValue");
 			
 			var playerControls = playerBottomBanner.children[2];
 			var playerControlTrickMode = playerControls.children[1];

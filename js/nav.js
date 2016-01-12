@@ -1,5 +1,6 @@
-move = function(action, event) {
-	switch (selecteur.getAttribute("zone")) {
+move = function(action, button, event) {
+	var zone = selecteur.getAttribute("zone");
+	switch (zone) {
 		case "userChoice":
 			myUser.validUser();
 			break;
@@ -44,16 +45,16 @@ move = function(action, event) {
 			myPlayer.validClose();
 			break;
 		case "playerOptionSigne":
-			myPlayer.validOptionSigne();
+			myPlayer.validOption(button, zone);
 			break;
 		case "playerOptionDescription":
-			myPlayer.validOptionDescription();
+			myPlayer.validOption(button, zone);
 			break;
 		case "playerOptionSub":
-			myPlayer.validOptionSub();
+			myPlayer.validOption(button, zone);
 			break;
 		case "playerOptionAudio":
-			myPlayer.validOptionAudio();
+			myPlayer.validOption(button, zone);
 			break;
 		case "":
 			myPlayer.validOptionAudio();

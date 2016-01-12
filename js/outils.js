@@ -54,7 +54,7 @@ function createButton(idElement, parent, zone, x, y, style){
 			button.clickAction();
 		}
 		else {
-			move('enter');
+			move('enter', button);
 		}
 	}
 	button.setAttribute("onClick", "this.onSelect();");

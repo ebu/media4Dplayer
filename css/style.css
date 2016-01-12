@@ -841,21 +841,17 @@ body > div{
 #playerOptions
 {
 	position: absolute;
-    bottom: 180px;
+    bottom: 205px;
     left: 0px;
-    width: 100%;
-    min-width: 1280px;
-    height: 160px;
-    display: block;
+	padding-left: 190px;
+    height: 42px;
 }
 
 #playerProgressInfos
 {
 	position: absolute;
     bottom: 180px;
-    left: 0px;
     width: 100%;
-    min-width: 1280px;
 
     height: 40px;
     display: block;
@@ -873,19 +869,24 @@ body > div{
     display: block;
 }
 
-#playerOptionSigne,
-#playerOptionAudio,
-#playerOptionSub,
-#playerOptionDescription
-{
+#playerOptions > div{
     position: relative;
-    text-align: center;
-    top: 20px;
-    width: 24%;
-    height: 120px;
-    display: block;
-    float: left;
+    width: 271px;
+    height: 100%;
     margin-left: 0%;
+	float: left;
+}
+#playerOptions > div.hidden{
+	opacity: 0.5;
+}
+#playerOptions > div > div{
+	float: left;
+	height: 100%;
+}
+.playerOptionValue{
+	line-height: 44px;
+	color: #fff;
+	font-size: 1.2em;
 }
 
 .optionDropDownMenu {
