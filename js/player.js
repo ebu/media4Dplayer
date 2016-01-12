@@ -7,7 +7,7 @@ function playerScreen() {
 	this.playerUI = document.getElementById('playerUI');
 	
 	this.playerUI.addEventListener('click', function(e){
-		if(!document.getElementById("BTdisplayUI")){
+		if($(document.getElementById("playerBottomBanner")).is(":visible")){
 			myPlayer.hideUI();
 		}
 	});
