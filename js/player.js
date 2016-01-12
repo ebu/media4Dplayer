@@ -5,6 +5,12 @@ function playerScreen() {
 	this.alreadyInit = false;
 	this.playerScreen = document.getElementById("playerScreen");
 	this.playerUI = document.getElementById('playerUI');
+	
+	this.playerUI.addEventListener('click', function(e){
+		if(!document.getElementById("BTdisplayUI")){
+			myPlayer.hideUI();
+		}
+	});
 
 	this.videoMain = document.getElementById('videoPlayerMain');
 	this.videoPip =  document.getElementById('videoPlayerPip');
