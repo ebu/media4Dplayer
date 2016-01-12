@@ -9,6 +9,8 @@ function playerScreen() {
 	this.playerUI.addEventListener('click', function(e){
 		if($(document.getElementById("playerBottomBanner")).is(":visible")){
 			myPlayer.hideUI();
+		}else{
+			myPlayer.diplayUI();
 		}
 	});
 
@@ -388,7 +390,6 @@ function playerScreen() {
 	}
 
 	this.diplayUI = function() {
-		document.getElementById("BTdisplayUI").remove();
 		$("#playerTopBanner").css("display","block");
 		$("#playerBottomBanner").css("display","block");
 		$("#playerUI").css("background","");
@@ -398,7 +399,6 @@ function playerScreen() {
 		$("#playerTopBanner").css("display","none");
 		$("#playerBottomBanner").css("display","none");
 		$("#playerUI").css("background","url('../media/player/player_ombre_video.png') repeat");
-		var btn = createButton("BTdisplayUI", document.getElementById("playerScreen"), "playerDisplayUI", 0, 0);
 	}
 	
 	this.init = function(index) {
