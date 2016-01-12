@@ -524,6 +524,11 @@ function playerScreen() {
             });
 
             this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(e) {
+				if(getCookie("subtitlesDisabled")){
+					myPlayerScreen.playerManager.playerMain.setTextTrack(-1);
+				}else{
+					myPlayerScreen.playerManager.playerMain.setTextTrack(0);
+				}
             	console.debug("MediaPlayer.events.TEXT_TRACKS_ADDED");
 		
 				var xPos = getCookie("LSFPipSubtitles_position_x"),
@@ -544,7 +549,8 @@ function playerScreen() {
 						.css("left", xPos + "%")
 						.css("width", wSize + "%");
 				}
-            });
+            });		
+			
 	        /*
             function onCheckVideo()
             {
