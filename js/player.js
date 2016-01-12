@@ -6,11 +6,15 @@ function playerScreen() {
 	this.playerScreen = document.getElementById("playerScreen");
 	this.playerUI = document.getElementById('playerUI');
 	
-	this.playerUI.addEventListener('click', function(e){
-		if($(document.getElementById("playerBottomBanner")).is(":visible")){
-			myPlayer.hideUI();
+	$(this.playerUI).on('click', function(e){
+		if(["pipContainer","playerTopBanner","playerBottomBanner","playerControls","playerControlVolume"].indexOf(e.target.id) !== -1){
+			if($(document.getElementById("playerBottomBanner")).is(":visible")){
+				myPlayer.hideUI();
+			}else{
+				myPlayer.diplayUI();
+			}
 		}else{
-			myPlayer.diplayUI();
+			console.log("id="+e.target.id);
 		}
 	});
 
