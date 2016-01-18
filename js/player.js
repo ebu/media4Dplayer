@@ -505,14 +505,13 @@ function playerScreen() {
 	
 	        var videoAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoMain);
 	        var audioAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
-	
-	        var audioGainNode = this.playerManager.audioContext.createGain();
-	        audioGainNode.gain.value = 1.;
+						
+	        audioGainNode = this.playerManager.audioContext.createGain();
 	        audioAudioSource.connect(audioGainNode);
 	        audioGainNode.connect(this.playerManager.audioContext.destination);
 	
-	        var videoGainNode = this.playerManager.audioContext.createGain();
-	        videoGainNode.gain.value = 1.;
+	        videoGainNode = this.playerManager.audioContext.createGain();
+			myPlayerScreen.setVolume(audioGainNode, videoGainNode, getCookie("volumeValue") || defaultVolumeValue);
 	        videoAudioSource.connect(videoGainNode);
 	        videoGainNode.connect(this.playerManager.audioContext.destination);
 
@@ -884,6 +883,13 @@ function playerScreen() {
 
 		$(document.getElementById("playerProgressCurrent")).text(timeC);
 		$(document.getElementById("playerProgressTotal")).text(timeT);
+	};
+	
+	this.setVolume = function(audioGainNode, videoGainNode, volume){
+		var gain = volume / 100;
+		audioGainNode.gain.value = gain;
+		videoGainNode.gain.value = gain;
+		console.warn("Volume passé à "+gain);
 	};
 	
 	return this;
