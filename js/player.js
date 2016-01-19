@@ -239,17 +239,37 @@ function playerScreen() {
 	this.validOptionSigne = function() {
 		this.displayOptionDropDownMenu("signe");
 	};
+	
+	this.isPIPMode = function(){
+		return Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO";
+	};
+	
 	this.activeOptionSigne = function(index){
 		
 		var $textContent = $(document.getElementById("playerOptionSigneCurrentValue"));
+		var isPIPMode = this.isPIPMode() || (currentPipMode === "PIP_MODE_VIDEO" && typeOf(Media.LSF) === "array" && index !== Media.LSF.length);
+		
+		var playerPIP, playerMain;
+		if(isPIPMode){
+			playerPIP = this.playerManager.playerMain;
+			playerMain = this.playerManager.playerPip;
+		}else{
+			playerPIP = this.playerManager.playerPip;
+			playerMain = this.playerManager.playerMain;
+		}
+		
 		if(index !== Media.LSF.length){
 		
-        	this.playerManager.controller.currentTime = this.videoMain.currentTime;
-            this.videoPip.controller = this.playerManager.controller;
-            this.playerManager.playerPip.startup();
-            this.playerManager.playerPip.setAutoPlay(false);
-            this.playerManager.playerPip.attachView(this.videoPip);
-            this.playerManager.playerPip.attachSource(Media.LSF[Media.currentLSFIndex].url);
+        	this.playerManager.controller.currentTime = isPIPMode ? this.videoPip.currentTime : this.videoMain.currentTime;
+			if(isPIPMode){
+				this.videoMain.controller = this.playerManager.controller;		
+			}else{
+				this.videoPip.controller = this.playerManager.controller;				
+			}
+            playerPIP.startup();
+            playerPIP.setAutoPlay(false);
+            playerPIP.attachView(isPIPMode ? this.videoMain : this.videoPip);
+            playerPIP.attachSource(Media.LSF[Media.currentLSFIndex].url);
 			
 			Media.currentLSFIndex = index;
 			Media.LSFEnabled = true;
@@ -257,9 +277,12 @@ function playerScreen() {
 			$textContent.html(Media.LSF[index].lang);
 
 		}else{
-			
-        	this.videoPip.controller = null;
-            this.playerManager.playerPip.reset();
+			if(isPIPMode){
+				this.videoMain.controller = null;
+			}else{
+				this.videoPip.controller = null;				
+			}
+            playerPIP.reset();
 			
 			Media.LSFEnabled = false;
 			setCookie("LSFDisabled", 1);
@@ -276,7 +299,7 @@ function playerScreen() {
 		var $textContent = $(document.getElementById("playerOptionDescriptionCurrentValue"));
 		if(index !== Media.audioDescriptions.length){
 			
-        	this.playerManager.controller.currentTime = this.videoMain.currentTime;
+        	this.playerManager.controller.currentTime = this.isPIPMode() ? this.videoPip.currentTime : this.videoMain.currentTime;
             this.videoAudio.controller = this.playerManager.controller;
             this.playerManager.playerAudio.startup();
             this.playerManager.playerAudio.setAutoPlay(false);
@@ -323,8 +346,9 @@ function playerScreen() {
 	
 	this.activeOptionSub = function(index) {
 		var $textContent = $(document.getElementById("playerOptionSubCurrentValue"));
+		var isPIPMode = this.isPIPMode();
 		if(index !== Media.subtitlesList.length){
-			if(Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO"){
+			if(isPIPMode){
 				myPlayerScreen.playerManager.playerPip.setTextTrack(index);
 			}else{
 				myPlayerScreen.playerManager.playerMain.setTextTrack(index);
@@ -336,7 +360,7 @@ function playerScreen() {
 			$textContent.html(Media.subtitlesList[index]);
 
 		}else{
-			if(Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO"){
+			if(isPIPMode){
 				myPlayerScreen.playerManager.playerPip.setTextTrack(-1);
 			}else{
 				myPlayerScreen.playerManager.playerMain.setTextTrack(-1);
@@ -650,7 +674,7 @@ function playerScreen() {
 	        this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 	        console.debug("######### audioContext: " + this.playerManager.audioContext);
 	
-	        var videoAudioSource = this.playerManager.audioContext.createMediaElementSource((Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO") ? this.videoPip : this.videoMain);
+	        var videoAudioSource = this.playerManager.audioContext.createMediaElementSource(this.isPIPMode() ? this.videoPip : this.videoMain);
 	        var audioAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
 						
 	        audioGainNode = this.playerManager.audioContext.createGain();
@@ -700,7 +724,7 @@ function playerScreen() {
 				}
             };
 			
-			if(Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO"){
+			if(this.isPIPMode()){
 				this.playerManager.playerPip.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, textTrackEvent);
 			}else{
 				 this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, textTrackEvent);
@@ -719,7 +743,7 @@ function playerScreen() {
 
 		// Add HTML-rendered TTML subtitles
 		ttmlDiv = document.querySelector("#video-caption");
-		if(Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO"){
+		if(this.isPIPMode()){
 			this.playerManager.playerPip.attachTTMLRenderingDiv(ttmlDiv);
 		}else{
 			this.playerManager.playerMain.attachTTMLRenderingDiv(ttmlDiv);
