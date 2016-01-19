@@ -507,7 +507,7 @@ function playerScreen() {
 			var playerBottomBanner = this.playerUI.children[1];
 	
 			//top bar button
-			var btn = createButton("playerClose", playerTopBanner, "playerClose", 0, 0);
+			var btn = createButton("playerClose", playerTopBanner, "playerClose", 0, 0, "btn");
 			btn.setAttribute("tabindex", 11);
 			createImg(null, btn, "media/player/inte_close.png", null, "Fermer");
 			
@@ -515,7 +515,7 @@ function playerScreen() {
 			emptyElem(playerOptions);
 			
 			//button for accessibility
-			var btn = createButton("playerOptionAudio", playerOptions, "playerOptionAudio", 3, 0);
+			var btn = createButton("playerOptionAudio", playerOptions, "playerOptionAudio", 3, 0, "btn");
 			btn.setAttribute("tabindex", 21);
 			createIconeLA(btn, 57, 42);
 			var $sliderVolume = $(document.getElementById("slider"));
@@ -533,7 +533,7 @@ function playerScreen() {
 				}
 			}
 
-			btn = createButton("playerOptionSub", playerOptions, "playerOptionSub", 2, 0);
+			btn = createButton("playerOptionSub", playerOptions, "playerOptionSub", 2, 0, "btn");
 			btn.setAttribute("tabindex", 22);
 			createIconeST(btn, 57, 42);
 			if(Media.subtitleEnabled){
@@ -546,7 +546,7 @@ function playerScreen() {
 				}
 			}
 
-			btn = createButton("playerOptionDescription", playerOptions, "playerOptionDescription", 1, 0);
+			btn = createButton("playerOptionDescription", playerOptions, "playerOptionDescription", 1, 0, "btn");
 			btn.setAttribute("tabindex", 23);
 			createIconeAD(btn, 57, 42);
 			if(Media.audioDescriptionEnabled){
@@ -559,7 +559,7 @@ function playerScreen() {
 				}
 			}
 			
-			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
+			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0, "btn");
 			btn.setAttribute("tabindex", 24);
 			createIconeLSF(btn, 57, 42);
 			if(Media.LSFEnabled){
@@ -576,22 +576,22 @@ function playerScreen() {
 			var playerControlTrickMode = playerControls.children[1];
 			
 			// button for trick mode
-			btn = createButton("playerControlRW", playerControlTrickMode, "playerControlRW", 0, 0);
+			btn = createButton("playerControlRW", playerControlTrickMode, "playerControlRW", 0, 0, "btn");
 			btn.setAttribute("tabindex", 31);
 			createImg(null, btn, "media/player/controle_btn_previous.png", null, "retour rapide");
 
-			btnPlayPause = createButton("playerControlPlayPause", playerControlTrickMode, "playerControlPlayPause", 1, 0);
+			btnPlayPause = createButton("playerControlPlayPause", playerControlTrickMode, "playerControlPlayPause", 1, 0, "btn");
 			btnPlayPause.setAttribute("tabindex", 11);
 			createImg(null, btnPlayPause, "media/player/controle_btn_play.png", null, "lecture");
 
-			btn = createButton("playerControlFF", playerControlTrickMode, "playerControlFF", 2, 0);
+			btn = createButton("playerControlFF", playerControlTrickMode, "playerControlFF", 2, 0, "btn");
 			btn.setAttribute("tabindex", 32);
 			createImg(null, btn, "media/player/controle_btn_next.png", null, "avance rapide");
-			btn = createButton("playerControlStop", playerControlTrickMode, "playerControlStop", 3, 0);
+			btn = createButton("playerControlStop", playerControlTrickMode, "playerControlStop", 3, 0, "btn");
 			btn.setAttribute("tabindex", 33);
 			createImg(null, btn, "media/player/controle_btn_stop.png", null, "stop");
 			
-			btn = createButton("playerControlConfig", playerControlTrickMode, "playerControlConfig", 4, 0);
+			btn = createButton("playerControlConfig", playerControlTrickMode, "playerControlConfig", 4, 0, "btn");
 			btn.setAttribute("tabindex", 34);
 			createImg(null, btn, "media/topbar/menu_reglages.png", null, "settings");
 

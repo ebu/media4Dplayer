@@ -28,6 +28,8 @@ function onLoad() {
  
         slide: function(event, ui) {
 			
+			myPlayer.resetTimerHideUI();
+			
             var value = ui.value,//slider.slider('value'),
                 volume = $('.volume');
  
@@ -66,6 +68,10 @@ function onLoad() {
 	});
 	var tooltip = $('.tooltip');
 	tooltip.hide();
+	
+	$(document.getElementById("playerUI")).on("mouseover", ".btn", function(){
+		myPlayer.resetTimerHideUI();
+	})
 
 	document.addEventListener("keydown", handleKey, false);
 	createSelecteur();
