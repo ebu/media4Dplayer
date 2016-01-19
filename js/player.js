@@ -265,23 +265,33 @@ function playerScreen() {
 	this.validOptionDescription = function() {
 		this.displayOptionDropDownMenu("description");
 	};
-	this.activeOptionDescription = function(active) {
-
-        if (!this.playerManager.optionDescription && active){
+	this.activeOptionDescription = function(index) {
+		
+		var $textContent = $(document.getElementById("playerOptionDescriptionCurrentValue"));
+		if(index !== Media.audioDescriptions.length){
+			
         	this.playerManager.controller.currentTime = this.videoMain.currentTime;
             this.videoAudio.controller = this.playerManager.controller;
             this.playerManager.playerAudio.startup();
             this.playerManager.playerAudio.setAutoPlay(false);
             this.playerManager.playerAudio.attachView(this.videoAudio);
-            this.playerManager.playerAudio.attachSource(Media.audioDescriptions[Media.currentAudioDescriptionIndex].url);
-            this.playerManager.optionDescription = true;
+            this.playerManager.playerAudio.attachSource(Media.audioDescriptions[index].url);
 			
-        }else{
+			Media.currentAudioDescriptionIndex = index;
+			Media.audioDescriptionEnabled = true;
+			eraseCookie("audioDescriptionDisabled");
+			$textContent.html(Media.audioDescriptions[index].lang);
+
+		}else{
+			
             this.videoAudio.controller = null;
             this.playerManager.playerAudio.reset();
-            this.playerManager.optionDescription = false;
-        }
-        this.resetTimerHideUI();       
+			
+			Media.audioDescriptionEnabled = false;
+			setCookie("audioDescriptionDisabled", 1);
+			$textContent.html("Aucun");
+		}
+		this.resetTimerHideUI();
     };
 	this.validOption = function(button, zone){
 		if($(button).length && !$(button).hasClass("hidden")){
@@ -480,7 +490,7 @@ function playerScreen() {
 			Media.LSFEnabled = typeOf(Media.LSF) === "array" && Media.LSF.length ? true : false;
 			Media.audioEnabled = !getCookie("muteEnabled") && typeOf(Media.audiosList) === "array" && Media.audiosList.length ? true : false;
 			Media.subtitleEnabled = !getCookie("subtitlesDisabled") && typeOf(Media.subtitlesList) === "array" && Media.subtitlesList.length ? true : false;
-			Media.audioDescriptionEnabled = typeOf(Media.audioDescriptions) === "array" && Media.audioDescriptions.length ? true : false;
+			Media.audioDescriptionEnabled = !getCookie("audioDescriptionDisabled") && typeOf(Media.audioDescriptions) === "array" && Media.audioDescriptions.length ? true : false;
 			
 			Media.currentAudioIndex = 0;
 			Media.currentAudioDescriptionIndex = 0;
@@ -536,7 +546,11 @@ function playerScreen() {
 			if(Media.audioDescriptionEnabled){
 				createDiv("playerOptionDescriptionCurrentValue", btn, Media.audioDescriptions[Media.currentAudioDescriptionIndex].lang, "playerOptionValue");
 			}else{
-				createDiv("playerOptionDescriptionCurrentValue", btn, "Aucun", "playerOptionValue hidden");
+				createDiv("playerOptionDescriptionCurrentValue", btn, "Aucun", "playerOptionValue");
+				
+				if(typeOf(Media.audioDescriptions) !== "array" || !Media.audioDescriptions.length){
+					$(btn).addClass("hidden");
+				}
 			}
 			
 			btn = createButton("playerOptionSigne", playerOptions, "playerOptionSigne", 0, 0);
@@ -586,14 +600,14 @@ function playerScreen() {
 	        this.playerManager.playerPip.startup();
 	        this.playerManager.playerPip.setAutoPlay(false);
 	        
-	        this.playerManager.playerAudio = new MediaPlayer(context);
-	        this.playerManager.playerAudio.startup();
-	        this.playerManager.playerAudio.setAutoPlay(false);
+	        this.playerManager.playerAudio = new MediaPlayer(context);	
+			this.playerManager.playerAudio.startup();
+			this.playerManager.playerAudio.setAutoPlay(false);
 	        
 	        // remove Dash.js logs
 	        this.playerManager.playerMain.getDebug().setLogToBrowserConsole(false);
 	        this.playerManager.playerPip.getDebug().setLogToBrowserConsole(false);
-	        this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);
+			this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);
 	
 	        this.playerManager.controller = new MediaController();
 	
@@ -601,7 +615,9 @@ function playerScreen() {
 	
 		    this.videoMain.controller = this.playerManager.controller;
 		    this.videoPip.controller = this.playerManager.controller;
-		    this.videoAudio.controller = this.playerManager.controller;
+			if(Media.audioDescriptionEnabled){
+				this.videoAudio.controller = this.playerManager.controller;
+			}		    
 
 	        this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 	        console.debug("######### audioContext: " + this.playerManager.audioContext);
@@ -666,8 +682,10 @@ function playerScreen() {
 		this.playerManager.playerMain.attachTTMLRenderingDiv(ttmlDiv);
 		
 		this.playerManager.playerPip.attachView(this.videoPip);
-	    this.playerManager.playerAudio.attachView(this.videoAudio);
-
+	    if(Media.audioDescriptionEnabled){
+			this.playerManager.playerAudio.attachView(this.videoAudio);
+		}
+		
 		//Gestion du switch LSF/Vidéo comme vidéo plein taille
 		if(Media.LSFEnabled){
 
@@ -697,7 +715,10 @@ function playerScreen() {
 
         this.playerManager.playerMain.play();
         this.playerManager.playerPip.play();
-        this.playerManager.playerAudio.play();
+		
+		if(Media.audioDescriptionEnabled){
+			this.playerManager.playerAudio.play();
+		}
         //this.playerManager.controller.play();
 
 //this.playerManager.playerMain.seek(0);
