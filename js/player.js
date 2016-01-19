@@ -472,13 +472,13 @@ function playerScreen() {
 	this.diplayUI = function() {
 		$("#playerTopBanner").css("display","block");
 		$("#playerBottomBanner").css("display","block");
-		$("#playerUI").css("background","");
+		$("#playerUI").css("background","url('../media/player/player_ombre_video.png') repeat-x");
 		this.resetTimerHideUI();	
 	}
 	this.hideUI = function() {
 		$("#playerTopBanner").css("display","none");
 		$("#playerBottomBanner").css("display","none");
-		$("#playerUI").css("background","url('../media/player/player_ombre_video.png') repeat");
+		$("#playerUI").css("background","0 none");
 	}
 	
 	this.init = function(index) {		
