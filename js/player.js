@@ -239,27 +239,33 @@ function playerScreen() {
 	this.validOptionSigne = function() {
 		this.displayOptionDropDownMenu("signe");
 	};
-	this.activeOptionSigne = function(active) {
-		console.log("activeOptionSigne: " + active);
-		console.log("this.playerManager.optionSigne: " + this.playerManager.optionSigne);
-
-        if (!this.playerManager.optionSigne && active)
-        {
+	this.activeOptionSigne = function(index){
+		
+		var $textContent = $(document.getElementById("playerOptionSigneCurrentValue"));
+		if(index !== Media.LSF.length){
+		
         	this.playerManager.controller.currentTime = this.videoMain.currentTime;
             this.videoPip.controller = this.playerManager.controller;
             this.playerManager.playerPip.startup();
             this.playerManager.playerPip.setAutoPlay(false);
             this.playerManager.playerPip.attachView(this.videoPip);
             this.playerManager.playerPip.attachSource(Media.LSF[Media.currentLSFIndex].url);
-            this.playerManager.optionSigne = true;
-        }
-        else
-        {
+			
+			Media.currentLSFIndex = index;
+			Media.LSFEnabled = true;
+			eraseCookie("LSFDisabled");
+			$textContent.html(Media.LSF[index].lang);
+
+		}else{
+			
         	this.videoPip.controller = null;
             this.playerManager.playerPip.reset();
-            this.playerManager.optionSigne = false;
-        }
-        this.resetTimerHideUI();
+			
+			Media.LSFEnabled = false;
+			setCookie("LSFDisabled", 1);
+			$textContent.html("Aucun");
+		}
+		this.resetTimerHideUI();		
 	};
 	
 	this.validOptionDescription = function() {
@@ -475,7 +481,7 @@ function playerScreen() {
 		$("#playerUI").css("background","url('../media/player/player_ombre_video.png') repeat");
 	}
 	
-	this.init = function(index) {
+	this.init = function(index) {		
 		if(!this.alreadyInit || (Media.index !== index)){
 
 			$("#playerScreen").css("background-color", "black");
@@ -487,7 +493,7 @@ function playerScreen() {
 			Media.audioDescriptions = medias[Media.index].audioDescriptions;
 			Media.LSF = medias[Media.index].LSF;
 			
-			Media.LSFEnabled = typeOf(Media.LSF) === "array" && Media.LSF.length ? true : false;
+			Media.LSFEnabled = !getCookie("LSFDisabled") && typeOf(Media.LSF) === "array" && Media.LSF.length ? true : false;
 			Media.audioEnabled = !getCookie("muteEnabled") && typeOf(Media.audiosList) === "array" && Media.audiosList.length ? true : false;
 			Media.subtitleEnabled = !getCookie("subtitlesDisabled") && typeOf(Media.subtitlesList) === "array" && Media.subtitlesList.length ? true : false;
 			Media.audioDescriptionEnabled = !getCookie("audioDescriptionDisabled") && typeOf(Media.audioDescriptions) === "array" && Media.audioDescriptions.length ? true : false;
@@ -559,7 +565,11 @@ function playerScreen() {
 			if(Media.LSFEnabled){
 				createDiv("playerOptionSigneCurrentValue", btn, Media.LSF[Media.currentLSFIndex].lang, "playerOptionValue");
 			}else{
-				createDiv("playerOptionSigneCurrentValue", btn, "Aucun", "playerOptionValue hidden");
+				createDiv("playerOptionSigneCurrentValue", btn, "Aucun", "playerOptionValue");
+				
+				if(typeOf(Media.LSF) !== "array" || !Media.LSF.length){
+					$(btn).addClass("hidden");
+				}
 			}
 			
 			var playerControls = playerBottomBanner.children[2];
@@ -612,9 +622,13 @@ function playerScreen() {
 	        this.playerManager.controller = new MediaController();
 	
 	        console.debug("controller = " + this.playerManager.controller);
-	
-		    this.videoMain.controller = this.playerManager.controller;
-		    this.videoPip.controller = this.playerManager.controller;
+			
+			this.videoMain.controller = this.playerManager.controller;
+			
+			if(Media.LSFEnabled){
+				this.videoPip.controller = this.playerManager.controller;			
+			}
+			
 			if(Media.audioDescriptionEnabled){
 				this.videoAudio.controller = this.playerManager.controller;
 			}		    
@@ -687,9 +701,8 @@ function playerScreen() {
 		}
 		
 		//Gestion du switch LSF/Vidéo comme vidéo plein taille
+		this.setPIP();
 		if(Media.LSFEnabled){
-
-			this.setPIP();
 			
 			if(currentPipMode == null){
 				currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
@@ -698,15 +711,15 @@ function playerScreen() {
 			console.log("Player - currentPipMode : ", currentPipMode);
 			if(currentPipMode == "PIP_MODE_VIDEO"){
 
-				//$("#videoPlayerPip").attr("muted", "false"); // /!\  EFFECT MUTED EVEN "false"
 				this.playerManager.playerPip.attachSource(Media.url);
 				this.playerManager.playerMain.attachSource(Media.LSF[Media.currentLSFIndex].url);
 
 			}else{
-				//$("#videoPlayerPip").attr("muted", "false"); // /!\  EFFECT MUTED EVEN "false"
 				this.playerManager.playerMain.attachSource(Media.url);
 				this.playerManager.playerPip.attachSource(Media.LSF[Media.currentLSFIndex].url);
 			}
+		}else{
+			this.playerManager.playerMain.attachSource(Media.url);			
 		}
 		
 		if(Media.audioDescriptionEnabled){
@@ -714,7 +727,10 @@ function playerScreen() {
 		}
 
         this.playerManager.playerMain.play();
-        this.playerManager.playerPip.play();
+		
+		if(Media.LSFEnabled){
+			this.playerManager.playerPip.play();
+		}
 		
 		if(Media.audioDescriptionEnabled){
 			this.playerManager.playerAudio.play();
@@ -778,7 +794,9 @@ function playerScreen() {
 									})
 						.click( function() {
 							console.log("onClick .pipVideo !!");
-							appearPipControls();
+							if(Media.LSFEnabled){
+								appearPipControls();
+							}							
 						});
 
 		$('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
