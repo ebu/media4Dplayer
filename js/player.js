@@ -329,6 +329,7 @@ function playerScreen() {
 	
 	this.activeOptionAudio = function(index) {
 		var $textContent = $(document.getElementById("playerOptionAudioCurrentValue"));
+		var $sliderVolume = $( document.getElementById("slider") );
 		if(index !== Media.audiosList.length){
 			// TODO : changer langue audio de la vidéo principale
 			Media.currentAudioIndex = index;
@@ -341,8 +342,10 @@ function playerScreen() {
 			$textContent.html(Media.audiosList[index]);
 			$('.volume').css('background-position', '0 -50px');
 			$('.tooltip').css('left', defaultVolumeValue+5).text(defaultVolumeValue);
+			$sliderVolume.slider( "option", "value", defaultVolumeValue );
 
 		}else{
+			$sliderVolume.slider( "option", "value", 0 );
 			this.setMute();
 		}
 	};
@@ -499,13 +502,18 @@ function playerScreen() {
 			var btn = createButton("playerOptionAudio", playerOptions, "playerOptionAudio", 3, 0);
 			btn.setAttribute("tabindex", 21);
 			createIconeLA(btn, 57, 42);
+			var $sliderVolume = $(document.getElementById("slider"));
 			if(Media.audioEnabled){
 				createDiv("playerOptionAudioCurrentValue", btn, Media.audiosList[Media.currentAudioIndex], "playerOptionValue");
+				$sliderVolume.slider( "option", "disabled", false );
 			}else{
 				createDiv("playerOptionAudioCurrentValue", btn, "Aucun", "playerOptionValue");
 				
 				if(typeOf(Media.audiosList) !== "array" || !Media.audiosList.length){
 					$(btn).addClass("hidden");
+					$sliderVolume.slider( "option", "disabled", true );
+				}else{
+					$sliderVolume.slider( "option", "disabled", false );
 				}
 			}
 
