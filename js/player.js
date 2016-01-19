@@ -324,14 +324,23 @@ function playerScreen() {
 	this.activeOptionSub = function(index) {
 		var $textContent = $(document.getElementById("playerOptionSubCurrentValue"));
 		if(index !== Media.subtitlesList.length){
-			myPlayerScreen.playerManager.playerMain.setTextTrack(index);
+			if(Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO"){
+				myPlayerScreen.playerManager.playerPip.setTextTrack(index);
+			}else{
+				myPlayerScreen.playerManager.playerMain.setTextTrack(index);
+			}
+			
 			Media.currentSubtitleIndex = index;
 			Media.subtitleEnabled = true;
 			eraseCookie("subtitlesDisabled");
 			$textContent.html(Media.subtitlesList[index]);
 
 		}else{
-			myPlayerScreen.playerManager.playerMain.setTextTrack(-1);
+			if(Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO"){
+				myPlayerScreen.playerManager.playerPip.setTextTrack(-1);
+			}else{
+				myPlayerScreen.playerManager.playerMain.setTextTrack(-1);
+			}
 			Media.subtitleEnabled = false;
 			Media.currentSubtitleIndex = 0;
 			setCookie("subtitlesDisabled", 1);
@@ -482,6 +491,11 @@ function playerScreen() {
 	}
 	
 	this.init = function(index) {		
+			
+			if(currentPipMode == null){
+				currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
+			}
+			
 		if(!this.alreadyInit || (Media.index !== index)){
 
 			$("#playerScreen").css("background-color", "black");
@@ -636,7 +650,7 @@ function playerScreen() {
 	        this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 	        console.debug("######### audioContext: " + this.playerManager.audioContext);
 	
-	        var videoAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoMain);
+	        var videoAudioSource = this.playerManager.audioContext.createMediaElementSource((Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO") ? this.videoPip : this.videoMain);
 	        var audioAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
 						
 	        audioGainNode = this.playerManager.audioContext.createGain();
@@ -656,8 +670,8 @@ function playerScreen() {
 			this.playerManager.controller.addEventListener('pause', function(e) {
             	myPlayerScreen.onPause();
             });
-
-            this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(e) {
+			
+			var textTrackEvent = function(e) {
 				if(getCookie("subtitlesDisabled")){
 					myPlayerScreen.playerManager.playerMain.setTextTrack(-1);					
 				}else{
@@ -684,29 +698,36 @@ function playerScreen() {
 						.css("left", xPos + "%")
 						.css("width", wSize + "%");
 				}
-            });
+            };
+			
+			if(Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO"){
+				this.playerManager.playerPip.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, textTrackEvent);
+			}else{
+				 this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, textTrackEvent);
+			}
+           
 			this.alreadyInit = true;
 		}
 		
 		this.playerManager.playerMain.attachView(this.videoMain);
 		this.playerManager.playerMain.attachVideoContainer(document.getElementById("playerScreen"));
-
-		// Add HTML-rendered TTML subtitles
-		ttmlDiv = document.querySelector("#video-caption");
-		this.playerManager.playerMain.attachTTMLRenderingDiv(ttmlDiv);
 		
 		this.playerManager.playerPip.attachView(this.videoPip);
 	    if(Media.audioDescriptionEnabled){
 			this.playerManager.playerAudio.attachView(this.videoAudio);
 		}
+
+		// Add HTML-rendered TTML subtitles
+		ttmlDiv = document.querySelector("#video-caption");
+		if(Media.LSFEnabled && currentPipMode === "PIP_MODE_VIDEO"){
+			this.playerManager.playerPip.attachTTMLRenderingDiv(ttmlDiv);
+		}else{
+			this.playerManager.playerMain.attachTTMLRenderingDiv(ttmlDiv);
+		}
 		
 		//Gestion du switch LSF/Vidéo comme vidéo plein taille
 		this.setPIP();
 		if(Media.LSFEnabled){
-			
-			if(currentPipMode == null){
-				currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
-			}
 
 			console.log("Player - currentPipMode : ", currentPipMode);
 			if(currentPipMode == "PIP_MODE_VIDEO"){
