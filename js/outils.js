@@ -78,3 +78,27 @@ function emptyElem(elem) {
 		elem.removeChild(elem.firstChild);
 	}
 }
+
+/**
+ * 
+ * @author Johny EUGENE
+ * @description Retourne le type d'une variable
+ * @version 1.0
+ * @create 2012
+ * par jeugene
+ * modifier 08-11-2012
+ * 
+ */
+
+function typeOf(obj) {
+	return({}).toString.call(obj).slice(8, -1).toLowerCase();
+}
+
+function isEmpty(obj) {
+	for (var prop in obj) {
+		if (obj.hasOwnProperty(prop)) {
+			return false;
+		}
+	}
+	return true;
+}

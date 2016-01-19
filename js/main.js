@@ -8,7 +8,7 @@ var myPlayer = new playerScreen();
 var myComingSoon = new comingSoonScreen();
 var myTextHelper = new textHelperScreen();
 var backToPlayerFromSettings = false;
-var defaultVolumeValue = 50;
+var defaultVolumeValue = 70;
 
 function onLoad() {
 	top.resizeTo(window.screen.availWidth, window.screen.availHeight);
@@ -46,9 +46,15 @@ function onLoad() {
                 volume.css('background-position', '0 -75px');
             }
 			
-			setCookie("volumeValue", value);
 			try{
-				myPlayer.setVolume(audioGainNode, videoGainNode, value);
+				if(!value){
+					myPlayer.setMute();
+				}else{
+					eraseCookie("muteEnabled");
+					setCookie("volumeValue", value);
+					myPlayer.setVolume(audioGainNode, videoGainNode, value);		
+					$(document.getElementById("playerOptionAudioCurrentValue")).html(Media.audiosList[Media.currentAudioIndex]);
+				}
 			}catch(e){
 				console.error(e);
 			}			
