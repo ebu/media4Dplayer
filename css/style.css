@@ -464,6 +464,7 @@ body > div{
     left: 52%;
     width: 47%;
     height: 100%;
+	overflow: hidden;
 }
 
 #playButton
@@ -639,7 +640,8 @@ body > div{
     top: 25%;
     left: 0px;
     width: 100%;
-    height: auto;
+    height: 455px;
+	overflow-y: auto;
 
     color: #000000;
     font-family: 'helveticaNeue-Regular';
