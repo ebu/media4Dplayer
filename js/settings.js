@@ -162,7 +162,7 @@ function settingsScreen() {
 
 		var ret = '';
 		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
-		ret += '<div id="settingsPipText" class="settingsPipText settingsTitleTexts">LSF</div>';
+		ret += '<div id="settingsPipText" class="settingsPipText settingsTitleTexts"></div>';
 		ret += '<div class="ui-icon-gripsmall-center" style="z-index: 1010;"></div>';
 		ret += '<div id="ui-icon-switchVideos" zone="settingsSwitchVideos" class="ui-icon-switchVideos" style="z-index: 1011;" onMouseOver="moveSelecteur(\'ui-icon-switchVideos\')" onFocus="moveSelecteur(\'ui-icon-switchVideos\')" onClick="move(\'enter\')">';
 		ret += createIconeSwitchVideosSVGBalise(44, 33);
@@ -723,9 +723,7 @@ function settingsScreen() {
 
 	var currentPipMode;
 	this.initVideoAndPipBackgroundColor = function(pipText, videoText) {
-		if(currentPipMode == null) {
-			currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
-		}
+		currentPipMode = getCookie("PIPMode") || "PIP_MODE_LSF";
 
 		var LSFBackgroundColor = "#4D4D4D";
 		var VideoBackgroundColor = "#D8D8D8";
@@ -739,8 +737,8 @@ function settingsScreen() {
 		else if(currentPipMode == "PIP_MODE_VIDEO") {
 			$(".settingsPipVideo").css("background-color", VideoBackgroundColor);	
 			$(".settingsVideoBackground").css("background-color", LSFBackgroundColor);
-			$("#settingsPipText").text(pipText);
-			$("#settingsVideoText").text(videoText);			
+			$("#settingsPipText").text(videoText);
+			$("#settingsVideoText").text(pipText);			
 		}
 		else {
 			console.log("initVideoAndPipBackgroundColor - case not defined [", currentPipMode);
@@ -750,33 +748,25 @@ function settingsScreen() {
 	this.settingsSwitchVideos = function() {
 		//console.log("settingsSwitchVideos");
 
-		if(currentPipMode == null) {
-			currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
-		}
+		currentPipMode = getCookie("PIPMode") || "PIP_MODE_LSF";
 		
 		var newPipMode;
-		if(currentPipMode == "PIP_MODE_LSF") {
+		if(currentPipMode === "PIP_MODE_LSF") {
 			newPipMode = "PIP_MODE_VIDEO";
 		}
-		else if(currentPipMode == "PIP_MODE_VIDEO") {
+		else if(currentPipMode === "PIP_MODE_VIDEO") {
 			newPipMode = "PIP_MODE_LSF";
 		}
 		else {
 			console.log("settingsSwitchVideos - case not defined [", currentPipMode);
 		}
 
-
 		console.log("settingsSwitchVideos ", currentPipMode, " TO >>", newPipMode, "<<"); 
 
-		currentPipMode = newPipMode; //to test on locahost
-
-		//reset background color
-		mySettingsScreen.initVideoAndPipBackgroundColor()
-
+		currentPipMode = newPipMode;
 		setCookie("PIPMode", newPipMode);
-	}
-}
-	
-function pad(thing) {
-	return (thing < 10) ? "0" + String(thing) : thing;
+		
+		//reset background color
+		mySettingsScreen.initVideoAndPipBackgroundColor("LSF","Vidéo");
+	};
 }

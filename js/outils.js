@@ -102,3 +102,7 @@ function isEmpty(obj) {
 	}
 	return true;
 }
+	
+function pad(thing) {
+	return (thing < 10) ? "0" + String(thing) : thing;
+}
