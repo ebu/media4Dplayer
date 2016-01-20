@@ -796,19 +796,11 @@ function playerScreen() {
 		this.launchCheckPositionVideo();
 	},
 	this.setPIP = function(){
-		if(getCookie("LSFPip_position_x") != null) {
-			$(".pipVideo").css("left", getCookie("LSFPip_position_x") + "%" );
-		}
-		if(getCookie("LSFPip_position_y") != null) {
-			$(".pipVideo").css("top", getCookie("LSFPip_position_y") + "%" );
-		}
-		if(getCookie("LSFPip_size_width") != null) {
-			$(".pipVideo").css("width", getCookie("LSFPip_size_width") + "%" );
-		}
-		if(getCookie("LSFPip_size_height") != null) {
-			$(".pipVideo").css("height", getCookie("LSFPip_size_height") + "%" );
-		}
-
+		$(".pipVideo").css("left", (getCookie("LSFPip_position_x") || defaultLSFPIPCoordonates.x) + "%" );
+		$(".pipVideo").css("top", (getCookie("LSFPip_position_y") || defaultLSFPIPCoordonates.y) + "%" );
+		$(".pipVideo").css("width", (getCookie("LSFPip_size_width") || defaultLSFPIPCoordonates.w) + "%" )
+		;$(".pipVideo").css("height", (getCookie("LSFPip_size_height") || defaultLSFPIPCoordonates.h) + "%" );
+ 
 		$( ".pipVideo" ).draggable({ 	containment: ".videoPipContainer",
 										scroll:false,
 										handle:".ui-icon-gripsmall-center",

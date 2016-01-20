@@ -131,21 +131,18 @@ function settingsScreen() {
 		var leftLowercaseDIV = createDiv("leftLowercase", slideFontSizeContainer, "", "leftLowercase");
 		leftLowercaseDIV.innerHTML = "A";
 		var slideRangeFontSize = createDiv("slideRangeFontSize", slideFontSizeContainer, "", "slideRangeFontSize slideHorizontalInput");
-		var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : 24;
-		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="30" value="'+valueMinSize+'" step="7" onchange="mySett.onSizeSlideChangeValue(this.value)" tabindex="37"/>';
+		var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : 16;
+		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="23" value="'+valueMinSize+'" step="1" onchange="mySett.onSizeSlideChangeValue(this.value)" tabindex="37"/>';
 		var rightUppercaseDIV = createDiv("rightUpperCase", slideFontSizeContainer, "", "rightUpperCase");
 		rightUppercaseDIV.innerHTML = "A";
 
 		this.setSize(valueMinSize);
 
-
 		var sizeFontDIV = createDiv("settingsSizeFont", this.settingsContainerDIV, "", "settingsSizeFont");
 		var sizeFontSample = createDiv("settingsSizeFontSample", sizeFontDIV, "", "settingsSizeFontSample");
 		sizeFontSample.innerHTML = "bonjour";
-		var slideContainer = createDiv("settingsSlideContainer", this.settingsContainerDIV, "", "settingsSlideContainer");
-
-
-	}
+		createDiv("settingsSlideContainer", this.settingsContainerDIV, "", "settingsSlideContainer");
+	};
 
 	this.initLSFSettings = function() {
 		this.cleanContainer();
@@ -157,11 +154,11 @@ function settingsScreen() {
 		var legende = createDiv("settingsVideoLegende", this.settingsContainerDIV, "Placez et redimensionnez la fenêtre vidéo", "settingsVideoLegende");
 
 		// !! using percent !!
-		var pipLeftPercent = (getCookie("LSFPip_position_x") != null && !isNaN(getCookie("LSFPip_position_x"))) ? getCookie("LSFPip_position_x") : 81;
-		var pipTopPercent = (getCookie("LSFPip_position_y") != null && !isNaN(getCookie("LSFPip_position_y"))) ? getCookie("LSFPip_position_y") : 45;
+		var pipLeftPercent = (getCookie("LSFPip_position_x") != null && !isNaN(getCookie("LSFPip_position_x"))) ? getCookie("LSFPip_position_x") : defaultLSFPIPCoordonates.x;
+		var pipTopPercent = (getCookie("LSFPip_position_y") != null && !isNaN(getCookie("LSFPip_position_y"))) ? getCookie("LSFPip_position_y") : defaultLSFPIPCoordonates.y;
 
-		var pipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : 18.63425925925926;
-		var pipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : 16.30824372759857;
+		var pipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : defaultLSFPIPCoordonates.w;
+		var pipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : defaultLSFPIPCoordonates.h;
 
 		var ret = '';
 		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
@@ -370,8 +367,8 @@ function settingsScreen() {
 		var leftLowercaseDIV = createDiv("leftLowercase", slideFontSizeContainer, "", "leftLowercase");
 		leftLowercaseDIV.innerHTML = "A";
 		var slideRangeFontSize = createDiv("slideRangeFontSize", slideFontSizeContainer, "", "slideRangeFontSize slideHorizontalInput");
-		var valueMinSize = (getCookie("subtitleFontSize") != null) ? getCookie("subtitleFontSize") : 24;
-		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="24" max="44" value="'+valueMinSize+'" step="5" onchange="mySett.onSizeSubtitleSlideChangeValue(this.value)" tabindex="51"/>';
+		var valueMinSize = (getCookie("subtitleFontSize") != null) ? getCookie("subtitleFontSize") : 16;
+		slideRangeFontSize.innerHTML = '<input class="horizontalSizeSlide" id="fontSlide" type="range" min="16" max="44" value="'+valueMinSize+'" step="1" onchange="mySett.onSizeSubtitleSlideChangeValue(this.value)" tabindex="51"/>';
 		var rightUppercaseDIV = createDiv("rightUpperCase", slideFontSizeContainer, "", "rightUpperCase");
 		rightUppercaseDIV.innerHTML = "A";
 		
@@ -380,11 +377,11 @@ function settingsScreen() {
 		var videoPipLimitScreen = createDiv("settingsVideoPipLimitScreenSubtitles", videoScreen, "", "settingsVideoPipLimitScreenSubtitles");
 	
 		// !! using percent !!
-		var pipLeftPercent = (getCookie("LSFPipSubtitles_position_x") != null && !isNaN(getCookie("LSFPipSubtitles_position_x"))) ? getCookie("LSFPipSubtitles_position_x") : 81;
-		var pipTopPercent = (getCookie("LSFPipSubtitles_position_y") != null && !isNaN(getCookie("LSFPipSubtitles_position_y"))) ? getCookie("LSFPipSubtitles_position_y") : 45;
+		var pipLeftPercent = (getCookie("LSFPipSubtitles_position_x") != null && !isNaN(getCookie("LSFPipSubtitles_position_x"))) ? getCookie("LSFPipSubtitles_position_x") : 0;
+		var pipTopPercent = (getCookie("LSFPipSubtitles_position_y") != null && !isNaN(getCookie("LSFPipSubtitles_position_y"))) ? getCookie("LSFPipSubtitles_position_y") : 71;
 
-		var pipWidthReal = (getCookie("LSFPipSubtitles_size_width") != null) ? getCookie("LSFPipSubtitles_size_width") : 18.63425925925926;
-		var pipHeightReal = (getCookie("LSFPipSubtitles_size_height") != null) ? getCookie("LSFPipSubtitles_size_height") : 16.30824372759857;
+		var pipWidthReal = (getCookie("LSFPipSubtitles_size_width") != null) ? getCookie("LSFPipSubtitles_size_width") : 100;
+		var pipHeightReal = (getCookie("LSFPipSubtitles_size_height") != null) ? getCookie("LSFPipSubtitles_size_height") : 28;
 
 		var ret = '';
 		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%;line-height:5em;text-align:center">';
