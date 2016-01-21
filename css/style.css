@@ -905,6 +905,9 @@ body > div{
     display: block;
     background-color: pink;
 }
+.optionDropDownMenu:hover{
+	/*font-weight: bold;*/
+}
 .optionDropDownMenu.hidden {
     display: none;
 }
@@ -1375,6 +1378,7 @@ body > div{
 
 .settingsPipVideo{
 	line-height: 60px !important;
+	z-index: 1;
 }
 
 .ui-icon {

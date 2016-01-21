@@ -3,13 +3,13 @@ var medias = [{
 	audiosList:["Français"],
 	subtitlesList:["Français"],
 	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest-ad.mpd"}],
-	LSF:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest-lsf.mpd"}],
+	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest-lsf.mpd"}],
 	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest.mpd"
 },{
 	audiosList:["Français"],
 	subtitlesList:["Français"],
 	audioDescriptions:[{lang:"Français", url:"http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-ad.mpd"}],
-	LSF:[{lang:"Français", url:"http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-lsf.mpd"}],
+	LSF:[{lang:"LSF", url:"http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-lsf.mpd"}],
 	url:"http://dash.edgesuite.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd"
 }];
 
@@ -159,7 +159,12 @@ function playerScreen() {
 			(function(bt, optionID){
 				bt.clickAction = function(){
 					actionEvent(bt, optionID);
-				};				
+				};
+				$(bt).on("mouseover", function(){
+					$(this).css("font-weight","bold");
+				}).on("mouseout", function(){
+					$(this).css("font-weight","normal");
+				});
 			})(bt, optionID);
 			
 			bt.innerHTML = inputsArray[i];
