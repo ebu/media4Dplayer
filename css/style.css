@@ -1150,6 +1150,16 @@ body > div{
 	background-color: #616161;
 }
 
+#settingsMenuButtonBackToPlayer{
+	position: absolute;
+	top: 30px;
+	padding-left: 20%;
+	padding-top: 0;
+	background:url("../media/left-arrow.png") no-repeat 35px center;
+	line-height: 30px;
+	background-size: contain;
+}
+
 .textVoiceControl,
 .textLecture
 {
