@@ -168,6 +168,10 @@ function playerScreen() {
 			})(bt, optionID);
 			
 			bt.innerHTML = inputsArray[i];
+			
+			if(optionID === "sub" && inputsArray[i] !== "Aucun"){
+				$(bt).append('<img src="media/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
+			}
 		}
 		
 		var $ctn = $(document.getElementById("optionDropDownMenu"));
@@ -382,7 +386,7 @@ function playerScreen() {
 			Media.currentSubtitleIndex = index;
 			Media.subtitleEnabled = true;
 			eraseCookie("subtitlesDisabled");
-			$textContent.html(Media.subtitlesList[index]);
+			$textContent.html(Media.subtitlesList[index] + '<img src="media/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
 
 		}else{
 			if(isPIPMode){
@@ -600,7 +604,8 @@ function playerScreen() {
 			btn.setAttribute("tabindex", 22);
 			createIconeST(btn, 57, 42);
 			if(Media.subtitleEnabled){
-				createDiv("playerOptionSubCurrentValue", btn, Media.subtitlesList[Media.currentSubtitleIndex], "playerOptionValue");
+				var el = createDiv("playerOptionSubCurrentValue", btn, Media.subtitlesList[Media.currentSubtitleIndex], "playerOptionValue");
+				$(el).append('<img src="media/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
 			}else{
 				createDiv("playerOptionSubCurrentValue", btn, "Aucun", "playerOptionValue");
 				

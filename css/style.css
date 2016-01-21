@@ -887,6 +887,7 @@ body > div{
 }
 #playerOptions svg{
 	height: 37px;
+	margin-top: 1px;
 }
 .playerOptionValue{
 	line-height: 44px;
@@ -904,9 +905,6 @@ body > div{
 
     display: block;
     background-color: pink;
-}
-.optionDropDownMenu:hover{
-	/*font-weight: bold;*/
 }
 .optionDropDownMenu.hidden {
     display: none;
