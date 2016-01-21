@@ -631,7 +631,7 @@ function playerScreen() {
 			
 			btn = createButton("playerControlConfig", playerControlTrickMode, "playerControlConfig", 4, 0, "btn");
 			btn.setAttribute("tabindex", 34);
-			createImg(null, btn, "media/topbar/menu_reglages_white.png", null, "settings");
+			createImg(null, btn, "media/player/reglages_player.png", null, "settings");
 
 			dropDownMenu = createDiv("optionDropDownMenu", playerBottomBanner, null, "optionDropDownMenu hidden");
 			isOptionDropDownMenuDisplayed = false;
