@@ -164,6 +164,26 @@ function playerScreen() {
 			
 			bt.innerHTML = inputsArray[i];
 		}
+		
+		var $ctn = $(document.getElementById("optionDropDownMenu"));
+		var setSel = function($el){
+			$el.css("color", "orange");
+		};
+		if(optionID === "audio" && Media.audioEnabled){
+			setSel($ctn.children(":eq("+Media.currentAudioIndex+")"));
+		
+		}else if(optionID === "sub" && Media.subtitleEnabled){
+			setSel($ctn.children(":eq("+Media.currentSubtitleIndex+")"));
+			
+		}else if(optionID === "description" && Media.audioDescriptionEnabled){
+			setSel($ctn.children(":eq("+Media.currentAudioDescriptionIndex+")"));
+			
+		}else if(optionID === "signe" && Media.LSFEnabled){
+			setSel($ctn.children(":eq("+Media.currentLSFIndex+")"));
+			
+		}else{
+			setSel($ctn.children(":last"));
+		}
 	};
 	
 	this.hideOptionDropDownMenu = function() {
