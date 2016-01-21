@@ -885,6 +885,9 @@ body > div{
 	float: left;
 	height: 100%;
 }
+#playerOptions svg{
+	height: 39px;
+}
 .playerOptionValue{
 	line-height: 44px;
 	color: #fff;
