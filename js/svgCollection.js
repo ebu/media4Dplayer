@@ -920,8 +920,8 @@ function createIconeLA(parent, width, height) {
 function createIconeNarrator(parent, width, height) {
 	var icone = createDiv("iconeNarrator", parent, null, null);
 	var ret = '';
-	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
-	ret += '	 height="'+height+'px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">';
+	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%"';
+	ret += '	 height="100%" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">';
 	ret += '<style type="text/css">';
 	ret += '<![CDATA[';
 	ret += '	.iconeNarrator_st0{fill:#FFFFFF;}';
@@ -953,8 +953,8 @@ function createIconeNarrator(parent, width, height) {
 function createIconeMagnifyingGlass(parent, width, height) {
 	var icone = createDiv("iconeMagnifyingGlass", parent, null, null);
 	var ret = '';
-	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="'+width+'px"';
-	ret += '	 height="'+height+'px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">';
+	ret += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%"';
+	ret += '	 height="100%" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">';
 	ret += '<style type="text/css">';
 	ret += '<![CDATA[';
 	ret += '	.IconeMagnifyingGlass_st0{fill:#FFFFFF;}';
