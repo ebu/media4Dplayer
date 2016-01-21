@@ -973,7 +973,7 @@ body > div{
 {
 	position: absolute;
 	left: 38px;
-	bottom: 126px;
+	bottom: 114px;
 	width: 160px;
 }
 #slider{
@@ -986,8 +986,6 @@ body > div{
     height: 4px;
     background-color: #8e8d8d;
     background: url('../media/volume/bg-track.png') repeat top left;
-	box-shadow: inset 0 1px 5px 0px rgba(0, 0, 0, .5), 
-                 0 1px 0 0px rgba(250, 250, 250, .5);
 	left: 20px;
 	top: 4px;
 }
@@ -1027,7 +1025,7 @@ body > div{
 	border: 0 none;
 }
 #slider .ui-slider-range {
-    background: linear-gradient(top, #ffffff 0%,#eaeaea 100%);
+    background: orange;
     position: absolute;
     border: 0;
     top: 0;
