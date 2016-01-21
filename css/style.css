@@ -886,7 +886,7 @@ body > div{
 	height: 100%;
 }
 #playerOptions svg{
-	height: 39px;
+	height: 37px;
 }
 .playerOptionValue{
 	line-height: 44px;
@@ -1041,42 +1041,39 @@ body > div{
 	width: 750px;
     text-align: center;
     height: 80px;
+	line-height: 78px;
+}
+#playerControlTrickMode > div{
+	width: 100px;
+    height: 80px;
+	float: left;
+	margin-left: 15px;
+}
+#playerControlTrickMode img{
+	vertical-align: middle;
+}
+#playerControlPlayPause img{
+	height: 78px;
 }
 
-#playerControlRW
+#playerControlTrickMode #playerControlRW
 {
-	position: absolute;
-	left: 0px;
-	width: 170px;
-    text-align: center;
-    height: 80px;
+	margin-left: 100px;
 }
 
 #playerControlPlayPause
 {
-	position: absolute;
-	left: 170px;
-	width: 170px;
-    text-align: center;
-    height: 80px;
+	margin-left: 15px;
 }
 
 #playerControlFF
 {
-	position: absolute;
-	left: 340px;
-	width: 170px;
-    text-align: center;
-    height: 80px;
+	margin-left: 15px;
 }
 
 #playerControlStop
 {
-	position: absolute;
-	left: 560px;
-	width: 160px;
-    text-align: center;
-    height: 80px;
+	margin-left: 15px;
 }
 
 #playerControlConfig
