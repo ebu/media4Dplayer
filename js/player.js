@@ -3,7 +3,7 @@ var medias = [{
 	audiosList:["Français"],
 	subtitlesList:["Français"],
 	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest-ad.mpd"}],
-	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest-lsf.mpd"}],
+	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}],
 	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest.mpd"
 },{
 	audiosList:["Français"],
@@ -93,13 +93,13 @@ function playerScreen() {
 		isPlaying = false;
 		btnPlayPause.children[0].src="media/player/controle_btn_play.png";
 		btnPlayPause.children[0].alt="lecture";
-	}	
+	};	
 	this.onPlay = function() {
 		console.log("onPlay");
 		isPlaying = true;
 		btnPlayPause.children[0].src="media/player/controle_btn_pause.png";
 		btnPlayPause.children[0].alt="pause";
-	}
+	};
 
 	this.validClose = function() {
 		this.playerManager.playerMain.reset();
@@ -431,7 +431,7 @@ function playerScreen() {
 	this.playPause = function() {
 		console.log("playPause : ", isPlaying);
 		
-		if(isPlaying == true) {
+		if(isPlaying) {
 			this.playerManager.controller.pause();
 		}
 		else {
@@ -500,7 +500,7 @@ function playerScreen() {
 	this.updateIconsPip = function() {
 		this.updateIconCenterPositionToCenter();
 		this.updateIconSwitchPositionToTopCenter();
-	}
+	};
 
 	this.updateIconSwitchPositionToTopCenter = function() {
 		console.log("updateIconSwitchPositionToTopCenter");
@@ -511,7 +511,7 @@ function playerScreen() {
 			left:($(".settingsPipVideo").width() - $(".ui-icon-switchVideos").outerWidth()) / 2
 		});
 */
-	}
+	};
 	this.updateIconCenterPositionToCenter = function() {
 		console.log("updateIconCenterPositionToCenter");
 		$(".ui-icon-gripsmall-center").css({
@@ -519,7 +519,7 @@ function playerScreen() {
 			left:($(".pipVideo").width() - $(".ui-icon-gripsmall-center").outerWidth()) / 2,
 			top:($(".pipVideo").height() - $(".ui-icon-gripsmall-center").outerHeight()) / 2
 		});
-	}
+	};
 
 	var refreshTimer;
 	this.resetTimerHideUI = function() {
@@ -529,23 +529,23 @@ function playerScreen() {
 		}
 		refreshTimer = setTimeout(this.hideUI, 4 * 1000);
 		
-	}
+	};
 
 	this.diplayUI = function() {
 		$("#playerTopBanner").css("display","block");
 		$("#playerBottomBanner").css("display","block");
 		$("#playerUI").css("background","url('media/player/player_ombre_video.png') repeat-x");
 		this.resetTimerHideUI();	
-	}
+	};
 	this.hideUI = function() {
 		$("#playerTopBanner").css("display","none");
 		$("#playerBottomBanner").css("display","none");
 		$("#playerUI").css("background","0 none");
-	}
+	};
 	
 	this.init = function(index) {		
 			
-			if(currentPipMode == null){
+			if(!currentPipMode){
 				currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
 			}
 			
@@ -784,7 +784,7 @@ function playerScreen() {
 		if(Media.LSFEnabled){
 
 			console.log("Player - currentPipMode : ", currentPipMode);
-			if(currentPipMode == "PIP_MODE_VIDEO"){
+			if(currentPipMode === "PIP_MODE_VIDEO"){
 
 				this.playerManager.playerPip.attachSource(Media.url);
 				this.playerManager.playerMain.attachSource(Media.LSF[Media.currentLSFIndex].url);
@@ -836,7 +836,7 @@ function playerScreen() {
 										handle:".ui-icon-gripsmall-center",
 										stop: function() {
 											console.log("onDrag STOP");
-											appearPipControls()
+											appearPipControls();
 											saveCoordinates();
 										},
 										start: function() {
