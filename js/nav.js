@@ -177,6 +177,13 @@ move = function(action, button, event) {
 			myPlayer.show();			
 			break;
 			
+		case "favoritePlay":
+			myPlayer.init($(button).parent().index(), function(){
+				myFav.show();
+			});
+			myFav.hide();
+			break;
+			
 		default:
 			console.log( selecteur.getAttribute("zone") + " not defined");
 			break;

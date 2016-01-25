@@ -108,7 +108,9 @@ function dashboardScreen() {
 	};
 	
 	this.validPlay = function(index) {
-		myPlayer.init(index);
+		myPlayer.init(index, function(){
+			myDash.show();
+		});
 		this.hide();
 	};
 	

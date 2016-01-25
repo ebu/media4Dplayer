@@ -8,9 +8,9 @@ var medias = [{
 },{
 	audiosList:["Français"],
 	subtitlesList:["Français"],
-	audioDescriptions:[{lang:"Français", url:"http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-ad.mpd"}],
-	LSF:[{lang:"LSF", url:"http://medias2.francetv.fr/innovation/media4D/m4dp-demo1-webvtt/m4dp-demo1-webvtt/manifest-lsf.mpd"}],
-	url:"http://dash.edgesuite.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd"
+	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest-ad.mpd"}],
+	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}],
+	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest.mpd"
 }];
 
 var Media = {
@@ -37,6 +37,7 @@ function playerScreen() {
 	this.activeScreen = false;
 	this.alreadyInit = false;
 	this.playerScreen = document.getElementById("playerScreen");
+	this.onClose = null;
 	this.playerUI = document.getElementById('playerUI');
 	
 	$(this.playerUI).on('click', function(e){
@@ -107,8 +108,11 @@ function playerScreen() {
 		this.playerManager.playerAudio.reset();
 		
 		myTopbar.show();
-		//pas de init on veux juste rendre visible l'existant
-		myDash.show();
+		
+		if(typeOf(this.onClose) === "function"){
+			this.onClose();
+		}
+		
 		this.hide();
 	};
 
@@ -543,11 +547,12 @@ function playerScreen() {
 		$("#playerUI").css("background","0 none");
 	};
 	
-	this.init = function(index) {		
-			
-			if(!currentPipMode){
-				currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
-			}
+	this.init = function(index, onClose) {		
+		if(!currentPipMode){
+			currentPipMode = (getCookie("PIPMode") != null) ? getCookie("PIPMode") : "PIP_MODE_LSF";	
+		}
+		
+		this.onClose = onClose;
 			
 		if(!this.alreadyInit || (Media.index !== index)){
 
@@ -644,6 +649,7 @@ function playerScreen() {
 			var playerControlTrickMode = playerControls.children[1];
 			
 			// button for trick mode
+			emptyElem(playerControlTrickMode);
 			btn = createButton("playerControlRW", playerControlTrickMode, "playerControlRW", 0, 0, "btn");
 			btn.setAttribute("tabindex", 31);
 			createImg(null, btn, "media/player/controle_btn_previous.png", null, "retour rapide");

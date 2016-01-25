@@ -57,7 +57,10 @@ function createButton(idElement, parent, zone, x, y, style){
 			move('enter', button);
 		}
 	}
-	button.setAttribute("onClick", "this.onSelect();");
+	$(button).on("click", function(){
+		this.onSelect();
+		return false;
+	});
 	return button;
 }
 
