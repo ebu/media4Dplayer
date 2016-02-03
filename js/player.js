@@ -8,9 +8,9 @@ var medias = [{
 },{
 	audiosList:["Français"],
 	subtitlesList:["Français"],
-	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest-ad.mpd"}],
-	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}],
-	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest.mpd"
+	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest-ad.mpd"}],
+	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest-lsf.mpd"}],
+	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest.mpd"
 }];
 
 var Media = {
@@ -65,7 +65,8 @@ function playerScreen() {
     	audioContext: null,
     	optionSigne: true,
     	optionDescription: true,
-    	optionSub: true
+    	optionSub: true,
+		waaAllreadyInit:false
     };
 	
 	var btnPlayPause = null;
@@ -709,20 +710,23 @@ function playerScreen() {
 
 	        this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 	        console.debug("######### audioContext: " + this.playerManager.audioContext);
-	
-	        var videoAudioSource = this.playerManager.audioContext.createMediaElementSource(this.isPIPMode() ? this.videoPip : this.videoMain);
-	        var audioAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
-						
-	        audioGainNode = this.playerManager.audioContext.createGain();
-	        audioAudioSource.connect(audioGainNode);
-	        audioGainNode.connect(this.playerManager.audioContext.destination);
-	
-	        videoGainNode = this.playerManager.audioContext.createGain();
-			var lastVolumeValue = parseInt(getCookie("volumeValue") || defaultVolumeValue,10);
-			var volumeValue = !Media.audioEnabled || isNaN(lastVolumeValue) || !lastVolumeValue ? 0 : lastVolumeValue;
-			myPlayerScreen.setVolume(audioGainNode, videoGainNode, volumeValue);
-	        videoAudioSource.connect(videoGainNode);
-	        videoGainNode.connect(this.playerManager.audioContext.destination);
+			
+			if(!this.waaAllreadyInit){
+				this.waaAllreadyInit = true;
+				var videoAudioSource = this.playerManager.audioContext.createMediaElementSource(this.isPIPMode() ? this.videoPip : this.videoMain);
+				var audioAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
+
+				audioGainNode = this.playerManager.audioContext.createGain();
+				audioAudioSource.connect(audioGainNode);
+				audioGainNode.connect(this.playerManager.audioContext.destination);
+
+				videoGainNode = this.playerManager.audioContext.createGain();
+				var lastVolumeValue = parseInt(getCookie("volumeValue") || defaultVolumeValue,10);
+				var volumeValue = !Media.audioEnabled || isNaN(lastVolumeValue) || !lastVolumeValue ? 0 : lastVolumeValue;
+				myPlayerScreen.setVolume(audioGainNode, videoGainNode, volumeValue);
+				videoAudioSource.connect(videoGainNode);
+				videoGainNode.connect(this.playerManager.audioContext.destination);				
+			}
 
             this.playerManager.controller.addEventListener('play', function(e) {
             	myPlayerScreen.onPlay();
