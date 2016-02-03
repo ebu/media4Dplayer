@@ -66,7 +66,7 @@ function playerScreen() {
     	optionSigne: true,
     	optionDescription: true,
     	optionSub: true,
-		waaAllreadyInit:false
+		waaAlreadyInit:false
     };
 	
 	var btnPlayPause = null;
@@ -707,12 +707,13 @@ function playerScreen() {
 			if(Media.audioDescriptionEnabled){
 				this.videoAudio.controller = this.playerManager.controller;
 			}		    
-
-	        this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
-	        console.debug("######### audioContext: " + this.playerManager.audioContext);
 			
-			if(!this.waaAllreadyInit){
-				this.waaAllreadyInit = true;
+			if(!this.waaAlreadyInit){
+				this.waaAlreadyInit = true;
+
+				this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
+				console.debug("######### audioContext: " + this.playerManager.audioContext);
+				
 				var videoAudioSource = this.playerManager.audioContext.createMediaElementSource(this.isPIPMode() ? this.videoPip : this.videoMain);
 				var audioAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
 
