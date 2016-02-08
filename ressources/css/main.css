@@ -99,7 +99,7 @@ body > div{
 	margin-left: 592px;
 }
 
-.manual-centering ul{	
+.manual-centering ul{
 	margin-top: 120px;
 }
 
@@ -125,6 +125,11 @@ body > div{
 
 #simplified-mode-container section > a:hover{
 	color: #000;
+}
+
+.section-with-topbar{
+	box-sizing: border-box;
+	padding-top: 150px;
 }
 
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
@@ -155,6 +160,8 @@ nav{
 	background-color: #ffffff;
 	border-bottom: 1px solid #bebebe;
 	height: 82px;
+	position: absolute;
+	width: 100%;
 }
 
 .topbarButton{
@@ -173,7 +180,7 @@ nav{
 }
 
 .topbarImg{
-  margin-right: 5%;
+	margin-right: 5%;
 }
 
 /* LISTE DES PROFILS */
@@ -262,6 +269,106 @@ nav{
 }
 
 /* PLAYLISTS D'UNE APP */
-#app-playlists{
+.playlist{
+	background-color: #f5f5f5;
+	height: 470px;
+	left: 7%;
+	width: 86%;
+	margin: 0 auto;
+	padding: 20px 40px 10px;
+	box-sizing: border-box;
+}
 
+.playlist-title{
+	height: 50px;
+	line-height: 50px;
+}
+
+.playlist-title > div{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.playlist-icon{
+	margin-right: 5px;
+}
+
+.playlist-icon svg, .delete-icon svg {
+	display: inline-block;
+	vertical-align: middle;
+	width: 36px;
+	margin-top: -5px;
+}
+
+.playlist-text{
+	font-family: "helveticaNeue-Regular";
+}
+
+.playlist-list{
+	background-color: #ffffff;
+	margin-top: 10px;
+}
+
+.item-playlist{
+	border-color: rgba(0, 0, 0, 0.2);
+	border-style: solid;
+	border-width: 0 1px 1px;
+	height: 85px;
+	line-height: 85px;
+}
+
+.item-playlist:first-child{
+	border-top-width: 1px;
+}
+
+.item-playlist > div, .item-playlist .thumb{
+	float: left;
+	height: 100%;
+}
+
+.item-playlist .delete{
+	width: 77px;
+	text-align: center;
+}
+
+.item-playlist .delete-icon{
+	display: inline-block;
+	vertical-align: middle;
+}
+.item-playlist .item-infos{
+	margin-left: 2.5%;
+	width: 65%;
+}
+
+.item-playlist .item-infos > div {
+	line-height: normal;
+}
+
+.item-playlist .item-infos .title {
+	font-family: "helveticaNeue-Regular";
+	margin-top: 1%;
+}
+
+.item-playlist .item-infos .subtitle{
+	text-transform: uppercase;
+}
+
+.item-playlist .item-infos .subtitle, .item-playlist .item-infos .infos{
+	font-family: "helveticaNeue-Light";
+	font-size: 0.75em;
+}
+
+.item-playlist .item-infos .infos{
+	color: rgba(0, 0, 0, 0.5);
+	margin-top: 1%;
+}
+
+.item-playlist .play{
+  margin-left: 3%;
+  width: 4%;
+}
+
+.item-playlist .play img{
+	vertical-align: middle;
+	width: 45px;
 }
