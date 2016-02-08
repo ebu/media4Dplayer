@@ -12,7 +12,7 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	</head>
-	<body class="apps-list sm">
+	<body class="app-options sm">
 		<div id="sections-container">
 			<nav>
 				<ul>
@@ -55,26 +55,44 @@
 			<section id="profile"></section>
 		</div>
 		<div id="simplified-mode-container">
-			<section id="apps-list-container-sm">
+			<section id="apps-list-container-sm" class="manual-centering">
 				<h1>Accueil</h1>
 				<ul id="apps-list-sm">
-					<li class="app">
+					<li class="app menu-item">
 						<a title="pluzz">Pluzz</a>
 					</li>
-					<li class="app">
+					<li class="app menu-item">
 						<a title="baddp">BàBDP</a>
 					</li>
-					<li class="app">
+					<li class="app menu-item">
 						<a title="La poste">La poste</a>
 					</li>
-					<li class="app">
+					<li class="app menu-item">
 						<a title="lesitetv">Le site.tv</a>
 					</li>
-					<li class="app">
+					<li class="app menu-item">
 						<a title="media">Médiathèque</a>
 					</li>
 				</ul>
 				<a id="logout-button" title="Se déconnecter">Se déconnecter</a>
+			</section>
+			<section id="app-options-container" class="manual-centering">
+				<h1>Pluzz</h1>
+				<ul id="app-options">
+					<li class="menu-item">
+						<a title="Mes vidéos Pluzz">Mes vidéos Pluzz</a>
+					</li>
+					<li class="menu-item">
+						<a title="Recherche">Recherche</a>
+					</li>
+					<li class="menu-item">
+						<a title="Réglages">Réglages</a>
+					</li>
+					<li class="menu-item">
+						<a title="Mon profil">Mon profil</a>
+					</li>
+				</ul>
+				<a id="home-button" title="Accueil">Accueil</a>				
 			</section>
 		</div>
 		<div id="videoPlayerContainer"></div>
