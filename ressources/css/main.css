@@ -1,17 +1,71 @@
-html, body{
-	height: 100%;
+@font-face {
+	font-family: 'helveticaNeue-Light';
+	src: url('../font/HelveticaNeue-Light.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'helveticaNeue-Medium';
+	src: url('../font/HelveticaNeue-Medium.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'helveticaNeue-Regular';
+	src: url('../font/HelveticaNeue-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ayuthaya';
+    src: url('../font/Ayuthaya.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Georgia';
+    src: url('../font/Georgia.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('../font/OpenDyslexic-Regular.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Andika';
+    src: url('../font/AndBasR.ttf') format('truetype');
+}
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+  background: transparent none repeat scroll 0 0;
+  border: 0 none;
+  font-size: 100%;
+  margin: 0;
+  /*outline: 0 none;*/
+  padding: 0;
+  vertical-align: baseline;
+}
+hr{
+	clear:both;
+	margin:0;
+	visibility:hidden;
 }
 
 html{
     font-size: 62.5%; /* Ré-équilibrage du Rem face au Pixel pour des calculs simples */
-	max-width: 2160px;
-	min-width: 1280px;
-	min-height: 853px;
+	width: 1280px;
+	height: 720px;
 }
 
 body{
 	font-family: arial, sans-serif;
-	font-size: 2.6rem;
+	font-size: 1.6rem;
+	background-color: #fbfcfc;
+	position: relative;
+	height: 100%;
+}
+
+body.splashscreen #splashscreen, body.profils-list #profils-list-container, body.apps-list #apps-list-container{
+	display: block;
+}
+
+body.profils-list nav, body.apps-list nav, body.in-construction nav, body.splashscreen #sections-container{
+	display: none;
+}
+
+body > div{
+	font-size: 1em;
 }
 
 .bold{
@@ -20,20 +74,6 @@ body{
 
 .grey{
 	color:#959595;
-}
-
-body.splashscreen #splashscreen, body.profils-list #profils-list-container, body.apps-list #apps-list-container{
-	display: block;
-}
-
-body.profils-list nav, body.apps-list nav, body.in-construction nav{
-	display: none;
-}
-
-hr{
-	clear:both;
-	margin:0;
-	visibility:hidden;
 }
 
 #sections-container{
@@ -74,14 +114,19 @@ section .list{
 	height: auto;
 }
 
+.user a{
+	font-family: "helveticaNeue-Medium";
+	font-size: 1.625em;
+}
+
 /* LISTE DES APPLICATIONS */
 #apps-list .app{
 	display:inline-block;
 	vertical-align:middle;
-	width: 337px;
-	height: 337px;
-	margin-right: 17px;
-	margin-bottom: 17px;
+	width: 225px;
+	height: 225px;
+	margin-right: 12px;
+	margin-bottom: 12px;
 	background-color: #c9c9c9;
 }
 
