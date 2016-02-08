@@ -132,15 +132,11 @@ body.profils-list #profils-list-container, body:not(.sm).apps-list #apps-list-co
 	display: table;
 }
 
-body.splashscreen #splashscreen, body.sm.apps-list #apps-list-container-sm, body.sm.app-options #app-options-container{
+body.splashscreen #splashscreen, body.sm.apps-list #apps-list-container-sm, body.sm.app-options #app-options-container, body.app-playlists #app-playlists{
 	display: block;
 }
 
-body.profils-list nav, body.apps-list nav, body.in-construction nav, body.splashscreen #sections-container{
-	display: none;
-}
-
-body.sm #sections-container{
+body.profils-list nav, body.apps-list nav, body.in-construction nav, body.splashscreen #sections-container, body.sm #sections-container{
 	display: none;
 }
 
@@ -152,6 +148,32 @@ section .list{
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
+}
+
+/* TOPBAR */
+nav{
+	background-color: #ffffff;
+	border-bottom: 1px solid #bebebe;
+	height: 82px;
+}
+
+.topbarButton{
+	color: #545454;
+	float: left;
+	font-family: "helveticaNeue-Regular";
+	height: 100%;
+	line-height: 80px;
+	text-align: center;
+	width: 19.5%;
+}
+
+.topbarImg, .topbarText{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.topbarImg{
+  margin-right: 5%;
 }
 
 /* LISTE DES PROFILS */
@@ -237,4 +259,9 @@ section .list{
 	height: 100%;
 	width: 100%;
 	display: none;
+}
+
+/* PLAYLISTS D'UNE APP */
+#app-playlists{
+
 }
