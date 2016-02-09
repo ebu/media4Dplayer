@@ -12,7 +12,7 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	</head>
-	<body class="epg-fiche sm">
+	<body class="epg-fiche">
 		<div id="sections-container">
 			<nav>
 				<ul>
@@ -136,11 +136,60 @@
 			<section id="in-construction">
 				<div class="content">
 					<p class="grey">La page à laquelle vous tenter d'accéder n'existe pas encore.<br/><span class="bold">Pas de panique, nos agents très spéciaux sont sur le coup...</span></p>
-					<a id="back-button-in-construction-section" class="bold">Retour à la home</a>					
+					<a id="back-button-in-construction-section" class="bold">Retour à la home</a>
 				</div>
 			</section>
-			<section id="my-videos"></section>
-			<section id="dashboard"></section>
+			<section id="epg-fiche-container" class="section-with-topbar">
+				<a title="Retour" class="back-button">Retour</a>
+				<h1>Des forêts et des hommes</h1>
+				<div id="thumb-and-related-content-container">
+					<div id="thumb-container">
+						<img id="media-thumb" alt="Lire la vidéo Le monde de jamy" src="ressources/img/dashboard/icone_gr_video_JamyVolcans.png"/>
+						<img id="play-icon" alt="" src="ressources/img/dashboard/icone_gr_play_video.png"/>
+					</div>
+					<div id="related-content-container">
+						<div class="title">Vidéos sur le même thème</div>
+						<div id="related-content">
+							<div class="item">
+								<img src="ressources/img/dashboard/icone_pt_video_soufle.png" alt="Lire la vidéo Le Monde de Jamy : A couper le souffle."/>
+								<div class="title">Le Monde de Jamy : A couper le souffle.</div>
+								<div class="subtitle">Des forêts et des hommes</div>									
+							</div>
+							<div class="item">
+								<img src="ressources/img/dashboard/icone_pt_video_koala.png" alt="Lire la vidéo Le repas des koalas"/>
+								<div class="title">Le repas des koalas</div>
+								<div class="subtitle">Des forêts et des hommes</div>									
+							</div>
+							<div class="item">
+								<img src="ressources/img/dashboard/icone_pt_video_sangsue.png" alt="Lire la vidéo Attention sangsue !"/>
+								<div class="title">Attention sangsue !</div>
+								<div class="subtitle">Des forêts et des hommes</div>									
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="synopsis-and-social-icons-container">
+					<div id="social-icons">
+						<div class="icon"><img alt="Ajouter aux favoris" src="ressources/img/dashboard/icone_favoris_actif.png"/></div>
+						<div class="icon"><img alt="Partager sur Facebook" src="ressources/img/dashboard/icone_facebook_actif.png"/></div>
+						<div class="icon"><img alt="Partager sur Twitter" src="ressources/img/dashboard/icone_twitter_actif.png"/></div>
+					</div>
+					<h2 class="oneline">Jardins suspendus de la canopée</h2>
+					<div class="program-date">Émission du 07/05/2014</div>
+					<div id="video-compatibilities-list">
+						<div class="compatibility audio" title="Contient des pistes audios"></div>
+						<div class="compatibility subtitle" title="Contient des sous-titres"></div>
+						<div class="compatibility ad" title="Contient des pistes pour l'audio description"></div>
+						<div class="compatibility lsf" title="Contient des videos pour le language des signes"></div>
+					</div>
+					<div id="synopsis-container">
+						<div class="label">Résumé</div>
+						<div id="synopsis" class="synopsis">
+							Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite. Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux.<br/>Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps.<br/>Toujours attentif pour rendre simple et intelligible les phénomènes les plus complexes, c’est un Jamy impliqué que  nous découvrons au cours de ce voyage plein de surprises et de rebondissements, un Jamy aventurier aussi qui ne craint pas de s'approcher au plus près  de la lave, d’un spectaculaire volcan d’Éthiopie ou de se poser sur un cratère instable de l’île de Montserrat.<br/>L’Éthiopie, les Antilles, l’Italie du Sud et Hawaï, autant d’étapes sur un parcours exceptionnel qui conjugue passion, émotion et envie d’apprendre et de transmettre. Un véritable tour du monde filmé comme un grand spectacle de la nature.
+						</div>
+					</div>
+				</div>
+			</section>
 			<section id="settings"></section>
 			<section id="profile"></section>
 		</div>
@@ -202,7 +251,7 @@
 			<section id="app-playlists-sm" class="playlist-sm">
 				<h1>Mes vidéos Favorites</h1>
 				<div class="buttons-container">
-					<a title="Retour" class="back">Retour</a>
+					<a title="Retour" class="back-button">Retour</a>
 					<a title="Page précedente" class="prev">Page précedente</a>
 					<a title="Page suivante" class="next">Page suivante</a>
 				</div>
