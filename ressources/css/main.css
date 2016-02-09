@@ -389,22 +389,23 @@ nav{
 
 .playlist-sm .buttons-container .back, .playlist-sm .buttons-container .prev{
 	padding-left: 30px;
-	background-image: url("../img/left-arrow.png");
 	background-position: left center;
 }
 
 .playlist-sm .buttons-container .back{
 	left: 45px;
+	background-image: url("../img/fleche_retour.png");
 }
 
 .playlist-sm .buttons-container .prev{
+	background-image: url("../img/fleche_precedent.png");
 	left: 681px;
 }
 
 .playlist-sm .buttons-container .next{
 	right: 45px;
 	padding-right: 30px;
-	background-image: url("../img/right-arrow.png");
+	background-image: url("../img/fleche_suivant.png");
 	background-position: right center;
 }
 
