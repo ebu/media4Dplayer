@@ -2,9 +2,21 @@ var checkPositionVideo;
 var medias = [{
 	audiosList:["Français"],
 	subtitlesList:["Français"],
-	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest-ad.mpd"}],
+	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-ad.mpd"}],
 	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}],
 	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest.mpd"
+},{
+	audiosList:["Français"],
+	subtitlesList:["Français"],
+	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest-ad.mpd"}],
+	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest-lsf.mpd"}],
+	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest.mpd"
+},{
+	audiosList:["Français"],
+	subtitlesList:["Français"],
+	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest-ad.mpd"}],
+	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest-lsf.mpd"}],
+	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest.mpd"
 },{
 	audiosList:["Français"],
 	subtitlesList:["Français"],
