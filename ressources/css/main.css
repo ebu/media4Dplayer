@@ -139,16 +139,24 @@ body > div{
 	padding-top: 120px;
 }
 
+#full-synopsis, #videoPlayerContainer{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
 body.profils-list #profils-list-container, body:not(.sm).apps-list #apps-list-container, body.in-construction #in-construction{
 	display: table;
 }
 
-body.splashscreen #splashscreen, body.sm.apps-list #apps-list-container-sm, body.sm.app-options #app-options-container, body.app-playlists #app-playlists, body.sm.my-videos-options #my-videos-options-container, body.sm.favorites-videos #app-playlists-sm, body.sm.options-favorites #options-favorites-container, body.sm.options-signets #options-signets-container, body.sm.options-history #options-history-container, body.sm.epg-fiche #epg-fiche-container-sm, body.epg-fiche #epg-fiche-container, body.full-synopsis #full-synopsis{
+body.splashscreen #splashscreen, body.sm.apps-list #apps-list-container-sm, body.sm.app-options #app-options-container, body.app-playlists #app-playlists, body.sm.my-videos-options #my-videos-options-container, body.sm.favorites-videos #app-playlists-sm, body.sm.options-favorites #options-favorites-container, body.sm.options-signets #options-signets-container, body.sm.options-history #options-history-container, body.sm.epg-fiche #epg-fiche-container-sm, body.epg-fiche #epg-fiche-container, body.full-synopsis #full-synopsis, body.player #videoPlayerContainer{
 	display: block;
 }
 
-body.profils-list nav, body.apps-list nav, body.in-construction nav, body.splashscreen #sections-container, body.sm #sections-container, body.full-synopsis nav{
+body.profils-list nav, body.apps-list nav, body.in-construction nav, body.splashscreen #sections-container, body.sm #sections-container, body.full-synopsis nav, body.player nav{
 	display: none;
 }
 
@@ -632,14 +640,9 @@ h1 {
 /* RESUME EN FULLSCREEN */
 #full-synopsis{
 	display: none;
-	height: 100%;
-	width: 100%;
 	box-sizing: border-box;
 	padding: 136px 45px 0;
 	font-size: 1.1em;
-	position: absolute;
-	top: 0;
-	left: 0;
 }
 
 #full-synopsis .back-button {
@@ -669,4 +672,312 @@ h1 {
 #full-synopsis .synopsis{
 	font-size: 1.25em;
 	height: 438px;
+}
+
+/* PLAYER */
+#videoPlayerContainer video{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#video-caption {
+    height: 66% !important;
+}
+
+#playerUI {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0) url("../img/player/degrade.png") repeat-x scroll 0 0 / contain ;
+}
+
+#playerTopBanner, #playerBottomBanner{	
+    width: 100%;
+    position: absolute;	
+    z-index: 1;
+}
+
+#playerTopBanner {
+    top: 0;
+}
+
+#playerClose {
+    position: absolute;
+    left: 45px;
+    width: 50px;
+    height: 50px;
+    top: 45px;
+}
+
+#playerClose img{
+	width: 100%;
+	height: 100%;
+}
+
+#playerBottomBanner {
+    bottom: 0;
+}
+
+#playerBottomBanner > div{
+    position: absolute;	
+}
+
+#playerOptions {
+    bottom: 220px;
+    left: 0;
+    padding-left: 190px;
+    height: 42px;
+}
+
+#playerOptions > div {
+    position: relative;
+    width: 271px;
+    height: 100%;
+    float: left;
+}
+
+#playerOptions > div > div {
+    float: left;
+    height: 100%;
+}
+
+#playerOptions .compatibility{
+	width: 58px;
+}
+
+.playerOptionValue {
+    line-height: 44px;
+    color: #fff;
+    font-size: 1.2em;
+}
+
+#playerOptions svg {
+    height: 37px;
+    margin-top: 1px;
+}
+
+#playerProgressInfos {
+	bottom: 145px;
+	width: 100%;
+}
+
+#playerProgressInfos > div{
+	position: absolute;	
+}
+
+#playerProgressCurrent, #playerProgressTotal{
+	bottom: 10px;
+	color: #fff;
+}
+
+#playerProgressTotal{
+	right: 96px;
+}
+
+#playerProgressBar, #playerProgressCurrent{
+	left: 96px;
+}
+
+#playerProgressBar {
+	background-color: rgba(255, 255, 255, 0.09);
+	height: 4px;
+	bottom: 0;
+	width: 1088px;
+}
+
+#playerProgressCursor {
+	background-color: #fff;
+	height: 100%;
+	width: 0;
+}
+
+#playerControlVolume {
+	left: 45px;
+	width: 338px;
+}
+
+#playerControls {
+	bottom: 26px;
+	height: 54px;
+	width: 100%;
+}
+
+#playerControls > div{
+	height: 100%;
+	position: absolute;
+	line-height: 54px;
+}
+
+#slider {
+	background: rgba(0, 0, 0, 0) url("../img/volume/bg-track.png") repeat scroll left top;
+	border-color: #333 #333 #777;
+	border-radius: 25px;
+	border-style: solid;
+	border-width: 1px;
+	height: 4px;
+	position: relative;
+	width: 277px;
+	vertical-align: middle;
+}
+
+.tooltip {
+    position: absolute;
+    display: block;
+    top: -25px;
+    width: 35px;
+    height: 20px;
+    color: #fff;
+    text-align: center;
+    font: 10pt Tahoma, Arial, sans-serif ;
+    border-radius: 3px;
+    border: 1px solid #333;
+	box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .3);
+    box-sizing: border-box;
+    background: linear-gradient(top, rgba(69,72,77,0.5) 0%,rgba(0,0,0,0.5) 100%);
+}
+
+#playerControlVolume > div, #playerControlVolume .icon{
+    display: inline-block;
+}
+
+#playerControlVolume .icon{
+    width: 25px;
+    height: 25px;
+    background: url('../img/volume/volume.png') no-repeat 0 -50px;
+	vertical-align: middle;
+}
+
+#playerControlVolume .volume-mute{
+	background-position: 0 0;
+}
+
+#slider .ui-slider-handle {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    background: url('../img/volume/handle.png') no-repeat 50% 50%;
+    font-weight: bold;
+    color: #1C94C4;
+    top: -10px;
+    margin-left: -12px;
+	border: 0 none;
+}
+
+#slider .ui-slider-range {
+    background: #fff;
+    position: absolute;
+    border: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 25px;
+}
+
+#playerControlTrickMode{
+	left: 556.5px;
+}
+#playerControlTrickMode > div{
+	display: inline-block;
+	margin-left: 15px;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+#playerControlFF, #playerControlRW{
+	width: 37px;
+	height: 37px;
+}
+
+#playerControlRW{
+	background-image: url("../img/player/controle_btn_previous.png");
+}
+
+#playerControlFF{
+	background-image: url("../img/player/controle_btn_next.png");
+}
+
+#playerControlPlayPause{
+	height: 100%;
+	width: 54px;
+	background-image: url("../img/player/controle_btn_play.png");
+}
+
+#playerControlPlayPause.pause{
+	background-image: url("../img/player/controle_btn_pause.png");
+}
+
+
+#playerControlTrickMode #playerControlRW{
+	margin-left: 0;
+}
+
+#playerControlFF{
+	margin-left: 15px;
+}
+
+#playerControlConfig {
+	right: 45px;
+}
+
+#video-caption{
+	height: 66% !important;
+}
+
+#video-caption *{
+	font-size: inherit !important;
+	text-align: center !important;
+}
+
+#video-caption div{
+	width: 100%;
+	display: block;
+}
+
+.videoPipContainer {
+    position: absolute;
+    width: 96%;
+    height: 93%;
+    top: 4%;
+    left: 2%;
+    border-style: hidden;
+    border-width: 1px;
+    border-color: #FFFFFF;
+}
+
+.optionDropDownMenu {
+    position: absolute;
+    top: 600px;
+    left: 130px;
+
+    width: 180px;
+    height: 100px;
+
+    display: block;
+    background-color: pink;
+}
+
+.optionDropDownMenu.hidden {
+    display: none;
+}
+
+.optionDropDownMenuButton {
+    position: relative;
+    width: 100%;
+    height: 50px;
+
+    display: block;
+
+    border-color: white;
+    border-width: 1px;
+    border-style: solid;
+    background-color: black;
+
+    text-align: center;
+    color: white;
+    line-height: 45px;
+    font-family: 'helveticaNeue-Regular';
 }

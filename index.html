@@ -12,7 +12,7 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 	</head>
-	<body class="full-synopsis">
+	<body class="player">
 		<div id="sections-container">
 			<nav>
 				<ul>
@@ -375,7 +375,66 @@
 				</div>
 			</div>
 		</section>
-		<div id="videoPlayerContainer"></div>
+		<div id="videoPlayerContainer">
+			<video id="videoPlayerMain" class="player mainPlayer" autoplay></video>
+			<video id="videoPlayerAudio" class="player audioPlayer" autoplay></video>
+			<div id="video-caption"></div>
+			<div id="playerUI">
+				<div id="playerTopBanner">
+					<div id="playerClose" class="btn"><img alt="Fermer le player" src="ressources/img/player/inte_close.png"/></div>
+				</div>
+				<div id="playerBottomBanner">
+				<div id="playerOptions">
+					<div id="playerOptionAudio" class="btn">
+						<div id="iconeLA" class="compatibility audio" title="Audio"></div>
+						<div id="playerOptionAudioCurrentValue" class="playerOptionValue">Français</div>							
+					</div>
+					<div id="playerOptionSub" class="btn">
+						<div id="iconeST" class="compatibility subtitle" title="Sous-titre"></div>
+						<div id="playerOptionSubCurrentValue" class="playerOptionValue">Français<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/></div>
+					</div>
+					<div id="playerOptionDescription" class="btn">
+						<div id="iconeAD" class="compatibility ad" title="Audio description"></div>
+						<div id="playerOptionDescriptionCurrentValue" class="playerOptionValue">Français</div>							
+					</div>
+					<div id="playerOptionSigne" class="btn">
+						<div id="iconeLSF" class="compatibility lsf" title="Langue des signes"></div>
+						<div id="playerOptionSigneCurrentValue" class="playerOptionValue">LSF</div>							
+					</div>	
+				</div>
+				<div id="playerProgressInfos">
+					<div id="playerProgressCurrent">00 : 00</div>
+					<div id="playerProgressBar">
+						<div id="playerProgressCursor" style="width: 0%;"></div>
+					</div>
+					<div id="playerProgressTotal">09 : 49</div>
+				</div>
+				<div id="playerControls">
+					<div id="playerControlVolume">
+						<span class="tooltip" style="display: none;"></span> 
+						<span class="icon volume-mute"></span>
+						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 58%;"></a><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 58%;"></div></div>
+						<span class="icon volume"></span>
+					</div>
+					<div id="playerControlTrickMode">
+						<div id="playerControlRW" class="btn"></div>
+						<div id="playerControlPlayPause" class="btn"></div>
+						<div id="playerControlFF" class="btn"></div>
+					</div>
+					<div id="playerControlConfig" class="btn">
+						<img alt="settings" src="ressources/img/player/reglages_player.png"/>
+					</div>
+				</div>
+				<div id="optionDropDownMenu" class="optionDropDownMenu hidden" style="top: 120px; left: 247px; height: 102px;"><div id="option_0" class="optionDropDownMenuButton" zone="optionDropDownMenuButton" x="0" y="0" onmouseover="moveSelecteur('option_0');" onfocus="moveSelecteur('option_0');" style="color: orange;">Français</div><div id="option_1" class="optionDropDownMenuButton" zone="optionDropDownMenuButton" x="0" y="0" onmouseover="moveSelecteur('option_1');" onfocus="moveSelecteur('option_1');">Aucun</div></div></div>
+				<div id="pipContainer" class="player videoPipContainer">
+					<div id="pipVideo" class="pipVideo ui-draggable ui-resizable">
+						<video id="videoPlayerPip" class="player pipPlayer" autoplay></video>
+						<div class="ui-icon ui-icon-gripsmall-center" style="width:60px;height:60px;z-index: 1010;"></div>
+						<div id="ui-icon-switchVideos" class="ui-icon-switchVideos" style="z-index: 1011;"></div>
+					</div>
+				</div>
+			</div>			
+		</div>
 		<div id="splashscreen"></div>
 	</body>
 </html>
