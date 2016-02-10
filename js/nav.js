@@ -17,17 +17,37 @@ move = function(action, button, event) {
 
 		case "favoriteChoice10":
 			myFav.validFavorite(0);
+			indexVideo = null;
 			break;
 		case "favoriteChoice13":
 			myFav.validFavorite(1);
+			indexVideo = null;
+			break;
+		case "favoriteChoice16":
+			myFav.validFavorite(0);
+			indexVideo = 2;
+			break;
+		case "favoriteChoice19":
+			myFav.validFavorite(1);
+			indexVideo = 3;
 			break;			
 		case "dashboardPlay0":
 			$("#videoSubtitle").attr("src", "samplesVTT/w1_jamy.vtt");
-			myDash.validPlay(0);
+			
+			var index = 0;
+			if(typeOf(indexVideo) === "number"){
+				index = indexVideo;
+			}
+			myDash.validPlay(index);
 			break;
 		case "dashboardPlay1":
 			$("#videoSubtitle").attr("src", "samplesVTT/w1_20h.vtt");
-			myDash.validPlay(1);
+			
+			var index = 1;
+			if(typeOf(indexVideo) === "number"){
+				index = indexVideo;
+			}
+			myDash.validPlay(index);
 			break;	
 		case "topBarProfileZone":
 			myTopbar.validAccount();
