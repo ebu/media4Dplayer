@@ -144,11 +144,11 @@ body.profils-list #profils-list-container, body:not(.sm).apps-list #apps-list-co
 	display: table;
 }
 
-body.splashscreen #splashscreen, body.sm.apps-list #apps-list-container-sm, body.sm.app-options #app-options-container, body.app-playlists #app-playlists, body.sm.my-videos-options #my-videos-options-container, body.sm.favorites-videos #app-playlists-sm, body.sm.options-favorites #options-favorites-container, body.sm.options-signets #options-signets-container, body.sm.options-history #options-history-container, body.sm.epg-fiche #epg-fiche-container-sm, body.epg-fiche #epg-fiche-container{
+body.splashscreen #splashscreen, body.sm.apps-list #apps-list-container-sm, body.sm.app-options #app-options-container, body.app-playlists #app-playlists, body.sm.my-videos-options #my-videos-options-container, body.sm.favorites-videos #app-playlists-sm, body.sm.options-favorites #options-favorites-container, body.sm.options-signets #options-signets-container, body.sm.options-history #options-history-container, body.sm.epg-fiche #epg-fiche-container-sm, body.epg-fiche #epg-fiche-container, body.full-synopsis #full-synopsis{
 	display: block;
 }
 
-body.profils-list nav, body.apps-list nav, body.in-construction nav, body.splashscreen #sections-container, body.sm #sections-container{
+body.profils-list nav, body.apps-list nav, body.in-construction nav, body.splashscreen #sections-container, body.sm #sections-container, body.full-synopsis nav{
 	display: none;
 }
 
@@ -412,6 +412,10 @@ h1 {
 	background-image: url("../img/fleche_retour.png");
 }
 
+.back-button:hover{
+	cursor: pointer;
+}
+
 .playlist-sm .buttons-container .prev{
 	background-image: url("../img/fleche_precedent.png");
 	left: 681px;
@@ -455,7 +459,7 @@ h1 {
 	font-family: "helveticaNeue-Light";
 }
 
-.playlist-sm .item .type, #epg-fiche-container .program-date{
+.playlist-sm .item .type, .program-date{
 	font-family: "helveticaNeue-Light";
 	color: rgba(0, 0, 0, 0.5);
 }
@@ -512,7 +516,7 @@ h1 {
 	margin-top: 18px;
 }
 
-#related-content-container > .title, #epg-fiche-container .label{
+#related-content-container > .title, #epg-fiche-container .label, #full-synopsis .label{
 	text-transform: uppercase;
 	height: 48px;
 	line-height: 48px;
@@ -571,13 +575,13 @@ h1 {
 	border-right: 0 none;
 }
 
-#epg-fiche-container h2{
+#synopsis-and-social-icons-container h2{
 	font-size: 1.8em;
 	text-align: left;
 	margin-top: 25px;
 }
 
-#epg-fiche-container .program-date{
+.program-date{
 	margin-top: 10px;
 	text-transform: uppercase;
 }
@@ -612,12 +616,57 @@ h1 {
 	background-image: url("../img/compatibilities/AD_petit.png");
 }
 
-#synopsis-container{
+.synopsis-container{
 	overflow: hidden;
 }
 
 .synopsis{
 	line-height: 1.2;
 	overflow-y: auto;
+}
+
+#epg-fiche-container .synopsis{
 	height: 320px;
+}
+
+/* RESUME EN FULLSCREEN */
+#full-synopsis{
+	display: none;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 136px 45px 0;
+	font-size: 1.1em;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#full-synopsis .back-button {
+	color: rgba(0, 0, 0, 0.5);
+	font-size: 1.7em;
+	height: 45px;
+	line-height: 45px;
+	padding-left: 40px;
+	top: 45px;
+}
+
+#full-synopsis h2{
+	text-align: left;
+	font-size: 2.2em;
+}
+
+#full-synopsis .program-date{
+	color: inherit;
+	font-size: 1.1em;
+}
+
+#full-synopsis .label{
+	font-size: 1.6em;
+	margin-top: 30px;
+}
+
+#full-synopsis .synopsis{
+	font-size: 1.25em;
+	height: 438px;
 }
