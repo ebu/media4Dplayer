@@ -4,7 +4,7 @@ var medias = [{
 	subtitlesList:["Français"],
 	audioDescriptions:[{lang:"Français", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-ad.mpd"}],
 	LSF:[{lang:"LSF", url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}],
-	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ3-ondemand/manifest.mpd"
+	url:"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest.mpd"
 },{
 	audiosList:["Français"],
 	subtitlesList:["Français"],
