@@ -758,11 +758,9 @@ function playerScreen() {
 				console.debug("MediaPlayer.events.TEXT_TRACKS_ADDED");
 
 				var xPos = getCookie("LSFPipSubtitles_position_x"),
-					yPos = getCookie("LSFPipSubtitles_position_y"),
-					wSize = getCookie("LSFPipSubtitles_size_width"),
-					hSize = getCookie("LSFPipSubtitles_size_height");
+					yPos = getCookie("LSFPipSubtitles_position_y");
 
-				if(xPos !== "undefined" && yPos !== "undefined" && wSize !== "undefined" && hSize !== "undefined"){
+				if(xPos !== "undefined" && yPos !== "undefined"){
 					var top = Math.round(yPos);
 					if(top <= 0){
 						top = 0;
@@ -773,7 +771,7 @@ function playerScreen() {
 					}
 					$(ttmlDiv).css("top", top + "%")
 						.css("left", xPos + "%")
-						.css("width", wSize + "%");
+						.css("width", "100%");
 				}
             };
 			
@@ -979,7 +977,24 @@ function playerScreen() {
 		var selectedFontSize = getCookie("subtitleFontSize");
 		if(selectedFontSize){
 			$videoPlayer.css("font-size", selectedFontSize+"px");
-		}		
+		}	
+		
+		var xPos = getCookie("LSFPipSubtitles_position_x"),
+			yPos = getCookie("LSFPipSubtitles_position_y");
+
+		if(xPos !== "undefined" && yPos !== "undefined"){
+			var top = Math.round(yPos);
+			if(top <= 0){
+				top = 0;
+			}else if(top>= 65){
+				top = 65 / 2;
+			}else{
+				top = top / 2;
+			}
+			$(ttmlDiv).css("top", top + "%")
+				.css("left", xPos + "%")
+				.css("width", "100%");
+		}
 	},
 	
 
