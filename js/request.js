@@ -32,25 +32,25 @@ getFav = function() {
 		    	title: "Le monde de Jamy",
 		    	subtitle: "Des volcans et des hommes",
 		    	detail: "Émission du 07/05/2014 | 60 min",
-		    	picture: "media/favoris/favoris_vignette_JamyVolcans.png"
+		    	picture: "media/favoris/LMDJ2.png"
 		    },
 		    {
 		    	title: "Le JT de France 2",
 		    	subtitle: "FRANCE2",
-		    	detail: "Émission du 15/09/2015 | 40 min",
-		    	picture: "media/favoris/favoris_vignette_JTFR2.png"
+		    	detail: "Émission du 10/02/2016 | 38 min",
+		    	picture: "media/favoris/JT_20h00.png"
 		    },
 		    {
-		    	title: "ALEX HUGO - La mort et la belle vie",
-		    	subtitle: "La Tendresse a besoin de liberté",
-		    	detail: "série et fiction | 92 min",
-				picture: "media/favoris/favoris_vignette_alex_hugo.png"
+		    	title: "Tchoupi",
+		    	subtitle: "",
+		    	detail: "série d'animation | 5 min",
+				picture: "media/favoris/TCHOUPI.png"
 		    },
 		    {
-		    	title: "Jardins suspendus de la canopée",
-		    	subtitle: "DES FORÊTS ET DES HOMMES",
-		    	detail: "Emission du 15 Septembre | 50 minutes",
-		    	picture: "media/favoris/favoris_vignette_jardin_suspendu.png"
+		    	title: "La météo",
+		    	subtitle: "",
+		    	detail: "Emission du 08/02/2016 | 5 minutes",
+		    	picture: "media/favoris/MÉTÉO.png"
 		    }
 
 
@@ -65,7 +65,7 @@ getContentDashboard = function(index) {
     	title: "Le monde de jamy",
     	subtitle: "Des volcans et des hommes",
     	detail: "Émission du 07/05/2014 | 60 min",
-    	picture: "media/dashboard/icone_gr_video_JamyVolcans.png",
+    	picture: "media/dashboard/LMDJ2.png",
     	facebook: 16,
     	twitter: 1,
     	signe: true,
@@ -104,9 +104,9 @@ getContentDashboard = function(index) {
 
 	{
     	title: "Le JT de France 2",
-    	subtitle: "JT du 20h du mercredi 15 septembre 2015",
-    	detail: "Émission du 15/09/2015",
-    	picture: "media/dashboard/icone_gr_video_JTFR2.png",
+    	subtitle: "JT du 20h du mercredi 10 Février 2016",
+    	detail: "Émission du 10/02/2016",
+    	picture: "media/dashboard/JT_20h00.png",
     	facebook: 16,
     	twitter: 1,
     	signe: true,
@@ -139,18 +139,43 @@ getContentDashboard = function(index) {
 	       }
     	]
 	},
-
-
-
-
-
-
-
-
-
-
-
-
+	{
+    	title: "Tchoupi",
+    	subtitle: "",
+    	detail: "série d'animation | 5 min",
+    	picture: "media/dashboard/TCHOUPI.png",
+    	facebook: 16,
+    	twitter: 1,
+    	signe: true,
+    	view: true,
+    	sub: true,
+    	audio: true,
+    	synopsis: "T'choupi et Doudou est une série d'animation canado–belgo–française en 65 épisodes de 5 minutes, adaptée de la série de littérature de jeunesse T'choupi. <br/>En France, la série a été diffusée en 1999 sur Canal J, rediffusée en 2000 sur TiJi puis sur France 5 dans Zouzous depuis le 29 octobre 2012 et sur France 4 également dans Zouzous."
+    			,
+    	resume: "",
+    	link: []
+	},
+	{
+    	title: "La météo",
+    	subtitle: "",
+    	detail: "Emission du 08/02/2016 | 5 minutes",
+    	picture: "media/dashboard/MÉTÉO.png",
+    	facebook: 16,
+    	twitter: 1,
+    	signe: true,
+    	view: true,
+    	sub: true,
+    	audio: true,
+    	synopsis: "Le journal de 20 Heures est le grand rendez-vous de l'actualité de la journée sur France 2. Du lundi au jeudi, David Pujadas est au commande de ce journal TV de 40 minutes." +
+    			"<br />" +
+    			"Le 20 Heures propose un tour d'horizon complet de l'actualité de la journée, enrichi par les nombreux reportages et duplex des envoyés spéciaux en France et à l’étranger," +
+    			"ainsi que les interventions des correspondants à travers le monde pour raconter et analyser l’actualité internationale." +
+    			"Après la présentation des titres, la rédaction décrypte les événements forts de l’actualité avec des infographies, des chroniques, des invités, et des experts sur le plateau pour expliquer les sujets qui font la Une." +
+    			"Ce programme est disponible ici en direct vidéo ou en replay après sa diffusion pour voir et revoir les précédentes éditions à volonté."
+    			,
+    	resume: "",
+    	link: []
+	}
 	];
 	return contentDashboard[index];
 };

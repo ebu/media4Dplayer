@@ -10,7 +10,6 @@ var myTextHelper = new textHelperScreen();
 var backToPlayerFromSettings = false;
 var defaultVolumeValue = 70;
 var defaultLSFPIPCoordonates = {x:81,y:45,w:20.15,h:37};
-var indexVideo = null;
 
 function onLoad() {
 	top.resizeTo(window.screen.availWidth, window.screen.availHeight);
