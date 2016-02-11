@@ -870,14 +870,14 @@ function playerScreen() {
 						.resizable({
 										containment: ".videoPipContainer",
 										handles: 'all',
-										minHeight: 120,
-										aspectRatio: 16/9,
+										minHeight: 80,
+										aspectRatio: true,
 										resize: function() {
 											myPlayerScreen.updateIconsPip();
 										},
 										stop: function() {
 											saveLSFSize();
-											saveLSFCoordinates();
+											saveCoordinates();
 										}
 									})
 						.click( function() {
@@ -919,7 +919,17 @@ function playerScreen() {
 			setCookie("LSFPip_position_y", newTopPercent);
 		}
 		function saveLSFSize() {
-			console.log("!! saveLSFSize TODO !!");
+			var pipWidth = $(".pipVideo").width();
+			var pipHeight = $(".pipVideo").height();
+			var containerWidth = $(".videoPipContainer").width();
+			var containerHeight = $(".videoPipContainer").height();
+
+			var newWidthPercent = (pipWidth/containerWidth)*100;
+			var newHeightPercent = (pipHeight/containerHeight)*100;
+
+			console.log("saveLSFSize :"+newWidthPercent+"x"+newHeightPercent+" dans un container de "+containerWidth+"x"+containerHeight);
+			setCookie("LSFPip_size_width", newWidthPercent);
+			setCookie("LSFPip_size_height", newHeightPercent);
 		}
 
 		function appearPipControls() {

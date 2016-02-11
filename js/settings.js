@@ -149,7 +149,7 @@ function settingsScreen() {
 		var pipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : defaultLSFPIPCoordonates.w;
 		var pipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : defaultLSFPIPCoordonates.h;
 
-		var ret = '';
+		var ret = '';  
 		ret += '<div class="settingsPipVideo ui-draggable ui-resizable" style="left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%">';
 		ret += '<div id="settingsPipText" class="settingsPipText settingsTitleTexts"></div>';
 		ret += '<div class="ui-icon-gripsmall-center" style="z-index: 1010;"></div>';
@@ -164,13 +164,14 @@ function settingsScreen() {
 												scroll:false,
 												handle:".ui-icon-gripsmall-center",
 												stop: function() {
+        											saveLSFSize();
         											saveLSFCoordinates();
       											}
       										}).resizable( {
       											containment: ".settingsVideoPipLimitScreen",
       											handles: 'all',
       											minHeight: 80,
-      											aspectRatio: 16/9,
+      											aspectRatio: true,
       											resize: function() {
       												mySettingsScreen.updateIconsPip();
       											},
@@ -194,7 +195,7 @@ function settingsScreen() {
 			var newWidthPercent = (pipWidth/containerWidth)*100;
 			var newHeightPercent = (pipHeight/containerHeight)*100;
 
-			console.log("saveLSFSize :", newWidthPercent, "% et ", newHeightPercent, "%");
+			console.log("saveLSFSize :"+newWidthPercent+"x"+newHeightPercent+" dans un container de "+containerWidth+"x"+containerHeight);
 			setCookie("LSFPip_size_width", newWidthPercent);
 			setCookie("LSFPip_size_height", newHeightPercent);
 		}
@@ -412,16 +413,17 @@ function settingsScreen() {
 												scroll:false,
 												handle:".ui-icon-gripsmall-center",
 												stop: function() {
+        											saveLSFSize();
         											saveLSFCoordinates();
       											}
       										}).resizable( {
       											containment: ".settingsVideoPipLimitScreenSubtitles",
       											handles: 'all',
-      											minHeight: 60,
-      											maxHeight: 60,
-												minWidth:866,
-												maxWidth:866,
-      											//aspectRatio: 16/9,
+      											minHeight: 80,
+      											//maxHeight: 60,
+												//minWidth:866,
+												//maxWidth:866,
+      											aspectRatio: true,
       											resize: function() {
       												mySettingsScreen.updateIconsPip();
       											},
@@ -445,7 +447,8 @@ function settingsScreen() {
 			var newWidthPercent = (pipWidth/containerWidth)*100;
 			var newHeightPercent = (pipHeight/containerHeight)*100;
 
-			console.log("saveLSFSize :", newWidthPercent, "% et ", newHeightPercent, "%");
+			//console.log("saveLSFSize :", newWidthPercent, "% et ", newHeightPercent, "%");
+			console.log("saveLSFSize :"+newWidthPercent+"x"+newHeightPercent+" dans un container de "+containerWidth+"x"+containerHeight);
 			setCookie("LSFPipSubtitles_size_width", newWidthPercent);
 			setCookie("LSFPipSubtitles_size_height", newHeightPercent);
 		}
@@ -656,7 +659,7 @@ function settingsScreen() {
 	}
 
 	this.updateIconSwitchPositionToTopCenter = function() {
-		console.log("updateIconSwitchPositionToTopCenter");
+		//console.log("updateIconSwitchPositionToTopCenter");
 		$(".ui-icon-switchVideos").css({
 			position:'absolute',
 			top:'-30px',
@@ -664,7 +667,7 @@ function settingsScreen() {
 		});
 	}
 	this.updateIconCenterPositionToCenter = function() {
-		console.log("updateIconCenterPositionToCenter");
+		//console.log("updateIconCenterPositionToCenter");
 		$(".ui-icon-gripsmall-center").css({
 			position:'absolute',
 			left:($(".settingsPipVideo").width() - $(".ui-icon-gripsmall-center").outerWidth()) / 2,

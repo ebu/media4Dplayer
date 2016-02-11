@@ -28,13 +28,13 @@
 }
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
-  background: transparent none repeat scroll 0 0;
-  border: 0 none;
-  font-size: 100%;
-  margin: 0;
-  /*outline: 0 none;*/
-  padding: 0;
-  vertical-align: baseline;
+	background: transparent none repeat scroll 0 0;
+	border: 0 none;
+	font-size: 100%;
+	margin: 0;
+	/*outline: 0 none;*/
+	padding: 0;
+	vertical-align: baseline;
 }
 hr{
 	clear:both;
@@ -106,11 +106,11 @@ body > div{
 }
 
 #dashboardScreen, #favoriteScreen {
-  display: none;
-  height: 606px;
-  position: absolute;
-  top: 114px;
-  width: 100%;
+	display: none;
+	height: 606px;
+	position: absolute;
+	top: 114px;
+	width: 100%;
 }
 
 /*************\
@@ -186,7 +186,7 @@ body > div{
     width: 380px;
     height: 60px;
     text-align: center;
-    
+
 	font-size: 1.625em;
     color: #000000;
     font-family: 'helveticaNeue-Medium';
@@ -247,10 +247,10 @@ body > div{
     width: 100%;
     min-width: 1280px;
     height: 82px;
-    
+
     background-color : #ffffff;
 	border-bottom : 1px solid #bebebe;
-	
+
 	display: none;
 }
 
@@ -340,12 +340,12 @@ body > div{
 }
 
 .favButton {
-  border-color: rgba(0,0,0,0.2);
-  border-style: solid;
-  border-width: 1px;
-  border-top-width: 0;
-  height: 85px;
-  line-height: 85px;
+	border-color: rgba(0,0,0,0.2);
+	border-style: solid;
+	border-width: 1px;
+	border-top-width: 0;
+	height: 85px;
+	line-height: 85px;
 }
 .favButton:first-child{
 	border-top-width: 1px;
@@ -365,15 +365,15 @@ body > div{
 }
 
 .favoriteImg {
-  float: left;
-  height: 100%;
+	float: left;
+	height: 100%;
 }
 
 .favoriteInfos {
-  float: left;
-  height: 100%;
-  width: 65%;
-  margin-left: 2.5%;
+	float: left;
+	height: 100%;
+	width: 65%;
+	margin-left: 2.5%;
 }
 
 .favoriteInfos > div{
@@ -399,10 +399,10 @@ body > div{
 
 
 .favPlay {
-  float: left;
-  height: 100%;
-  margin-left: 3%;
-  width: 4%;
+	float: left;
+	height: 100%;
+	margin-left: 3%;
+	width: 4%;
 }
 
 .favPlay img
@@ -1001,7 +1001,7 @@ body > div{
     font: 10pt Tahoma, Arial, sans-serif ;
     border-radius: 3px;
     border: 1px solid #333;
-  box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .3);
+	box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .3);
     box-sizing: border-box;
     background: linear-gradient(top, rgba(69,72,77,0.5) 0%,rgba(0,0,0,0.5) 100%);
 }
@@ -1102,29 +1102,29 @@ body > div{
 \*****************/
 
 #settingsScreen {
-  height: 606px;
-  left: 0;
-  min-width: 1280px;
-  position: absolute;
-  top: 83px;
-  width: 100%;
-  display: none;
+	height: 606px;
+	left: 0;
+	min-width: 1280px;
+	position: absolute;
+	top: 83px;
+	width: 100%;
+	display: none;
 }
 
 .settingsContainer {
-  height: 100%;
-  left: 295px;
-  min-width: 900px;
-  position: absolute;
-  width: 77%;
+    height: 100%;
+    left: 295px;
+    min-width: 900px;
+    position: absolute;
+    width: 77%;
 }
 
 .settingsMenu {
-  background-color: #e7e8e8;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  width: 295px;
+	background-color: #e7e8e8;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	width: 295px;
 }
 
 .settingsMenuButton { 
@@ -1170,7 +1170,7 @@ body > div{
 .textVolume,
 .textVitesse,
 .textTimbre
- {
+{
     position: relative;
     top: 5%;
     left: 10%;
@@ -1310,14 +1310,13 @@ body > div{
 }
 
 
-.settingsVideoBackground
-{
+.settingsVideoBackground {
     position: relative;
-    width: 86%;
-    height: 34vw;
+    width: 902px;
+    height: 507px;
     min-height: 435px;
-    top: 5%;
-    left: 6%;
+    top: 10%;
+    left: 4%;
     background-color: #000000;
 }
 
@@ -1441,12 +1440,12 @@ body > div{
 
 /* settings - sous-titre */
 #titleSubRubric {
-  font-family: "helveticaNeue-Light";
-  font-size: 1.2em;
-  position: absolute;
-  text-align: center;
-  top: 3%;
-  width: 100%;
+	font-family: "helveticaNeue-Light";
+	font-size: 1.2em;
+	position: absolute;
+	text-align: center;
+	top: 3%;
+	width: 100%;
 }
 .separator{
 	width: 2px;
@@ -1521,14 +1520,14 @@ body > div{
 	font-weight: bold;
 }
 .settingsFontColorSelectionCell {
-  border-color: #aaa;
-  border-style: solid;
-  border-width: 1px;
-  float: left;
-  height: 28px;
-  margin-left: 20px;
-  margin-top: 50px;
-  width: 28px;
+	border-color: #aaa;
+	border-style: solid;
+	border-width: 1px;
+	float: left;
+	height: 28px;
+	margin-left: 20px;
+	margin-top: 50px;
+	width: 28px;
 }
 .settingsFontColorSelectionCell:nth-child(2){
 	margin-left: 0;
@@ -1562,11 +1561,11 @@ body > div{
 	color: #64D7FF !important;
 }
 .settingsFontBGColorSelection, .settingsFontColorSelection{
-  width: 46%;	
+	width: 46%;	
 }
 .settingsFontBGColorSelection {
-  left: 4%;
-  position: absolute;
+	left: 4%;
+	position: absolute;
 }
 .settingsFontBGColorSelectionCell {
     float: left;
@@ -1635,10 +1634,10 @@ body > div{
 }
 
 .textFontSizeSubtitle {
-  font-family: "helveticaNeue-Regular";
-  font-weight: bold;
-  position: absolute;
-  text-align: left;
+	font-family: "helveticaNeue-Regular";
+	font-weight: bold;
+	position: absolute;
+	text-align: left;
 }
 .slideFontSizeSubtitleContainer, .slideOpacityContainer{
     position: absolute;
@@ -1647,17 +1646,17 @@ body > div{
     width: 42%;
 }
 .slideFontSizeSubtitleContainer {
-  left: 53%;
-  color: #000;
+	left: 53%;
+	color: #000;
 }
 .textOpacity, .textFontSizeSubtitle{
 	top: 39%;
 }
 .textOpacity {
-  font-family: "helveticaNeue-Regular";
-  font-weight: bold;
-  left: 4%;
-  position: absolute;
+	font-family: "helveticaNeue-Regular";
+	font-weight: bold;
+	left: 4%;
+	position: absolute;
 }
 .slideOpacityContainer {
     left: 4%;
@@ -1787,12 +1786,12 @@ body > div{
 
 .textHelperContainer {
     position: absolute;
-/*
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-*/
+	/*
+		top: 0%;
+		left: 0%;
+		width: 100%;
+		height: 100%;
+	*/
     text-align: center;
     color: #FFFFFF;
     font-family: 'helveticaNeue-Regular';

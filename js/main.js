@@ -9,7 +9,7 @@ var myComingSoon = new comingSoonScreen();
 var myTextHelper = new textHelperScreen();
 var backToPlayerFromSettings = false;
 var defaultVolumeValue = 70;
-var defaultLSFPIPCoordonates = {x:81,y:45,w:18,h:16};
+var defaultLSFPIPCoordonates = {x:81,y:45,w:20.15,h:37};
 var indexVideo = null;
 
 function onLoad() {

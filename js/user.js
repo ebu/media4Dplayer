@@ -32,7 +32,7 @@ function userScreen() {
 		myUserScreen.show();
 
 		if(versionBuild == null) {
-			versionBuild = createDiv("versionBuild", myUserScreen.userSelectScreen, "v0.10-sourd");
+			versionBuild = createDiv("versionBuild", myUserScreen.userSelectScreen, "v0.10-fg12022016");
 		}
 	};
 	
