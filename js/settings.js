@@ -53,19 +53,7 @@ function settingsScreen() {
 		this.cleanContainer();
 		this.selectButton(".settingsMenuButton0"); //change color bg button & reset all
 
-		var activeNarratorBT = createButton("activeNarrator", this.settingsContainerDIV, "btActiveNarrator", 0, 0, "activeNarrator");
-		var activeNarratorText = createDiv("activeNarratorText", activeNarratorBT, "", "activeNarratorText");
-		activeNarratorText.innerHTML = "Activer le narrateur";
-		activeNarratorText.setAttribute("tabindex", 20);
-		createIconeNarrator(activeNarratorBT, 60, 60);
-
-		var activeMagnifyingGlassBT = createButton("activeMagnifyingGlass", this.settingsContainerDIV, "btActiveMagnifyingGlass", 0, 0, "activeMagnifyingGlass");
-		var activeMagnifyingGlassText = createDiv("activeMagnifyingGlassText", activeMagnifyingGlassBT, "", "activeMagnifyingGlassText");
-		activeMagnifyingGlassText.innerHTML = "Activer la loupe";
-		createIconeMagnifyingGlass(activeMagnifyingGlassBT, 60, 60);
-		activeMagnifyingGlassText.setAttribute("tabindex", 35);
-
-		var textVoiceControl = createDiv("textVoiceControl", this.settingsContainerDIV, "", "textVoiceControl");
+		/*var textVoiceControl = createDiv("textVoiceControl", this.settingsContainerDIV, "", "textVoiceControl");
 		textVoiceControl.innerHTML = "Contrôle de la voix";
 		textVoiceControl.setAttribute("tabindex", 21);
 		var textVolume = createDiv("textVolume", this.settingsContainerDIV, "", "textVolume");
@@ -121,7 +109,7 @@ function settingsScreen() {
 		var textMotsQueLOnTape = createDiv("textMotsQueLOnTape", textMotsQueLOnTapeContainer, "", "textMotsQueLOnTape");
 		textMotsQueLOnTape.innerHTML = "Mots que l'on tape";
 		createIconeSwitchOff(textMotsQueLOnTapeContainer, 60, 40);
-		textMotsQueLOnTape.setAttribute("tabindex", 30);
+		textMotsQueLOnTape.setAttribute("tabindex", 30);*/
 
 
 		var textFontSize = createDiv("textFontSize", this.settingsContainerDIV, "", "textFontSize");
@@ -138,10 +126,11 @@ function settingsScreen() {
 
 		this.setSize(valueMinSize);
 
-		var sizeFontDIV = createDiv("settingsSizeFont", this.settingsContainerDIV, "", "settingsSizeFont");
+		/*var sizeFontDIV = createDiv("settingsSizeFont", this.settingsContainerDIV, "", "settingsSizeFont");
 		var sizeFontSample = createDiv("settingsSizeFontSample", sizeFontDIV, "", "settingsSizeFontSample");
 		sizeFontSample.innerHTML = "bonjour";
-		createDiv("settingsSlideContainer", this.settingsContainerDIV, "", "settingsSlideContainer");
+		var div = createDiv("settingsSlideContainer", this.settingsContainerDIV, "", "settingsSlideContainer");
+		div.innerHTML = "Ajuster votre interface";*/
 	};
 
 	this.initLSFSettings = function() {

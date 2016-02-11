@@ -1225,7 +1225,7 @@ body > div{
     width: 32%;
     height: 5%;
     top: 30%;
-    left: 50%;
+    left: 4%;
 }
 
 .volumeSlide,
@@ -1249,47 +1249,6 @@ body > div{
     left: 12%;
     height: 100%;
     width: 74%;
-}
-
-.activeNarrator {
-    position: relative;
-    top: 10%;
-    left: 10%;
-    width: 38%;
-    height: 10%;
-
-    background-color: #959595;
-}
-.activeNarratorText,
-.activeMagnifyingGlassText {
-    position: relative;
-    left: 34%;
-    width: 62%;
-    height: 100%;
-	line-height: 60px;
-
-    text-align: left;
-    color: #FFFFFF;
-    font-family: 'helveticaNeue-Regular';
-
-}
-.activeMagnifyingGlass {
-    position: relative;
-    top: 0%;
-    left: 50%;
-    width: 38%;
-    height: 10%;
-
-    background-color: #959595;
-}
-#iconeNarrator,
-#iconeMagnifyingGlass
-{
-    top: 11%;
-    left: 10%;
-    position: absolute;
-	width: 50px;
-	height: 50px;
 }
 
 .leftMinus {
@@ -1343,7 +1302,7 @@ body > div{
 .textFontSize {
     position: absolute;
     top: 24%;
-    left: 50%;
+    left: 4%;
 
     text-align: left;
     color: #6D6D6D;
