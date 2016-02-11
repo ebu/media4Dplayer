@@ -189,6 +189,10 @@ nav{
 	width: 19.5%;
 }
 
+.topbarButton.sel{
+	background-color: rgb(200, 200, 200);
+}
+
 .topbarImg, .topbarText{
 	display: inline-block;
 	vertical-align: middle;
@@ -495,9 +499,12 @@ h1 {
 	padding-right: 45px;
 }
 
+#epg-fiche-container > .back-button, #epg-fiche-container > h1{
+	margin-top: 38px;	
+}
+
 #epg-fiche-container h1{
 	text-transform: uppercase;
-	margin-top: 38px;
 }
 
 #epg-fiche-container > div{
@@ -990,3 +997,82 @@ h1 {
     line-height: 45px;
     font-family: 'helveticaNeue-Regular';
 }
+
+/* SETTINGS */
+#subrubrics-container, #settings-options-container{
+	float: left;
+	height: 100%;
+}
+
+#subrubrics-container{
+	width: 296px;
+	background-color: #e7e8e8;
+	line-height: 637px;
+}
+
+#subrubrics-container ul{
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.subrubric{
+	height: 50px;
+	line-height: 50px;
+	padding-left: 45px;
+	margin-bottom: 15px;
+}
+
+.subrubric:last-child{
+	margin-bottom: 0;
+}
+
+#settings-options-container{
+	width: 984px;
+	padding: 38px 50px 0;
+	box-sizing: border-box;
+}
+
+#settings-options-container > div{
+	display: none;
+}
+
+#settings.interface #interface-settings{
+	display: block;
+}
+
+#settings.audio #audio-settings{
+	display: block;
+}
+
+#settings.subtitles #subtitles-settings{
+	display: block;
+}
+
+#settings.ls #ls-settings{
+	display: block;
+}
+
+#settings.interface li.interface, #settings.audio li.audio, #settings.subtitles li.subtitles, #settings.ls li.ls{
+	color: #fff;
+	background-color: #616161;
+}
+
+.title-subrubric{
+	font-family: "helveticaNeue-Light";
+	font-size: 1.2em;
+	text-align: center;
+}
+
+#interface-settings .col{
+	width: 405px;
+}
+
+#interface-settings .left-col{
+	float: left;
+}
+
+#interface-settings .right-col{
+	float: right;
+}
+
