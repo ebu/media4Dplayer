@@ -1021,6 +1021,7 @@ h1 {
 	line-height: 50px;
 	padding-left: 45px;
 	margin-bottom: 15px;
+	cursor: pointer;
 }
 
 .subrubric:last-child{
@@ -1056,23 +1057,307 @@ h1 {
 #settings.interface li.interface, #settings.audio li.audio, #settings.subtitles li.subtitles, #settings.ls li.ls{
 	color: #fff;
 	background-color: #616161;
+	font-weight: bold;
 }
 
 .title-subrubric{
 	font-family: "helveticaNeue-Light";
 	font-size: 1.2em;
 	text-align: center;
+	margin-bottom: 20px;
 }
 
-#interface-settings .col{
-	width: 405px;
+#settings-options-container .label {
+    color: #000;
+    font-family: 'helveticaNeue-Regular';
+	font-weight: bold;
+	margin: 30px 0 15px;
 }
 
-#interface-settings .left-col{
+#settings-options-container .left-col{
 	float: left;
 }
 
-#interface-settings .right-col{
+#settings-options-container .right-col{
 	float: right;
 }
+#settings-options-container .col{
+	width: 405px;
+}
 
+.option-slider{
+    font-family: 'helveticaNeue-Regular';	
+	height: 30px;
+	line-height: 30px;
+}
+
+/* Settings - Interface */
+.option-slider > div{
+	float: left;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.min-font-size, .max-font-size{
+	line-height: 30px;
+	width: 8%;
+}
+
+.min-font-size{
+	font-size: 1.6rem;
+}
+
+.max-font-size{
+	font-size: 2.4rem;
+	text-align: right;
+}
+
+.slider-horizontal{
+    height: 100%;
+}
+
+.slider-horizontal.font-size{
+	width: 84%;
+}
+
+.slider-horizontal input{
+	height: 100%;
+	margin: 0;
+}
+
+/* Settings - Sous-titres */
+.font-family {
+	float: left;
+	width: 20%;
+	height: 65%;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.font-family.fontArial, #video-caption.fontArial span{
+	font-family: Arial !important;
+}
+.font-family.fontOpenDyslexic, #video-caption.fontOpenDyslexic span{
+	font-family: OpenDyslexic !important;
+}
+.font-family.fontAndika, #video-caption.fontAndika span{
+	font-family: Andika !important;
+}
+.font-family.fontHelvetica, #video-caption.fontHelvetica span{
+	font-family: Helvetica !important;
+}
+.font-family.fontLexia, #video-caption.fontLexia span{
+	font-family: Lexia !important;
+}
+
+.font-family.selected {
+	text-decoration: underline;
+	color: #000;
+}
+
+.col-container{
+	margin-bottom: 30px;
+}
+
+.option-background-color{
+	height: 54px;
+	line-height: 54px;
+}
+
+.option-color > div{
+	display: inline-block;
+	width: 28px;
+	height: 28px;
+	margin-left: 20px;
+	border: solid 1px #aaa;
+	vertical-align: middle;
+	box-shadow: 0px 0px 2px #aaa;
+}
+
+.option-color .color.white {
+	background-color: rgba(255,255,255,0.8);
+}
+
+.option-color .color.black {
+	background-color: #000;
+}
+
+.option-color .transparent {
+	background: url("../img/multicolor.png") no-repeat;
+	background-size: contain;
+}
+
+.option-color .color.yellow {
+	background-color: #FEBF00;
+}
+
+.option-color .color.blue {
+	background-color: #64D7FF;
+}
+
+.option-color .color:first-child {
+	margin-left: 0;
+}
+
+.option-color .color.selected {
+	width: 52px;
+	height: 52px;
+	border-color: #000;
+}
+
+.option-background-opacity > div{
+	display: inline-block;
+	vertical-align: middle;
+	float: none;	
+}
+
+.transparent-opacity, .darkest-opacity {
+	width: 10%;
+}
+
+.option-slider .transparent-opacity, .option-slider .darkest-opacity{
+	height: 70%;
+}
+
+.transparent-opacity {
+	border: 1px solid #000;
+	margin-right: 5%;
+	background-color: #e7e8e8;
+}
+
+.darkest-opacity {
+	background-color: #000;
+	margin-left: 5%;
+}
+
+#subtitles-settings .slider-horizontal{
+	width: 70%;
+}
+
+.ui-subtitles, .ui-ls{
+    background-color: #e7e8e8;
+    position: relative;
+	box-sizing: border-box;
+	padding: 2%;
+}
+
+.ui-subtitles , .pip-limit{
+	border: #aaa solid 1px;	
+}
+
+.ui-subtitles{
+	width: 884px;
+    height: 227px;
+}
+
+.pip-video{
+    width: 320px;
+    height: 180px;
+    top: 200px;
+    left: 200px;
+    border-color: #333333;
+    border-width: 1px;
+	color: #fff;
+	line-height: 60px !important;
+	z-index: 1;
+	background-color: rgb(77, 77, 77);
+	box-shadow: 0 0 5px #000;
+}
+
+.ui-icon {
+    width: 20px;
+    height: 20px;
+	background-size: contain;
+}
+
+.ui-resizable-ne, .ui-resizable-se{
+	right: -11px;	
+}
+
+.ui-resizable-sw, .ui-resizable-nw{
+	left: -11px;
+}
+
+.ui-resizable-se, .ui-resizable-sw{
+	bottom: -11px;
+}
+
+.ui-resizable-ne, .ui-resizable-nw{
+	top: -11px;
+}
+
+.ui-icon-gripsmall-center {
+    background-image: url("../img/lsf/lsf_move.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+    width: 50px;
+    height: 50px;
+
+}
+.ui-icon-gripsmall-diagonal-sw { 
+    background-image: url("../img/lsf/lsf_size_bg.png");
+}
+.ui-icon-gripsmall-diagonal-nw {
+    background-image: url("../img/lsf/lsf_size_hg.png");
+}
+.ui-icon-gripsmall-diagonal-ne {
+    background-image: url("../img/lsf/lsf_size_hd.png");
+}
+.ui-icon-gripsmall-diagonal-se {
+    background-image: url("../img/lsf/lsf_size_bd.png");
+}
+
+.pip-text.blackBGColor.opacity_0, #video-caption.blackBGColor.opacity_0 span{
+	background-color: rgba(0,0,0,0) !important;
+}
+.pip-text.blackBGColor.opacity_025, #video-caption.blackBGColor.opacity_025 span{
+	background-color: rgba(0,0,0,0.25) !important;
+}
+.pip-text.blackBGColor.opacity_05, #video-caption.blackBGColor.opacity_05 span{
+	background-color: rgba(0,0,0,0.5) !important;
+}
+.pip-text.blackBGColor.opacity_075, #video-caption.blackBGColor.opacity_075 span{
+	background-color: rgba(0,0,0,0.75) !important;
+}
+.pip-text.blackBGColor.opacity_1, #video-caption.blackBGColor.opacity_1 span{
+	background-color: rgba(0,0,0,1) !important;
+}
+.pip-text.whiteBGColor.opacity_0, #video-caption.whiteBGColor.opacity_0 span{
+	background-color: rgba(255,255,255,0) !important;
+}
+.pip-text.whiteBGColor.opacity_025, #video-caption.whiteBGColor.opacity_025 span{
+	background-color: rgba(255,255,255,0.25) !important;
+}
+.pip-text.whiteBGColor.opacity_05, #video-caption.whiteBGColor.opacity_05 span{
+	background-color: rgba(255,255,255,0.5) !important;
+}
+.pip-text.whiteBGColor.opacity_075, #video-caption.whiteBGColor.opacity_075 span{
+	background-color: rgba(255,255,255,0.75) !important;
+}
+.pip-text.whiteBGColor.opacity_1, #video-caption.whiteBGColor.opacity_1 span{
+	background-color: rgba(255,255,255,1) !important;
+}
+
+/* Settings - LS */
+.ui-ls{
+	width: 902px;
+    height: 507px;
+}
+
+.pip-limit {
+	position: relative;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.label-pip-video {
+	position: absolute;
+	left: 10px;
+	color: #FFFFFF;
+	font-family: 'helveticaNeue-Regular';
+	font-size: 3.5rem;
+	color: #aaa;
+}
+
+.label-pip-video.main{
+	top: 10px;
+}

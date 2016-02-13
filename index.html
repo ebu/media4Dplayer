@@ -7,6 +7,8 @@
 		<meta name="viewport" content="user-scalable=no"/>
 
 		<link type="text/css" rel="stylesheet" href="ressources/css/reset.css"/>
+		<link type="text/css" rel="stylesheet" href="ressources/css/jquery-ui.css"/>
+		<link type="text/css" rel="stylesheet" href="ressources/css/inputRangeSettings.css"/>
 		<link type="text/css" rel="stylesheet" href="ressources/css/main.css"/>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -190,7 +192,7 @@
 					</div>
 				</div>
 			</section>
-			<section id="settings" class="section-with-topbar interface">
+			<section id="settings" class="section-with-topbar subtitles">
 				<div id="subrubrics-container">
 					<ul>
 						<li class="subrubric interface"><a title="Interface">Interface</a></li>
@@ -202,8 +204,107 @@
 				<div id="settings-options-container">
 					<div id="interface-settings">
 						<div class="title-subrubric">Ajuster votre interface</div>
-						<div class="left-col col"></div>
+						<div class="left-col col">
+							<div id="option-font-size" class="option-container">
+								<div class="label">Taille de la police</div>
+								<div class="option-font-size option-slider">
+									<div class="min-font-size">A</div>
+									<div class="slider-horizontal font-size">
+										<input id="fontSlide" min="16" max="24" value="16" step="1" onchange="mySett.onSizeSlideChangeValue(this.value)" type="range"/>
+									</div>
+									<div class="max-font-size">A</div>									
+								</div>
+							</div>
+						</div>
 						<div class="right-col col"></div>
+					</div>
+					<div id="subtitles-settings">
+						<div class="title-subrubric">Réglez vos sous-titres</div>
+						<div id="option-font-family" class="option-container">
+							<div class="label">Choisir sa police</div>
+							<div class="option-font-family">
+								<div tabindex="22" class="font-family fontArial selected" id="fontArial">Arial</div>
+								<div tabindex="23" class="font-family fontOpenDyslexic" id="fontOpenDyslexic">OpenDyslexic</div>
+								<div tabindex="24" class="font-family fontAndika" id="fontAndika">Andika</div>
+								<div tabindex="25" class="font-family fontHelvetica" id="fontHelvetica">Helvetica</div>
+								<div tabindex="26" class="font-family fontLexia" id="fontLexia">Lexia</div>
+							</div>
+						</div>
+						<div class="col-container">
+							<div class="left-col col">
+								<div id="option-background-color" class="option-container">
+									<div class="label">Couleur d'arrière plan</div>
+									<div class="option-background-color option-color">
+										<div title="Couleur blanche" tabindex="31" class="color white"></div>
+										<div title="Couleur noire" tabindex="32" class="color black selected"></div>
+									</div>									
+								</div>
+								<div id="option-background-opacity" class="option-container">
+									<div class="label">Régler l'opacité de son arrière plan</div>
+									<div class="option-background-opacity option-slider">
+										<div class="transparent-opacity" title="Arrière plan transparent"></div><div class="slider-horizontal">
+											<input id="opacitySlide" min="0" max="1" value="1" step="0.25" onchange="mySett.onOpacitySubtitleSlideChangeValue(this.value)" type="range"/>
+										</div><div class="darkest-opacity" title="Arrière plan plus sombre"></div>							
+									</div>
+								</div>
+							</div>
+							<div class="right-col col">
+								<div id="option-text-color" class="option-container">
+									<div class="label">Couleur de texte</div>
+									<div class="option-text-color option-color">
+										<div title="Couleur transparent" class="color transparent"></div>
+										<div title="Couleur blanche" class="color white selected"></div>
+										<div title="Couleur jaune" class="color yellow"></div>
+										<div title="Couleur bleu" class="color blue"></div>
+									</div>					
+								</div>	
+								<div id="option-subtitles-font-size" class="option-container">
+									<div class="label">Régler la taille de ses sous-titres</div>
+									<div class="option-font-size option-slider">
+										<div class="min-font-size">A</div>
+										<div class="slider-horizontal font-size">
+											<input id="subtitlesFontSlide" min="16" max="24" value="16" step="1" onchange="mySett.onSizeSubtitleSlideChangeValue(this.value)" type="range"/>
+										</div>
+										<div class="max-font-size">A</div>									
+									</div>
+								</div>											
+							</div>
+							<hr/>
+						</div>
+						<div id="uiSubtitles-container" class="ui-subtitles">
+							<div class="pip-video ui-draggable ui-resizable" style="left: 0%; top: 71%; width: 100%; height: 28%; line-height: 5em; text-align: center;">
+								<div class="pip-text opacity_05 blackBGColor yellowColor fontOpenDyslexic" style="display: inline-block; vertical-align: middle; line-height: normal; font-size: 16px;">Texte de sous-titre</div>
+								<div class="ui-icon-gripsmall-center" style="z-index: 1010; width: 15px; height: 15px; background-size: contain; position: absolute; left: 425.5px; top: 22.5px;"></div>
+								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-n"></div>
+								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-e"></div>
+								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-s"></div>
+								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-w"></div>
+								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-sw ui-icon ui-icon-gripsmall-diagonal-sw"></div>
+								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-ne ui-icon ui-icon-gripsmall-diagonal-ne"></div>
+								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-nw ui-icon ui-icon-gripsmall-diagonal-nw"></div>											
+							</div>	
+						</div>
+					</div>
+					<div id="ls-settings">
+						<div class="title-subrubric">Placez et redimensionnez la fenêtre vidéo</div>
+						<div id="uiLS-container" class="ui-ls">
+							<div class="pip-limit" id="uiLimitLS">
+								<div class="pip-video ui-draggable ui-resizable" style="left: 387px; top: 163px; width: 20.15%; height: 37%;">
+									<div id="label-pip-second-video" class="label-pip-video">LSF</div>
+									<div class="ui-icon-gripsmall-center" style="z-index: 1010; position: absolute; left: 62px; top: 62px;"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-n"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-e"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-s"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-w"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-sw ui-icon ui-icon-gripsmall-diagonal-sw"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-ne ui-icon ui-icon-gripsmall-diagonal-ne"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-nw ui-icon ui-icon-gripsmall-diagonal-nw"></div>										
+								</div>
+								<div id="label-pip-main-video" class="label-pip-video main">Vidéo</div>
+							</div>							
+						</div>
 					</div>
 				</div>
 			</section>
