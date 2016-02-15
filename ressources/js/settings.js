@@ -22,13 +22,13 @@ Settings.init = function(section, rubric){
 
 	var rubrics = Section.rubrics[section];
 	if(rubric === rubrics[1]){
-		rubric = rubrics[1];
+		//this.init.audio();
 		
 	}else if(rubric === rubrics[2]){
 		this.init.subtitles();
 		
 	}else if(rubric === rubrics[3]){
-		rubric = rubrics[4];
+		this.init.ls();
 		
 	}else{
 		this.init.interface();
@@ -99,26 +99,31 @@ Settings.init.subtitles = function(){
 	
 	/* LS */
 	var pipTopPercent = (getCookie("LSFPipSubtitles_position_y") != null && !isNaN(getCookie("LSFPipSubtitles_position_y"))) ? getCookie("LSFPipSubtitles_position_y") : Settings.subtitlesDefaultPosition;
-	var $pipVideo = $(".pip-video").css("top", pipTopPercent+"%");
+	var $pipVideo = $(".ui-subtitles > .pip-video").css("top", pipTopPercent+"%");
 	$pipVideo.draggable({ 	
-		//containment: ".pip-limit",
+		containment: ".ui-subtitles",
 		scroll:false,
+		axis: "y",
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
-			//saveLSFCoordinates();
-		}
-	}).resizable( {
-		//containment: ".pip-limit",
-		axis: "y",
-		handles: 'all',
-		resize: function() {
-			//mySettingsScreen.updateIconsPip();
-		},
-		stop: function() {
-			//saveLSFSize();
-			//saveLSFCoordinates();
+			Settings.saveSubtitlesPIPPosition($( this ).parent($( this ).draggable( "option", "containment" )));
 		}
 	});	
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.ls = function(){
+	/*var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
+	$(document.getElementById("fontSlide")).attr("value", valueMinSize);
+	Settings.change.fontSize(valueMinSize);*/
 };
 
 /**
@@ -206,4 +211,12 @@ Settings.change.subtitlesOpacity = function(newValue){
 Settings.change.subtitlesFontSize = function(newValue){
 	setCookie("subtitleFontSize", newValue);
 	$(".ui-subtitles .pip-text").css("font-size", newValue+"px");
+};
+
+Settings.saveSubtitlesPIPPosition = function($container){
+	var newTopPercent = ($container.children(".pip-video").position().top / $container.height()) * 100;
+	newTopPercent -= Math.round(2 * $container.height() / 100 * 2);
+	log("Pourcentage sans les marges : "+newTopPercent);
+
+	setCookie("LSFPipSubtitles_position_y", newTopPercent<0?0:newTopPercent);
 };

@@ -55,8 +55,8 @@ $(document.getElementById("settings-menu")).on("click", ".btn", function(){
 	}else if(classList.indexOf(rubrics[2]) !== -1){
 		rubric = rubrics[2];
 		
-	}else if(classList.indexOf(rubrics[4]) !== -1){
-		rubric = rubrics[4];
+	}else if(classList.indexOf(rubrics[3]) !== -1){
+		rubric = rubrics[3];
 	}
 	
 	if(rubric){
