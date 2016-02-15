@@ -11,30 +11,30 @@
 		<link type="text/css" rel="stylesheet" href="ressources/css/inputRangeSettings.css"/>
 		<link type="text/css" rel="stylesheet" href="ressources/css/main.css"/>
 	</head>
-	<body class="settings">
+	<body class="splashscreen">
 		<div id="sections-container">
 			<nav>
-				<ul>
-					<li class="topbarButton">
+				<ul id="menu">
+					<li class="topbarButton profils-list btn" tabindex="1">
 						<img class="topbarImg" alt="Changer utilisateur - profil de Invité" src="ressources/img/topbar/menu_profil.png"/><span class="topbarText">Invité</span>
 					</li>
-					<li class="topbarButton">
+					<li class="topbarButton settings btn" tabindex="2">
 						<img class="topbarImg" alt="Préférences" src="ressources/img/topbar/menu_reglages.png"/><span class="topbarText">Préférences</span>
 					</li>
-					<li class="topbarButton">
+					<li class="topbarButton app-playlists btn" tabindex="3">
 						<img class="topbarImg" alt="Favoris" src="ressources/img/topbar/menu_favoris.png"/><span class="topbarText">Favoris</span>
 					</li>
-					<li class="topbarButton">
+					<li class="topbarButton search btn" tabindex="4">
 						<img class="topbarImg" alt="Recherche" src="ressources/img/topbar/menu_recherche.png"/><span class="topbarText">Recherche</span>
 					</li>
-					<li class="topbarButton">
+					<li class="topbarButton apps-list btn" tabindex="5">
 						<img class="topbarImg" alt="Accueil" src="ressources/img/topbar/menu_accueil.png"/><span class="topbarText">Accueil</span>
 					</li>
 				</ul>
 			</nav>
 			<section id="profils-list-container">
 				<ul id="profils-list" class="list">
-					<li class="user">
+					<li class="user btn" tabindex="1">
 						<img alt="Profile de Invité" src="ressources/img/avatar.png"/>
 						<a title="Invité">Invité</a>
 					</li>
@@ -42,16 +42,16 @@
 			</section>
 			<section id="apps-list-container">
 				<ul id="apps-list" class="list">
-					<li class="app icon">
+					<li class="app icon btn" tabindex="1">
 						<a title="baddp"><img alt="Icône de l'application baddp" src="ressources/img/temp/home/baddp.png"/></a>
 					</li>
-					<li class="app icon">
+					<li class="app icon btn" tabindex="2">
 						<a title="pluzz"><img alt="Icône de l'application pluzz" src="ressources/img/temp/home/pluzz.png"/></a>
 					</li>
-					<li class="app icon">
+					<li class="app icon btn" tabindex="3">
 						<a title="lesitetv"><img alt="Icône de l'application lesitetv" src="ressources/img/temp/home/lesitetv.png"/></a>
 					</li>
-					<li class="app icon">
+					<li class="app icon btn" tabindex="4">
 						<a title="media"><img alt="Icône de l'application media" src="ressources/img/temp/home/media.png"/></a>
 					</li>
 				</ul>				
@@ -65,8 +65,8 @@
 						<div class="playlist-text">Mes vidéos favorites</div>
 					</div>
 					<div id="favorites-list" class="playlist-list">
-						<div class="item-playlist">
-							<div class="delete">
+						<div class="item-playlist btn" tabindex="6">
+							<div class="delete" tabindex="7">
 								<div class="delete-icon">
 									<svg xml:space="preserve" style="enable-background:new 0 0 50 43;" viewBox="0 0 50 43" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Calque_1" version="1.1"><g><polygon points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1" style="fill:#FFDE00;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;" class="st0"/></g></svg>										
 								</div>									
@@ -77,12 +77,12 @@
 								<div class="subtitle">Des volcans et des hommes</div>
 								<div class="infos">Émission du 07/05/2014 | 60 min</div>									
 							</div>
-							<div class="play">
+							<div class="play" tabindex="8">
 								<img alt="lecture de la vidéo" src="ressources/img/fav_play_icone.png"/>
 							</div>
 						</div>
-						<div class="item-playlist">
-							<div class="delete">
+						<div class="item-playlist btn" tabindex="9">
+							<div class="delete" tabindex="10">
 								<div class="delete-icon">
 									<svg xml:space="preserve" style="enable-background:new 0 0 50 43;" viewBox="0 0 50 43" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Calque_1" version="1.1"><g><polygon points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1" style="fill:#FFDE00;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;" class="st0"/></g></svg>										
 								</div>									
@@ -93,12 +93,12 @@
 								<div class="subtitle">FRANCE2</div>
 								<div class="infos">Émission du 15/09/2015 | 40 min</div>									
 							</div>
-							<div class="play">
+							<div class="play" tabindex="11">
 								<img alt="lecture de la vidéo" src="ressources/img/fav_play_icone.png"/>
 							</div>
 						</div>
-						<div class="item-playlist">
-							<div class="delete">
+						<div class="item-playlist btn" tabindex="12">
+							<div class="delete" tabindex="13">
 								<div class="delete-icon">
 									<svg xml:space="preserve" style="enable-background:new 0 0 50 43;" viewBox="0 0 50 43" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Calque_1" version="1.1"><g><polygon points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1" style="fill:#FFDE00;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;" class="st0"/></g></svg>										
 								</div>									
@@ -109,12 +109,12 @@
 								<div class="subtitle">La Tendresse a besoin de liberté</div>
 								<div class="infos">Série et fiction | 92 min</div>									
 							</div>
-							<div class="play">
+							<div class="play" tabindex="14">
 								<img alt="lecture de la vidéo" src="ressources/img/fav_play_icone.png"/>
 							</div>
 						</div>
-						<div class="item-playlist">
-							<div class="delete">
+						<div class="item-playlist btn" tabindex="15">
+							<div class="delete" tabindex="16">
 								<div class="delete-icon">
 									<svg xml:space="preserve" style="enable-background:new 0 0 50 43;" viewBox="0 0 50 43" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Calque_1" version="1.1"><g><polygon points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1" style="fill:#FFDE00;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;" class="st0"/></g></svg>										
 								</div>									
@@ -125,7 +125,7 @@
 								<div class="subtitle">DES FORÊTS ET DES HOMMES</div>
 								<div class="infos">Emission du 15 Septembre | 50 minutes</div>									
 							</div>
-							<div class="play">
+							<div class="play" tabindex="17">
 								<img alt="lecture de la vidéo" src="ressources/img/fav_play_icone.png"/>
 							</div>
 						</div>
@@ -139,7 +139,7 @@
 				</div>
 			</section>
 			<section id="epg-fiche-container" class="section-with-topbar">
-				<a title="Retour" class="back-button">Retour</a>
+				<a title="Retour" class="back-button btn">Retour</a>
 				<h1>Des forêts et des hommes</h1>
 				<div id="thumb-and-related-content-container">
 					<div id="thumb-container">
@@ -191,11 +191,11 @@
 			</section>
 			<section id="settings" class="section-with-topbar interface">
 				<div id="subrubrics-container">
-					<ul>
-						<li class="subrubric interface"><a title="Interface">Interface</a></li>
-						<li class="subrubric audio"><a title="Audio">Audio</a></li>
-						<li class="subrubric subtitles"><a title="Sous-titres">Sous-titres</a></li>
-						<li class="subrubric ls"><a title="Langues des signes">Langues des signes</a></li>
+					<ul id="settings-menu">
+						<li class="subrubric btn interface"><a title="Interface">Interface</a></li>
+						<li class="subrubric btn audio"><a title="Audio">Audio</a></li>
+						<li class="subrubric btn subtitles"><a title="Sous-titres">Sous-titres</a></li>
+						<li class="subrubric btn ls"><a title="Langues des signes">Langues des signes</a></li>
 					</ul>					
 				</div>
 				<div id="settings-options-container">
@@ -207,7 +207,7 @@
 								<div class="option-font-size option-slider">
 									<div class="min-font-size">A</div>
 									<div class="slider-horizontal font-size">
-										<input id="fontSlide" min="16" max="24" value="16" step="1" onchange="mySett.onSizeSlideChangeValue(this.value)" type="range"/>
+										<input id="fontSlide" min="16" max="24" value="16" step="1" onchange="Settings.change.fontSize(this.value)" type="range"/>
 									</div>
 									<div class="max-font-size">A</div>									
 								</div>
@@ -220,11 +220,11 @@
 						<div id="option-font-family" class="option-container">
 							<div class="label">Choisir sa police</div>
 							<div class="option-font-family">
-								<div tabindex="22" class="font-family fontArial selected" id="fontArial">Arial</div>
-								<div tabindex="23" class="font-family fontOpenDyslexic" id="fontOpenDyslexic">OpenDyslexic</div>
-								<div tabindex="24" class="font-family fontAndika" id="fontAndika">Andika</div>
-								<div tabindex="25" class="font-family fontHelvetica" id="fontHelvetica">Helvetica</div>
-								<div tabindex="26" class="font-family fontLexia" id="fontLexia">Lexia</div>
+								<div tabindex="22" class="font-family Arial selected" id="fontArial">Arial</div>
+								<div tabindex="23" class="font-family OpenDyslexic" id="fontOpenDyslexic">OpenDyslexic</div>
+								<div tabindex="24" class="font-family Andika" id="fontAndika">Andika</div>
+								<div tabindex="25" class="font-family Helvetica" id="fontHelvetica">Helvetica</div>
+								<div tabindex="26" class="font-family Lexia" id="fontLexia">Lexia</div>
 							</div>
 						</div>
 						<div class="col-container">
@@ -239,8 +239,8 @@
 								<div id="option-background-opacity" class="option-container">
 									<div class="label">Régler l'opacité de son arrière plan</div>
 									<div class="option-background-opacity option-slider">
-										<div class="transparent-opacity" title="Arrière plan transparent"></div><div class="slider-horizontal">
-											<input id="opacitySlide" min="0" max="1" value="1" step="0.25" onchange="mySett.onOpacitySubtitleSlideChangeValue(this.value)" type="range"/>
+										<div class="transparent-opacity" title="Arrière plan transparent"></div><div class="slider-horizontal opacity">
+											<input id="opacitySlide" min="0" max="1" value="1" step="0.25" onchange="Settings.change.subtitlesOpacity(this.value)" type="range"/>
 										</div><div class="darkest-opacity" title="Arrière plan plus sombre"></div>							
 									</div>
 								</div>
@@ -260,17 +260,17 @@
 									<div class="option-font-size option-slider">
 										<div class="min-font-size">A</div>
 										<div class="slider-horizontal font-size">
-											<input id="subtitlesFontSlide" min="16" max="24" value="16" step="1" onchange="mySett.onSizeSubtitleSlideChangeValue(this.value)" type="range"/>
+											<input id="subtitlesFontSlide" min="16" max="24" value="16" step="1" onchange="Settings.change.subtitlesFontSize(this.value)" type="range"/>
 										</div>
-										<div class="max-font-size">A</div>									
+										<div class="max-font-size">A</div>
 									</div>
 								</div>											
 							</div>
 							<hr/>
 						</div>
 						<div id="uiSubtitles-container" class="ui-subtitles">
-							<div class="pip-video ui-draggable ui-resizable" style="left: 0%; top: 71%; width: 100%; height: 28%; line-height: 5em; text-align: center;">
-								<div class="pip-text opacity_05 blackBGColor yellowColor fontOpenDyslexic" style="display: inline-block; vertical-align: middle; line-height: normal; font-size: 16px;">Texte de sous-titre</div>
+							<div class="pip-video ui-draggable ui-resizable" style="left: 0%; width: 100%; height: 28%; line-height: 5em; text-align: center;">
+								<div class="pip-text" style="display: inline-block; vertical-align: middle; line-height: normal; font-size: 16px;">Texte de sous-titre</div>
 								<div class="ui-icon-gripsmall-center" style="z-index: 1010; width: 15px; height: 15px; background-size: contain; position: absolute; left: 425.5px; top: 22.5px;"></div>
 								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-n"></div>
 								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-e"></div>

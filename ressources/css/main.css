@@ -214,6 +214,10 @@ nav{
 	margin-left: 0;
 }
 
+.btn:hover{
+	outline: #065f92 solid 2px;
+}
+
 .user img{
 	width: 100%;
 	height: auto;
@@ -229,7 +233,6 @@ nav{
 	display:inline-block;
 	vertical-align:middle;
 	width: 225px;
-	height: 225px;
 	margin-right: 12px;
 	margin-bottom: 12px;
 	background-color: #c9c9c9;
@@ -1131,21 +1134,22 @@ h1 {
 	width: 20%;
 	height: 65%;
 	color: rgba(0, 0, 0, 0.6);
+	cursor: pointer;
 }
 
-.font-family.fontArial, #video-caption.fontArial span{
+.Arial, #video-caption.Arial span{
 	font-family: Arial !important;
 }
-.font-family.fontOpenDyslexic, #video-caption.fontOpenDyslexic span{
+.OpenDyslexic, #video-caption.OpenDyslexic span{
 	font-family: OpenDyslexic !important;
 }
-.font-family.fontAndika, #video-caption.fontAndika span{
+.Andika, #video-caption.Andika span{
 	font-family: Andika !important;
 }
-.font-family.fontHelvetica, #video-caption.fontHelvetica span{
+.Helvetica, #video-caption.Helvetica span{
 	font-family: Helvetica !important;
 }
-.font-family.fontLexia, #video-caption.fontLexia span{
+.Lexia, #video-caption.Lexia span{
 	font-family: Lexia !important;
 }
 
@@ -1335,6 +1339,18 @@ h1 {
 }
 .pip-text.whiteBGColor.opacity_1, #video-caption.whiteBGColor.opacity_1 span{
 	background-color: rgba(255,255,255,1) !important;
+}
+
+.pip-text.whiteColor, #video-caption.whiteColor span{
+	color: #FFFFFF !important;
+}
+
+.pip-text.yellowColor, #video-caption.yellowColor span{
+	color: #FEBF00 !important;
+}
+
+.pip-text.blueColor, #video-caption.blueColor span{
+	color: #64D7FF !important;
 }
 
 /* Settings - LS */

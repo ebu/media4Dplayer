@@ -2,38 +2,17 @@ var Section = {
 	"dontSaveThisSection":false,
 	"name": null,
 	"className":"",
-	"sections": [
-		"homepage",				// 0
-		"movies",				// 1
-		"series",				// 2
-		"my movies",			// 3
-		"search",				// 4
-		"settings",				// 5
-		"login",				// 6-Statique
-		"movie dashboard",		// 7
-		"tvseries dashboard",	// 8
-		"player",				// 9
-		"watchlist",			// 10
-		"kids"					// 11
-	],
+	"sections": ["profils","apps-list","app-playlists","epg-fiche","settings"],
 
 	"rubrics": {
-		"watchlist":["grid"],
-		"movies":["grid","disney"],
-		"series":["grid"],
-		"kids":["grid"],
-		"player":["playlist","media"],
-		"settings":["parental_control","payment","devices","account"]
+		"settings":["interface","audio","subtitles","ls"]
 	},
-	"sectionsWithSubmenu":["watchlist","movies","settings"],
-	"sectionsWithHome":["movies","tvseries"],
 	"rubric": null,
 	"template": "",
 	"oldTemplate": [],
-	oldCollectionContainer:[],
 	"oldName": [],
 	"oldRubric": [],
-	"isDisney":false
+	"oldClass":[]
 };
 
 /**
@@ -48,45 +27,25 @@ var Section = {
 Section.change = function(newSection, rubric, mixed_var, $item){
 	if(this.sections.indexOf(newSection) !== -1){
 		
-		// L'écran Settings
-		if(newSection === this.sections[5]){
-			this.change.toSettings(newSection, rubric, $item);
-			
-		// L'écran de login
-		}else if(newSection === this.sections[6]){
-			this.change.toLoginScreen(newSection, mixed_var, $item);
-			
-		// L'écran Watchlist
-		}else if(newSection === this.sections[10]){
-			this.change.toWatchListScreen(newSection, rubric, $item);
-			
-		// L'écran Movies
+		// La liste des profils
+		if(newSection === this.sections[0]){
+			this.change.toProfils(newSection);
+		
+		// Liste des apps
 		}else if(newSection === this.sections[1]){
-			this.change.toMoviesScreen(newSection, rubric, $item, mixed_var);
+			this.change.toAppsList(newSection);
 		
-		// L'écran Series
+		// Les playlist
 		}else if(newSection === this.sections[2]){
-			this.change.toSeriesScreen(newSection, rubric, $item, mixed_var);
+			this.change.toAppPlaylist(newSection, mixed_var);
 		
-		// L'info Banner
-		}else if(newSection === this.sections[9]){
-			this.change.toPlayer(newSection, rubric, mixed_var);
+		// Fiche EPG
+		}else if(newSection === this.sections[3]){
+			this.change.toEPG(newSection, mixed_var);
 		
-		// La dashboard
-		}else if([this.sections[8], this.sections[7]].indexOf(newSection) !== -1){
-			this.change.toDashboard(newSection, mixed_var, rubric);
-		
-		// La home
-		}else if(newSection === this.sections[0]){
-			this.change.toHomepage(newSection, $item);
-		
-		// L'écran Kids
-		}else if(newSection === this.sections[11]){
-			this.change.toKidsScreen(newSection, rubric, $item, mixed_var);
-		
-		// L'écran recherche
+		// Fiche EPG
 		}else if(newSection === this.sections[4]){
-			this.change.toSearchScreen(newSection, $item);
+			this.change.toSettings(newSection, rubric, mixed_var);
 		}
 	}
 };
@@ -99,26 +58,8 @@ Section.change = function(newSection, rubric, mixed_var, $item){
  * @param {jQuery Object} $item The current focused element
  */
 
-Section.change.toSettings = function(newSection, rubric, $item){
-	if(rubric){
-		
-		var item = json.cache["submenu"][newSection][LANG.codeLang][$item.index()];
-		Section.launchSectionContainingSubmenu({
-			rubric:rubric,
-			item:item,
-			loadRubFunc:function(){
-				Settings.load(arguments[0], arguments[1], arguments[2], arguments[3]);
-			},
-			onErrorLoadRub:function(){
-				// TODO: affichage d'une popup d'erreur
-			}
-		}, newSection, $item);
-		
-	}else{
-		Section.launchSectionContainingSubmenu({
-			submenuUrl: LANG.cache["settings_" + LANG.codeLang]
-		}, newSection, $item);
-	}
+Section.change.toProfils = function(){
+	$("body").attr("class","profils-list");
 };
 
 /**
@@ -129,285 +70,45 @@ Section.change.toSettings = function(newSection, rubric, $item){
  * @param {jQuery Object} $item The current focused element
  */
 
-Section.change.toLoginScreen = function(newSection, callbackList, $item){
-	
-	Section.hide(function(){
-		var defaultCallback = {
-			onSuccess:function(){
-				Menu.rubrics.launchAccountRubric();
-			}
-		};
-		Section.prepare(newSection, null, null, {callbackList:callbackList||defaultCallback, $item:$item});
-	}, newSection);
+Section.change.toAppsList = function(){
+	$("body").attr("class","apps-list");
 };
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Launches loading of the watchlist section
+ * @description Launches loading of the login section
  * @param {String} newSection The name of the new section
- * @param {Integer} rubric The rubric's name of the section
+ * @param {Object} callbackList Contains a success and error callback
  * @param {jQuery Object} $item The current focused element
  */
 
-Section.change.toWatchListScreen = function(newSection, rubric, $item){
-	if(rubric){
-		
-		var item = json.cache["submenu"][newSection][LANG.codeLang][$item.index()];
-		Section.launchSectionContainingSubmenu({
-			rubric:rubric,
-			item:item,
-			loadRubFunc:function(){
-				Grid.load(arguments[0], arguments[1], arguments[2]);
-			},
-			onErrorLoadRub:function(){}
-		}, newSection, $item);
-		
-	}else{
-		Section.launchSectionContainingSubmenu({
-			submenuUrl: LANG.cache["watchlist_" + LANG.codeLang]
-		}, newSection, $item);
-	}
+Section.change.toAppPlaylist = function(newSection, mixed_var){
+	$("body").attr("class","app-playlists");
 };
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Launches loading of the movies section
+ * @description Launches loading of the login section
  * @param {String} newSection The name of the new section
- * @param {Integer} rubric The rubric's name of the section
+ * @param {Object} callbackList Contains a success and error callback
  * @param {jQuery Object} $item The current focused element
- * @param {Object} params Contains parameters that will be used for the loading of section
  */
 
-Section.change.toMoviesScreen = function(newSection, rubric, $item, params){
-	
-	if(rubric){
-		if(Section.rubrics[Section.name] && Section.rubric === Section.rubrics[Section.name][1]){
-			Section.isDisney = true;
-		}
-		var url;
-		var fullMode = typeOf(params) === "object" && params.fullCatalogue && !Section.isDisney;
-		var searchQuery, searchXhr, searchData;
-		if(params){
-			searchXhr = params.xhr ? params.xhr : null;
-			searchData = params.data ? params.data : null;
-			searchQuery = params.searchQuery ? params.searchQuery : null;
-		}
-
-		var _callback = function(){
-			var params = {
-				url:url,
-				withHeaderMenu:true,
-				fullMode:fullMode,
-				searchQuery:searchQuery
-			};
-
-			Grid.load(params, newSection, {onSuccess:function(){
-				Section.prepare(newSection, null, rubric, {$item:$item});
-
-			}, onError:function(){}});
-		};
-		
-		//Si je rentre dans Disney
-		var customMenu = json.cache["submenu"] && json.cache["submenu"][newSection] && json.cache["submenu"][newSection][LANG.codeLang] && $($item).length && json.cache["submenu"][newSection][LANG.codeLang][$item.index()]?json.cache["submenu"][newSection][LANG.codeLang][$item.index()]:null;
-		if(customMenu && customMenu.params && customMenu.params.custom){
-			// url = customMenu.params.url;
-			url = Config.versions[Config.version].domain+"mediaCatalog/layout/?byScheme=urn:peg:layoutDskDisney"+ getParentalControlFilter();
-			Section.hideRubric(function(){
-				Section.prepare(newSection, function(){
-					Home.loadSubmenu(url, {carrousel:"HeroStatic", collections:["List5Items"], catalogue:"catalogue"}, newSection, true);
-				},rubric, {$item:$item});
-			});
-
-		// Si je rentre dans le catalogue de disney
-		} else if(!$($item).length && Section.isDisney){
-			url = Grid.getSortUrl(Grid.filterIndex, false);
-			Section.hideRubric(_callback);
-
-		// Si j'ai lancé la recherche
-		} else if(searchQuery){
-			Section.hide(function() {
-				var param = {
-					url: params.url,
-					withHeaderMenu: false,
-					fullMode: fullMode,
-					searchQuery: searchQuery,
-					data: searchData,
-					xhr: searchXhr
-				};
-				Grid.load(param, newSection, {
-					onSuccess: function() {
-						Section.prepare(newSection, null, rubric, {
-							$item: $item
-						});
-					},
-					onError: function() {}
-				});
-			});
-		
-		// Si j'ai cliqué sur le bouton Full catalog		
-		}else if(fullMode){
-			
-			url = Grid.getSortUrl(Grid.filterIndex, true);
-			if(url){
-				Section.hide(_callback);
-			}
-		
-		// Si j'ai cliqué sur l'un des boutons de filtre
-		}else if(Grid.withHeaderMenu && typeOf(params) === "object" && params.url && $($item).length && $item.hasClass("focus")){
-			Grid.filterIndex = $item.index();
-			url = params.url;
-			fullMode = Grid.fullMode;
-			Section.hideRubric(_callback);
-				
-		// Si j'ai cliqué sur un genre
-		}else if(!fullMode && $($item).length){
-			Section.isDisney = false;
-			url = Grid.getSortUrl(Grid.filterIndex, false, $item.index());
-			Section.hideRubric(_callback);
-		}
-
-	}else{
-		
-		// Si j'ai pas choisi de rubrique, charge d'abords le sous-menu
-		Section.hide(function(){
-			
-			var parentControlFilter = getParentalControlFilter();
-			var wsLinks = Config.versions[Config.version];
-			
-			Submenu.load(wsLinks.domain+"mediaCatalog/feeds?feedUrl="+encodeURIComponent(wsLinks.feed+wsLinks.prefix2+"?byCustomValue={pEGGenreType}{Adult}&byScheme=urn:peg:genre" + LANG.getLanguagePath()) + parentControlFilter, newSection, {onSuccess:function(){
-				Section.prepare(newSection, null, null, {$item:$item});
-				
-				// Affiche la home de cette section
-				Home.load(wsLinks.domain+"mediaCatalog/layout/?byScheme=urn:peg:layoutBigMoviesPage" + parentControlFilter + LANG.getLanguagePath(), {carrousel:"Hero", collections:["List5Items"], catalogue:"catalogue"}, newSection, true);
-				
-			}, onError:function(){
-				// TODO: affichage d'une popup d'erreur
-			}});
-			
-		}, newSection);
-	}
+Section.change.toEPG = function(newSection, mixed_var){
+	$("body").attr("class","epg-fiche");
 };
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Launches loading of the series screen
+ * @description Launches loading of the login section
  * @param {String} newSection The name of the new section
- * @param {Integer} rubric The rubric's name of the section
+ * @param {Object} callbackList Contains a success and error callback
  * @param {jQuery Object} $item The current focused element
- * @param {Object} params Contains parameters that will be used for the loading of section
  */
 
-Section.change.toSeriesScreen = function(newSection, rubric, $item, params){
-	this.toSeriesOrKidsScreen(newSection, rubric, $item, params, {url:Config.versions[Config.version].domain+"mediaCatalog/layout/?byScheme=urn:peg:layoutBigSeriesPage" + LANG.getLanguagePath(), carrousel:"Hero", collections:["List5Items"], catalogue:"catalogue"});
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Launches loading of the kids section
- * @param {String} newSection The name of the new section
- * @param {Integer} rubric The rubric's name of the section
- * @param {jQuery Object} $item The current focused element
- * @param {Object} params Contains parameters that will be used for the loading of section
- */
-
-Section.change.toKidsScreen = function(newSection, rubric, $item, params){
-	this.toSeriesOrKidsScreen(newSection, rubric, $item, params, {url:Config.versions[Config.version].domain+"mediaCatalog/layout/?byScheme=urn:peg:layoutBigKidsPage" + LANG.getLanguagePath(), carrousel:"Hero", collections:["List5Items"], catalogue:"catalogue",isKids:true,characterTypeName:"character"});
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Launches loading of the series/kids screen
- * @param {String} newSection The name of the new section
- * @param {Integer} rubric The rubric's name of the section
- * @param {jQuery Object} $item The current focused element
- * @param {Object} params Contains parameters that will be used for the loading of section
- * @param {Object} homeParams Contains parameters that will be used for the loading of Home component
- */
-
-Section.change.toSeriesOrKidsScreen = function(newSection, rubric, $item, params, homeParams){
-	if(rubric){
-		
-		var url;
-		var fullMode = typeOf(params) === "object" && params.fullCatalogue;
-		var _callback = function(){
-			var params = {
-				url:url,
-				withHeaderMenu:true,
-				fullMode:fullMode
-			};
-
-			Grid.load(params, newSection, {onSuccess:function(list){
-				Section.prepare(newSection, null, rubric, {$item:$item});
-				
-				// Donne le focus au 1er de la liste s'il existe
-				if(list && list.length > 0){
-					var menuFocused = $(document.getElementById("top-menu-submenu-grid")).children(".focus");
-					if(!menuFocused.length){
-						Navigation.setFocusToGrid(null, "down");
-					}else{
-						Navigation.setClassFocus(menuFocused);
-					}
-				}else{
-					Navigation.setClassFocus(Menu.getSelected());
-				}
-
-			}, onError:function(){
-				Section.template.show();
-			}});
-		};
-		
-		// Si j'ai cliqué sur le bouton Full catalog
-		if(fullMode){
-			
-			url = Grid.getSortUrl(Grid.filterIndex, true);
-			if(url){
-				Section.hide(_callback, newSection);					
-			}
-		
-		// Si j'ai cliqué sur l'un des boutons de filtre
-		}else if(Grid.withHeaderMenu && typeOf(params) === "object" && params.url && $($item).length && $item.hasClass("focus")){
-			Grid.filterIndex = $item.index();
-			url = params.url;
-			fullMode = true;
-			Section.hide(_callback, newSection);			
-		}
-		
-	}else{
-		Section.hide(function(){
-
-			// Affiche le menu Kids
-			if(newSection === Section.sections[11]){
-				Menu.showKidsMenu();
-			}
-
-			Section.prepare(newSection, null, null, {$item:$item});
-
-			// Affiche la home de cette section
-			Home.load(homeParams.url + getParentalControlFilter(), homeParams, newSection, false, {onSuccess:function(){
-				
-				if(Section.name === Section.sections[11]){
-					
-					// Donne le focus en priorité au bouton Full catalogue si elle est visible. Sinon aux boutons du carrousel les collections
-					var $btn = $(document.getElementById("full-catalogue-button")).filter(":visible");
-					if(!$btn.length){
-						$btn = $(document.getElementById("carrousel-buttons-container")).children(".btn:visible:first");
-					}
-
-					if($btn.length){
-						$(document.getElementById("return-button-kids-menu")).removeClass("focus");
-						Navigation.setClassFocus($btn);
-
-					}else{
-						Navigation.setFocusToCollections(null, "right");
-					}
-				}
-				
-			},onError:function(){
-				Navigation.setClassFocus($(document.getElementById("return-button-kids-menu")));
-			}});
-
-		}, newSection);
-	}
+Section.change.toSettings = function(newSection, rubric){
+	Settings.init(newSection, rubric);
+	$("body").attr("class","settings");
 };
 
 /**
@@ -428,93 +129,6 @@ Section.change.toPlayer = function(newSection, rubric, params){
 			// TODO: affichage d'une popup d'erreur
 		}}, rubric);
 	}
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Launches loading of the dashboard
- * @param {String} newSection The name of the new section
- * @param {Object} data The media data
- * @param {Integer} rubric The rubric's name of the section
- */
-
-Section.change.toDashboard = function(newSection, data, rubric){
-	var gridIsVisible = Grid.isVisible(),
-		submenuIsVisible = Submenu.isVisible();
-	Section.hide(function(){
-
-		var searchResult = rubric ? rubric : null;
-		
-		var params = {
-			id:data.id,
-			type:Dash.types[newSection === Section.sections[7] ? 0 : 1],
-			from:searchResult,
-			data:data
-		};
-
-		Dash.load(params, newSection, {onSuccess:function(){
-			Section.prepare(newSection);
-
-		}, onError:function(){
-			log("Une erreur est survenue pendant le chargement de la dashboard");
-			$(document.getElementById("dashboard")).hide();
-			Section.template.show();
-			
-			if(gridIsVisible){
-				Grid.show();
-			}
-			
-			if(submenuIsVisible){
-				Submenu.show();
-			}
-			
-			Popup.info.show({
-				titleAndMsg:["", LANG.langData.errors.genericError],
-				onBack:Popup.hideAll,
-				buttons:[{
-						title:LANG.getStr("ok"),
-						onClick:Popup.hideAll
-				}]
-			});			
-		}});
-	}, newSection);
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Launches loading of the homepage
- * @param {String} newSection The name of the new section
- * @param {jQuery Object} $item The current focused element
- */
-
-Section.change.toHomepage = function(newSection, $item){
-	Section.hide(function(){
-
-		Section.prepare(newSection, null, null, {$item:$item});
-
-		// Affiche la home de cette section
-		if(User.itsKidsParentalControl()){
-			$(document.getElementById("homepage-section")).removeClass("reduce");
-			$(document.getElementById("error-message-homepage-section-container")).html("<span class='vertical-centering'>"+LANG.langData.errors.noContentBecauseOfParentalControl+"</span>").show();
-		}else{
-			Home.load(Config.versions[Config.version].domain+"mediaCatalog/layout/?byScheme=urn:peg:layoutBigMainPage" + getParentalControlFilter() + LANG.getLanguagePath(), {carrousel:"Hero", collections:["List5Items"], catalogue:"catalogue"}, newSection);
-		}
-
-	}, newSection);
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Launches loading of the homepage
- * @param {String} newSection The name of the new section
- * @param {jQuery Object} $item The current focused element
- */
-
-Section.change.toSearchScreen = function(newSection, $item){
-
-	Section.hide(function(){
-		Section.prepare(newSection, null, null, {$item:$item});
-	}, newSection);
 };
 
 /**
@@ -564,19 +178,10 @@ Section.prepare = function(name, callback_function, rubric, mixed_var){
  */
 
 Section.getTemplateID = function(name, rubric){
-	var ids = ["settings","login","submenu-1-grid","homepage-section","info-banner-section-name-and-arrow-container","dashboard","search-container"];
+	var ids = ["profils-list-container","apps-list-container"];
 	var sections = {};
-	sections[this.sections[0]] = ids[3];
-	sections[this.sections[1]] = rubric && rubric !== this.rubrics[this.sections[1]][1] ? ids[2] : ids[3];
-	sections[this.sections[2]] = rubric ? ids[2] : ids[3];
-	sections[this.sections[4]] = ids[6];
-	sections[this.sections[5]] = ids[0];
-	sections[this.sections[6]] = ids[1];
-	sections[this.sections[7]] = ids[5];
-	sections[this.sections[8]] = ids[5];
-	sections[this.sections[9]] = ids[4];
-	sections[this.sections[10]] = ids[2];
-	sections[this.sections[11]] =  rubric ? ids[2] : ids[3];
+	sections[this.sections[0]] = ids[0];
+	sections[this.sections[1]] = ids[1];
 	
 	return sections[name];
 };
@@ -622,7 +227,6 @@ Section.eraseSectionInfo = function(){
 	this.oldTemplate = [];
 	this.oldName = [];
 	this.oldRubric = [];
-	this.oldCollectionContainer = [];
 	Navigation.oldEl = [];
 	
 	if(!Popup.isOpen){
@@ -877,10 +481,6 @@ Section.init.playerScreen = function(){
     else {
         Navigation.setClassFocus($(document.getElementById("pause-play-video-player-button")));
     }
-	
-	if([Section.sections[7], Section.sections[8]].indexOf(Section.name) !== -1){
-		Section.oldCollectionContainer.push(Collections.$container);		
-	}
 };
 
 /**

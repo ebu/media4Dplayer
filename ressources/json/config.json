@@ -3,5 +3,6 @@
 	"appVersion":"0.10",
 	"playerTimeout":30,
     "infoBannerDelayToHide":5,
-	"jsonTimeout":30
+	"jsonTimeout":30,
+    "userCredentialsIsSavedFor":86400
 }

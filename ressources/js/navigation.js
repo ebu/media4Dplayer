@@ -579,49 +579,6 @@ Navigation.handleReturnButton = function(time){
 Navigation.goBack = function(time){
 	var itWasPlayerSection = Section.name === Section.sections[9];
 	this.goBack.resetData();
-	
-    if (itWasPlayerSection /* && time*/ ) {
-        if ([Section.sections[7], Section.sections[8]].indexOf(Section.name) !== -1) {
-            Navigation.blockNavigation = true;
-            // Dash.showLoader();
-            $(document.getElementById("loader-dashboard-over")).show();
-            Player.handleStoppingPlaying(time, function() {
-                Player.destroy();
-                Navigation.blockNavigation = false;
-                // Dash.hideLoader();
-                $(document.getElementById("loader-dashboard-over")).hide();
-                Section.show();
-                Dash.showResumeWatchAgainBtn();
-            });
-
-        } else {
-            Player.handleStoppingPlaying(time, function() {
-                Player.destroy();
-                Navigation.blockNavigation = false;
-                if (Main.firstLaunch) {
-                    Main.launchMenuGenerating();
-                } else {
-                    Section.show();
-                }
-            });
-        }
-    } else {
-        Section.show();
-    }
-	
-	var $focusInMenu = $(document.getElementById("menu")).find(".focus"),
-		$focusInSection = Section.template.find(".focus");
-	
-	if($focusInMenu.length && $focusInSection.length && $focusInMenu.is(":visible")){
-		$focusInSection.removeClass("focus").find(".focus2").removeClass("focus2");
-		Navigation.setClassFocus($focusInMenu);
-	}else if(!$focusInSection.length){
-		Navigation.setFocusToMainMenu();
-	}
-
-	if(Player.playlistTrailerActive){
-		Player.resetPlaylistTrailer();
-	}
 };
 
 /**
@@ -631,7 +588,7 @@ Navigation.goBack = function(time){
 
 Navigation.goBack.resetData = function(){
 	// log('Navigation.goBack.resetData');
-	if(Section.oldTemplate.length){
+	/*if(Section.oldTemplate.length){
 		Section.template = Section.oldTemplate[Section.oldTemplate.length-1];
 		Section.oldTemplate.pop();
 	}
@@ -652,19 +609,11 @@ Navigation.goBack.resetData = function(){
 	if(Section.oldRubric.length){
 		Section.rubric = Section.oldRubric[Section.oldRubric.length-1] || null;
 		Section.oldRubric.pop();
-	}
+	}*/
 
 	// MAJ du nom du container des collections
-	if(Section.oldCollectionContainer.length){
-		Collections.$container = Section.oldCollectionContainer[Section.oldCollectionContainer.length-1] || null;
-		Section.oldCollectionContainer.pop();
-	}
-	
-	// MAJ du nom de la section
-	if(Section.sectionsWithSubmenu.indexOf(Section.name) !== -1 && 
-		((Section.template[0].id !== "homepage-section" || Home.mode !== "full") && (Section.template[0].id !== "submenu-1-grid" || !Grid.fullMode))){
-		Submenu.show();
-	}else{
-		Submenu.hide();
+	if(Section.oldClass.length){
+		$("body").attr("class", Section.oldClass[Section.oldClass.length-1]);
+		Section.oldClass.pop();
 	}
 };

@@ -26,23 +26,16 @@ Main.onLoad = function () {
 	
 	$(document.getElementById("appVersion")).html("v"+Config.appVersion);
 	
-	/**********************************************************************
-	 *																	  *
-	 * 						GESTION DE LA NAVIGATION					  *
-	 *																	  *
-	 *********************************************************************/
-
-	$(document).on("keydown", Navigation.onKeyDown);
-	
-	/********************************************************************
-	 *																	*
-	 *						LANCEMENT DE L'APPLICATION					*
-	 *																	*
-	 ********************************************************************/
+	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
+	Settings.change.fontSize(valueMinSize);
 	
 	Main.firstLaunch = true;
 	API.getConfig(function() {
-	    Main.initApp();
+	    //Main.initApp();
+		Section.change(Section.sections[0]);
+		setTimeout(function(){
+			Main.hideSplashScreen();
+		}, 1000);
 	});
 };
 
@@ -54,7 +47,7 @@ Main.onLoad = function () {
  * @param {Boolean} dontLoadRubric Determines whether the first rubric must be loaded after menu generating
  */
 
-Main.initApp = function(lang, afterInitApp, dontLoadRubric){
+Main.initApp = function(afterInitApp){
 	
 	var _callback = function(){
 		
@@ -64,20 +57,12 @@ Main.initApp = function(lang, afterInitApp, dontLoadRubric){
 			codeLang:lang,
         	headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'},
 			onComplete: function(){*/
-	
-				// Pour la navigation
-				LANG.setDirection();
 				
 				// MAJ des textes et boutons
-				Main.updateStaticText();	
+				//Main.updateStaticText();	
 				
 				if(typeOf(afterInitApp) === "function"){
 					afterInitApp();
-				}
-				if(Main.firstLaunch){
-					Model.getPlaylistTrailer();
-				}else{
-					Main.launchMenuGenerating(dontLoadRubric);
 				}
 			/*}
 		});	*/	
@@ -101,60 +86,6 @@ Main.initApp = function(lang, afterInitApp, dontLoadRubric){
 		
 	}else{
 		_callback();
-	}
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the menu
- * @param {Boolean} dontLoadRubric Determines whether the first rubric must be loaded after menu generating
- */
-
-Main.launchMenuGenerating = function(dontLoadRubric){
-	
-	// Récupère les rubriques du menu
-
-	if(LANG.cache && LANG.cache["menu_"+LANG.codeLang] && LANG.cache["menu_"+LANG.codeLang].list){
-
-		// récupère l'element selectionné
-		var oldSelected = $(document.getElementById("rubrics-list-menu")).children('.selected').attr('id')
-		// Génère les rubriques du menu
-		Menu.rubrics.generate(LANG.cache["menu_"+LANG.codeLang].list);
-
-		// Simule un clique sur la 1ère rubrique du menu et lui donne le focus
-		var $rubToSelect = null;
-		var kidsSection = User.itsKidsParentalControl();
-		if(kidsSection){
-			$rubToSelect = $(document.getElementById("rubrics-list-menu")).children(".btn:visible:first").next();
-		}else{
-			$rubToSelect = $(document.getElementById("rubrics-list-menu")).children(".btn:visible:first");
-		}
-		if(!dontLoadRubric){
-			if(!Main.firstLaunch){
-				Navigation.setClassFocus($rubToSelect);
-			}else{
-				if(kidsSection){
-					Navigation.setClassFocus($rubToSelect);
-				}
-				Main.firstLaunch = false;
-			}
-			actionList[$rubToSelect[0].id].enter($rubToSelect);
-		}else{
-			$(document.getElementById(oldSelected)).addClass('selected');
-			Navigation.setClassFocus($rubToSelect);
-		}
-
-	// Network & WS error
-	}else{
-		Main.hideSplashScreen();
-		Popup.info.show({
-			titleAndMsg:["", LANG.getStr(LANG.langData.errors.networkError)],
-			onBack:Main.exit,
-			buttons:[{
-				title:LANG.getStr("exit"),
-				onClick:Main.exit
-			}]
-		});
 	}
 };
 
@@ -242,7 +173,7 @@ Main.getTitle = function(title, maxLength){
 
 Main.hideSplashScreen = function(){
 	if(Main.splashscreenIsVisible){
-		$(document.getElementById("splash-screen")).hide();
+		$("body").removeClass("splashscreen");
 		Main.splashscreenIsVisible = false;
 	}
 };
@@ -253,13 +184,8 @@ Main.hideSplashScreen = function(){
  */
 
 Main.exit = function(){
-	if(isTizen()){
-		window.tizen.application.getCurrentApplication().exit();
-		
-	}else{
-		window.open('', '_self', '');
-		window.close();
-	}
+	window.open('', '_self', '');
+	window.close();
 };
 
 /**
@@ -304,47 +230,6 @@ Main.displayAfterMasking.displayAfterFullscreen = function(eventName){
 		InfoBanner.show();
 	}
 };
-
-
-    /********************************************************************
-     *                                                                  *
-     *                     Gestion MultiTasking Tizen                   *
-     *                                                                  *
-     ********************************************************************/
-(function() {
-    if (isTizen()) {
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                // quit app
-                if (Player.isPlayPaused()) {
-                    Main.wasSuspend = true;
-                    Main.saveParamsPlayer = {
-                        media: Player.getCurrentMedia(),
-                        position: Player.getCurrentTime()
-                    };
-                    webapis.avplay.suspend();
-                }
-            } else {
-                // display app
-                if (Main.wasSuspend) {
-                    Main.wasSuspend = false;
-
-                    webapis.avplay.restore();
-                    if (Section.name === Section.sections[9] && Player.chosenDrm !== drms.NO_DRM) {
-                        log('With DRM');
-                        var media = Main.saveParamsPlayer.media;
-                        media.playbackTime = Math.round(Main.saveParamsPlayer.position/1000);
-                        Player.launchStreaming(media, "streaming");
-                    } else {
-                        log('Without DRM');
-                    }
-                }else{
-                    log('Nothing to do');
-                }
-            }
-        });
-    }
-})();
 
 // Add onload event to window
 window.onload = Main.onLoad;
