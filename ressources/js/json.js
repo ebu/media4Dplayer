@@ -1,7 +1,5 @@
 var json = {
-	cache:{
-		menu:null
-	}
+	cache:{}
 };
 
 /**

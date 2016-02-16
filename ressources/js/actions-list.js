@@ -2,23 +2,27 @@
 var actionList = {};
 
 $(document.getElementById("menu")).on("click", ".btn", function(){
-	var section, sections = Section.sections, classList = $(this).attr("class");
+	var section, sections = Section.sections, classList = $(this).attr("class"), mixed_var;
 	if(classList.indexOf(sections[0]) !== -1){
 		section = sections[0];
-		
+	
+	// La liste des apps
 	}else if(classList.indexOf(sections[1]) !== -1){
 		section = sections[1];
-		
+	
+	// Les playlists
 	}else if(classList.indexOf(sections[2]) !== -1){
 		section = sections[2];
-		
+		mixed_var = Apps.programs.appIndex;
+	
+	// Les settings
 	}else if(classList.indexOf(sections[4]) !== -1){
 		section = sections[4];
 	}
 	
 	if(section){
 		Section.oldClass = [];
-		Section.change(section, null, null, $(this));
+		Section.change(section, null, mixed_var, $(this));
 	}
 });
 
@@ -32,7 +36,7 @@ $(document.getElementById("apps-list")).on("click", ".btn", function(){
 
 $(document.getElementById("favorites-list")).on("click", ".item-playlist", function(){
 	Section.oldClass.push($("body").attr("class"));
-	Section.change(Section.sections[3]);
+	Section.change(Section.sections[3], null, $(this).data("data"));
 });
 
 $(document.getElementById("favorites-list")).on("click", ".item-playlist .delete, .item-playlist .play", function(){

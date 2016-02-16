@@ -43,7 +43,7 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		}else if(newSection === this.sections[3]){
 			this.change.toEPG(newSection, mixed_var);
 		
-		// Fiche EPG
+		// Settings
 		}else if(newSection === this.sections[4]){
 			this.change.toSettings(newSection, rubric, mixed_var);
 		}
@@ -59,6 +59,7 @@ Section.change = function(newSection, rubric, mixed_var, $item){
  */
 
 Section.change.toProfils = function(){
+	json.cache = {};
 	$("body").attr("class","profils-list");
 };
 
@@ -71,7 +72,9 @@ Section.change.toProfils = function(){
  */
 
 Section.change.toAppsList = function(){
-	$("body").attr("class","apps-list");
+	Apps.load(function(){
+		$("body").attr("class","apps-list");
+	});
 };
 
 /**
@@ -82,8 +85,10 @@ Section.change.toAppsList = function(){
  * @param {jQuery Object} $item The current focused element
  */
 
-Section.change.toAppPlaylist = function(newSection, mixed_var){
-	$("body").attr("class","app-playlists");
+Section.change.toAppPlaylist = function(newSection, index){
+	Apps.programs.load(index, function(){
+		$("body").attr("class","app-playlists");
+	});
 };
 
 /**
@@ -94,8 +99,10 @@ Section.change.toAppPlaylist = function(newSection, mixed_var){
  * @param {jQuery Object} $item The current focused element
  */
 
-Section.change.toEPG = function(newSection, mixed_var){
-	$("body").attr("class","epg-fiche");
+Section.change.toEPG = function(newSection, data){
+	Dash.load(data, function(){
+		$("body").attr("class","epg-fiche");
+	});	
 };
 
 /**

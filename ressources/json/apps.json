@@ -1,0 +1,19 @@
+{
+	"list":[{
+		"title":"baddp",
+		"picture":"ressources/img/temp/home/baddp.png",
+		"userProgramsListUrl":""
+	},{
+		"title":"pluzz",
+		"picture":"ressources/img/temp/home/pluzz.png",
+		"userProgramsListUrl":"ressources/json/programs_pluzz.json"
+	},{
+		"title":"lesitetv",
+		"picture":"ressources/img/temp/home/lesitetv.png",
+		"userProgramsListUrl":""
+	},{
+		"title":"Médiathèque",
+		"picture":"ressources/img/temp/home/media.png",
+		"userProgramsListUrl":""
+	}]
+}
