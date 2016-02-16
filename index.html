@@ -70,23 +70,7 @@
 					</div>
 					<div id="related-content-container">
 						<div class="title">Vidéos sur le même thème</div>
-						<div id="related-content">
-							<div class="item">
-								<img src="ressources/img/dashboard/icone_pt_video_soufle.png" alt="Lire la vidéo Le Monde de Jamy : A couper le souffle."/>
-								<div class="title">Le Monde de Jamy : A couper le souffle.</div>
-								<div class="subtitle">Des forêts et des hommes</div>									
-							</div>
-							<div class="item">
-								<img src="ressources/img/dashboard/icone_pt_video_koala.png" alt="Lire la vidéo Le repas des koalas"/>
-								<div class="title">Le repas des koalas</div>
-								<div class="subtitle">Des forêts et des hommes</div>									
-							</div>
-							<div class="item">
-								<img src="ressources/img/dashboard/icone_pt_video_sangsue.png" alt="Lire la vidéo Attention sangsue !"/>
-								<div class="title">Attention sangsue !</div>
-								<div class="subtitle">Des forêts et des hommes</div>									
-							</div>
-						</div>
+						<div id="related-content"></div>
 					</div>
 				</div>
 				<div id="synopsis-and-social-icons-container">
@@ -101,7 +85,7 @@
 						<div class="compatibility audio" title="Contient des pistes audios"></div>
 						<div class="compatibility subtitle" title="Contient des sous-titres"></div>
 						<div class="compatibility ad" title="Contient des pistes pour l'audio description"></div>
-						<div class="compatibility lsf" title="Contient des videos pour le language des signes"></div>
+						<div class="compatibility ls" title="Contient des videos pour le language des signes"></div>
 					</div>
 					<div class="synopsis-container">
 						<div class="label">Résumé</div>
@@ -140,7 +124,7 @@
 						<div id="option-font-family" class="option-container">
 							<div class="label">Choisir sa police</div>
 							<div class="option-font-family">
-								<div tabindex="22" class="font-family Arial selected" id="fontArial">Arial</div>
+								<div tabindex="22" class="font-family Arial" id="fontArial">Arial</div>
 								<div tabindex="23" class="font-family OpenDyslexic" id="fontOpenDyslexic">OpenDyslexic</div>
 								<div tabindex="24" class="font-family Andika" id="fontAndika">Andika</div>
 								<div tabindex="25" class="font-family Helvetica" id="fontHelvetica">Helvetica</div>
@@ -153,14 +137,14 @@
 									<div class="label">Couleur d'arrière plan</div>
 									<div class="option-background-color option-color">
 										<div title="Couleur blanche" tabindex="31" class="color white"></div>
-										<div title="Couleur noire" tabindex="32" class="color black selected"></div>
+										<div title="Couleur noire" tabindex="32" class="color black"></div>
 									</div>									
 								</div>
 								<div id="option-background-opacity" class="option-container">
 									<div class="label">Régler l'opacité de son arrière plan</div>
 									<div class="option-background-opacity option-slider">
 										<div class="transparent-opacity" title="Arrière plan transparent"></div><div class="slider-horizontal opacity">
-											<input id="opacitySlide" min="0" max="1" value="1" step="0.25" onchange="Settings.change.subtitlesOpacity(this.value)" type="range"/>
+											<input id="opacitySlide" min="0" max="1" value="0" step="0.25" onchange="Settings.change.subtitlesOpacity(this.value)" type="range"/>
 										</div><div class="darkest-opacity" title="Arrière plan plus sombre"></div>							
 									</div>
 								</div>
@@ -170,7 +154,7 @@
 									<div class="label">Couleur de texte</div>
 									<div class="option-text-color option-color">
 										<div title="Couleur transparent" class="color transparent"></div>
-										<div title="Couleur blanche" class="color white selected"></div>
+										<div title="Couleur blanche" class="color white"></div>
 										<div title="Couleur jaune" class="color yellow"></div>
 										<div title="Couleur bleu" class="color blue"></div>
 									</div>					

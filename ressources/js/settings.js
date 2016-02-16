@@ -3,7 +3,7 @@ var Settings = {
 	minOpacity:0,
 	minSubtitlesSize:16,
 	subtitlesDefaultPosition:71,
-	defaultLSPIPCoordonates: {x:40,y:45,w:22.51131221719457,h:40.04024144869215},
+	defaultLSPIPCoordonates: {x:75,y:4.5,w:22.51131221719457,h:40.04024144869215},
 	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Lexia"],
 	init:{},
 	change:{}
@@ -233,7 +233,7 @@ Settings.change.subtitlesColor = function(color){
 
 Settings.change.subtitlesOpacity = function(newValue){
 	setCookie("subtitleBackgroundOpacity", newValue);
-	$(".ui-subtitles .pip-text").removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1").addClass("opacity_"+newValue.replace(".",""));
+	$(".ui-subtitles .pip-text").removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1").addClass("opacity_"+newValue.toString().replace(".",""));
 };
 
 /**
