@@ -1254,14 +1254,7 @@ h1 {
 }
 
 .pip-video{
-    /*width: 320px;
-    height: 180px;
-    top: 0;
-    left: 0;
-    border-color: #333333;
-    border-width: 1px;
-	color: #fff;
-	z-index: 1;*/
+    position: relative;
 	box-shadow: 0 0 5px #000;
 	background-color: rgb(77, 77, 77);
 }
@@ -1304,18 +1297,15 @@ h1 {
 }
 
 .ui-icon-gripsmall-center {
-    background: url("../img/lsf/lsf_move.png") no-repeat;
-    background-size:contain;
-    width: 50px;
-    height: 50px;
+    background: url("../img/lsf/lsf_move.png") no-repeat center;
+    width: 100%;
+    height: 100%;
 	position: absolute;
+	top: 0;
 }
 
 .ui-subtitles .ui-icon-gripsmall-center{
-    width: 15px;
-    height: 15px;
-	top: 39%;
-	left: 50%;
+    background-size:2% auto;
 }
 
 .ui-icon-gripsmall-diagonal-sw { 
@@ -1376,8 +1366,7 @@ h1 {
 
 /* Settings - LS */
 .ui-ls{
-	width: 902px;
-    height: 507px;
+    height: 497px;
 }
 
 .pip-limit {

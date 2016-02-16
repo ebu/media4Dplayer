@@ -3,6 +3,7 @@ var Settings = {
 	minOpacity:0,
 	minSubtitlesSize:16,
 	subtitlesDefaultPosition:71,
+	defaultLSPIPCoordonates: {x:40,y:45,w:22.51131221719457,h:40.04024144869215},
 	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Lexia"],
 	init:{},
 	change:{}
@@ -97,7 +98,7 @@ Settings.init.subtitles = function(){
 	$(document.getElementById("subtitlesFontSlide")).attr("value", valueMinSize);
 	Settings.change.subtitlesFontSize(valueMinSize);
 	
-	/* LS */
+	/* PIP SUBTITLES */
 	var pipTopPercent = (getCookie("LSFPipSubtitles_position_y") != null && !isNaN(getCookie("LSFPipSubtitles_position_y"))) ? getCookie("LSFPipSubtitles_position_y") : Settings.subtitlesDefaultPosition;
 	var $pipVideo = $(".ui-subtitles > .pip-video").css("top", pipTopPercent+"%");
 	$pipVideo.draggable({ 	
@@ -121,9 +122,45 @@ Settings.init.subtitles = function(){
  */
 
 Settings.init.ls = function(){
-	/*var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
-	$(document.getElementById("fontSlide")).attr("value", valueMinSize);
-	Settings.change.fontSize(valueMinSize);*/
+	var defaultCoordonates = Settings.defaultLSPIPCoordonates;
+	var pipLeftPercent = (getCookie("LSFPip_position_x") != null && !isNaN(getCookie("LSFPip_position_x"))) ? getCookie("LSFPip_position_x") : defaultCoordonates.x;
+	var pipTopPercent = (getCookie("LSFPip_position_y") != null && !isNaN(getCookie("LSFPip_position_y"))) ? getCookie("LSFPip_position_y") : defaultCoordonates.y;
+
+	var pipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : defaultCoordonates.w;
+	var pipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : defaultCoordonates.h;	
+	
+	//var $pipVideo = $(".ui-ls .pip-video").attr("style",'left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%');
+	var $pipVideo = $(".ui-ls .pip-video").attr("style",'left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%');
+	$pipVideo.draggable({ 	
+		containment: ".ui-ls",
+		scroll:false,
+		handle:".ui-icon-gripsmall-center",
+		stop: function() {
+			Settings.saveLSPIPPosition($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
+		}
+	}).resizable( {
+		containment: "parent",
+		handles: 'all',
+		minWidth: 100,
+      	aspectRatio: true,
+		resize: function() {
+			log("resize");
+			//mySettingsScreen.updateIconsPip();
+		},
+		stop: function() {
+			log("Resize terminé !!!");
+			Settings.saveLSPIPSize($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
+			Settings.saveLSPIPPosition($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
+		},
+		create: function(){
+			log("create event");
+		}
+	});
+	
+	$('.ui-ls .ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
+	$('.ui-ls .ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne');
+	$('.ui-ls .ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw');
+	$('.ui-ls .ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
 };
 
 /**
@@ -219,4 +256,29 @@ Settings.saveSubtitlesPIPPosition = function($container){
 	log("Pourcentage sans les marges : "+newTopPercent);
 
 	setCookie("LSFPipSubtitles_position_y", newTopPercent<0?0:newTopPercent);
+};
+
+Settings.saveLSPIPPosition = function($container, $pip){
+	
+	var newLeftPercent = ($pip.position().left / $container.width()) * 100;
+	var newTopPercent = ($pip.position().top / $container.height()) * 100;
+
+	//log("Pourcentage sans les marges = left:"+ newLeftPercent+ ", top:" + newTopPercent);
+
+	setCookie("LSFPip_position_x", newLeftPercent<0?0:newLeftPercent);
+	setCookie("LSFPip_position_y", newTopPercent<0?0:newTopPercent);		
+};
+
+Settings.saveLSPIPSize = function($container, $pip){
+	var pipWidth = $pip.width();
+	var pipHeight = $pip.height();
+	var containerWidth = $container.width();
+	var containerHeight = $container.height();
+
+	var newWidthPercent = (pipWidth/containerWidth)*100;
+	var newHeightPercent = (pipHeight/containerHeight)*100;
+
+	//log("saveLSFSize :"+newWidthPercent+"x"+newHeightPercent+" dans un container de "+containerWidth+"x"+containerHeight);
+	setCookie("LSFPip_size_width", newWidthPercent);
+	setCookie("LSFPip_size_height", newHeightPercent);	
 };
