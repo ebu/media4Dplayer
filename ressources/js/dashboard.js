@@ -54,7 +54,6 @@ Dash.generate = function(){
 	$(document.getElementById("epg-fiche-container")).children("h1").html(mediaData.title);
     $(document.getElementById("media-thumb")).attr("src", mediaData.picture);
 	
-	//$(document.getElementById("video-compatibilities-list")).children(".compatibility").hide();
     $(document.getElementById("synopsis")).html(mediaData.synopsis);
 	$(document.getElementById("synopsis-and-social-icons-container")).children("h2").html(mediaData.subtitle).end().children(".program-date").html(mediaData.detail);
 	
@@ -86,4 +85,17 @@ Dash.generate = function(){
 	if(mediaData.hasAudio){
 		$ctn.children(".audio").show();
 	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Inserts the media infos in the dashboard
+ */
+
+Dash.generateFullscreenSynopsis = function(){
+	
+	var mediaData = Dash.data;
+	$(document.getElementById("full-synopsis")).children("h2").html(mediaData.subtitle).end().children(".program-date").html(mediaData.detail);
+	
+    $(document.getElementById("synopsis2")).html(mediaData.synopsis);
 };

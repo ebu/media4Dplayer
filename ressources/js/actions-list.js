@@ -1,6 +1,10 @@
 
 var actionList = {};
-
+	
+																	/* ******************/
+																	/*	 MODE NORMAL	*/
+																	/* ******************/
+	
 $(document.getElementById("menu")).on("click", ".btn", function(){
 	var section, sections = Section.sections, classList = $(this).attr("class"), mixed_var;
 	if(classList.indexOf(sections[0]) !== -1){
@@ -32,29 +36,6 @@ $(document.getElementById("profils-list")).on("click", ".btn", function(){
 
 $(document.getElementById("apps-list")).on("click", ".app", function(){
 	Section.change(Section.sections[2], null, $(this).index());
-});
-
-$(document.getElementById("apps-list-sm")).on("click", ".app", function(){
-	Section.oldClass.push($("body").attr("class"));
-	Section.change(Section.sections[5], null, $(this).index());
-});
-
-$(document.getElementById("app-options")).on("click", ".menu-item", function(){
-	var indexes = {"my-videos-btn":6,"search-btn":7,"settings-btn":8,"profil-btn":9};
-	Section.change(Section.sections[indexes[this.id]]);
-});
-
-$(document.getElementById("my-videos-options")).on("click", ".menu-item", function(){
-	var rubric = Section.rubrics[Section.sections[10]][$(this).index()];
-	if(rubric){
-		Section.change(Section.sections[10], rubric);
-	}	
-});
-
-$(document.getElementById("playlist")).on("click", ".item", function(){
-	Section.oldClass.push($("body").attr("class"));
-	Section.change(Section.sections[11], null, $(this).data("data"));
-	//Section.change(Section.sections[this.id === "play-video-btn" ? "player" : this.id === "see-fiche-btn" ? "dashboard-sm" : this.id === "remove-favorite-btn" ? "remove-fav" : null], null, $(this).data("data"));
 });
 
 $(document.getElementById("favorites-list")).on("click", ".item-playlist", function(){
@@ -101,4 +82,43 @@ $(".option-background-color").on("click", ".color", function(){
 
 $(".option-text-color").on("click", ".color", function(){
 	Settings.change.subtitlesColor($(this).attr("class").replace("color ", ""));
+});
+	
+																	/* **************/
+																	/*	 MODE SM	*/
+																	/* **************/
+	
+$(document.getElementById("apps-list-sm")).on("click", ".app", function(){
+	Section.oldClass.push($("body").attr("class"));
+	Section.change(Section.sections[5], null, $(this).index());
+});
+
+$(document.getElementById("app-options")).on("click", ".menu-item", function(){
+	var indexes = {"my-videos-btn":6,"search-btn":7,"settings-btn":8,"profil-btn":9};
+	Section.change(Section.sections[indexes[this.id]]);
+});
+
+$(document.getElementById("my-videos-options")).on("click", ".menu-item", function(){
+	var rubric = Section.rubrics[Section.sections[10]][$(this).index()];
+	if(rubric){
+		Section.change(Section.sections[10], rubric);
+	}	
+});
+
+$(document.getElementById("playlist")).on("click", ".item", function(){
+	Section.change(Section.sections[11], null, {type:Apps.programs.playlistType, data:$(this).data("data")});
+});
+
+$(document.getElementById("options-favorites")).on("click", ".menu-item", function(){
+	if(Dash.data){
+		var indexes = {"play-video-btn":12,"see-fiche-btn":13,"remove-favorite-btn":14};
+		Section.change(Section.sections[indexes[this.id]]);		
+	}
+});
+
+$(document.getElementById("program-options")).on("click", ".menu-item", function(){
+	if(Dash.data){
+		var indexes = {"play-video-btn-2":12,"add-remove-to-favorites":14,"see-full-synopsis-btn":15,"see-related-content-btn":10};
+		Section.change(Section.sections[indexes[this.id]]);		
+	}
 });

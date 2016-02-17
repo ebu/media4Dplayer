@@ -3,9 +3,11 @@ var Apps = {
 	programs:{
 		appIndex:null,
 		list:{},
+		
 		limitByPage:4,
 		limitByPageSM:8,
-		start:0
+		start:0,
+		playlistType:null
 	}
 };
 
@@ -57,6 +59,7 @@ Apps.generates = function(){
 Apps.programs.reset = function(){
 	this.list = {};
 	this.appIndex = null;
+	this.playlistType = null;
 	
 	if(Main.simplifiedMode){
 		this.start = 0;
@@ -89,6 +92,7 @@ Apps.programs.load.callback = function(data, jqXHR, onSuccess, appIndex, rubric)
 		
 		Apps.programs.appIndex = appIndex;
 		Apps.programs.list = data;
+		Apps.programs.playlistType = rubric;
 		
 		if(Main.simplifiedMode){
 			

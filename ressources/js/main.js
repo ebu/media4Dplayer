@@ -242,5 +242,9 @@ Main.switchToMode = function(){
 	Section.change(Section.sections[1]);
 };
 
+Main.goToHome = function(){
+	Section.change(Section.sections[1]);
+};
+
 // Add onload event to window
 window.onload = Main.onLoad;

@@ -463,6 +463,10 @@ h1 {
 	cursor: pointer;
 }
 
+.sm .back-button:hover{
+	font-weight: bold;
+}
+
 .playlist-sm .buttons-container .prev{
 	background-image: url("../img/fleche_precedent.png");
 	left: 681px;
