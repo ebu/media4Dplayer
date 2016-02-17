@@ -1,6 +1,7 @@
 var isHTML5 = isHTML5 || false;
 var Main = {
-	splashscreenIsVisible:true
+	splashscreenIsVisible:true,
+	simplifiedMode:false
 };
 
 /**
@@ -25,6 +26,8 @@ Main.onLoad = function () {
 	log("onLoad() : start;");
 	
 	$(document.getElementById("appVersion")).html("v"+Config.appVersion);
+	
+	Main.simplifiedMode = statusHtmlStorage("simplifiedMode") ? localStorage.getItem("simplifiedMode") : false;
 	
 	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
 	Settings.change.fontSize(valueMinSize);
@@ -229,6 +232,14 @@ Main.displayAfterMasking.displayAfterFullscreen = function(eventName){
 		InfoBanner.launchMaskingAfterDelay();
 		InfoBanner.show();
 	}
+};
+
+Main.switchToMode = function(){
+	this.simplifiedMode = this.simplifiedMode ? false : true;
+	
+	setHtmlStorage("simplifiedMode", this.simplifiedMode, 1000 * 60 * 60 * 24 * 365);
+	
+	Section.change(Section.sections[1]);
 };
 
 // Add onload event to window

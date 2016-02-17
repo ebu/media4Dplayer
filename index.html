@@ -41,6 +41,7 @@
 				</ul>
 			</section>
 			<section id="apps-list-container">
+				<a id="switch-to-simplified-mode-btn" class="switch-btn btn" title="Cliquez içi pour basculer en mode rapide et accessible" onclick="Main.switchToMode();" tabindex="1">Basculer en mode rapide et accessible</a>
 				<ul id="apps-list" class="list"></ul>
 			</section>
 			<section id="app-playlists" class="section-with-topbar">
@@ -201,8 +202,9 @@
 		</div>
 		<div id="simplified-mode-container">
 			<section id="apps-list-container-sm" class="manual-centering">
+				<a id="switch-to-standard-mode-btn" class="switch-btn btn" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="1">Basculer en mode normal</a>
 				<h1>Accueil</h1>
-				<ul>
+				<ul id="apps-list-sm">
 					<li class="app menu-item">
 						<a title="pluzz">Pluzz</a>
 					</li>

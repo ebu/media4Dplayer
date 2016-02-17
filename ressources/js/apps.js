@@ -8,7 +8,7 @@ var Apps = {
 
 Apps.reset = function(){
 	this.list = [];
-	$(document.getElementById("apps-list")).empty();
+	$(document.getElementById(Main.simplifiedMode ? "apps-list-sm" : "apps-list")).empty();
 };
 
 Apps.load = function(onSuccess){
@@ -41,10 +41,14 @@ Apps.generates = function(){
 	var list = this.list, i, l = list.length, app;
 	for(i=0;i<l;i++){
 		app = list[i];
-		html += '<li tabindex="'+(i+1)+'" class="app icon btn"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
+		if(Main.simplifiedMode){
+			html += '<li class="app menu-item"><a title="'+app.title+'">'+app.title+'</a></li>';
+		}else{
+			html += '<li tabindex="'+(i+2)+'" class="app icon btn"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
+		}
 	}
 	
-	$(document.getElementById("apps-list")).html(html);
+	$(document.getElementById(Main.simplifiedMode ? "apps-list-sm" : "apps-list")).html(html);
 };
 
 Apps.programs.reset = function(){

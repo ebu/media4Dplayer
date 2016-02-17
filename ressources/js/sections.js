@@ -60,7 +60,7 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 
 Section.change.toProfils = function(){
 	json.cache = {};
-	$("body").attr("class","profils-list");
+	Section.addClass("profils-list");
 };
 
 /**
@@ -73,7 +73,7 @@ Section.change.toProfils = function(){
 
 Section.change.toAppsList = function(){
 	Apps.load(function(){
-		$("body").attr("class","apps-list");
+		Section.addClass("apps-list");
 	});
 };
 
@@ -87,7 +87,7 @@ Section.change.toAppsList = function(){
 
 Section.change.toAppPlaylist = function(newSection, index){
 	Apps.programs.load(index, function(){
-		$("body").attr("class","app-playlists");
+		Section.addClass("app-playlists");
 	});
 };
 
@@ -101,7 +101,7 @@ Section.change.toAppPlaylist = function(newSection, index){
 
 Section.change.toEPG = function(newSection, data){
 	Dash.load(data, function(){
-		$("body").attr("class","epg-fiche");
+		Section.addClass("epg-fiche");
 	});	
 };
 
@@ -115,7 +115,7 @@ Section.change.toEPG = function(newSection, data){
 
 Section.change.toSettings = function(newSection, rubric){
 	Settings.init(newSection, rubric);
-	$("body").attr("class","settings");
+	Section.addClass("settings");
 };
 
 /**
@@ -136,6 +136,11 @@ Section.change.toPlayer = function(newSection, rubric, params){
 			// TODO: affichage d'une popup d'erreur
 		}}, rubric);
 	}
+};
+
+Section.addClass = function(className){
+	var cn = Main.simplifiedMode ? "sm " + className : className;
+	$("body").attr("class", cn);
 };
 
 /**
