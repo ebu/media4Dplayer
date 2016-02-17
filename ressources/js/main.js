@@ -27,7 +27,7 @@ Main.onLoad = function () {
 	
 	$(document.getElementById("appVersion")).html("v"+Config.appVersion);
 	
-	Main.simplifiedMode = statusHtmlStorage("simplifiedMode") ? localStorage.getItem("simplifiedMode") : false;
+	Main.simplifiedMode = statusHtmlStorage("simplifiedMode") && localStorage.getItem("simplifiedMode") === "true" ? true : false;
 	
 	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
 	Settings.change.fontSize(valueMinSize);

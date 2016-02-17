@@ -83,6 +83,10 @@ $(".option-background-color").on("click", ".color", function(){
 $(".option-text-color").on("click", ".color", function(){
 	Settings.change.subtitlesColor($(this).attr("class").replace("color ", ""));
 });
+
+$(document.getElementById("synopsis-container")).on("click", function(){
+	Section.change(Section.sections[15]);
+});
 	
 																	/* **************/
 																	/*	 MODE SM	*/
@@ -119,6 +123,6 @@ $(document.getElementById("options-favorites")).on("click", ".menu-item", functi
 $(document.getElementById("program-options")).on("click", ".menu-item", function(){
 	if(Dash.data){
 		var indexes = {"play-video-btn-2":12,"add-remove-to-favorites":14,"see-full-synopsis-btn":15,"see-related-content-btn":10};
-		Section.change(Section.sections[indexes[this.id]]);		
+		Section.change(Section.sections[indexes[this.id]]);
 	}
 });

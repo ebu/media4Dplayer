@@ -64,7 +64,7 @@ Dash.generate = function(){
 		var $item, i, l = list.length, $ctn = $(document.getElementById("related-content")), item;
 		for(i=0;i<l;i++){
 			item = list[i];
-			$item = $('<div class="item"><img src="'+item.picture+'" alt="Lire la vidéo '+item.title+'"/><div class="title">'+item.title+'</div><div class="subtitle">'+item.subtitle+'</div></div>').appendTo($ctn);
+			$item = $('<div class="item btn"><img src="'+item.picture+'" alt="Lire la vidéo '+item.title+'"/><div class="title">'+item.title+'</div><div class="subtitle">'+item.subtitle+'</div></div>').appendTo($ctn);
 		}
 	}
 	
