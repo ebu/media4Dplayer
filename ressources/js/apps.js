@@ -2,7 +2,10 @@ var Apps = {
 	list:[],
 	programs:{
 		appIndex:null,
-		list:{}
+		list:{},
+		limitByPage:4,
+		limitByPageSM:8,
+		start:0
 	}
 };
 
@@ -54,20 +57,29 @@ Apps.generates = function(){
 Apps.programs.reset = function(){
 	this.list = {};
 	this.appIndex = null;
-	$(document.getElementById("favorites-container")).children(".playlist-list").empty();
+	
+	if(Main.simplifiedMode){
+		this.start = 0;
+		$(document.getElementById("playlist")).empty();
+		$(document.getElementById("previous-page-playlist")).hide();
+		$(document.getElementById("next-page-playlist")).hide();
+		$(document.getElementById("playlist-title")).empty();
+	}else{
+		$(document.getElementById("favorites-container")).children(".playlist-list").empty();
+	}	
 };
 
-Apps.programs.load = function(appIndex, onSuccess){
+Apps.programs.load = function(appIndex, onSuccess, rubric){
 	this.reset();
 	var app = Apps.list[appIndex];
 	if(typeOf(app) === "object" && app.userProgramsListUrl){
 		API.getAppPlaylistsOfUser(app.userProgramsListUrl, appIndex, function(data, jqXHR){
-			Apps.programs.load.callback(data, jqXHR, onSuccess, appIndex);
+			Apps.programs.load.callback(data, jqXHR, onSuccess, appIndex, rubric);
 		});
 	}
 };
 
-Apps.programs.load.callback = function(data, jqXHR, onSuccess, appIndex){
+Apps.programs.load.callback = function(data, jqXHR, onSuccess, appIndex, rubric){
 	if(typeOf(data) === "object" && !isEmpty(data)){
 		
 		if(!json.cache["programs"]){
@@ -78,7 +90,22 @@ Apps.programs.load.callback = function(data, jqXHR, onSuccess, appIndex){
 		Apps.programs.appIndex = appIndex;
 		Apps.programs.list = data;
 		
-		Apps.programs.generates();
+		if(Main.simplifiedMode){
+			
+			var rubrics = Section.rubrics[Section.sections[10]];
+			var list = data[rubric === rubrics[0] ? "favorites" : rubric === rubrics[1] ? "signets" : "history"];
+			if(typeOf(list) === "array" && list.length){	
+			
+				$(document.getElementById("playlist-title")).html(rubric === rubrics[0] ? "Mes vidéos favorites" : rubric === rubrics[1] ? "Mes signets" : "Mon historique");
+
+				Apps.programs.generatesForSM(rubric);					
+			}else{
+				// TODO : afficher une message d'erreur
+				return;
+			}
+		}else{
+			Apps.programs.generates();
+		}
 		
 		if(typeOf(onSuccess) === "function"){
 			onSuccess();
@@ -91,8 +118,9 @@ Apps.programs.generates = function(){
 	/* FAVORITES */
 	var $item, $container = $(document.getElementById("favorites-list"));
 	var tabindex = 6;
+	var limit = this.limitByPage;
 	var list = this.list.favorites, i, l = list.length, program;
-	for(i=0;i<l;i++){
+	for(i=0;i<l&&i<limit;i++){
 		program = list[i];
 		$item = $('<div tabindex="'+tabindex+'" class="item-playlist btn">'+
 							'<div tabindex="'+(tabindex+1)+'" class="delete">'+
@@ -113,5 +141,21 @@ Apps.programs.generates = function(){
 					
 		$item.data("data", program);
 		tabindex+=3;
+	}
+};
+
+Apps.programs.generatesForSM = function(rubric){
+	
+	var $item, $container = $(document.getElementById("playlist"));
+	var tabindex = 5;
+	var limit = this.limitByPageSM;
+	var rubrics = Section.rubrics[Section.sections[10]];
+	var list = this.list[rubric === rubrics[0] ? "favorites" : rubric === rubrics[1] ? "signets" : "history"], i, l = list.length, program;
+	for(i=this.start;i<l&&i<limit;i++){
+		program = list[i];
+		$item = $('<li tabindex="'+tabindex+'" class="item btn"><div class="title">'+program.title+'</div><div class="subtitle">'+program.subtitle+'</div><div class="type">'+program.detail+'</div></li>').appendTo($container);
+					
+		$item.data("data", program);
+		tabindex++;
 	}
 };

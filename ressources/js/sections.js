@@ -2,10 +2,26 @@ var Section = {
 	"dontSaveThisSection":false,
 	"name": null,
 	"className":"",
-	"sections": ["profils","apps-list","app-playlists","epg-fiche","settings"],
+	"sections": [
+		"profils",					// 0
+		"apps-list",				// 1
+		"app-playlists",			// 2
+		"epg-fiche",				// 3
+		"settings",					// 4
+		
+		"app-options",				// 5
+		"my-videos-options",		// 6
+		"search-btn",				// 7
+		"settings-btn",				// 8
+		"profil-btn",				// 9
+		"playlist",
+		"program-options",
+		"player",
+		"remove-fav"],
 
 	"rubrics": {
-		"settings":["interface","audio","subtitles","ls"]
+		"settings":["interface","audio","subtitles","ls"],
+		"playlist":["favorites","signets","history"]
 	},
 	"rubric": null,
 	"template": "",
@@ -37,7 +53,7 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		
 		// Les playlist
 		}else if(newSection === this.sections[2]){
-			this.change.toAppPlaylist(newSection, mixed_var);
+			this.change.toAppPlaylist(newSection, rubric, mixed_var);
 		
 		// Fiche EPG
 		}else if(newSection === this.sections[3]){
@@ -46,6 +62,22 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		// Settings
 		}else if(newSection === this.sections[4]){
 			this.change.toSettings(newSection, rubric, mixed_var);
+		
+		// SM - Les options d'une appli : Mes vidéos, recherche, réglages et mon profil
+		}else if(newSection === this.sections[5]){
+			this.change.toAppOptions(newSection, mixed_var);
+		
+		// SM - Les options de "Mes vidéos" : Mes vidéos favorites, mes signets, mon historique
+		}else if(newSection === this.sections[6]){
+			this.change.toMyVideosOptions(newSection);
+		
+		// SM - Mes vidéos favorites / signets / historiques : la liste des programmes
+		}else if(newSection === this.sections[10]){
+			this.change.toAppPlaylist(newSection, rubric, Apps.indexAppInSM);
+		
+		// SM - Les options d'un programme : accéder à la vidéo, mettre en favoris, lire le résumé, les vidéos sur le même thème, partager sur les réseaux
+		}else if(newSection === this.sections[11]){
+			this.change.toProgramOptions(newSection, mixed_var);
 		}
 	}
 };
@@ -85,10 +117,11 @@ Section.change.toAppsList = function(){
  * @param {jQuery Object} $item The current focused element
  */
 
-Section.change.toAppPlaylist = function(newSection, index){
+Section.change.toAppPlaylist = function(newSection, rubric, index){
 	Apps.programs.load(index, function(){
+		Section.oldClass.push($("body").attr("class"));
 		Section.addClass("app-playlists");
-	});
+	}, rubric);
 };
 
 /**
@@ -136,6 +169,53 @@ Section.change.toPlayer = function(newSection, rubric, params){
 			// TODO: affichage d'une popup d'erreur
 		}}, rubric);
 	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toAppOptions = function(newSection, index){
+	Apps.indexAppInSM = index;
+	var title = Apps.list[index].title;
+	$(document.getElementById("app-title")).html(title);
+	$(document.getElementById("my-videos-btn")).children().html("Mes vidéos " + title);
+	Section.addClass("app-options");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toMyVideosOptions = function(newSection, $item){
+	Section.oldClass.push($("body").attr("class"));
+	
+	var title = Apps.list[Apps.indexAppInSM].title;
+	$(document.getElementById("my-videos-options-container")).children("h1").html("Mes vidéos " + title);
+	Section.addClass("my-videos-options");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toProgramOptions = function(newSection, data){
+	Dash.data = data;
+	$(document.getElementById("epg-fiche-container-sm")).children("h1").html(data.title);
+	$(document.getElementById("epg-fiche-container-sm")).children("h2").html(data.subtitle);
+	Section.addClass("epg-fiche");
 };
 
 Section.addClass = function(className){

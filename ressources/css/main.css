@@ -116,7 +116,7 @@ body > div{
 	list-style-type: none;
 }
 
-.menu-item:first-letter{
+.menu-item:first-letter, h1:first-letter, h2:first-letter{
 	text-transform: uppercase;
 }
 
@@ -165,12 +165,21 @@ a.switch-btn{
 	cursor: pointer;
 }
 
+.btn:hover{
+	outline: #065f92 solid 2px;
+	cursor: pointer;
+}
+
+#simplified-mode-container .btn:hover{
+	outline: 0 none;
+}
+
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
 body.profils-list #profils-list-container, body:not(.sm).apps-list #apps-list-container, body.in-construction #in-construction{
 	display: table;
 }
 
-body.splashscreen #splashscreen, body.sm.apps-list #apps-list-container-sm, body.sm.app-options #app-options-container, body.app-playlists #app-playlists, body.sm.my-videos-options #my-videos-options-container, body.sm.favorites-videos #app-playlists-sm, body.sm.options-favorites #options-favorites-container, body.sm.options-signets #options-signets-container, body.sm.options-history #options-history-container, body.sm.epg-fiche #epg-fiche-container-sm, body.epg-fiche #epg-fiche-container, body.full-synopsis #full-synopsis, body.player #videoPlayerContainer, body.settings #settings{
+body.splashscreen #splashscreen, body.sm.apps-list #apps-list-container-sm, body.sm.app-options #app-options-container, body.app-playlists #app-playlists, body.sm.my-videos-options #my-videos-options-container, body.sm.app-playlists #app-playlists-sm, body.sm.options-favorites #options-favorites-container, body.sm.options-signets #options-signets-container, body.sm.options-history #options-history-container, body.sm.epg-fiche #epg-fiche-container-sm, body.epg-fiche #epg-fiche-container, body.full-synopsis #full-synopsis, body.player #videoPlayerContainer, body.settings #settings{
 	display: block;
 }
 
@@ -235,10 +244,6 @@ nav{
 
 #profils-list .user:first-child{
 	margin-left: 0;
-}
-
-.btn:hover{
-	outline: #065f92 solid 2px;
 }
 
 .user img{

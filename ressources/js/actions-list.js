@@ -30,8 +30,31 @@ $(document.getElementById("profils-list")).on("click", ".btn", function(){
 	Section.change(Section.sections[1]);
 });
 
-$(document.getElementById("apps-list")).on("click", ".btn", function(){
+$(document.getElementById("apps-list")).on("click", ".app", function(){
 	Section.change(Section.sections[2], null, $(this).index());
+});
+
+$(document.getElementById("apps-list-sm")).on("click", ".app", function(){
+	Section.oldClass.push($("body").attr("class"));
+	Section.change(Section.sections[5], null, $(this).index());
+});
+
+$(document.getElementById("app-options")).on("click", ".menu-item", function(){
+	var indexes = {"my-videos-btn":6,"search-btn":7,"settings-btn":8,"profil-btn":9};
+	Section.change(Section.sections[indexes[this.id]]);
+});
+
+$(document.getElementById("my-videos-options")).on("click", ".menu-item", function(){
+	var rubric = Section.rubrics[Section.sections[10]][$(this).index()];
+	if(rubric){
+		Section.change(Section.sections[10], rubric);
+	}	
+});
+
+$(document.getElementById("playlist")).on("click", ".item", function(){
+	Section.oldClass.push($("body").attr("class"));
+	Section.change(Section.sections[11], null, $(this).data("data"));
+	//Section.change(Section.sections[this.id === "play-video-btn" ? "player" : this.id === "see-fiche-btn" ? "dashboard-sm" : this.id === "remove-favorite-btn" ? "remove-fav" : null], null, $(this).data("data"));
 });
 
 $(document.getElementById("favorites-list")).on("click", ".item-playlist", function(){
@@ -43,7 +66,7 @@ $(document.getElementById("favorites-list")).on("click", ".item-playlist .delete
 	
 });
 
-$("body").on("click", ".back-button", function(){
+$("body").on("click", ".back-button, .back-to-home-button, .back", function(){
 	Navigation.goBack();
 });
 

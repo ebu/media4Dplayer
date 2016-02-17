@@ -204,46 +204,30 @@
 			<section id="apps-list-container-sm" class="manual-centering">
 				<a id="switch-to-standard-mode-btn" class="switch-btn btn" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="1">Basculer en mode normal</a>
 				<h1>Accueil</h1>
-				<ul id="apps-list-sm">
-					<li class="app menu-item">
-						<a title="pluzz">Pluzz</a>
-					</li>
-					<li class="app menu-item">
-						<a title="baddp">BàBDP</a>
-					</li>
-					<li class="app menu-item">
-						<a title="La poste">La poste</a>
-					</li>
-					<li class="app menu-item">
-						<a title="lesitetv">Le site.tv</a>
-					</li>
-					<li class="app menu-item">
-						<a title="media">Médiathèque</a>
-					</li>
-				</ul>
+				<ul id="apps-list-sm"></ul>
 				<a title="Se déconnecter">Se déconnecter</a>
 			</section>
 			<section id="app-options-container" class="manual-centering">
-				<h1>Pluzz</h1>
-				<ul>
-					<li class="menu-item">
-						<a title="Mes vidéos Pluzz">Mes vidéos Pluzz</a>
+				<h1 id="app-title"></h1>
+				<ul id="app-options">
+					<li id="my-videos-btn" class="menu-item">
+						<a title="Mes vidéos Pluzz"></a>
 					</li>
-					<li class="menu-item">
+					<li id="search-btn" class="menu-item">
 						<a title="Recherche">Recherche</a>
 					</li>
-					<li class="menu-item">
+					<li id="settings-btn" class="menu-item">
 						<a title="Réglages">Réglages</a>
 					</li>
-					<li class="menu-item">
+					<li id="profil-btn" class="menu-item">
 						<a title="Mon profil">Mon profil</a>
 					</li>
 				</ul>
-				<a title="Accueil">Accueil</a>
+				<a title="Accueil" class="back-to-home-button">Accueil</a>
 			</section>
 			<section id="my-videos-options-container" class="manual-centering">
-				<h1>Mes vidéos Pluzz</h1>
-				<ul>
+				<h1></h1>
+				<ul id="my-videos-options">
 					<li class="menu-item">
 						<a title="Mes vidéos favorites">Mes vidéos favorites</a>
 					</li>
@@ -257,65 +241,24 @@
 				<a title="Retour" class="back">Retour</a>
 			</section>
 			<section id="app-playlists-sm" class="playlist-sm">
-				<h1>Mes vidéos Favorites</h1>
+				<h1 id="playlist-title"></h1>
 				<div class="buttons-container">
 					<a title="Retour" class="back-button">Retour</a>
-					<a title="Page précedente" class="prev">Page précedente</a>
-					<a title="Page suivante" class="next">Page suivante</a>
+					<a id="previous-page-playlist" title="Page précedente" class="prev">Page précedente</a>
+					<a id="next-page-playlist" title="Page suivante" class="next">Page suivante</a>
 				</div>
-				<ul>
-					<li class="item">
-						<div class="title">Le monde de Jamy</div>
-						<div class="subtitle">Des volcans et des hommes</div>
-						<div class="type">Émission du 07/05/2014 | 60 min</div>	
-					</li>
-					<li class="item">
-						<div class="title">Le JT de France 2</div>
-						<div class="subtitle">FRANCE2</div>
-						<div class="type">Émission du 15/09/2015 | 40 min</div>	
-					</li>
-					<li class="item">
-						<div class="title">ALEX HUGO - La mort et la belle vie</div>
-						<div class="subtitle">La Tendresse a besoin de liberté</div>
-						<div class="type">Série et fiction | 92 min</div>	
-					</li>
-					<li class="item">
-						<div class="title">Jardins suspendus de la canopée</div>
-						<div class="subtitle">DES FORÊTS ET DES HOMMES</div>
-						<div class="type">Emission du 15 Septembre | 50 minutes</div>	
-					</li>
-					<li class="item">
-						<div class="title">Le monde de Jamy</div>
-						<div class="subtitle">Des volcans et des hommes</div>
-						<div class="type">Émission du 07/05/2014 | 60 min</div>	
-					</li>
-					<li class="item">
-						<div class="title">Le JT de France 2</div>
-						<div class="subtitle">FRANCE2</div>
-						<div class="type">Émission du 15/09/2015 | 40 min</div>	
-					</li>
-					<li class="item">
-						<div class="title">ALEX HUGO - La mort et la belle vie</div>
-						<div class="subtitle">La Tendresse a besoin de liberté</div>
-						<div class="type">Série et fiction | 92 min</div>	
-					</li>
-					<li class="item">
-						<div class="title">Jardins suspendus de la canopée</div>
-						<div class="subtitle">DES FORÊTS ET DES HOMMES</div>
-						<div class="type">Emission du 15 Septembre | 50 minutes</div>	
-					</li>
-				</ul>
+				<ul id="playlist"></ul>
 			</section>
 			<section id="options-favorites-container" class="manual-centering">
 				<h1>Options Favoris</h1>
-				<ul>
-					<li class="menu-item">
+				<ul id="options-favorites">
+					<li id="play-video-btn" class="menu-item btn">
 						<a title="Lire la vidéo">Lire la vidéo</a>
 					</li>
-					<li class="menu-item">
+					<li id="see-fiche-btn" class="menu-item btn">
 						<a title="Accéder à la fiche">Accéder à la fiche</a>
 					</li>
-					<li class="menu-item">
+					<li id="remove-favorite-btn" class="menu-item btn">
 						<a title="Supprimer des favoris">Supprimer des favoris</a>
 					</li>
 				</ul>
@@ -349,8 +292,8 @@
 				<a title="Retour" class="back">Retour</a>
 			</section>
 			<section id="epg-fiche-container-sm" class="manual-centering">
-				<h1>Jardins suspendus de la canopée</h1>
-				<h2>Des forêts et des hommes</h2>
+				<h1></h1>
+				<h2></h2>
 				<ul>
 					<li class="menu-item">
 						<a title="Accéder à la vidéo">Accéder à la vidéo</a>
