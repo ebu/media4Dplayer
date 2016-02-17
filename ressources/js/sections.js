@@ -23,7 +23,7 @@ var Section = {
 
 	"rubrics": {
 		"settings":["interface","audio","subtitles","ls"],
-		"playlist":["favorites","signets","history"]
+		"playlist":["favorites","signets","history","related"]
 	},
 	"rubric": null,
 	"template": "",
@@ -128,8 +128,13 @@ Section.change.toAppsList = function(){
  */
 
 Section.change.toAppPlaylist = function(newSection, rubric, index){
+	
+	if(Main.simplifiedMode && !rubric){
+		return;
+	}
+	
 	Apps.programs.load(index, function(){
-		Section.oldClass.push($("body").attr("class"));
+		Section.save();
 		Section.addClass("app-playlists");
 		Section.handleMenuSel(newSection);
 	}, rubric);
@@ -208,7 +213,7 @@ Section.change.toAppOptions = function(newSection, index){
  */
 
 Section.change.toMyVideosOptions = function(newSection, $item){
-	Section.oldClass.push($("body").attr("class"));
+	Section.save();
 	
 	var title = Apps.list[Apps.indexAppInSM].title;
 	$(document.getElementById("my-videos-options-container")).children("h1").html("Mes vidéos " + title);
@@ -231,7 +236,7 @@ Section.change.toPlaylistOptions = function(params){
 		
 		Dash.data = params.data;
 		
-		Section.oldClass.push($("body").attr("class"));
+		Section.save();
 		Section.addClass(className);
 	}
 };
@@ -247,7 +252,7 @@ Section.change.toPlaylistOptions = function(params){
 Section.change.toProgramOptions = function(){
 	var data = Dash.data;
 	
-	Section.oldClass.push($("body").attr("class"));
+	Section.save();
 	$(document.getElementById("epg-fiche-container-sm")).children("h1").html(data.title).end().children("h2").html(data.subtitle);
 	$(document.getElementById("add-remove-to-favorites")).children("a").html(Apps.programs.playlistType === Section.rubrics[Section.sections[10]][0] ? "Supprimer des favoris" : "Mettre en favoris");
 	Section.addClass("epg-fiche");
@@ -265,7 +270,7 @@ Section.change.toFullscreenSynopsis = function(){
 	
 	Dash.generateFullscreenSynopsis();
 	
-	Section.oldClass.push($("body").attr("class"));
+	Section.save();
 	Section.addClass("full-synopsis");
 };
 
@@ -274,18 +279,24 @@ Section.addClass = function(className){
 	$("body").attr("class", cn);
 };
 
+Section.save = function(){
+	this.oldClass.push($("body").attr("class"));
+};
+
 Section.handleMenuSel = function(newSection){
 	
-	var $nav = $(document.getElementById("menu"));
-	$nav.children(".sel").removeClass("sel");
-	
-	switch(newSection){
-		case Section.sections[2]:
-			$nav.children(".app-playlists").addClass("sel");
-			break;
-			
-		case Section.sections[4]:
-			$nav.children(".settings").addClass("sel");
-			break;
+	if(!Main.simplifiedMode){
+		var $nav = $(document.getElementById("menu"));
+		$nav.children(".sel").removeClass("sel");
+
+		switch(newSection){
+			case this.sections[2]:
+				$nav.children(".app-playlists").addClass("sel");
+				break;
+
+			case this.sections[4]:
+				$nav.children(".settings").addClass("sel");
+				break;
+		}		
 	}
 };

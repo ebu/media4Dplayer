@@ -39,7 +39,7 @@ $(document.getElementById("apps-list")).on("click", ".app", function(){
 });
 
 $(document.getElementById("favorites-list")).on("click", ".item-playlist", function(){
-	Section.oldClass.push($("body").attr("class"));
+	Section.save();
 	Section.change(Section.sections[3], null, $(this).data("data"));
 });
 
@@ -93,7 +93,7 @@ $(document.getElementById("synopsis-container")).on("click", function(){
 																	/* **************/
 	
 $(document.getElementById("apps-list-sm")).on("click", ".app", function(){
-	Section.oldClass.push($("body").attr("class"));
+	Section.save();
 	Section.change(Section.sections[5], null, $(this).index());
 });
 
@@ -123,6 +123,7 @@ $(document.getElementById("options-favorites")).on("click", ".menu-item", functi
 $(document.getElementById("program-options")).on("click", ".menu-item", function(){
 	if(Dash.data){
 		var indexes = {"play-video-btn-2":12,"add-remove-to-favorites":14,"see-full-synopsis-btn":15,"see-related-content-btn":10};
+		var rubric = this.id === "see-related-content-btn" ? Section.rubrics[Section.sections[10]][3] : "";
 		Section.change(Section.sections[indexes[this.id]]);
 	}
 });
