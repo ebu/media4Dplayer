@@ -131,6 +131,7 @@ Section.change.toAppPlaylist = function(newSection, rubric, index){
 	Apps.programs.load(index, function(){
 		Section.oldClass.push($("body").attr("class"));
 		Section.addClass("app-playlists");
+		Section.handleMenuSel(newSection);
 	}, rubric);
 };
 
@@ -158,6 +159,7 @@ Section.change.toEPG = function(newSection, data){
 
 Section.change.toSettings = function(newSection, rubric){
 	Settings.init(newSection, rubric);
+	Section.handleMenuSel(newSection);
 	Section.addClass("settings");
 };
 
@@ -270,4 +272,20 @@ Section.change.toFullscreenSynopsis = function(){
 Section.addClass = function(className){
 	var cn = Main.simplifiedMode ? "sm " + className : className;
 	$("body").attr("class", cn);
+};
+
+Section.handleMenuSel = function(newSection){
+	
+	var $nav = $(document.getElementById("menu"));
+	$nav.children(".sel").removeClass("sel");
+	
+	switch(newSection){
+		case Section.sections[2]:
+			$nav.children(".app-playlists").addClass("sel");
+			break;
+			
+		case Section.sections[4]:
+			$nav.children(".settings").addClass("sel");
+			break;
+	}
 };
