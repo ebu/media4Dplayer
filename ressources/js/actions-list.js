@@ -39,12 +39,14 @@ $(document.getElementById("apps-list")).on("click", ".app", function(){
 });
 
 $(document.getElementById("favorites-list")).on("click", ".item-playlist", function(){
-	Section.save();
-	Section.change(Section.sections[3], null, $(this).data("data"));
+	if(!($(event.target).hasClass("play") || $(event.target).parent().hasClass("play"))){
+		Section.save();
+		Section.change(Section.sections[3], null, $(this).data("data"));		
+	}
 });
 
-$(document.getElementById("favorites-list")).on("click", ".item-playlist .delete, .item-playlist .play", function(){
-	
+$(document.getElementById("app-playlists")).on("click", ".item-playlist .play", function(){
+	Section.change(Section.sections[12], null, $(this).parents(".btn").data("data"));
 });
 
 $("body").on("click", ".back-button, .back-to-home-button, .back", function(){
@@ -87,6 +89,21 @@ $(".option-text-color").on("click", ".color", function(){
 $(document.getElementById("synopsis-container")).on("click", function(){
 	Section.change(Section.sections[15]);
 });
+
+$(document.getElementById('playerUI')).on('click', function(e){
+	if(["pipContainer","playerTopBanner","playerBottomBanner","playerControls","playerControlVolume"].indexOf(e.target.id) !== -1){
+		if(!$(document.getElementById("playerBottomBanner")).is(":visible")){
+			InfoBanner.show();
+		}else{
+			InfoBanner.hide();
+		}
+	}else{
+		log("id="+e.target.id);
+	}
+	
+}).on("mouseover", ".btn", function(){
+	InfoBanner.launchMaskingAfterDelay();
+});
 	
 																	/* **************/
 																	/*	 MODE SM	*/
@@ -114,16 +131,15 @@ $(document.getElementById("playlist")).on("click", ".item", function(){
 });
 
 $(document.getElementById("options-favorites")).on("click", ".menu-item", function(){
-	if(Dash.data){
+	if(Dashboard.data){
 		var indexes = {"play-video-btn":12,"see-fiche-btn":13,"remove-favorite-btn":14};
 		Section.change(Section.sections[indexes[this.id]]);		
 	}
 });
 
 $(document.getElementById("program-options")).on("click", ".menu-item", function(){
-	if(Dash.data){
+	if(Dashboard.data){
 		var indexes = {"play-video-btn-2":12,"add-remove-to-favorites":14,"see-full-synopsis-btn":15,"see-related-content-btn":10};
-		var rubric = this.id === "see-related-content-btn" ? Section.rubrics[Section.sections[10]][3] : "";
 		Section.change(Section.sections[indexes[this.id]]);
 	}
 });

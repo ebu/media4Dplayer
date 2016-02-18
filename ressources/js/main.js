@@ -32,6 +32,58 @@ Main.onLoad = function () {
 	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
 	Settings.change.fontSize(valueMinSize);
 	
+	var defaultValue = getCookie("volumeValue") || Settings.defaultVolumeValue;
+	$( document.getElementById("slider") ).slider({
+        range: "min",
+        min: 0,
+        value: defaultValue,
+ 
+        start: function(event,ui) {
+          tooltip.fadeIn('fast');
+        },
+ 
+        slide: function(event, ui) {
+			
+			InfoBanner.resetTimerHideUI();
+			
+            var value = ui.value,//slider.slider('value'),
+                volume = $('.volume');
+ 
+            tooltip.css('left', value+5).text(ui.value);
+ 
+            if(value <= 5) { 
+                volume.css('background-position', '0 0');
+            } 
+            else if (value <= 25) {
+                volume.css('background-position', '0 -25px');
+            } 
+            else if (value <= 75) {
+                volume.css('background-position', '0 -50px');
+            } 
+            else {
+                volume.css('background-position', '0 -75px');
+            }
+			
+			try{
+				if(!value){
+					myPlayer.setMute();
+				}else{
+					eraseCookie("muteEnabled");
+					setCookie("volumeValue", value);
+					myPlayer.setVolume(audioGainNode, videoGainNode, value);		
+					$(document.getElementById("playerOptionAudioCurrentValue")).html(Media.audiosList[Media.currentAudioIndex]);
+				}
+			}catch(e){
+				console.error(e);
+			}			
+        },
+ 
+        stop: function(event, ui) {
+          tooltip.fadeOut('fast');
+        }
+	});
+	var tooltip = $('.tooltip').hide();	
+	
 	Main.firstLaunch = true;
 	API.getConfig(function() {
 	    //Main.initApp();

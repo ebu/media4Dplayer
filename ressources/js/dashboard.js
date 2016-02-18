@@ -1,4 +1,4 @@
-var Dash = {
+var Dashboard = {
 	data:null
 };
 
@@ -8,7 +8,7 @@ var Dash = {
  * @param {String} type The dashboard type
  */
 
-Dash.reset = function(){
+Dashboard.reset = function(){
 	
 	this.data = null;			
 	$(document.getElementById("epg-fiche-container")).children("h1").empty();
@@ -27,7 +27,7 @@ Dash.reset = function(){
  * @param {Object} callbackList Contains a success and error callback
  */
 
-Dash.load = function(data, callback){
+Dashboard.load = function(data, callback){
 
     if(typeOf(data) === "object"){
 		
@@ -47,7 +47,7 @@ Dash.load = function(data, callback){
  * @description Inserts the media infos in the dashboard
  */
 
-Dash.generate = function(){
+Dashboard.generate = function(){
 	
 	var mediaData = this.data;
 	
@@ -92,9 +92,9 @@ Dash.generate = function(){
  * @description Inserts the media infos in the dashboard
  */
 
-Dash.generateFullscreenSynopsis = function(){
+Dashboard.generateFullscreenSynopsis = function(){
 	
-	var mediaData = Dash.data;
+	var mediaData = Dashboard.data;
 	$(document.getElementById("full-synopsis")).children("h2").html(mediaData.subtitle).end().children(".program-date").html(mediaData.detail);
 	
     $(document.getElementById("synopsis2")).html(mediaData.synopsis);

@@ -6,7 +6,8 @@ var Settings = {
 	defaultLSPIPCoordonates: {x:75,y:4.5,w:22.51131221719457,h:40.04024144869215},
 	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Lexia"],
 	init:{},
-	change:{}
+	change:{},
+	defaultVolumeValue:70
 };
 
 /**
@@ -129,10 +130,9 @@ Settings.init.ls = function(){
 	var pipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : defaultCoordonates.w;
 	var pipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : defaultCoordonates.h;	
 	
-	//var $pipVideo = $(".ui-ls .pip-video").attr("style",'left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%');
 	var $pipVideo = $(".ui-ls .pip-video").attr("style",'left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%');
 	$pipVideo.draggable({ 	
-		containment: ".ui-ls",
+		containment: $pipVideo.parents(".ui-ls"),
 		scroll:false,
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {

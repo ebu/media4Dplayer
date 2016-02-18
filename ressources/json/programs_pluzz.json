@@ -23,7 +23,14 @@
 			   "title": "Attention sangsue !",
 			   "subtitle": "Des forêts et des hommes",
 			   "picture": "ressources/img/temp/related/icone_pt_video_sangsue.png"
-		}]
+		}],
+		"video":{
+			"audiosList":["Français"],
+			"subtitlesList":["Français"],
+			"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-ad.mpd"}],
+			"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}],
+			"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest.mpd"
+		}
 	},{
     	"title": "Le JT de France 2",
     	"subtitle": "JT du 20h du mercredi 10 Février 2016",
@@ -48,7 +55,14 @@
 	    	   "title": "Le JT de France 2",
 	    	   "subtitle": "Émission du 13/11/2015",
 	    	   "picture": "ressources/img/temp/related/icone_pt_video_JTFR2.png"
-	       }]
+	       }],
+	   "video":{
+			"audiosList":["Français"],
+			"subtitlesList":["Français"],
+			"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest-ad.mpd"}],
+			"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest-lsf.mpd"}],
+			"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest.mpd"
+		}
 	},{
     	"title": "Tchoupi",
     	"subtitle": "",
@@ -61,7 +75,14 @@
 		"hasAudio": true,
     	"synopsis": "T'choupi et Doudou est une série d'animation canado–belgo–française en 65 épisodes de 5 minutes, adaptée de la série de littérature de jeunesse T'choupi. <br/>En France, la série a été diffusée en 1999 sur Canal J, rediffusée en 2000 sur TiJi puis sur France 5 dans Zouzous depuis le 29 octobre 2012 et sur France 4 également dans Zouzous.",
     	"resume": "",
-    	"relatedContent": []
+    	"relatedContent": [],
+		"video":{
+			"audiosList":["Français"],
+			"subtitlesList":["Français"],
+			"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest-ad.mpd"}],
+			"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest-lsf.mpd"}],
+			"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest.mpd"
+		}
 	},{
     	"title": "La météo",
     	"subtitle": "",
@@ -74,6 +95,13 @@
 		"hasAudio": true,
     	"synopsis": "",
     	"resume": "",
-    	"relatedContent": []
+    	"relatedContent": [],
+		"video":{
+			"audiosList":["Français"],
+			"subtitlesList":["Français"],
+			"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest-ad.mpd"}],
+			"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest-lsf.mpd"}],
+			"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest.mpd"
+		}
 	}]
 }

@@ -724,6 +724,7 @@ h1 {
 /* PLAYER */
 #videoPlayerContainer{
 	display: none;
+	background-color: #000;
 }
 
 #videoPlayerContainer video{
@@ -974,10 +975,6 @@ h1 {
 	right: 45px;
 }
 
-#video-caption{
-	height: 66% !important;
-}
-
 #video-caption *{
 	font-size: inherit !important;
 	text-align: center !important;
@@ -988,15 +985,11 @@ h1 {
 	display: block;
 }
 
-.videoPipContainer {
-    position: absolute;
-    width: 96%;
-    height: 93%;
-    top: 4%;
-    left: 2%;
+#playerUI .ui-ls{
+	height: 100%;
+}
+#pipContainer {
     border-style: hidden;
-    border-width: 1px;
-    border-color: #FFFFFF;
 }
 
 .optionDropDownMenu {
@@ -1270,7 +1263,6 @@ h1 {
 }
 
 .ui-subtitles, .ui-ls{
-    background-color: #e7e8e8;
     position: relative;
 	box-sizing: border-box;
 	padding: 2%;
@@ -1397,7 +1389,8 @@ h1 {
 }
 
 /* Settings - LS */
-.ui-ls{
+#settings .ui-ls{
+    background-color: #e7e8e8;
     height: 497px;
 }
 

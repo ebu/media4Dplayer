@@ -64,6 +64,10 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		// Settings
 		}else if(newSection === this.sections[4]){
 			this.change.toSettings(newSection, rubric, mixed_var);
+			
+		// Le player
+		}else if(newSection === this.sections[12]){
+			this.change.toPlayer(mixed_var);
 		
 		// SM - Les options d'une appli : Mes vidéos, recherche, réglages et mon profil
 		}else if(newSection === this.sections[5]){
@@ -79,7 +83,7 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		
 		// SM - Les options d'une playlist : Lire la vidéo, accéder à la fiche, supprimer des favoris
 		}else if(newSection === this.sections[11]){
-			this.change.toPlaylistOptions(mixed_var);
+			this.change.toPlaylistOptions(mixed_var);	
 		
 		// SM - Les options d'un programme : accéder à la vidéo, mettre en favoris, lire le résumé, les vidéos sur le même thème, partager sur les réseaux
 		}else if(newSection === this.sections[13]){
@@ -149,7 +153,7 @@ Section.change.toAppPlaylist = function(newSection, rubric, index){
  */
 
 Section.change.toEPG = function(newSection, data){
-	Dash.load(data, function(){
+	Dashboard.load(data, function(){
 		Section.addClass("epg-fiche");
 	});	
 };
@@ -176,15 +180,13 @@ Section.change.toSettings = function(newSection, rubric){
  * @param {Object} params Contains parameters that will be used for the loading of section
  */
 
-Section.change.toPlayer = function(newSection, rubric, params){
-	if(rubric && typeOf(params) === "object" && typeOf(params.list) === "array" && params.list.length){
+Section.change.toPlayer = function(data){
+	if(typeOf(data) === "object" && typeOf(data.video) === "object" && data.video.url){
 		
-		Player.load(params.list, {onSuccess:function(){
-			Section.prepare(newSection, null, rubric);
-			
-		}, onError:function(){
-			// TODO: affichage d'une popup d'erreur
-		}}, rubric);
+		Player.load(data.video, function(){
+			Section.save();
+			Section.addClass("player");		
+		});
 	}
 };
 
@@ -234,7 +236,7 @@ Section.change.toPlaylistOptions = function(params){
 	var className = params.type === rubrics[0] ? "options-favorites" : params.type === rubrics[1] ? "options-signets" : params.type === rubrics[2] ? "options-history" : null;
 	if(className){
 		
-		Dash.data = params.data;
+		Dashboard.data = params.data;
 		
 		Section.save();
 		Section.addClass(className);
@@ -250,7 +252,7 @@ Section.change.toPlaylistOptions = function(params){
  */
 
 Section.change.toProgramOptions = function(){
-	var data = Dash.data;
+	var data = Dashboard.data;
 	
 	Section.save();
 	$(document.getElementById("epg-fiche-container-sm")).children("h1").html(data.title).end().children("h2").html(data.subtitle);
@@ -268,7 +270,7 @@ Section.change.toProgramOptions = function(){
 
 Section.change.toFullscreenSynopsis = function(){
 	
-	Dash.generateFullscreenSynopsis();
+	Dashboard.generateFullscreenSynopsis();
 	
 	Section.save();
 	Section.addClass("full-synopsis");
