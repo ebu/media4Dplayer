@@ -38,8 +38,8 @@ $(document.getElementById("apps-list")).on("click", ".app", function(){
 	Section.change(Section.sections[2], null, $(this).index());
 });
 
-$(document.getElementById("favorites-list")).on("click", ".item-playlist", function(){
-	if(!($(event.target).hasClass("play") || $(event.target).parent().hasClass("play"))){
+$(document.getElementById("favorites-list")).on("click", ".item-playlist", function(e){
+	if(!($(e.target).hasClass("play") || $(e.target).parent().hasClass("play"))){
 		Section.save();
 		Section.change(Section.sections[3], null, $(this).data("data"));		
 	}
