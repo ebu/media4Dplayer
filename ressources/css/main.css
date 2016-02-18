@@ -1389,6 +1389,9 @@ h1 {
 }
 
 /* Settings - LS */
+#settings .ui-ls, .ui-subtitles{
+    background-color: #e7e8e8;
+}
 #settings .ui-ls{
     background-color: #e7e8e8;
     height: 497px;
