@@ -1285,7 +1285,7 @@ h1 {
 .ui-subtitles, .ui-ls{
     position: relative;
 	box-sizing: border-box;
-	padding: 2%;
+	padding: 17.6719px;
 }
 
 .ui-subtitles , .pip-limit{
@@ -1435,9 +1435,11 @@ h1 {
 .label-pip-video.main{
 	top: 10px;
 }
+#uiLS-container-sm{
+	width: 884px;	
+}
 
 #uiLS-container-sm, #uiSubtitles-sm-container{
-	width: 884px;
 	margin: 20px auto 0;	
 }
 

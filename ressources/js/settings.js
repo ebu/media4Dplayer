@@ -256,11 +256,12 @@ Settings.change.fontSize = function(newValue){
 
 Settings.change.subtitlesFontFamily = function(ff){
 	setCookie("subtitleFont", ff);
+	$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Lexia").addClass(ff);
+	
 	if(Main.simplifiedMode){
 		$(document.getElementById("font-family")).children(".menu-item."+ff).addClass("selected").siblings().removeClass("selected");		
 	}else{
 		$(".option-font-family .font-family."+ff).addClass("selected").siblings().removeClass("selected");
-		$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Lexia").addClass(ff);		
 	}
 };
 
@@ -274,12 +275,9 @@ Settings.change.subtitlesFontFamily = function(ff){
  */
 
 Settings.change.subtitlesBackgroundColor = function(color){
-	$(".option-background-color .color."+color).addClass("selected").siblings().removeClass("selected");
 	setCookie("subtitleBGColor", color);
 	$(".option-background-color .color."+color).addClass("selected").siblings().removeClass("selected");
-	if(!Main.simplifiedMode){
-		$(".ui-subtitles .pip-text").removeClass("blackBGColor whiteBGColor").addClass(color+"BGColor");		
-	}
+	$(".ui-subtitles .pip-text").removeClass("blackBGColor whiteBGColor").addClass(color+"BGColor");
 };
 
 /**
@@ -292,11 +290,9 @@ Settings.change.subtitlesBackgroundColor = function(color){
  */
 
 Settings.change.subtitlesColor = function(color){
-	$(".option-text-color .color."+color).addClass("selected").siblings().removeClass("selected");
 	setCookie("subtitleFontColor", color);
-	if(!Main.simplifiedMode){
-		$(".ui-subtitles .pip-text").removeClass("multiColor whiteColor yellowColor blueColor").addClass(color+"Color");
-	}	
+	$(".option-text-color .color."+color).addClass("selected").siblings().removeClass("selected");
+	$(".ui-subtitles .pip-text").removeClass("multiColor whiteColor yellowColor blueColor").addClass(color+"Color");
 };
 
 /**

@@ -439,6 +439,9 @@ Section.change.toSettingsSubtitlesBGColor = function(){
 
 Section.change.toSettingsSubtitlesPIP = function(){
 	Settings.init.subtitles.pip();
+	
+	Settings.init.subtitles();
+	
 	Section.save();
 	Section.addClass("settings-subtitles-pip");
 };
