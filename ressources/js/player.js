@@ -117,7 +117,7 @@ Player.load = function(videoData, callback, onClose){
 
 	this.onPlay(); // pas d'évenement lors du play... alors on le force.
 	this.launchCheckPositionVideo();
-	InfoBanner.launchMaskingAfterDelay();
+	InfoBanner.show();
 
 	if(typeOf(callback) === "function"){
 		callback();
@@ -341,7 +341,9 @@ Player.setPIP = function(){
 				Settings.saveLSPIPPosition($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
 			}			
 		}).click( function() {
-			if(Media.LSFEnabled){
+			if(InfoBanner.isDisplayed()){
+				InfoBanner.hide();
+			}else if(Media.LSFEnabled){
 				appearPipControls();
 			}
 		});
