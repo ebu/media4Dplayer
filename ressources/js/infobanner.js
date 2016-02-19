@@ -2,7 +2,8 @@ var InfoBanner = {
 	progressBar:{},
 	timeoutHideBanner:null,
 	isVisible:false,
-	isOptionDropDownMenuDisplayed:false
+	isOptionDropDownMenuDisplayed:false,
+	currentOptionDropDownMenu:""
 };
 
 /**
@@ -19,6 +20,7 @@ InfoBanner.reset = function(){
 	this.progressBar.reset();
 	
 	this.isOptionDropDownMenuDisplayed = false;
+	this.currentOptionDropDownMenu = "";
 	this.isVisible = false;
 };
 
@@ -182,6 +184,154 @@ InfoBanner.suspendMaskingAfterDelay = function(){
 
 InfoBanner.executeMaskingAfterDelay = function(){
 	this.hide();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Executes the hiding the info banner
+ */
+
+InfoBanner.showOptionPopup = function(type, button){
+	if(type && $(button).length && !$(button).hasClass("hidden")){
+		
+		if(this.isOptionDropDownMenuDisplayed && (type === this.currentOptionDropDownMenu)) {
+			this.hideOptionDropDownMenu();
+			return;
+			
+		}else if(this.isOptionDropDownMenuDisplayed && type === this.currentOptionDropDownMenu) {
+			
+		}else if(!this.isOptionDropDownMenuDisplayed) {
+			$(".optionDropDownMenu").removeClass("hidden");
+			this.isOptionDropDownMenuDisplayed = true;
+		}
+		this.currentOptionDropDownMenu = type;
+		
+		var $ctn = $(document.getElementById("optionDropDownMenu")).empty();
+
+		var inputsArray = this.getOptionsArrayForOption(type);
+		$ctn.css("left", this.getOptionsDropDownMenuLeft(type))
+			.css("height", this.getOptionsDropDownMenuHeight(inputsArray));
+		
+		var actionEvent = function(bt, optionID) {
+			var index = $(bt).data("index");
+			if(optionID === "ls"){
+				myPlayerScreen.activeOptionSigne(index);
+			}
+			else if(optionID === "subtitle") {
+				myPlayerScreen.activeOptionSub(index);
+			}
+			else if(optionID === "ad") {
+				myPlayerScreen.activeOptionDescription(index);	
+			}
+			else if(optionID === "audio") {
+				myPlayerScreen.activeOptionAudio(index);
+			}
+			myPlayerScreen.hideOptionDropDownMenu();
+		};
+
+		for (var i = 0; i < inputsArray.length; i++) {
+			var $bt = $('<div id="option_"'+i+' class="optionDropDownMenuButton">'+inputsArray[i]+'</div>').appendTo($ctn);
+			$bt.data("index", i);
+			(function(bt, optionID){
+				bt.clickAction = function(){
+					actionEvent(bt, optionID);
+				};
+			})($bt[0], type);
+			
+			if(type === "subtitle" && inputsArray[i] !== "Aucun"){
+				$bt.append('<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
+			}
+		}
+		
+		var setSel = function($el){
+			$el.css("color", "orange");
+		};
+		
+		if(type === "audio" && Media.audioEnabled){
+			setSel($ctn.children(":eq("+Media.currentAudioIndex+")"));
+		
+		}else if(type === "subtitle" && Media.subtitleEnabled){
+			setSel($ctn.children(":eq("+Media.currentSubtitleIndex+")"));
+			
+		}else if(type === "ad" && Media.audioDescriptionEnabled){
+			setSel($ctn.children(":eq("+Media.currentAudioDescriptionIndex+")"));
+			
+		}else if(type === "ls" && Media.LSFEnabled){
+			setSel($ctn.children(":eq("+Media.currentLSFIndex+")"));
+			
+		}else{
+			setSel($ctn.children(":last"));
+		}
+	}	
+};
+
+InfoBanner.hideOptionDropDownMenu = function() {
+	$(document.getElementById("optionDropDownMenu")).addClass("hidden");
+	this.isOptionDropDownMenuDisplayed = false;		
+};
+
+InfoBanner.getOptionsArrayForOption = function(optionID) {
+	var optionsArray = [];
+	var getList = function(list){
+		var newList = [];
+		for(var i=0;i<list.length;i++){
+			newList.push(list[i].lang);
+		}
+		return newList;
+	};
+
+	switch(optionID) {
+		case "ls":
+			optionsArray = getList(Media.ls);
+			break;
+
+		case "ad":
+			optionsArray = getList(Media.audioDescriptions);
+			break;
+
+		case "subtitle":
+			optionsArray = JSON.parse(JSON.stringify(Media.subtitlesList));
+			break;
+
+		case "audio":
+			optionsArray = JSON.parse(JSON.stringify(Media.audiosList));
+			break;
+	}
+	optionsArray.push("Aucun");
+	return optionsArray;
+};
+
+InfoBanner.getOptionsDropDownMenuHeight = function(inputsArray) {
+	return inputsArray.length * (50 + 1); // +1 for border 
+};
+InfoBanner.getOptionsDropDownMenuTop = function(inputsArray) {
+	return 120; 
+};
+InfoBanner.getOptionsDropDownMenuLeft = function(optionID) {
+
+	var leftOption = 0;
+
+	switch(optionID) {
+		case "ls":
+			leftOption = document.getElementById("playerOptionSigne").offsetLeft;
+			break;
+		case "ad":
+			leftOption = document.getElementById("playerOptionDescription").offsetLeft;
+			break;
+		case "subtitle":
+			leftOption = document.getElementById("playerOptionSub").offsetLeft;
+			break;
+		case "audio":
+			leftOption = document.getElementById("playerOptionAudio").offsetLeft;
+			break;
+		default :
+			console.log("getOptionsDropDownMenuLeft - no optionID defined for " + optionID);
+			leftOption = 0;
+			break;
+	}
+
+	var leftDDM = leftOption + 57;
+	return leftDDM + "px";
 };
 
 																								/************************************************

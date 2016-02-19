@@ -65,7 +65,7 @@
 				<a title="Retour" class="back-button btn">Retour</a>
 				<h1></h1>
 				<div id="thumb-and-related-content-container">
-					<div id="thumb-container" class="btn">
+					<div id="thumb-container" class="btn" onclick="Section.launchPlayerLoading(Dashboard.data);">
 						<img id="media-thumb" alt="" src=""/>
 						<img id="play-icon" alt="" src="ressources/img/dashboard/icone_gr_play_video.png"/>
 					</div>
@@ -253,7 +253,7 @@
 				<h1>Options Favoris</h1>
 				<ul id="options-favorites">
 					<li id="play-video-btn" class="menu-item btn">
-						<a title="Lire la vidéo">Lire la vidéo</a>
+						<a title="Lire la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
 					</li>
 					<li id="see-fiche-btn" class="menu-item btn">
 						<a title="Accéder à la fiche">Accéder à la fiche</a>
@@ -283,7 +283,7 @@
 				<h1>Options Historique</h1>
 				<ul>
 					<li class="menu-item">
-						<a title="Lire la vidéo">Lire la vidéo</a>
+						<a title="Lire la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
 					</li>
 					<li class="menu-item">
 						<a title="Accéder à la fiche">Accéder à la fiche</a>
@@ -296,7 +296,7 @@
 				<h2></h2>
 				<ul id="program-options">
 					<li id="play-video-btn-2" class="menu-item">
-						<a title="Accéder à la vidéo">Accéder à la vidéo</a>
+						<a title="Accéder à la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);">Accéder à la vidéo</a>
 					</li>
 					<li id="add-remove-to-favorites" class="menu-item">
 						<a title="Mettre ou supprimer un favoris"></a>
@@ -334,19 +334,19 @@
 				</div>
 				<div id="playerBottomBanner">
 				<div id="playerOptions">
-					<div id="playerOptionAudio" class="btn">
+					<div id="playerOptionAudio" class="btn video-option" onclick="InfoBanner.showOptionPopup('audio', this);">
 						<div id="iconeLA" class="compatibility audio" title="Audio"></div>
 						<div id="playerOptionAudioCurrentValue" class="playerOptionValue"></div>							
 					</div>
-					<div id="playerOptionSub" class="btn">
+					<div id="playerOptionSub" class="btn video-option" onclick="InfoBanner.showOptionPopup('subtitle', this);">
 						<div id="iconeST" class="compatibility subtitle" title="Sous-titre"></div>
 						<div id="playerOptionSubCurrentValue" class="playerOptionValue"></div>
 					</div>
-					<div id="playerOptionDescription" class="btn">
+					<div id="playerOptionDescription" class="btn video-option" onclick="InfoBanner.showOptionPopup('ad', this);">
 						<div id="iconeAD" class="compatibility ad" title="Audio description"></div>
 						<div id="playerOptionDescriptionCurrentValue" class="playerOptionValue"></div>							
 					</div>
-					<div id="playerOptionSigne" class="btn">
+					<div id="playerOptionSigne" class="btn video-option" onclick="InfoBanner.showOptionPopup('ls', this);">
 						<div id="iconeLSF" class="compatibility ls" title="Langue des signes"></div>
 						<div id="playerOptionSigneCurrentValue" class="playerOptionValue"></div>							
 					</div>	
@@ -362,19 +362,19 @@
 					<div id="playerControlVolume">
 						<span class="tooltip" style="display: none;"></span> 
 						<span class="icon volume-mute"></span>
-						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 58%;"></a><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 58%;"></div></div>
+						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 58%;"></a></div>
 						<span class="icon volume"></span>
 					</div>
 					<div id="playerControlTrickMode">
-						<div id="playerControlRW" class="btn"></div>
-						<div id="playerControlPlayPause" class="btn"></div>
-						<div id="playerControlFF" class="btn"></div>
+						<div id="playerControlRW" class="btn" onclick="Player.rw();"></div>
+						<div id="playerControlPlayPause" class="btn" onclick="Player.playPause();"></div>
+						<div id="playerControlFF" class="btn" onclick="Player.ff();"></div>
 					</div>
 					<div id="playerControlConfig" class="btn">
 						<img alt="settings" src="ressources/img/player/reglages_player.png"/>
 					</div>
 				</div>
-				<div id="optionDropDownMenu" class="optionDropDownMenu hidden" style="top: 120px; left: 247px; height: 102px;"><div id="option_0" class="optionDropDownMenuButton" zone="optionDropDownMenuButton" x="0" y="0" onmouseover="moveSelecteur('option_0');" onfocus="moveSelecteur('option_0');" style="color: orange;">Français</div><div id="option_1" class="optionDropDownMenuButton" zone="optionDropDownMenuButton" x="0" y="0" onmouseover="moveSelecteur('option_1');" onfocus="moveSelecteur('option_1');">Aucun</div></div></div>
+				<div id="optionDropDownMenu" class="optionDropDownMenu hidden"></div></div>
 				<div id="ui-video-ls-container" class="ui-ls">
 					<div id="pipContainer" class="player pip-limit">
 						<div id="pipVideo" class="pipVideo ui-draggable ui-resizable">
@@ -383,6 +383,7 @@
 						</div>
 					</div>					
 				</div>
+				<hr/>
 			</div>			
 		</div>
 		<div id="splashscreen"></div>		

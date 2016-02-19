@@ -302,3 +302,16 @@ Section.handleMenuSel = function(newSection){
 		}		
 	}
 };
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Section.launchPlayerLoading = function(data){
+	this.change(this.sections[12], null, data);		
+};

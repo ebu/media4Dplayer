@@ -43,34 +43,33 @@ Main.onLoad = function () {
         },
  
         slide: function(event, ui) {
-			
-			InfoBanner.resetTimerHideUI();
+			InfoBanner.launchMaskingAfterDelay();
 			
             var value = ui.value,//slider.slider('value'),
                 volume = $('.volume');
  
-            tooltip.css('left', value+5).text(ui.value);
+            tooltip.css('left', $(this).children("a").css("left")).text(ui.value);
  
             if(value <= 5) { 
                 volume.css('background-position', '0 0');
-            } 
-            else if (value <= 25) {
+				
+            }else if (value <= 25) {
                 volume.css('background-position', '0 -25px');
-            } 
-            else if (value <= 75) {
+				
+            }else if (value <= 75) {
                 volume.css('background-position', '0 -50px');
-            } 
-            else {
+				
+            }else{
                 volume.css('background-position', '0 -75px');
             }
 			
 			try{
 				if(!value){
-					myPlayer.setMute();
+					Player.setMute();
 				}else{
 					eraseCookie("muteEnabled");
 					setCookie("volumeValue", value);
-					myPlayer.setVolume(audioGainNode, videoGainNode, value);		
+					Player.setVolume(audioGainNode, videoGainNode, value);		
 					$(document.getElementById("playerOptionAudioCurrentValue")).html(Media.audiosList[Media.currentAudioIndex]);
 				}
 			}catch(e){

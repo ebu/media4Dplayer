@@ -46,7 +46,7 @@ $(document.getElementById("favorites-list")).on("click", ".item-playlist", funct
 });
 
 $(document.getElementById("app-playlists")).on("click", ".item-playlist .play", function(){
-	Section.change(Section.sections[12], null, $(this).parents(".btn").data("data"));
+	Section.launchPlayerLoading($(this).parents(".btn").data("data"));
 });
 
 $("body").on("click", ".back-button, .back-to-home-button, .back", function(){
@@ -97,6 +97,8 @@ $(document.getElementById('playerUI')).on('click', function(e){
 		}else{
 			InfoBanner.hide();
 		}
+	}else if($(e.target.id).hasClass(".video-option")){
+		InfoBanner.showOptionPopup($(e.target.id));
 	}else{
 		log("id="+e.target.id);
 	}

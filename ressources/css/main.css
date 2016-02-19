@@ -772,6 +772,7 @@ h1 {
 
 #playerBottomBanner {
     bottom: 0;
+	height: 265px;
 }
 
 #playerBottomBanner > div{
@@ -810,6 +811,10 @@ h1 {
 #playerOptions svg {
     height: 37px;
     margin-top: 1px;
+}
+
+#playerBottomBanner > .optionDropDownMenu{
+	
 }
 
 #playerProgressInfos {
@@ -872,14 +877,15 @@ h1 {
 	border-width: 1px;
 	height: 4px;
 	position: relative;
-	width: 277px;
+	width: 267px;
+	margin-right: 10px;
 	vertical-align: middle;
 }
 
 .tooltip {
     position: absolute;
     display: block;
-    top: -25px;
+    top: -9px;
     width: 35px;
     height: 20px;
     color: #fff;
@@ -890,6 +896,7 @@ h1 {
 	box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, .3);
     box-sizing: border-box;
     background: linear-gradient(top, rgba(69,72,77,0.5) 0%,rgba(0,0,0,0.5) 100%);
+	margin-left: 17px;
 }
 
 #playerControlVolume > div, #playerControlVolume .icon{
