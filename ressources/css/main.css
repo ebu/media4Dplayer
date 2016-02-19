@@ -839,11 +839,21 @@ h1 {
 	left: 96px;
 }
 
-#playerProgressBar {
-	background-color: rgba(255, 255, 255, 0.09);
+#playerProgressBar, #slider{
+	background: rgba(0, 0, 0, 0) url("../img/volume/bg-track.png") repeat scroll left top;
+	border-color: #333 #333 #777;
+	border-style: solid;
+	border-width: 1px;
 	height: 4px;
+}
+
+#playerProgressBar {
 	bottom: 0;
 	width: 1088px;
+}
+
+#playerProgressBar, #playerProgressCursor, #slider .ui-slider-range, #slider {
+	border-radius: 25px;	
 }
 
 #playerProgressCursor {
@@ -870,12 +880,6 @@ h1 {
 }
 
 #slider {
-	background: rgba(0, 0, 0, 0) url("../img/volume/bg-track.png") repeat scroll left top;
-	border-color: #333 #333 #777;
-	border-radius: 25px;
-	border-style: solid;
-	border-width: 1px;
-	height: 4px;
 	position: relative;
 	width: 267px;
 	margin-right: 10px;
@@ -932,7 +936,6 @@ h1 {
     border: 0;
     top: 0;
     height: 100%;
-    border-radius: 25px;
 }
 
 #playerControlTrickMode{
@@ -1001,14 +1004,9 @@ h1 {
 
 .optionDropDownMenu {
     position: absolute;
-    top: 600px;
+	bottom: 280px;
     left: 130px;
-
     width: 180px;
-    height: 100px;
-
-    display: block;
-    background-color: pink;
 }
 
 .optionDropDownMenu.hidden {
@@ -1031,6 +1029,11 @@ h1 {
     color: white;
     line-height: 45px;
     font-family: 'helveticaNeue-Regular';
+}
+
+.optionDropDownMenuButton:hover{
+	cursor: pointer;
+	font-weight: bold;
 }
 
 /* SETTINGS */
