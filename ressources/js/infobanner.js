@@ -215,28 +215,29 @@ InfoBanner.showOptionPopup = function(type, button){
 		var actionEvent = function(bt, optionID) {
 			var index = $(bt).data("index");
 			if(optionID === "ls"){
-				myPlayerScreen.activeOptionSigne(index);
+				Player.activeOptionSigne(index);
 			}
 			else if(optionID === "subtitle") {
-				myPlayerScreen.activeOptionSub(index);
+				Player.activeOptionSub(index);
 			}
 			else if(optionID === "ad") {
-				myPlayerScreen.activeOptionDescription(index);	
+				Player.activeOptionDescription(index);	
 			}
 			else if(optionID === "audio") {
-				myPlayerScreen.activeOptionAudio(index);
+				Player.activeOptionAudio(index);
 			}
-			myPlayerScreen.hideOptionDropDownMenu();
+			InfoBanner.launchMaskingAfterDelay();
+			InfoBanner.hideOptionDropDownMenu();
 		};
 
 		for (var i = 0; i < inputsArray.length; i++) {
-			var $bt = $('<div id="option_"'+i+' class="optionDropDownMenuButton">'+inputsArray[i]+'</div>').appendTo($ctn);
+			var $bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton">'+inputsArray[i]+'</div>').appendTo($ctn);
 			$bt.data("index", i);
 			(function(bt, optionID){
-				bt.clickAction = function(){
+				bt.on("click", function(){
 					actionEvent(bt, optionID);
-				};
-			})($bt[0], type);
+				});
+			})($bt, type);
 			
 			if(type === "subtitle" && inputsArray[i] !== "Aucun"){
 				$bt.append('<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');

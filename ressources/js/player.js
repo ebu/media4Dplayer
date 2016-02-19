@@ -550,3 +550,137 @@ Player.playPause = function() {
 
 	InfoBanner.launchMaskingAfterDelay();
 };
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Updates the progress bar
+ * @param {Integer} time The current position inside the video (in milliseconds)
+ * @param {Integer} tT Total time of the video (in milliseconds)
+ */
+
+Player.activeOptionSigne = function(index) {
+	var $textContent = $(document.getElementById("playerOptionSigneCurrentValue"));
+
+	var playerPIP, playerMain;
+	playerPIP = this.playerManager.playerPip;
+	playerMain = this.playerManager.playerMain;
+
+	if(index !== Media.ls.length){
+
+		this.playerManager.controller.currentTime = this.videoMain.currentTime;
+		this.videoPip.controller = this.playerManager.controller;	
+		
+		playerPIP.startup();
+		playerPIP.setAutoPlay(false);
+		playerPIP.attachView(this.videoPip);
+		playerPIP.attachSource(Media.ls[Media.currentLSFIndex].url);
+
+		Media.currentLSFIndex = index;
+		Media.LSFEnabled = true;
+		eraseCookie("LSFDisabled");
+		$textContent.html(Media.ls[index].lang);
+
+	}else{
+		this.videoPip.controller = null;
+		playerPIP.reset();
+
+		Media.LSFEnabled = false;
+		setCookie("LSFDisabled", 1);
+		$textContent.html("Aucun");
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Updates the progress bar
+ * @param {Integer} time The current position inside the video (in milliseconds)
+ * @param {Integer} tT Total time of the video (in milliseconds)
+ */
+
+Player.activeOptionSub = function(index) {
+	var $textContent = $(document.getElementById("playerOptionSubCurrentValue"));
+	if(index !== Media.subtitlesList.length){
+		this.playerManager.playerMain.setTextTrack(index);
+
+		Media.currentSubtitleIndex = index;
+		Media.subtitleEnabled = true;
+		eraseCookie("subtitlesDisabled");
+		$textContent.html(Media.subtitlesList[index] + '<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
+
+	}else{
+		this.playerManager.playerMain.setTextTrack(-1);
+		
+		Media.subtitleEnabled = false;
+		Media.currentSubtitleIndex = 0;
+		setCookie("subtitlesDisabled", 1);
+		$textContent.html("Aucun");
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Updates the progress bar
+ * @param {Integer} time The current position inside the video (in milliseconds)
+ * @param {Integer} tT Total time of the video (in milliseconds)
+ */
+
+Player.activeOptionDescription = function(index) {
+		
+	var $textContent = $(document.getElementById("playerOptionDescriptionCurrentValue"));
+	if(index !== Media.audioDescriptions.length){
+
+		this.playerManager.controller.currentTime = this.videoMain.currentTime;
+		this.videoAudio.controller = this.playerManager.controller;
+		this.playerManager.playerAudio.startup();
+		this.playerManager.playerAudio.setAutoPlay(false);
+		this.playerManager.playerAudio.attachView(this.videoAudio);
+		this.playerManager.playerAudio.attachSource(Media.audioDescriptions[index].url);
+
+		Media.currentAudioDescriptionIndex = index;
+		Media.audioDescriptionEnabled = true;
+		eraseCookie("audioDescriptionDisabled");
+		$textContent.html(Media.audioDescriptions[index].lang);
+
+	}else{
+
+		this.videoAudio.controller = null;
+		this.playerManager.playerAudio.reset();
+
+		Media.audioDescriptionEnabled = false;
+		setCookie("audioDescriptionDisabled", 1);
+		$textContent.html("Aucun");
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Updates the progress bar
+ * @param {Integer} time The current position inside the video (in milliseconds)
+ * @param {Integer} tT Total time of the video (in milliseconds)
+ */
+
+Player.activeOptionAudio = function(index) {
+	
+	var $textContent = $(document.getElementById("playerOptionAudioCurrentValue"));
+	var $sliderVolume = $( document.getElementById("slider") );
+	var defaultVol = Settings.defaultVolumeValue;
+	
+	if(index !== Media.audiosList.length){
+		// TODO : changer langue audio de la vidéo principale
+		Media.currentAudioIndex = index;
+		Media.audioEnabled = true;
+		eraseCookie("muteEnabled");
+
+		setCookie("volumeValue", defaultVol);
+		this.setVolume(audioGainNode, videoGainNode, defaultVol);	
+
+		$textContent.html(Media.audiosList[index]);
+		$('.volume').css('background-position', '0 -50px');
+		$('.tooltip').css('left', defaultVol+5).text(defaultVol);
+		$sliderVolume.slider( "option", "value", defaultVol );
+
+	}else{
+		$sliderVolume.slider( "option", "value", 0 );
+		this.setMute();
+	}
+};
