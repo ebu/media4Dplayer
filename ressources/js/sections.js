@@ -18,8 +18,16 @@ var Section = {
 		"playlist-options",			// 11
 		"player",					// 12
 		"program-options",			// 13
-		"add-remove-fav",
-		"full-synopsis"],
+		"add-remove-fav",			// 14
+		"full-synopsis",			// 15
+		"settings-interface",		// 16
+		"settings-subtitles",		// 17
+		"settings-ls",
+		"settings-font-size",
+		"settings-subtitles-font-family",
+		"settings-subtitles-color",
+		"settings-subtitles-bgcolor",
+		"settings-subtitles-pip"],
 
 	"rubrics": {
 		"settings":["interface","audio","subtitles","ls"],
@@ -76,6 +84,10 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		// SM - Les options de "Mes vidéos" : Mes vidéos favorites, mes signets, mon historique
 		}else if(newSection === this.sections[6]){
 			this.change.toMyVideosOptions(newSection);
+			
+		// SM - Le menu réglages : Audio, interface, sous-titres, langue des signes
+		}else if(newSection === this.sections[8]){
+			this.change.toSettingsMenu();
 		
 		// SM - Mes vidéos favorites / signets / historiques : la liste des programmes
 		}else if(newSection === this.sections[10]){
@@ -92,6 +104,38 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		// SM - Le synopsis en fullscreen
 		}else if(newSection === this.sections[15]){
 			this.change.toFullscreenSynopsis();
+			
+		// SM - Le menu réglages de l'interface : Taille de texte
+		}else if(newSection === this.sections[16]){
+			this.change.toSettingsInterfaceMenu();
+			
+		// SM - Le menu réglages des sous-titres : Audio, interface, sous-titres, langue des signes
+		}else if(newSection === this.sections[17]){
+			this.change.toSettingsSubtitlesMenu();
+			
+		// SM - Les réglages du positionnement de la LS
+		}else if(newSection === this.sections[18]){
+			this.change.toSettingsLS();
+			
+		// SM - Le choix de la taille des polices
+		}else if(newSection === this.sections[19]){
+			this.change.toSettingsFontSize();
+			
+		// SM - Le choix de la police de caractère pour les sous-titres
+		}else if(newSection === this.sections[20]){
+			this.change.toSettingsFontFamily();
+			
+		// SM - Le choix de la couleur des sous-titres
+		}else if(newSection === this.sections[21]){
+			this.change.toSettingsSubtitlesColor();
+			
+		// SM - Le choix de la couleur d'arrière plan des sous-titres
+		}else if(newSection === this.sections[22]){
+			this.change.toSettingsSubtitlesBGColor();
+			
+		// SM - Les réglages du positionnement des sous-titres
+		}else if(newSection === this.sections[23]){
+			this.change.toSettingsSubtitlesPIP();
 		}
 	}
 };
@@ -274,6 +318,129 @@ Section.change.toFullscreenSynopsis = function(){
 	
 	Section.save();
 	Section.addClass("full-synopsis");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsMenu = function(){
+	Section.save();
+	Section.addClass("settings");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsInterfaceMenu = function(){
+	Section.save();
+	Section.addClass("settings-interface-menu");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsSubtitlesMenu = function(){
+	Section.save();
+	Section.addClass("settings-subtitles-menu");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsLS = function(){
+	Settings.init.ls();
+	Section.save();
+	Section.addClass("settings-ls");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsFontSize = function(){
+	Settings.init.interface.fontSize();
+	Section.save();
+	Section.addClass("settings-font-size");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsFontFamily = function(){
+	Settings.init.subtitles.fontFamily();
+	Section.save();
+	Section.addClass("settings-subtitles-font-family");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsSubtitlesColor = function(){
+	Settings.init.subtitles.color();
+	Section.save();
+	Section.addClass("settings-subtitles-color");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsSubtitlesBGColor = function(){
+	Settings.init.subtitles.BGColor();
+	Section.save();
+	Section.addClass("settings-subtitles-bgcolor");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsSubtitlesPIP = function(){
+	Settings.init.subtitles.pip();
+	Section.save();
+	Section.addClass("settings-subtitles-pip");
 };
 
 Section.addClass = function(className){

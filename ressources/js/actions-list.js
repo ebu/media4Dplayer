@@ -145,3 +145,7 @@ $(document.getElementById("program-options")).on("click", ".menu-item", function
 		Section.change(Section.sections[indexes[this.id]]);
 	}
 });
+
+$(document.getElementById("font-family")).on("click", ".menu-item", function(){
+	Settings.change.subtitlesFontFamily($(this).children("a").text());
+});

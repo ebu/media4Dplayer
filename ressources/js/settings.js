@@ -47,6 +47,19 @@ Settings.init = function(section, rubric){
  */
 
 Settings.init.interface = function(){
+	this.interface.fontSize();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.interface.fontSize = function(){
 	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
 	$(document.getElementById("fontSlide")).attr("value", valueMinSize);
 	Settings.change.fontSize(valueMinSize);
@@ -64,30 +77,13 @@ Settings.init.interface = function(){
 Settings.init.subtitles = function(){
 	
 	/* CHOIX DE POLICE */
-	var selectedFont = getCookie("subtitleFont");
-	if(selectedFont && Settings.fontList.indexOf(selectedFont) !== -1){
-		Settings.change.subtitlesFontFamily(selectedFont);
-		
-	}else{
-		setCookie("subtitleFont", Settings.fontList[0]);
-		Settings.change.subtitlesFontFamily(Settings.fontList[0]);
-	}
+	this.subtitles.fontFamily();
 	
 	/* COULEUR D'ARRIERE PLAN */
-	var selectedFontBGColor = getCookie("subtitleBGColor");
-	if(selectedFontBGColor){
-		Settings.change.subtitlesBackgroundColor(selectedFontBGColor);
-	}else{
-		Settings.change.subtitlesBackgroundColor("black");
-	}
+	this.subtitles.BGColor();
 	
 	/* COULEUR DU TEXTE */
-	var selectedFontColor = getCookie("subtitleFontColor");
-	if(selectedFontColor){
-		Settings.change.subtitlesColor(selectedFontColor);
-	}else{
-		Settings.change.subtitlesColor("transparent");
-	}
+	this.subtitles.color();
 	
 	/* OPACITE DE L'ARRIERE PLAN DES SOUS-TITRES */
 	var valueMinOpacity = (getCookie("subtitleBackgroundOpacity") != null) ? getCookie("subtitleBackgroundOpacity") : Settings.minOpacity;
@@ -99,18 +95,93 @@ Settings.init.subtitles = function(){
 	$(document.getElementById("subtitlesFontSlide")).attr("value", valueMinSize);
 	Settings.change.subtitlesFontSize(valueMinSize);
 	
+	/* POSITION DES SOUS-TITRES */
+	this.subtitles.pip();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.subtitles.fontFamily = function(){
+	var selectedFont = getCookie("subtitleFont");
+	if(selectedFont && Settings.fontList.indexOf(selectedFont) !== -1){
+		Settings.change.subtitlesFontFamily(selectedFont);
+		
+	}else{
+		setCookie("subtitleFont", Settings.fontList[0]);
+		Settings.change.subtitlesFontFamily(Settings.fontList[0]);
+	}	
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.subtitles.color = function(){
+	var selectedFontColor = getCookie("subtitleFontColor");
+	if(selectedFontColor){
+		Settings.change.subtitlesColor(selectedFontColor);
+	}else{
+		Settings.change.subtitlesColor("transparent");
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.subtitles.BGColor = function(){
+	var selectedFontBGColor = getCookie("subtitleBGColor");
+	if(selectedFontBGColor){
+		Settings.change.subtitlesBackgroundColor(selectedFontBGColor);
+	}else{
+		Settings.change.subtitlesBackgroundColor("black");
+	}	
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.subtitles.pip = function(){
+	
 	/* PIP SUBTITLES */
 	var pipTopPercent = (getCookie("LSFPipSubtitles_position_y") != null && !isNaN(getCookie("LSFPipSubtitles_position_y"))) ? getCookie("LSFPipSubtitles_position_y") : Settings.subtitlesDefaultPosition;
-	var $pipVideo = $(".ui-subtitles > .pip-video").css("top", pipTopPercent+"%");
+	var $container = $(document.getElementById(Main.simplifiedMode ? "uiSubtitles-sm-container" : "uiSubtitles-container")); 
+	var $pipVideo = $container.find(".pip-video").css("top", pipTopPercent+"%");
 	$pipVideo.draggable({ 	
-		containment: ".ui-subtitles",
+		containment: $container,
 		scroll:false,
 		axis: "y",
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
 			Settings.saveSubtitlesPIPPosition($( this ).parent($( this ).draggable( "option", "containment" )));
+		},
+		create: function(){
+			log("create event");
 		}
-	});	
+	});		
 };
 
 /**
@@ -130,9 +201,10 @@ Settings.init.ls = function(){
 	var pipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : defaultCoordonates.w;
 	var pipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : defaultCoordonates.h;	
 	
-	var $pipVideo = $(".ui-ls .pip-video").attr("style",'left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%');
-	$pipVideo.draggable({ 	
-		containment: $pipVideo.parents(".ui-ls"),
+	var $container = $(document.getElementById(Main.simplifiedMode ? "uiLS-container-sm" : "uiLS-container")); 
+	var $pipVideo = $container.find(".pip-video").attr("style",'left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%');
+	$pipVideo.draggable({
+		containment: $container,
 		scroll:false,
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
@@ -143,10 +215,6 @@ Settings.init.ls = function(){
 		handles: 'all',
 		minWidth: 100,
       	aspectRatio: true,
-		resize: function() {
-			log("resize");
-			//mySettingsScreen.updateIconsPip();
-		},
 		stop: function() {
 			log("Resize terminé !!!");
 			Settings.saveLSPIPSize($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
@@ -157,10 +225,10 @@ Settings.init.ls = function(){
 		}
 	});
 	
-	$('.ui-ls .ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
-	$('.ui-ls .ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne');
-	$('.ui-ls .ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw');
-	$('.ui-ls .ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
+	$container.find('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw').end()
+		.find('.ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne').end()
+		.find('.ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw').end()
+		.find('.ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
 };
 
 /**
@@ -187,9 +255,13 @@ Settings.change.fontSize = function(newValue){
  */
 
 Settings.change.subtitlesFontFamily = function(ff){
-	$(".option-font-family .font-family."+ff).addClass("selected").siblings().removeClass("selected");
 	setCookie("subtitleFont", ff);
-	$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Lexia").addClass(ff);
+	if(Main.simplifiedMode){
+		$(document.getElementById("font-family")).children(".menu-item."+ff).addClass("selected").siblings().removeClass("selected");		
+	}else{
+		$(".option-font-family .font-family."+ff).addClass("selected").siblings().removeClass("selected");
+		$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Lexia").addClass(ff);		
+	}
 };
 
 /**
@@ -204,7 +276,10 @@ Settings.change.subtitlesFontFamily = function(ff){
 Settings.change.subtitlesBackgroundColor = function(color){
 	$(".option-background-color .color."+color).addClass("selected").siblings().removeClass("selected");
 	setCookie("subtitleBGColor", color);
-	$(".ui-subtitles .pip-text").removeClass("blackBGColor whiteBGColor").addClass(color+"BGColor");
+	$(".option-background-color .color."+color).addClass("selected").siblings().removeClass("selected");
+	if(!Main.simplifiedMode){
+		$(".ui-subtitles .pip-text").removeClass("blackBGColor whiteBGColor").addClass(color+"BGColor");		
+	}
 };
 
 /**
@@ -219,7 +294,9 @@ Settings.change.subtitlesBackgroundColor = function(color){
 Settings.change.subtitlesColor = function(color){
 	$(".option-text-color .color."+color).addClass("selected").siblings().removeClass("selected");
 	setCookie("subtitleFontColor", color);
-	$(".ui-subtitles .pip-text").removeClass("multiColor whiteColor yellowColor blueColor").addClass(color+"Color");
+	if(!Main.simplifiedMode){
+		$(".ui-subtitles .pip-text").removeClass("multiColor whiteColor yellowColor blueColor").addClass(color+"Color");
+	}	
 };
 
 /**

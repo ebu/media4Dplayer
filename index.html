@@ -314,6 +314,141 @@
 				<a title="Retour" class="back">Retour</a>
 				<a title="Accueil" class="home" onclick="Main.goToHome();">Accueil</a>
 			</section>
+			<section id="settings-sm-container" class="manual-centering">
+				<h1>Réglages</h1>
+				<ul>
+					<li class="menu-item">
+						<a title="Accéder aux réglages audio">Audio</a>
+					</li>
+					<li class="menu-item">
+						<a title="Accéder aux réglages de l'interface" onclick="Section.change(Section.sections[16]);">Interface</a>
+					</li>
+					<li class="menu-item">
+						<a title="Accéder aux réglages des sous-titres" onclick="Section.change(Section.sections[17]);">Sous-titres</a>
+					</li>
+					<li class="menu-item">
+						<a title="Accéder aux réglages pour la langue des signes" onclick="Section.change(Section.sections[18]);">Langue des signes</a>
+					</li>
+				</ul>
+				<a title="Retour" class="back">Retour</a>
+			</section>
+			<section id="settings-interface-sm-container" class="manual-centering">
+				<h1>Réglages de l'interface</h1>
+				<ul>
+					<li class="menu-item">
+						<a title="Accéder aux réglages de la taille du texte" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
+					</li>
+					<li class="menu-item">
+						<a title="Accéder aux réglages du choix du thème">Choix du thème</a>
+					</li>
+				</ul>
+				<a title="Retour" class="back">Retour</a>
+			</section>
+			<section id="settings-subtitles-sm-container" class="manual-centering">
+				<h1>Réglages des sous-titres</h1>
+				<ul>
+					<li class="menu-item">
+						<a title="Accéder aux réglages de la police de caractère" onclick="Section.change(Section.sections[20]);">Choisir la police de caractère</a>
+					</li>
+					<li class="menu-item">
+						<a title="Accéder aux réglages de la couleur du texte" onclick="Section.change(Section.sections[21]);">Choisir la couleur du texte</a>
+					</li>
+					<li class="menu-item">
+						<a title="Accéder aux réglages de la couleur de fond du texte" onclick="Section.change(Section.sections[22]);">Choisir la couleur du fond du texte</a>
+					</li>
+					<li class="menu-item">
+						<a title="Accéder aux réglages du positionnement des sous-titres" onclick="Section.change(Section.sections[23]);">Positionner les sous-titres</a>
+					</li>
+				</ul>
+				<a title="Retour" class="back">Retour</a>
+			</section>
+			<section id="settings-ls-sm-container">
+				<h1>Placez et redimensionnez la fenêtre vidéo</h1>
+				<div class="buttons-container">
+					<a title="Retour" class="back-button">Retour</a>
+				</div>
+				<div id="uiLS-container-sm" class="ui-ls">
+					<div class="pip-limit" id="uiLimitLS-sm">
+						<div id="label-pip-main-video-sm" class="label-pip-video main">Vidéo</div>
+						<div class="pip-video">
+							<div id="label-pip-second-video-sm" class="label-pip-video">LS</div>
+							<div class="ui-icon-gripsmall-center"></div>
+						</div>
+					</div>							
+				</div>
+			</section>
+			<section id="settings-font-size-sm-container">
+				<h1>Taille du texte</h1>
+				<div class="buttons-container">
+					<a title="Retour" class="back-button">Retour</a>
+				</div>
+				<div class="option-font-size option-slider">
+					<div class="min-font-size">A</div>
+					<div class="slider-horizontal font-size">
+						<input id="fontSlide" min="16" max="24" value="16" step="1" onchange="Settings.change.fontSize(this.value)" type="range"/>
+					</div>
+					<div class="max-font-size">A</div>									
+				</div>
+			</section>
+			<section id="settings-subtitles-font-family-sm-container" class="manual-centering">
+				<h1>Choisir la police de caractère</h1>
+				<ul id="font-family">
+					<li class="menu-item Arial">
+						<a title="Choisir la police Arial">Arial</a>
+					</li>
+					<li class="menu-item OpenDyslexic">
+						<a title="Choisir la police OpenDyslexic">OpenDyslexic</a>
+					</li>
+					<li class="menu-item Andika">
+						<a title="Choisir la police Andika">Andika</a>
+					</li>
+					<li class="menu-item Helvetica">
+						<a title="Choisir la police Helvetica">Helvetica</a>
+					</li>
+					<li class="menu-item Lexia">
+						<a title="Choisir la police Lexia">Lexia</a>
+					</li>
+				</ul>
+				<a title="Retour" class="back">Retour</a>
+			</section>
+			<section id="settings-subtitles-color-sm-container">
+				<h1>Choisir la couleur de texte</h1>
+				<div class="buttons-container">
+					<a title="Retour" class="back-button">Retour</a>
+				</div>
+				<div class="option-text-color option-color">
+					<div title="Couleur transparent" class="color transparent"></div>
+					<div title="Couleur blanche" class="color white"></div>
+					<div title="Couleur jaune" class="color yellow"></div>
+					<div title="Couleur bleu" class="color blue"></div>
+				</div>
+			</section>
+			<section id="settings-subtitles-bgcolor-sm-container">
+				<h1>Choisir la couleur de fond du texte</h1>
+				<div class="buttons-container">
+					<a title="Retour" class="back-button">Retour</a>
+				</div>
+				<div class="option-background-color option-color">
+					<div title="Couleur blanche" class="color white"></div>
+					<div title="Couleur noire" class="color black"></div>
+				</div>
+			</section>
+			<section id="settings-subtitles-pip-sm-container">
+				<h1>Positionner les sous-titres</h1>
+				<div class="buttons-container">
+					<a title="Retour" class="back-button">Retour</a>
+				</div>
+				<div id="uiSubtitles-sm-container" class="ui-subtitles">
+					<div class="pip-video">
+						<div class="pip-text">Texte de sous-titre</div>
+						<div class="ui-icon-gripsmall-center"></div>
+						<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+						<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-sw ui-icon ui-icon-gripsmall-diagonal-sw"></div>
+						<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-ne ui-icon ui-icon-gripsmall-diagonal-ne"></div>
+						<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-nw ui-icon ui-icon-gripsmall-diagonal-nw"></div>						
+					</div>	
+				</div>
+			</section>
 		</div>
 		<section id="full-synopsis">
 			<a title="Retour" class="back-button">Retour</a>
