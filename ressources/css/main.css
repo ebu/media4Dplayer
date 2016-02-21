@@ -1106,8 +1106,15 @@ h2 {
 	margin: 30px 0 15px;
 }
 
-#settings-options-container .left-col{
+#settings-options-container .left-col, #separator{
 	float: left;
+}
+#separator {
+	width: 2px;
+	height: 180px;
+	background-color: #e7e8e8;
+	margin-left: 36px;
+	margin-top: 26px;
 }
 
 #settings-options-container .right-col{
@@ -1239,12 +1246,12 @@ h2 {
 .option-color .color.selected {
 	width: 52px;
 	height: 52px;
-	border-color: #000;
-	box-shadow: 0 0 45px #aaa;
+	border-color: #aaa;
+	box-shadow: 0 0 20px #aaa;
 }
 
 #subtitles-settings .option-color .color.selected {
-	box-shadow: 0 0 20px #aaa;	
+	box-shadow: 0 0 9px #aaa;	
 }
 
 .option-background-opacity > div{
