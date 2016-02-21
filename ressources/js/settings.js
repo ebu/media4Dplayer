@@ -61,7 +61,7 @@ Settings.init.interface = function(){
 
 Settings.init.interface.fontSize = function(){
 	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
-	$(document.getElementById("fontSlide")).attr("value", valueMinSize);
+	$(document.getElementById(Main.simplifiedMode ? "fontSlide-sm" : "fontSlide")).val(valueMinSize);
 	Settings.change.fontSize(valueMinSize);
 };
 
@@ -87,12 +87,12 @@ Settings.init.subtitles = function(){
 	
 	/* OPACITE DE L'ARRIERE PLAN DES SOUS-TITRES */
 	var valueMinOpacity = (getCookie("subtitleBackgroundOpacity") != null) ? getCookie("subtitleBackgroundOpacity") : Settings.minOpacity;
-	$(document.getElementById("opacitySlide")).attr("value", valueMinOpacity);
+	$(document.getElementById("opacitySlide")).val(valueMinOpacity);
 	Settings.change.subtitlesOpacity(valueMinOpacity);
 	
 	/* TAILLE DES SOUS-TITRES */
 	var valueMinSize = (getCookie("subtitleFontSize") != null) ? getCookie("subtitleFontSize") : Settings.minSubtitlesSize;
-	$(document.getElementById("subtitlesFontSlide")).attr("value", valueMinSize);
+	$(document.getElementById("subtitlesFontSlide")).val(valueMinSize);
 	Settings.change.subtitlesFontSize(valueMinSize);
 	
 	/* POSITION DES SOUS-TITRES */
