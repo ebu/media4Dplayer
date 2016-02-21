@@ -20,9 +20,12 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
 	border: 0 none;
 	font-size: 100%;
 	margin: 0;
-	/*outline: 0 none;*/
+	outline: 0 none;
 	padding: 0;
 	vertical-align: baseline;
+}
+a:focus{
+	outline: 0 none;
 }
 hr{
 	clear:both;
@@ -166,15 +169,6 @@ a.switch-btn{
 
 .btn{
 	cursor: pointer;
-}
-
-.btn:hover{
-	outline: #065f92 solid 2px;
-	cursor: pointer;
-}
-
-#simplified-mode-container .btn:hover{
-	outline: 0 none;
 }
 
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
