@@ -1192,7 +1192,7 @@ h1 {
 	margin-bottom: 30px;
 }
 
-.option-background-color{
+#subtitles-settings .option-color{
 	height: 54px;
 	line-height: 54px;
 }
@@ -1205,6 +1205,7 @@ h1 {
 	border: solid 1px #aaa;
 	vertical-align: middle;
 	box-shadow: 0px 0px 2px #aaa;
+	transition: all 0.2s; 
 }
 
 .option-color > div:hover{
@@ -1447,6 +1448,8 @@ h1 {
 
 .sm .option-color{
 	text-align: center;
+	height: 117px;
+	line-height: 117px;
 }
 
 .sm .option-color > div{
