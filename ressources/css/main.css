@@ -1,16 +1,4 @@
 @font-face {
-	font-family: 'helveticaNeue-Light';
-	src: url('../font/HelveticaNeue-Light.ttf') format('truetype');
-}
-@font-face {
-	font-family: 'helveticaNeue-Medium';
-	src: url('../font/HelveticaNeue-Medium.ttf') format('truetype');
-}
-@font-face {
-	font-family: 'helveticaNeue-Regular';
-	src: url('../font/HelveticaNeue-Regular.ttf') format('truetype');
-}
-@font-face {
     font-family: 'ayuthaya';
     src: url('../font/Ayuthaya.ttf') format('truetype');
 }
@@ -56,7 +44,7 @@ html{
 }
 
 body{
-	font-family: arial, sans-serif;
+	font-family: 'Raleway', sans-serif;
 	font-size: 1.6rem;
 	background-color: #fbfcfc;
 	position: relative;
@@ -110,8 +98,15 @@ body > div{
 	margin-top: 120px;
 }
 
+.menu-item, .sm .buttons-container a, .back-button{
+	font-weight: 400;	
+}
+
+.menu-item:hover, .sm .back-button:hover{
+	font-weight: 500;	
+}
+
 .menu-item{
-	font-family: "helveticaNeue-Regular";
 	margin-bottom: 40px;
 	list-style-type: none;
 }
@@ -125,7 +120,6 @@ body > div{
 }
 
 .menu-item:hover{
-	font-family: "helveticaNeue-Medium";
 	list-style-type: circle;
 }
 
@@ -161,8 +155,7 @@ a.switch-btn{
 	top: 45px;
 	left: 45px;
 	padding: 10px;
-	font-weight: bold;
-	font-family: "helveticaNeue-Regular";
+	font-weight: 500;
 	margin-left: 0;
 }
 
@@ -219,7 +212,7 @@ nav{
 .topbarButton{
 	color: #545454;
 	float: left;
-	font-family: "helveticaNeue-Regular";
+	font-weight: 500;
 	height: 100%;
 	line-height: 80px;
 	text-align: center;
@@ -257,7 +250,7 @@ nav{
 }
 
 .user a{
-	font-family: "helveticaNeue-Medium";
+	font-weight: 300;
 	font-size: 1.625em;
 }
 
@@ -281,16 +274,17 @@ nav{
 }
 
 h1, h2 {
-	font-family: "helveticaNeue-Light";
 	text-align: center;
 }
 
 h1 {
+	font-weight: 300;
 	font-size: 1.9em;
 }
 
 .sm h2 {
 	font-size: 1.6em;
+	font-weight: 600;
 }
 
 /* EN CONSTRUCTION */
@@ -365,7 +359,7 @@ h1 {
 }
 
 .playlist-text{
-	font-family: "helveticaNeue-Regular";
+	font-weight: 500;
 }
 
 .playlist-list{
@@ -409,7 +403,7 @@ h1 {
 }
 
 .item-playlist .item-infos .title {
-	font-family: "helveticaNeue-Regular";
+	font-weight: 500;
 	margin-top: 1%;
 }
 
@@ -418,7 +412,7 @@ h1 {
 }
 
 .item-playlist .item-infos .subtitle, .item-playlist .item-infos .infos{
-	font-family: "helveticaNeue-Light";
+	font-weight: 300;
 	font-size: 0.75em;
 }
 
@@ -468,10 +462,6 @@ h1 {
 	cursor: pointer;
 }
 
-.sm .back-button:hover{
-	font-weight: bold;
-}
-
 .sm .buttons-container .prev{
 	background-image: url("../img/fleche_precedent.png");
 	left: 681px;
@@ -507,16 +497,16 @@ h1 {
 }
 
 .playlist-sm .item .title{
-	font-family: "helveticaNeue-Regular";
-	font-weight: bold;	
+	font-weight: 500;
 }
 
 .playlist-sm .item .subtitle{
-	font-family: "helveticaNeue-Light";
+	font-weight: 300;
 }
 
 .playlist-sm .item .type, .program-date{
-	font-family: "helveticaNeue-Light";
+	font-family: arial, sans-serif;
+	font-weight: 300;
 	color: rgba(0, 0, 0, 0.5);
 }
 
@@ -580,6 +570,7 @@ h1 {
 	text-transform: uppercase;
 	height: 48px;
 	line-height: 48px;
+	font-weight: 500;
 }
 
 #related-content .item{
@@ -597,12 +588,11 @@ h1 {
 }
 
 #related-content .item > div {
-	font-family: "helveticaNeue-Regular";
 	line-height: 1.2;
 }
 
 #related-content .item .title{
-	font-weight: bold;
+	font-weight: 600;
 }
 
 #synopsis-and-social-icons-container{
@@ -639,6 +629,7 @@ h1 {
 	font-size: 1.8em;
 	text-align: left;
 	margin-top: 25px;
+	font-weight: 600;
 }
 
 .program-date{
@@ -1033,12 +1024,12 @@ h1 {
     text-align: center;
     color: white;
     line-height: 45px;
-    font-family: 'helveticaNeue-Regular';
+	font-weight: 500;
 }
 
 .optionDropDownMenuButton:hover{
 	cursor: pointer;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 /* SETTINGS */
@@ -1100,11 +1091,11 @@ h1 {
 #settings.interface li.interface, #settings.audio li.audio, #settings.subtitles li.subtitles, #settings.ls li.ls{
 	color: #fff;
 	background-color: #616161;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .title-subrubric{
-	font-family: "helveticaNeue-Light";
+	font-weight: 300;
 	font-size: 1.2em;
 	text-align: center;
 	margin-bottom: 20px;
@@ -1112,8 +1103,7 @@ h1 {
 
 #settings-options-container .label {
     color: #000;
-    font-family: 'helveticaNeue-Regular';
-	font-weight: bold;
+    font-weight: 500;
 	margin: 30px 0 15px;
 }
 
@@ -1129,7 +1119,7 @@ h1 {
 }
 
 .option-slider{
-    font-family: 'helveticaNeue-Regular';	
+    font-weight: 500;
 	height: 30px;
 	line-height: 30px;
 }
@@ -1251,6 +1241,10 @@ h1 {
 	height: 52px;
 	border-color: #000;
 	box-shadow: 0 0 45px #aaa;
+}
+
+#subtitles-settings .option-color .color.selected {
+	box-shadow: 0 0 20px #aaa;	
 }
 
 .option-background-opacity > div{
@@ -1427,7 +1421,7 @@ h1 {
 	position: absolute;
 	left: 10px;
 	color: #FFFFFF;
-	font-family: 'helveticaNeue-Regular';
+	font-weight: 500;
 	font-size: 3.5rem;
 	color: #aaa;
 }
@@ -1463,5 +1457,5 @@ h1 {
 
 .sm .option-color .color.selected{
 	width: 115px;
-	height: 115px;
+	height: 115px;	
 }
