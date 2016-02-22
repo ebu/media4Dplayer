@@ -89,8 +89,9 @@ body > div{
 	font-size: 1em;
 }
 
-#simplified-mode-container a:hover{
+#simplified-mode-container a:hover, .back-button:hover, a.switch-btn:hover{
 	cursor: pointer;
+	font-weight: 600;
 }
 
 .manual-centering ul, .manual-centering > a{
@@ -101,12 +102,8 @@ body > div{
 	margin-top: 120px;
 }
 
-.menu-item, .sm .buttons-container a, .back-button{
+.menu-item, .sm .buttons-container a, .back-button, .user:hover a{
 	font-weight: 400;	
-}
-
-.menu-item:hover, .sm .buttons-container a:hover, .back-button:hover{
-	font-weight: 500;	
 }
 
 .sm.epg-fiche .manual-centering > a.back{
@@ -114,7 +111,7 @@ body > div{
 	bottom: 75px;
 }
 
-.sm .back, .sm .home, .sm .back-to-home-button, #logout-btn-sm{
+.sm .back, .sm .home, .sm .back-to-home-button, #logout-btn-sm, .sm .back-button{
 	color: rgba(0, 0, 0, 0.5);
 }
 
@@ -144,10 +141,6 @@ body > div{
 	display: block;
 }
 
-#simplified-mode-container section > a:hover{
-	color: #000;
-}
-
 .section-with-topbar{
 	box-sizing: border-box;
 	padding-top: 83px;
@@ -167,10 +160,6 @@ a.switch-btn{
 	left: 45px;
 	padding: 10px;
 	margin-left: 0;
-}
-
-a.switch-btn:hover{
-	font-weight: 500;
 }
 
 .btn{
@@ -502,11 +491,7 @@ h2 {
 }
 
 .playlist-sm .item .title{
-	font-weight: 500;
-}
-
-.playlist-sm .item .subtitle{
-	font-weight: 300;
+	font-weight: 600;
 }
 
 .playlist-sm .item .type, .program-date{
@@ -520,9 +505,13 @@ h2 {
 }
 
 /* FICHE EPG */
+#epg-fiche-container-sm h1{
+	font-weight: 600;	
+}
 #epg-fiche-container-sm h2{
 	text-transform: uppercase;
 	margin-top: 20px;
+	font-weight: 300;
 }
 
 .sm.epg-fiche #epg-fiche-container-sm .home{
@@ -726,6 +715,7 @@ h2 {
 #videoPlayerContainer{
 	display: none;
 	background-color: #000;
+	font-family: arial, sans-serif;
 }
 
 #videoPlayerContainer video{
