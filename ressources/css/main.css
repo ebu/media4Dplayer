@@ -598,7 +598,7 @@ h2 {
 }
 
 #social-icons{
-	height: 30px;
+	height: 20px;
 }
 
 #social-icons .icon{
@@ -606,7 +606,7 @@ h2 {
 	border-right: 1px solid grey;
 	text-align: center;
 	height: 100%;
-	width: 85px;
+	width: 70px;
 }
 
 #social-icons .icon img{
@@ -615,7 +615,7 @@ h2 {
 
 #social-icons .icon:first-child{
 	text-align: left;
-	width: 55px;
+	width: 45px;
 }
 
 #social-icons .icon:last-child{
