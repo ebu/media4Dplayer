@@ -36,7 +36,8 @@ var Section = {
 	"rubric": null,
 	"template": "",
 	"oldClass":[],
-	"oldClassBeforeSetings":[]
+	"oldClassBeforeSetings":[],
+	"oldSelectionInMenu":null
 };
 
 /**
@@ -500,6 +501,7 @@ Section.launchSettingsFromPlayer = function(){
 	
 	Settings.backToPlayerFromSettings = true;
 	
+	this.oldSelectionInMenu = $(document.getElementById("menu")).children(".sel");
 	this.oldClassBeforeSetings = JSON.parse(JSON.stringify(this.oldClass));
 	this.change(Section.sections[Main.simplifiedMode?8:4]);
 };
@@ -519,6 +521,11 @@ Section.launchPlayerFromSettings = function(){
 	Settings.backToPlayerFromSettings = false;
 	this.oldClass = this.oldClassBeforeSetings;
 	this.oldClassBeforeSetings = [];
+	
+	if($(this.oldSelectionInMenu).length){
+		$(this.oldSelectionInMenu).addClass("sel").siblings(".sel").removeClass("sel");
+	}
+	this.oldSelectionInMenu = null;
 	
 	Player.playerManager.controller.play();
 };
