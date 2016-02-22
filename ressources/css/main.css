@@ -585,7 +585,7 @@ h2 {
 }
 
 #related-content .item > div {
-	line-height: 1.2;
+	line-height: 1.5;
 }
 
 #related-content .item .title{
@@ -668,7 +668,7 @@ h2 {
 }
 
 .synopsis{
-	line-height: 1.2;
+	line-height: 1.5;
 	overflow-y: auto;
 }
 
