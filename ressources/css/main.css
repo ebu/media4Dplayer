@@ -209,8 +209,8 @@ nav{
 	color: #545454;
 	float: left;
 	font-weight: 500;
-	height: 100%;
-	line-height: 81px;
+	height: 83px;
+	line-height: 83px;
 	text-align: center;
 	width: 19.5%;
 }
@@ -226,6 +226,7 @@ nav{
 
 .topbarImg{
 	margin-right: 5%;
+	width: 32px;
 }
 
 /* LISTE DES PROFILS */
