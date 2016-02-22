@@ -587,32 +587,11 @@ Navigation.goBack = function(time){
  */
 
 Navigation.goBack.resetData = function(){
-	// log('Navigation.goBack.resetData');
-	/*if(Section.oldTemplate.length){
-		Section.template = Section.oldTemplate[Section.oldTemplate.length-1];
-		Section.oldTemplate.pop();
-	}
-
-	// Redonne le focus au dernier élément cliqué
-	if(Navigation.oldEl.length){
-		Navigation.currentEl = Navigation.oldEl[Navigation.oldEl.length-1];
-		Navigation.oldEl.pop();
-	}
-
-	// MAJ du nom de la section
-	if(Section.oldName.length){
-		Section.name = Section.oldName[Section.oldName.length-1];
-		Section.oldName.pop();
-	}
-
-	// MAJ du nom de la rubric
-	if(Section.oldRubric.length){
-		Section.rubric = Section.oldRubric[Section.oldRubric.length-1] || null;
-		Section.oldRubric.pop();
-	}*/
-
-	// MAJ du nom du container des collections
-	if(Section.oldClass.length){
+	
+	if(Settings.backToPlayerFromSettings && $("body").hasClass("sm settings")){
+		Section.launchPlayerFromSettings();
+		
+	}else if(Section.oldClass.length){
 		$("body").attr("class", Section.oldClass[Section.oldClass.length-1]);
 		Section.oldClass.pop();
 	}

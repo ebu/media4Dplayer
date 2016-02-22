@@ -35,10 +35,8 @@ var Section = {
 	},
 	"rubric": null,
 	"template": "",
-	"oldTemplate": [],
-	"oldName": [],
-	"oldRubric": [],
-	"oldClass":[]
+	"oldClass":[],
+	"oldClassBeforeSetings":[]
 };
 
 /**
@@ -226,6 +224,8 @@ Section.change.toSettings = function(newSection, rubric){
 
 Section.change.toPlayer = function(data){
 	if(typeOf(data) === "object" && typeOf(data.video) === "object" && data.video.url){
+		
+		Dashboard.data = data;
 		
 		Player.load(data.video, function(){
 			Section.save();
@@ -484,4 +484,41 @@ Section.handleMenuSel = function(newSection){
 
 Section.launchPlayerLoading = function(data){
 	this.change(this.sections[12], null, data);		
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Section.launchSettingsFromPlayer = function(){
+	Player.playerManager.controller.pause();
+	
+	Settings.backToPlayerFromSettings = true;
+	
+	this.oldClassBeforeSetings = JSON.parse(JSON.stringify(this.oldClass));
+	this.change(Section.sections[Main.simplifiedMode?8:4]);
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Section.launchPlayerFromSettings = function(){
+	this.launchPlayerLoading(Dashboard.data);
+	
+	Settings.backToPlayerFromSettings = false;
+	this.oldClass = this.oldClassBeforeSetings;
+	this.oldClassBeforeSetings = [];
+	
+	Player.playerManager.controller.play();
 };

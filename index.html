@@ -96,6 +96,11 @@
 				</div>
 			</section>
 			<section id="settings" class="section-with-topbar interface">
+				<div id="back-to-player-button-container">
+					<div id="back-to-player-button" class="btn closeBtn" onclick="Section.launchPlayerFromSettings();">
+						<img alt="Revenir à la vidéo" src="ressources/img/player/gobacktoplayer.png"/>
+					</div>
+				</div>
 				<div id="subrubrics-container">
 					<ul id="settings-menu">
 						<li class="subrubric btn interface"><a title="Interface">Interface</a></li>
@@ -467,7 +472,7 @@
 			<div id="video-caption"></div>
 			<div id="playerUI">
 				<div id="playerTopBanner">
-					<div id="playerClose" class="btn" onclick="Player.validClose();"><img alt="Fermer le player" src="ressources/img/player/inte_close.png"/></div>
+					<div id="playerClose" class="btn closeBtn" onclick="Player.validClose();"><img alt="Fermer le player" src="ressources/img/player/inte_close.png"/></div>
 				</div>
 				<div id="playerBottomBanner">
 				<div id="playerOptions">
@@ -507,7 +512,7 @@
 						<div id="playerControlPlayPause" class="btn" onclick="Player.playPause();"></div>
 						<div id="playerControlFF" class="btn" onclick="Player.ff();"></div>
 					</div>
-					<div id="playerControlConfig" class="btn">
+					<div id="playerControlConfig" class="btn" onclick="Section.launchSettingsFromPlayer();">
 						<img alt="settings" src="ressources/img/player/reglages_player.png"/>
 					</div>
 				</div>

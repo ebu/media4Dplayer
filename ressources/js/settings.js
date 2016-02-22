@@ -7,7 +7,8 @@ var Settings = {
 	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Lexia"],
 	init:{},
 	change:{},
-	defaultVolumeValue:70
+	defaultVolumeValue:70,
+	backToPlayerFromSettings:false
 };
 
 /**
@@ -21,6 +22,13 @@ var Settings = {
 
 Settings.init = function(section, rubric){	
 	$(document.getElementById("settings")).attr("class", "section-with-topbar " + (rubric || Section.rubrics[section][0]));
+	
+	var $backToPlayerCtn = $(document.getElementById("back-to-player-button-container"));
+	if(this.backToPlayerFromSettings){
+		$backToPlayerCtn.show();
+	}else{
+		$backToPlayerCtn.hide();
+	}
 
 	var rubrics = Section.rubrics[section];
 	if(rubric === rubrics[1]){
