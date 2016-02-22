@@ -114,6 +114,10 @@ body > div{
 	bottom: 75px;
 }
 
+.sm .back, .sm .home, .sm .back-to-home-button, #logout-btn-sm{
+	color: rgba(0, 0, 0, 0.5);
+}
+
 .menu-item{
 	margin-bottom: 40px;
 	list-style-type: none;
