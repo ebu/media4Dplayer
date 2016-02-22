@@ -137,7 +137,6 @@ body > div{
 }
 
 #simplified-mode-container section > a{
-	color: rgba(0,0,0,0.5);
 	display: block;
 }
 
@@ -163,8 +162,11 @@ a.switch-btn{
 	top: 45px;
 	left: 45px;
 	padding: 10px;
-	font-weight: 500;
 	margin-left: 0;
+}
+
+a.switch-btn:hover{
+	font-weight: 500;
 }
 
 .btn{
