@@ -65,7 +65,7 @@ InfoBanner.generate = function(){
 	// SOUS-TITRES
 	var $subtitles = $(document.getElementById("playerOptionSubCurrentValue"));
 	if(Media.subtitleEnabled){
-		$subtitles.html(Media.subtitlesList[Media.currentSubtitleIndex] + '<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
+		$subtitles.html(Media.subtitlesList[Media.currentSubtitleIndex] + '<img alt="" src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
 		
 	}else{
 		$subtitles.text("Aucun");

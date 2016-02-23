@@ -47,7 +47,7 @@ Apps.generates = function(){
 	for(i=0;i<l;i++){
 		app = list[i];
 		if(Main.simplifiedMode){
-			html += '<li class="app menu-item"><a title="'+app.title+'">'+app.title+'</a></li>';
+			html += '<li class="app menu-item"><a tabindex="'+(i+2)+'" title="'+app.title+'" class="selectable-by-chromevox">'+app.title+'</a></li>';
 		}else{
 			html += '<li tabindex="'+(i+2)+'" class="app icon btn"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
 		}
@@ -100,7 +100,7 @@ Apps.programs.load.callback = function(data, jqXHR, onSuccess, appIndex, rubric)
 			var list = data[rubric === rubrics[0] ? "favorites" : rubric === rubrics[1] ? "signets" : "history"];
 			if(typeOf(list) === "array" && list.length){	
 			
-				$(document.getElementById("playlist-title")).html(rubric === rubrics[0] ? "Mes vidéos favorites" : rubric === rubrics[1] ? "Mes signets" : "Mon historique");
+				$(document.getElementById("playlist-title")).html('<span tabindex="1" class="selectable-by-chromevox">'+(rubric === rubrics[0] ? "Mes vidéos favorites" : rubric === rubrics[1] ? "Mes signets" : "Mon historique")+'</span>');
 
 				Apps.programs.generatesForSM(rubric);					
 			}else{
@@ -157,7 +157,7 @@ Apps.programs.generatesForSM = function(rubric){
 	var list = this.list[rubric === rubrics[0] ? "favorites" : rubric === rubrics[1] ? "signets" : "history"], i, l = list.length, program;
 	for(i=this.start;i<l&&i<limit;i++){
 		program = list[i];
-		$item = $('<li tabindex="'+tabindex+'" class="item btn"><div class="title">'+program.title+'</div><div class="subtitle">'+program.subtitle+'</div><div class="type">'+program.detail+'</div></li>').appendTo($container);
+		$item = $('<li tabindex="'+tabindex+'" class="item btn selectable-by-chromevox"><div class="title">'+program.title+'</div><div class="subtitle">'+program.subtitle+'</div><div class="type">'+program.detail+'</div></li>').appendTo($container);
 					
 		$item.data("data", program);
 		tabindex++;

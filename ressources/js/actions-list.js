@@ -79,11 +79,11 @@ $(".option-font-family").on("click", ".font-family", function(){
 });
 
 $(".option-background-color").on("click", ".color", function(){
-	Settings.change.subtitlesBackgroundColor($(this).attr("class").replace("color ", ""));
+	Settings.change.subtitlesBackgroundColor($(this).attr("data-color"));
 });
 
 $(".option-text-color").on("click", ".color", function(){
-	Settings.change.subtitlesColor($(this).attr("class").replace("color ", ""));
+	Settings.change.subtitlesColor($(this).attr("data-color"));
 });
 
 $(document.getElementById("synopsis-container")).on("click", function(){
@@ -148,4 +148,24 @@ $(document.getElementById("program-options")).on("click", ".menu-item", function
 
 $(document.getElementById("font-family")).on("click", ".menu-item", function(){
 	Settings.change.subtitlesFontFamily($(this).children("a").text());
+});
+
+/* POUR CHROMEVOX */
+$("body").on("mouseover", ".selectable-by-chromevox", function(){
+	Navigation.moveSelecteur(this);
+	
+}).on("keydown", ".selectable-by-chromevox", function(e){
+	if($(this).is(":focus") && e.key.toLowerCase() === "enter"){
+		log("J'ai cliqué sur un item focusé");		
+		this.click();
+	}
+	
+}).on("click", ".selectable-by-chromevox:not(.final-option)", function(e){
+	$("body > .cvox_indicator_container").find(".cvox_indicator_top, .cvox_indicator_middle_nw, .cvox_indicator_middle_ne, .cvox_indicator_middle_sw, .cvox_indicator_middle_se, .cvox_indicator_bottom").removeAttr("style");
+	this.blur();
+	$(this).mouseout();
+	
+}).on("focus", "#videoPlayerContainer .selectable-by-chromevox", function(){
+log("focus déclenché");
+	InfoBanner.launchMaskingAfterDelay();
 });

@@ -284,7 +284,7 @@ Settings.change.subtitlesFontFamily = function(ff){
 
 Settings.change.subtitlesBackgroundColor = function(color){
 	setCookie("subtitleBGColor", color);
-	$(".option-background-color .color."+color).addClass("selected").siblings().removeClass("selected");
+	$(".option-background-color .color[data-color='"+color+"']").addClass("selected").siblings().removeClass("selected");
 	$(".ui-subtitles .pip-text").removeClass("blackBGColor whiteBGColor").addClass(color+"BGColor");
 };
 
@@ -299,7 +299,7 @@ Settings.change.subtitlesBackgroundColor = function(color){
 
 Settings.change.subtitlesColor = function(color){
 	setCookie("subtitleFontColor", color);
-	$(".option-text-color .color."+color).addClass("selected").siblings().removeClass("selected");
+	$(".option-text-color .color[data-color='"+color+"']").addClass("selected").siblings().removeClass("selected");
 	$(".ui-subtitles .pip-text").removeClass("multiColor whiteColor yellowColor blueColor").addClass(color+"Color");
 };
 

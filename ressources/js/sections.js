@@ -246,7 +246,7 @@ Section.change.toPlayer = function(data){
 Section.change.toAppOptions = function(newSection, index){
 	Apps.indexAppInSM = index;
 	var title = Apps.list[index].title;
-	$(document.getElementById("app-title")).html(title);
+	$(document.getElementById("app-title")).html('<span tabindex="1" class="selectable-by-chromevox">'+title+'</span>');
 	$(document.getElementById("my-videos-btn")).children().html("Mes vidéos " + title);
 	Section.addClass("app-options");
 };
@@ -263,7 +263,7 @@ Section.change.toMyVideosOptions = function(newSection, $item){
 	Section.save();
 	
 	var title = Apps.list[Apps.indexAppInSM].title;
-	$(document.getElementById("my-videos-options-container")).children("h1").html("Mes vidéos " + title);
+	$(document.getElementById("my-videos-options-container")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Mes vidéos '+title+'</span>');
 	Section.addClass("my-videos-options");
 };
 
@@ -300,7 +300,8 @@ Section.change.toProgramOptions = function(){
 	var data = Dashboard.data;
 	
 	Section.save();
-	$(document.getElementById("epg-fiche-container-sm")).children("h1").html(data.title).end().children("h2").html(data.subtitle);
+	$(document.getElementById("epg-fiche-container-sm")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">'+data.title+'</span>').end()
+		.children("h2").html('<span tabindex="2" class="selectable-by-chromevox">'+data.subtitle+'</span>');
 	$(document.getElementById("add-remove-to-favorites")).children("a").html(Apps.programs.playlistType === Section.rubrics[Section.sections[10]][0] ? "Supprimer des favoris" : "Mettre en favoris");
 	Section.addClass("epg-fiche");
 };

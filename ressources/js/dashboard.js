@@ -95,7 +95,8 @@ Dashboard.generate = function(){
 Dashboard.generateFullscreenSynopsis = function(){
 	
 	var mediaData = Dashboard.data;
-	$(document.getElementById("full-synopsis")).children("h2").html(mediaData.subtitle).end().children(".program-date").html(mediaData.detail);
+	$(document.getElementById("full-synopsis")).children("h2").html('<span tabindex="2" class="selectable-by-chromevox">'+mediaData.subtitle+'</span>').end()
+		.children(".program-date").html('<span tabindex="3" class="selectable-by-chromevox">'+mediaData.detail+'</span>');
 	
     $(document.getElementById("synopsis2")).html(mediaData.synopsis);
 };

@@ -2,7 +2,7 @@
 	"favorites":[{
 		"title": "Le monde de jamy",
 		"subtitle": "Des volcans et des hommes",
-		"detail": "Émission du 07/05/2014 | 60 min",
+		"detail": "Émission du 07 Mai 2014 | 60 minutes",
 		"thumbnail":"ressources/img/temp/programs/LMDJ-thumb.png",
 		"picture": "ressources/img/temp/programs/LMDJ.png",
 		"hasAD": true,
@@ -34,7 +34,7 @@
 	},{
     	"title": "Le JT de France 2",
     	"subtitle": "JT du 20h du mercredi 10 Février 2016",
-    	"detail": "Émission du 10/02/2016",
+    	"detail": "Émission du 10 Février 2016",
 		"thumbnail":"ressources/img/temp/programs/JT_20h00-thumb.png",
     	"picture": "ressources/img/temp/programs/JT_20h00.png",
 		"hasAD": true,
@@ -45,15 +45,15 @@
     	"resume": "",
     	"relatedContent": [{
 	    	   "title": "Le JT de France 3",
-	    	   "subtitle": "Émission du 15/11/2015",
+	    	   "subtitle": "Émission du 15 Novembre 2015",
 	    	   "picture": "ressources/img/temp/related/icone_pt_video_JTFR3.png"
 	       },{
 	    	   "title": "Le JT de France 2",
-	    	   "subtitle": "Émission du 14/11/2015",
+	    	   "subtitle": "Émission du 14 Novembre 2015",
 	    	   "picture": "ressources/img/temp/related/icone_pt_video_JTFR2.png"
 	       },{
 	    	   "title": "Le JT de France 2",
-	    	   "subtitle": "Émission du 13/11/2015",
+	    	   "subtitle": "Émission du 13 Novembre 2015",
 	    	   "picture": "ressources/img/temp/related/icone_pt_video_JTFR2.png"
 	       }],
 	   "video":{
@@ -66,7 +66,7 @@
 	},{
     	"title": "Tchoupi",
     	"subtitle": "",
-    	"detail": "série d'animation | 5 min",
+    	"detail": "Série d'animation | 5 minutes",
 		"thumbnail":"ressources/img/temp/programs/TCHOUPI-thumb.png",
     	"picture": "ressources/img/temp/programs/TCHOUPI.png",
 		"hasAD": true,
@@ -86,7 +86,7 @@
 	},{
     	"title": "La météo",
     	"subtitle": "",
-    	"detail": "Emission du 08/02/2016 | 5 minutes",
+    	"detail": "Emission du 08 Février 2016 | 5 minutes",
 		"thumbnail":"ressources/img/temp/programs/METEO-thumb.png",
     	"picture": "ressources/img/temp/programs/METEO.png",
 		"hasAD": true,

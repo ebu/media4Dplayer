@@ -596,3 +596,25 @@ Navigation.goBack.resetData = function(){
 		Section.oldClass.pop();
 	}
 };
+
+Navigation.moveSelecteur = function(Obj){
+	//log("moveSelecteur start; Obj = "+Obj.innerHTML);
+	try {
+		if (!$(Obj).length) {
+			Obj = document.getElementById(Obj);
+		}
+
+		var Obj_ref = Obj;
+		var absoluteLeft = 0;
+		var absoluteTop = 0;
+		while (Obj_ref && Obj_ref.tagName !== 'body') {
+			absoluteLeft += Obj_ref.offsetLeft;
+			absoluteTop += Obj_ref.offsetTop;
+			Obj_ref = Obj_ref.offsetParent;
+		}
+		
+		Obj.focus();
+	} catch (err) {
+		log("Une erreur est survenue...");
+	}
+};

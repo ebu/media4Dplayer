@@ -35,9 +35,9 @@
 			</nav>
 			<section id="profils-list-container">
 				<ul id="profils-list" class="list">
-					<li class="user btn" tabindex="1">
-						<img alt="Profile de Invité" src="ressources/img/avatar.png"/>
-						<a title="Invité">Invité</a>
+					<li class="user btn selectable-by-chromevox" tabindex="1">
+						<img alt="Profil de " src="ressources/img/avatar.png"/>
+						<a>Invité</a>
 					</li>
 				</ul>
 			</section>
@@ -143,8 +143,8 @@
 								<div id="option-background-color" class="option-container">
 									<div class="label">Couleur d'arrière plan</div>
 									<div class="option-background-color option-color">
-										<div title="Couleur blanche" tabindex="31" class="color white"></div>
-										<div title="Couleur noire" tabindex="32" class="color black"></div>
+										<div title="Couleur blanche" tabindex="31" class="color white" data-color="white"></div>
+										<div title="Couleur noire" tabindex="32" class="color black" data-color="black"></div>
 									</div>									
 								</div>
 								<div id="option-background-opacity" class="option-container">
@@ -161,10 +161,10 @@
 								<div id="option-text-color" class="option-container">
 									<div class="label">Couleur de texte</div>
 									<div class="option-text-color option-color">
-										<div title="Couleur transparent" class="color transparent"></div>
-										<div title="Couleur blanche" class="color white"></div>
-										<div title="Couleur jaune" class="color yellow"></div>
-										<div title="Couleur bleu" class="color blue"></div>
+										<div title="Couleur transparent" class="color transparent" data-color="transparent"></div>
+										<div title="Couleur blanche" class="color white" data-color="white"></div>
+										<div title="Couleur jaune" class="color yellow" data-color="yellow"></div>
+										<div title="Couleur bleu" class="color blue" data-color="blue"></div>
 									</div>					
 								</div>	
 								<div id="option-subtitles-font-size" class="option-container">
@@ -209,170 +209,170 @@
 		</div>
 		<div id="simplified-mode-container">
 			<section id="apps-list-container-sm" class="manual-centering">
-				<a id="switch-to-standard-mode-btn" class="switch-btn btn" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="1">Basculer en mode normal</a>
-				<h1>Accueil</h1>
+				<a id="switch-to-standard-mode-btn" class="switch-btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="1">Basculer en mode normal</a>
+				<h1><span tabindex="2" class="selectable-by-chromevox">Accueil</span></h1>
 				<ul id="apps-list-sm"></ul>
-				<a id="logout-btn-sm" title="Se déconnecter">Se déconnecter</a>
+				<a id="logout-btn-sm" title="Se déconnecter"><span tabindex="100" class="selectable-by-chromevox">Se déconnecter</span></a>
 			</section>
 			<section id="app-options-container" class="manual-centering">
 				<h1 id="app-title"></h1>
 				<ul id="app-options">
 					<li id="my-videos-btn" class="menu-item">
-						<a title="Mes vidéos Pluzz"></a>
+						<a title="Mes vidéos Pluzz" tabindex="2" class="selectable-by-chromevox"></a>
 					</li>
 					<li id="search-btn" class="menu-item">
-						<a title="Recherche">Recherche</a>
+						<a title="Recherche" tabindex="3" class="selectable-by-chromevox">Recherche</a>
 					</li>
 					<li id="settings-btn" class="menu-item">
-						<a title="Réglages">Réglages</a>
+						<a title="Réglages" tabindex="4" class="selectable-by-chromevox">Réglages</a>
 					</li>
 					<li id="profil-btn" class="menu-item">
-						<a title="Mon profil">Mon profil</a>
+						<a title="Mon profil" tabindex="5" class="selectable-by-chromevox">Mon profil</a>
 					</li>
 				</ul>
-				<a title="Accueil" class="back-to-home-button">Accueil</a>
+				<a title="Accueil" class="back-to-home-button"><span tabindex="100" class="selectable-by-chromevox">Accueil</span></a>
 			</section>
 			<section id="my-videos-options-container" class="manual-centering">
 				<h1></h1>
 				<ul id="my-videos-options">
 					<li class="menu-item">
-						<a title="Mes vidéos favorites">Mes vidéos favorites</a>
+						<a title="Mes vidéos favorites" tabindex="2" class="selectable-by-chromevox">Mes vidéos favorites</a>
 					</li>
 					<li class="menu-item">
-						<a title="Mes signets">Mes signets</a>
+						<a title="Mes signets" tabindex="3" class="selectable-by-chromevox">Mes signets</a>
 					</li>
 					<li class="menu-item">
-						<a title="Mon historique">Mon historique</a>
+						<a title="Mon historique" tabindex="4" class="selectable-by-chromevox">Mon historique</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 			</section>
 			<section id="app-playlists-sm" class="playlist-sm">
 				<h1 id="playlist-title"></h1>
 				<div class="buttons-container">
-					<a title="Retour" class="back-button">Retour</a>
-					<a id="previous-page-playlist" title="Page précedente" class="prev">Page précedente</a>
-					<a id="next-page-playlist" title="Page suivante" class="next">Page suivante</a>
+					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+					<a id="previous-page-playlist" title="Page précedente" class="prev"><span tabindex="3" class="selectable-by-chromevox">Page précedente</span></a>
+					<a id="next-page-playlist" title="Page suivante" class="next"><span tabindex="4" class="selectable-by-chromevox">Page suivante</span></a>
 				</div>
 				<ul id="playlist"></ul>
 			</section>
 			<section id="options-favorites-container" class="manual-centering">
-				<h1>Options Favoris</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Options Favoris</span></h1>
 				<ul id="options-favorites">
 					<li id="play-video-btn" class="menu-item btn">
-						<a title="Lire la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
+						<a title="Lire la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);" tabindex="2" class="selectable-by-chromevox">Lire la vidéo</a>
 					</li>
 					<li id="see-fiche-btn" class="menu-item btn">
-						<a title="Accéder à la fiche">Accéder à la fiche</a>
+						<a title="Accéder à la fiche" tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
 					</li>
 					<li id="remove-favorite-btn" class="menu-item btn">
-						<a title="Supprimer des favoris">Supprimer des favoris</a>
+						<a title="Supprimer des favoris" tabindex="4" class="selectable-by-chromevox">Supprimer des favoris</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 			</section>
 			<section id="options-signets-container" class="manual-centering">
-				<h1>Options Signets</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Options Signets</span></h1>
 				<ul>
 					<li class="menu-item">
-						<a title="Lire à partir de ce signet">Lire à partir de ce signet</a>
+						<a title="Lire à partir de ce signet" tabindex="2" class="selectable-by-chromevox">Lire à partir de ce signet</a>
 					</li>
 					<li class="menu-item">
-						<a title="Supprimer ce signet">Supprimer ce signet</a>
+						<a title="Supprimer ce signet" tabindex="3" class="selectable-by-chromevox">Supprimer ce signet</a>
 					</li>
 					<li class="menu-item">
-						<a title="Éditer ce signet">Éditer ce signet</a>
+						<a title="Éditer ce signet" tabindex="4" class="selectable-by-chromevox">Éditer ce signet</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 			</section>
 			<section id="options-history-container" class="manual-centering">
-				<h1>Options Historique</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Options Historique</span></h1>
 				<ul>
 					<li class="menu-item">
-						<a title="Lire la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
+						<a title="Lire la vidéo" tabindex="2" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder à la fiche">Accéder à la fiche</a>
+						<a title="Accéder à la fiche" tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 			</section>
 			<section id="epg-fiche-container-sm" class="manual-centering">
 				<h1></h1>
 				<h2></h2>
 				<ul id="program-options">
 					<li id="play-video-btn-2" class="menu-item">
-						<a title="Accéder à la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);">Accéder à la vidéo</a>
+						<a title="Accéder à la vidéo" tabindex="3" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Accéder à la vidéo</a>
 					</li>
 					<li id="add-remove-to-favorites" class="menu-item">
-						<a title="Mettre ou supprimer un favoris"></a>
+						<a title="Mettre ou supprimer un favoris" tabindex="4" class="selectable-by-chromevox"></a>
 					</li>
 					<li id="see-full-synopsis-btn" class="menu-item">
-						<a title="Lire le résumé">Lire le résumé</a>
+						<a title="Lire le résumé" tabindex="5" class="selectable-by-chromevox">Lire le résumé</a>
 					</li>
 					<li id="see-related-content-btn" class="menu-item">
-						<a title="Les vidéos sur le même thème">Les vidéos sur le même thème</a>
+						<a title="Les vidéos sur le même thème" tabindex="6" class="selectable-by-chromevox">Les vidéos sur le même thème</a>
 					</li>
 					<li id="share-btn" class="menu-item">
-						<a title="Partager sur le réseaux">Partager sur le réseaux</a>
+						<a title="Partager sur le réseaux" tabindex="7" class="selectable-by-chromevox">Partager sur le réseaux</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
-				<a title="Accueil" class="home" onclick="Main.goToHome();">Accueil</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				<a title="Accueil" class="home" onclick="Main.goToHome();"><span tabindex="101" class="selectable-by-chromevox">Accueil</span></a>
 			</section>
 			<section id="settings-sm-container" class="manual-centering">
-				<h1>Réglages</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Réglages</span></h1>
 				<ul>
 					<li class="menu-item">
-						<a title="Accéder aux réglages audio">Audio</a>
+						<a title="Accéder aux réglages audio" tabindex="2" class="selectable-by-chromevox">Audio</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder aux réglages de l'interface" onclick="Section.change(Section.sections[16]);">Interface</a>
+						<a title="Accéder aux réglages de l'interface" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[16]);">Interface</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder aux réglages des sous-titres" onclick="Section.change(Section.sections[17]);">Sous-titres</a>
+						<a title="Accéder aux réglages des sous-titres" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[17]);">Sous-titres</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder aux réglages pour la langue des signes" onclick="Section.change(Section.sections[18]);">Langue des signes</a>
+						<a title="Accéder aux réglages pour la langue des signes" tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[18]);">Langue des signes</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 			</section>
 			<section id="settings-interface-sm-container" class="manual-centering">
-				<h1>Réglages de l'interface</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Réglages de l'interface</span></h1>
 				<ul>
 					<li class="menu-item">
-						<a title="Accéder aux réglages de la taille du texte" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
+						<a title="Accéder aux réglages de la taille du texte" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder aux réglages du choix du thème">Choix du thème</a>
+						<a title="Accéder aux réglages du choix du thème" tabindex="3" class="selectable-by-chromevox">Choix du thème</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 			</section>
 			<section id="settings-subtitles-sm-container" class="manual-centering">
-				<h1>Réglages des sous-titres</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Réglages des sous-titres</span></h1>
 				<ul>
 					<li class="menu-item">
-						<a title="Accéder aux réglages de la police de caractère" onclick="Section.change(Section.sections[20]);">Choisir la police de caractère</a>
+						<a title="Accéder aux réglages de la police de caractère" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[20]);">Choisir la police de caractère</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder aux réglages de la couleur du texte" onclick="Section.change(Section.sections[21]);">Choisir la couleur du texte</a>
+						<a title="Accéder aux réglages de la couleur du texte" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[21]);">Choisir la couleur du texte</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder aux réglages de la couleur de fond du texte" onclick="Section.change(Section.sections[22]);">Choisir la couleur du fond du texte</a>
+						<a title="Accéder aux réglages de la couleur de fond du texte" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[22]);">Choisir la couleur du fond du texte</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder aux réglages du positionnement des sous-titres" onclick="Section.change(Section.sections[23]);">Positionner les sous-titres</a>
+						<a title="Accéder aux réglages du positionnement des sous-titres" tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[23]);">Positionner les sous-titres</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 			</section>
 			<section id="settings-ls-sm-container">
-				<h1>Placez et redimensionnez la fenêtre vidéo</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Placez et redimensionnez la fenêtre vidéo</span></h1>
 				<div class="buttons-container">
-					<a title="Retour" class="back-button">Retour</a>
+					<a tabindex="2" title="Retour" class="back-button selectable-by-chromevox">Retour</a>
 				</div>
 				<div id="uiLS-container-sm" class="ui-ls">
 					<div class="pip-limit" id="uiLimitLS-sm">
@@ -385,9 +385,9 @@
 				</div>
 			</section>
 			<section id="settings-font-size-sm-container">
-				<h1>Taille du texte</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Taille du texte</span></h1>
 				<div class="buttons-container">
-					<a title="Retour" class="back-button">Retour</a>
+					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 				</div>
 				<div class="option-font-size option-slider">
 					<div class="min-font-size">A</div>
@@ -398,52 +398,52 @@
 				</div>
 			</section>
 			<section id="settings-subtitles-font-family-sm-container" class="manual-centering">
-				<h1>Choisir la police de caractère</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la police de caractère</span></h1>
 				<ul id="font-family">
 					<li class="menu-item Arial">
-						<a title="Choisir la police Arial">Arial</a>
+						<a title="Choisir la police Arial" tabindex="2" class="selectable-by-chromevox final-option">Arial</a>
 					</li>
 					<li class="menu-item OpenDyslexic">
-						<a title="Choisir la police OpenDyslexic">OpenDyslexic</a>
+						<a title="Choisir la police OpenDyslexic" tabindex="3" class="selectable-by-chromevox final-option">OpenDyslexic</a>
 					</li>
 					<li class="menu-item Andika">
-						<a title="Choisir la police Andika">Andika</a>
+						<a title="Choisir la police Andika" tabindex="4" class="selectable-by-chromevox final-option">Andika</a>
 					</li>
 					<li class="menu-item Helvetica">
-						<a title="Choisir la police Helvetica">Helvetica</a>
+						<a title="Choisir la police Helvetica" tabindex="5" class="selectable-by-chromevox final-option">Helvetica</a>
 					</li>
 					<li class="menu-item Lexia">
-						<a title="Choisir la police Lexia">Lexia</a>
+						<a title="Choisir la police Lexia" tabindex="6" class="selectable-by-chromevox final-option">Lexia</a>
 					</li>
 				</ul>
-				<a title="Retour" class="back">Retour</a>
+				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 			</section>
 			<section id="settings-subtitles-color-sm-container">
-				<h1>Choisir la couleur de texte</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la couleur de texte</span></h1>
 				<div class="buttons-container">
-					<a title="Retour" class="back-button">Retour</a>
+					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 				</div>
 				<div class="option-text-color option-color">
-					<div title="Couleur transparent" class="color transparent"></div>
-					<div title="Couleur blanche" class="color white"></div>
-					<div title="Couleur jaune" class="color yellow"></div>
-					<div title="Couleur bleu" class="color blue"></div>
+					<div title="Couleur transparent" class="color final-option transparent selectable-by-chromevox" tabindex="3" data-color="transparent"></div>
+					<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="4" data-color="white"></div>
+					<div title="Couleur jaune" class="color final-option yellow selectable-by-chromevox" tabindex="5" data-color="yellow"></div>
+					<div title="Couleur bleu" class="color final-option blue selectable-by-chromevox" tabindex="6" data-color="blue"></div>
 				</div>
 			</section>
 			<section id="settings-subtitles-bgcolor-sm-container">
-				<h1>Choisir la couleur de fond du texte</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la couleur de fond du texte</span></h1>
 				<div class="buttons-container">
-					<a title="Retour" class="back-button">Retour</a>
+					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 				</div>
 				<div class="option-background-color option-color">
-					<div title="Couleur blanche" class="color white"></div>
-					<div title="Couleur noire" class="color black"></div>
+					<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="3" data-color="white"></div>
+					<div title="Couleur noire" class="color final-option black selectable-by-chromevox" tabindex="4" data-color="black"></div>
 				</div>
 			</section>
 			<section id="settings-subtitles-pip-sm-container">
-				<h1>Positionner les sous-titres</h1>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Positionner les sous-titres</span></h1>
 				<div class="buttons-container">
-					<a title="Retour" class="back-button">Retour</a>
+					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 				</div>
 				<div id="uiSubtitles-sm-container" class="ui-subtitles">
 					<div class="pip-video">
@@ -458,12 +458,12 @@
 			</section>
 		</div>
 		<section id="full-synopsis">
-			<a title="Retour" class="back-button">Retour</a>
+			<a title="Retour" class="back-button"><span tabindex="1" class="selectable-by-chromevox">Retour</span></a>
 			<h2 class="oneline"></h2>
 			<div class="program-date"></div>
 			<div class="synopsis-container">
-				<div class="label">Résumé</div>
-				<div id="synopsis2" class="synopsis"></div>
+				<div class="label"><span tabindex="4" class="selectable-by-chromevox">Résumé</span></div>
+				<div tabindex="5" id="synopsis2" class="synopsis selectable-by-chromevox"></div>
 			</div>
 		</section>
 		<div id="videoPlayerContainer">
@@ -472,48 +472,48 @@
 			<div id="video-caption"></div>
 			<div id="playerUI">
 				<div id="playerTopBanner">
-					<div id="playerClose" class="btn closeBtn" onclick="Player.validClose();"><img alt="Fermer le player" src="ressources/img/player/inte_close.png"/></div>
+					<div id="playerClose" class="btn closeBtn selectable-by-chromevox" onclick="Player.validClose();" tabindex="1"><img alt="Fermer le player" src="ressources/img/player/inte_close.png"/></div>
 				</div>
 				<div id="playerBottomBanner">
 				<div id="playerOptions">
-					<div id="playerOptionAudio" class="btn video-option" onclick="InfoBanner.showOptionPopup('audio', this);">
+					<div id="playerOptionAudio" class="btn video-option selectable-by-chromevox final-option" onclick="InfoBanner.showOptionPopup('audio', this);" tabindex="2">
 						<div id="iconeLA" class="compatibility audio" title="Audio"></div>
 						<div id="playerOptionAudioCurrentValue" class="playerOptionValue"></div>							
 					</div>
-					<div id="playerOptionSub" class="btn video-option" onclick="InfoBanner.showOptionPopup('subtitle', this);">
+					<div id="playerOptionSub" class="btn video-option selectable-by-chromevox final-option" onclick="InfoBanner.showOptionPopup('subtitle', this);" tabindex="13">
 						<div id="iconeST" class="compatibility subtitle" title="Sous-titre"></div>
 						<div id="playerOptionSubCurrentValue" class="playerOptionValue"></div>
 					</div>
-					<div id="playerOptionDescription" class="btn video-option" onclick="InfoBanner.showOptionPopup('ad', this);">
+					<div id="playerOptionDescription" class="btn video-option selectable-by-chromevox final-option" onclick="InfoBanner.showOptionPopup('ad', this);" tabindex="24">
 						<div id="iconeAD" class="compatibility ad" title="Audio description"></div>
 						<div id="playerOptionDescriptionCurrentValue" class="playerOptionValue"></div>							
 					</div>
-					<div id="playerOptionSigne" class="btn video-option" onclick="InfoBanner.showOptionPopup('ls', this);">
+					<div id="playerOptionSigne" class="btn video-option selectable-by-chromevox final-option" onclick="InfoBanner.showOptionPopup('ls', this);" tabindex="35">
 						<div id="iconeLSF" class="compatibility ls" title="Langue des signes"></div>
 						<div id="playerOptionSigneCurrentValue" class="playerOptionValue"></div>							
 					</div>	
 				</div>
 				<div id="playerProgressInfos">
-					<div id="playerProgressCurrent">00 : 00</div>
+					<div id="playerProgressCurrent" class="selectable-by-chromevox final-option" tabindex="46" title="Position actuelle dans la vidéo">00 : 00</div>
 					<div id="playerProgressBar">
 						<div id="playerProgressCursor" style="width: 0%;"></div>
 					</div>
-					<div id="playerProgressTotal">09 : 49</div>
+					<div id="playerProgressTotal" class="selectable-by-chromevox final-option" tabindex="48" title="Temps total de la vidéo">09 : 49</div>
 				</div>
 				<div id="playerControls">
 					<div id="playerControlVolume">
 						<span class="tooltip" style="display: none;"></span> 
 						<span class="icon volume-mute"></span>
-						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 58%;"></a></div>
+						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" style="left: 58%;" tabindex="49" title="Contrôle du volume"></a></div>
 						<span class="icon volume"></span>
 					</div>
 					<div id="playerControlTrickMode">
-						<div id="playerControlRW" class="btn" onclick="Player.rw();"></div>
-						<div id="playerControlPlayPause" class="btn" onclick="Player.playPause();"></div>
-						<div id="playerControlFF" class="btn" onclick="Player.ff();"></div>
+						<div id="playerControlRW" class="btn selectable-by-chromevox final-option" onclick="Player.rw();" tabindex="50" title="Bouton retour rapide"></div>
+						<div id="playerControlPlayPause" class="btn selectable-by-chromevox final-option" onclick="Player.playPause();" tabindex="51" title="Bouton lecture | pause"></div>
+						<div id="playerControlFF" class="btn selectable-by-chromevox final-option" onclick="Player.ff();" tabindex="52" title="Bouton avance rapide"></div>
 					</div>
-					<div id="playerControlConfig" class="btn" onclick="Section.launchSettingsFromPlayer();">
-						<img alt="settings" src="ressources/img/player/reglages_player.png"/>
+					<div id="playerControlConfig" class="btn selectable-by-chromevox" onclick="Section.launchSettingsFromPlayer();" tabindex="53">
+						<img alt="Bouton paramètres" src="ressources/img/player/reglages_player.png"/>
 					</div>
 				</div>
 				<div id="optionDropDownMenu" class="optionDropDownMenu hidden"></div></div>

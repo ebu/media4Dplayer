@@ -89,7 +89,7 @@ body > div{
 	font-size: 1em;
 }
 
-#simplified-mode-container a:hover, .back-button:hover, a.switch-btn:hover{
+#simplified-mode-container a:hover, .back-button:hover, .switch-btn:hover{
 	cursor: pointer;
 	font-weight: 600;
 }
@@ -478,6 +478,7 @@ h2 {
 
 .playlist-sm .item{
 	width: 500px;
+	height: 90px;
 	float: left;
 	margin-bottom: 30px;
 	padding-left: 50px;
@@ -1484,3 +1485,7 @@ h2 {
 	width: 115px;
 	height: 115px;	
 }
+
+.selectable-by-chromevox{}
+.final-option{}
+.color{}
