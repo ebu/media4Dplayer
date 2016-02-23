@@ -234,7 +234,11 @@ nav{
 	display:inline-block;
 	vertical-align:middle;
 	width: 240px;
+	padding-top: 240px;
 	margin-left: 180px;
+	background: rgba(0, 0, 0, 0) url("../img/avatar.png") no-repeat scroll 0 0 / contain;
+	font-weight: 300;
+	font-size: 1.625em;
 }
 
 #profils-list .user:first-child{
@@ -244,11 +248,6 @@ nav{
 .user img{
 	width: 100%;
 	height: auto;
-}
-
-.user a{
-	font-weight: 300;
-	font-size: 1.625em;
 }
 
 /* LISTE DES APPLICATIONS */
