@@ -245,11 +245,6 @@ nav{
 	margin-left: 0;
 }
 
-.user img{
-	width: 100%;
-	height: auto;
-}
-
 /* LISTE DES APPLICATIONS */
 #apps-list .app{
 	display:inline-block;
