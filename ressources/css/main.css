@@ -59,7 +59,7 @@ body > div{
 }
 
 .bold{
-	font-weight: bold;
+	font-weight: 800;
 }
 
 .grey{
@@ -290,19 +290,20 @@ h2 {
 }
 
 #in-construction p{
-	line-height: 35px;
-	margin-bottom: 100px;
+	line-height: 1.5;
+	margin-bottom: 70px;
 }
 
-#back-button-in-construction-section{
-	width: 622px;
-	height: 107px;
-	line-height: 107px;
-	display: inline-block;
+#back-button-in-construction-section {
 	background-color: #959595;
-	color: #fff;
-	font-size: 3rem;
 	box-shadow: 0 0 3px rgba(0, 0, 0, 1);
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1.5em;
+	height: 70px;
+	line-height: 70px;
+	width: 413px;
 }
 
 /* SPLASH SCREEN */
@@ -806,7 +807,7 @@ h2 {
 }
 
 #playerBottomBanner > .optionDropDownMenu{
-	
+
 }
 
 #playerProgressInfos {
