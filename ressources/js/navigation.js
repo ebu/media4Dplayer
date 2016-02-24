@@ -622,8 +622,10 @@ Navigation.moveSelecteur = function(Obj){
 };
 
 Navigation.setFocusToFirstItem = function(){
-	var $defaultFocus = $("body").find(".switch-btn:visible, h1:visible span, .back-button:visible span, .user:visible:first");
-	if($defaultFocus.length){
-		this.moveSelecteur($defaultFocus[0]);
-	}	
+	if(Main.simplifiedMode){
+		var $defaultFocus = $("body").find("h1:visible span, .back-button:visible span, .user:visible:first");
+		if($defaultFocus.length){
+			this.moveSelecteur($defaultFocus[0]);
+		}
+	}
 };

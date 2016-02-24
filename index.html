@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
 	<head>
-		<title>Media 4D</title>
+		<title>Media 4D | Bienvenue dans Media4D</title>
 		<meta charset="UTF-8"/>
 		<meta name="apple-mobile-web-app-capable" content="yes"/>
 		<meta name="viewport" content="user-scalable=no"/>
@@ -39,7 +39,7 @@
 				</ul>
 			</section>
 			<section id="apps-list-container">
-				<a id="switch-to-simplified-mode-btn" class="switch-btn btn" title="Cliquez içi pour basculer en mode rapide et accessible" onclick="Main.switchToMode();" tabindex="1">Basculer en mode rapide et accessible</a>
+				<a id="switch-to-simplified-mode-btn" class="switch-btn btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode rapide et accessible" onclick="Main.switchToMode();" tabindex="1">Basculer en mode rapide et accessible</a>
 				<ul id="apps-list" class="list"></ul>
 			</section>
 			<section id="app-playlists" class="section-with-topbar">
@@ -206,8 +206,8 @@
 		</div>
 		<div id="simplified-mode-container">
 			<section id="apps-list-container-sm" class="manual-centering">
-				<a id="switch-to-standard-mode-btn" class="switch-btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="1">Basculer en mode normal</a>
-				<h1><span tabindex="2" class="selectable-by-chromevox">Accueil</span></h1>
+				<a id="switch-to-standard-mode-btn" class="switch-btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="2">Basculer en mode normal</a>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Accueil</span></h1>
 				<ul id="apps-list-sm"></ul>
 				<a id="logout-btn-sm" title="Se déconnecter" onclick="Section.change(Section.sections[0]);"><span tabindex="100" class="selectable-by-chromevox">Se déconnecter</span></a>
 			</section>
