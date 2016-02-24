@@ -451,6 +451,8 @@ Section.change.toSettingsSubtitlesPIP = function(){
 Section.addClass = function(className){
 	var cn = Main.simplifiedMode ? "sm " + className : className;
 	$("body").attr("class", cn);
+	
+	Navigation.setFocusToFirstItem();
 };
 
 Section.save = function(){

@@ -595,6 +595,8 @@ Navigation.goBack.resetData = function(){
 		$("body").attr("class", Section.oldClass[Section.oldClass.length-1]);
 		Section.oldClass.pop();
 	}
+	
+	Navigation.setFocusToFirstItem();
 };
 
 Navigation.moveSelecteur = function(Obj){
@@ -617,4 +619,11 @@ Navigation.moveSelecteur = function(Obj){
 	} catch (err) {
 		log("Une erreur est survenue...");
 	}
+};
+
+Navigation.setFocusToFirstItem = function(){
+	var $defaultFocus = $("body").find(".switch-btn:visible, h1:visible span, .back-button:visible span");
+	if($defaultFocus.length){
+		this.moveSelecteur($defaultFocus[0]);
+	}	
 };

@@ -151,10 +151,7 @@ $(document.getElementById("font-family")).on("click", ".menu-item", function(){
 });
 
 /* POUR CHROMEVOX */
-$("body").on("mouseover", ".selectable-by-chromevox", function(){
-	Navigation.moveSelecteur(this);
-	
-}).on("keydown", ".selectable-by-chromevox", function(e){
+$("body").on("keydown", ".selectable-by-chromevox", function(e){
 	if($(this).is(":focus") && e.key.toLowerCase() === "enter"){
 		log("J'ai cliqué sur un item focusé");		
 		this.click();
@@ -166,6 +163,6 @@ $("body").on("mouseover", ".selectable-by-chromevox", function(){
 	$(this).mouseout();
 	
 }).on("focus", "#videoPlayerContainer .selectable-by-chromevox", function(){
-log("focus déclenché");
+	log("focus déclenché");
 	InfoBanner.launchMaskingAfterDelay();
 });
