@@ -79,11 +79,11 @@ $(".option-font-family").on("click", ".font-family", function(){
 });
 
 $(".option-background-color").on("click", ".color", function(){
-	Settings.change.subtitlesBackgroundColor($(this).attr("data-color"));
+	Settings.change.subtitlesBackgroundColor($(this).data("color"));
 });
 
 $(".option-text-color").on("click", ".color", function(){
-	Settings.change.subtitlesColor($(this).attr("data-color"));
+	Settings.change.subtitlesColor($(this).data("color"));
 });
 
 $(document.getElementById("synopsis-container")).on("click", function(){
