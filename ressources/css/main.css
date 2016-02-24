@@ -213,6 +213,7 @@ nav{
 	line-height: 83px;
 	text-align: center;
 	width: 19.5%;
+	list-style: none;
 }
 
 .topbarButton.sel{
