@@ -622,7 +622,7 @@ Navigation.moveSelecteur = function(Obj){
 };
 
 Navigation.setFocusToFirstItem = function(){
-	var $defaultFocus = $("body").find(".switch-btn:visible, h1:visible span, .back-button:visible span");
+	var $defaultFocus = $("body").find(".switch-btn:visible, h1:visible span, .back-button:visible span, .user:visible:first");
 	if($defaultFocus.length){
 		this.moveSelecteur($defaultFocus[0]);
 	}	

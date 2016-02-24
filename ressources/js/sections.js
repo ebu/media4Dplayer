@@ -149,6 +149,7 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 
 Section.change.toProfils = function(){
 	json.cache = {};
+	Section.oldClass = [];
 	Section.addClass("profils-list");
 };
 
@@ -531,4 +532,17 @@ Section.launchPlayerFromSettings = function(){
 	this.oldSelectionInMenu = null;
 	
 	Player.playerManager.controller.play();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Section.launchProfilsLoading = function(){
+	Section.change(Section.sections[0]);
 };
