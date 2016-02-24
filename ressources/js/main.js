@@ -89,7 +89,7 @@ Main.onLoad = function () {
 		Section.change(Section.sections[0]);
 		setTimeout(function(){
 			Main.hideSplashScreen();
-		}, 1000);
+		}, 3000);
 	});
 };
 
