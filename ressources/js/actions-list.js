@@ -159,9 +159,32 @@ $(document.getElementById("font-family")).on("click", ".menu-item", function(){
 
 /* POUR CHROMEVOX */
 $("body").on("keydown", ".selectable-by-chromevox", function(e){
+	log(e.key);
 	if($(this).is(":focus") && e.key.toLowerCase() === "enter"){
 		log("J'ai cliqué sur un item focusé");		
 		this.click();
+		
+	}else if($(this).is(":focus") && e.key.toLowerCase() === "tab"){
+		var $current = this;
+		var $nextSel = $("body .selectable-by-chromevox:visible").filter(function(){
+			return this.tabIndex > $current.tabIndex;
+		}).eq(0);
+		
+		if(!$nextSel.length){
+			log("Il n'y a pas d'élément suivant");
+			
+			var $firstSel = $("body .selectable-by-chromevox:visible").filter(function(){
+				return this.tabIndex < $current.tabIndex;
+			}).eq(0);
+			
+			if($firstSel.length){
+				Navigation.moveSelecteur($firstSel[0]);
+			}
+			
+			return false;
+		}else{
+			log("Un élément suivant à été trouvé");
+		}
 	}
 	
 }).on("click", ".selectable-by-chromevox:not(.final-option)", function(e){
