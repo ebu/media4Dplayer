@@ -53,12 +53,6 @@
 					<div id="favorites-list" class="playlist-list"></div>
 				</div>
 			</section>
-			<section id="in-construction">
-				<div class="content">
-					<p class="grey">La page à laquelle vous tenter d'accéder n'existe pas encore.<br/><span class="bold">Pas de panique, nos agents très spéciaux sont sur le coup...</span></p>
-					<a id="back-button-in-construction-section" class="bold">Retour à la home</a>
-				</div>
-			</section>
 			<section id="epg-fiche-container" class="section-with-topbar">
 				<a title="Retour" class="back-button btn">Retour</a>
 				<h1></h1>
@@ -322,7 +316,7 @@
 				<h1><span tabindex="1" class="selectable-by-chromevox">Réglages</span></h1>
 				<ul>
 					<li class="menu-item">
-						<a title="Accéder aux réglages audio" tabindex="2" class="selectable-by-chromevox">Audio</a>
+						<a title="Accéder aux réglages audio" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[26]);">Audio</a>
 					</li>
 					<li class="menu-item">
 						<a title="Accéder aux réglages de l'interface" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[16]);">Interface</a>
@@ -343,7 +337,7 @@
 						<a title="Accéder aux réglages de la taille du texte" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
 					</li>
 					<li class="menu-item">
-						<a title="Accéder aux réglages du choix du thème" tabindex="3" class="selectable-by-chromevox">Choix du thème</a>
+						<a title="Accéder aux réglages du choix du thème" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[27]);">Choix du thème</a>
 					</li>
 				</ul>
 				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
@@ -463,6 +457,12 @@
 				<div tabindex="5" id="synopsis2" class="synopsis selectable-by-chromevox"></div>
 			</div>
 		</section>
+		<div id="in-construction">
+			<div class="content">
+				<p class="grey">La page à laquelle vous tenter d'accéder n'existe pas encore.<br/><span class="bold">Pas de panique, nos agents très spéciaux sont sur le coup...</span></p>
+				<a id="back-button-in-construction-section" class="bold" onclick="Navigation.goBack();">Retour à la home</a>
+			</div>
+		</div>
 		<div id="videoPlayerContainer">
 			<video id="videoPlayerMain" class="player mainPlayer" autoplay></video>
 			<video id="videoPlayerAudio" class="player audioPlayer" autoplay></video>

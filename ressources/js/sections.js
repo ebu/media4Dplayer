@@ -22,12 +22,16 @@ var Section = {
 		"full-synopsis",			// 15
 		"settings-interface",		// 16
 		"settings-subtitles",		// 17
-		"settings-ls",
-		"settings-font-size",
-		"settings-subtitles-font-family",
-		"settings-subtitles-color",
-		"settings-subtitles-bgcolor",
-		"settings-subtitles-pip"],
+		"settings-ls",						// 18
+		"settings-font-size",				// 19
+		"settings-subtitles-font-family",	// 20
+		"settings-subtitles-color",			// 21
+		"settings-subtitles-bgcolor",		// 22
+		"settings-subtitles-pip",			// 23
+		"in-construction",					// 24
+		"share-on-social-network",			// 25
+		"settings-audio",					// 26
+		"settings-interface-theme"],		// 27
 
 	"rubrics": {
 		"settings":["interface","audio","subtitles","ls"],
@@ -75,6 +79,10 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		// Le player
 		}else if(newSection === this.sections[12]){
 			this.change.toPlayer(mixed_var);
+			
+		// Ecran "en construction"
+		}else if(newSection === this.sections[24]){
+			this.change.toInConstructionScreen();
 		
 		// SM - Les options d'une appli : Mes vidéos, recherche, réglages et mon profil
 		}else if(newSection === this.sections[5]){
@@ -135,6 +143,9 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		// SM - Les réglages du positionnement des sous-titres
 		}else if(newSection === this.sections[23]){
 			this.change.toSettingsSubtitlesPIP();
+			
+		}else{
+			this.change.toInConstructionScreen();
 		}
 	}
 };
@@ -181,11 +192,19 @@ Section.change.toAppPlaylist = function(newSection, rubric, index){
 		return;
 	}
 	
-	Apps.programs.load(index, function(){
+	// TEMPORAIRE
+	if(rubric && rubric !== Section.rubrics[newSection][0]){
+		Section.change(Section.sections[24]);
+		return;
+	}
+	
+	Apps.programs.load(index, {onSuccess:function(){
 		Section.save();
 		Section.addClass("app-playlists");
 		Section.handleMenuSel(newSection);
-	}, rubric);
+	}, onError:function(){
+		Section.change(Section.sections[24]);
+	}}, rubric);
 };
 
 /**
@@ -234,6 +253,19 @@ Section.change.toPlayer = function(data){
 			Section.addClass("player");		
 		});
 	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the video player
+ * @param {String} newSection The name of the new section
+ * @param {Integer} rubric The rubric's name of the section
+ * @param {Object} params Contains parameters that will be used for the loading of section
+ */
+
+Section.change.toInConstructionScreen = function(){
+	Section.save();
+	Section.addClass("in-construction");
 };
 
 /**

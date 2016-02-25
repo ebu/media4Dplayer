@@ -146,7 +146,7 @@ body > div{
 	padding-top: 83px;
 }
 
-#full-synopsis, #videoPlayerContainer{
+#full-synopsis, #videoPlayerContainer, #in-construction{
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -281,7 +281,8 @@ h2 {
 
 /* EN CONSTRUCTION */
 #in-construction{
-	text-align: center;	
+	text-align: center;
+	display: none;
 }
 
 #in-construction .content{
@@ -304,6 +305,11 @@ h2 {
 	height: 70px;
 	line-height: 70px;
 	width: 413px;
+	transition: all 0.2s;
+}
+
+#back-button-in-construction-section:hover{
+	box-shadow: 0 0 8px rgba(0, 0, 0, 1);
 }
 
 /* SPLASH SCREEN */

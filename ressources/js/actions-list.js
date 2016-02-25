@@ -27,6 +27,8 @@ $(document.getElementById("menu")).on("click", ".btn", function(){
 	if(section){
 		Section.oldClass = [];
 		Section.change(section, null, mixed_var, $(this));
+	}else{
+		Section.change(sections[24]);
 	}
 });
 
@@ -125,7 +127,7 @@ $(document.getElementById("my-videos-options")).on("click", ".menu-item", functi
 	var rubric = Section.rubrics[Section.sections[10]][$(this).index()];
 	if(rubric){
 		Section.change(Section.sections[10], rubric);
-	}	
+	}
 });
 
 $(document.getElementById("playlist")).on("click", ".item", function(){
@@ -141,8 +143,13 @@ $(document.getElementById("options-favorites")).on("click", ".menu-item", functi
 
 $(document.getElementById("program-options")).on("click", ".menu-item", function(){
 	if(Dashboard.data){
-		var indexes = {"play-video-btn-2":12,"add-remove-to-favorites":14,"see-full-synopsis-btn":15,"see-related-content-btn":10};
-		Section.change(Section.sections[indexes[this.id]]);
+		
+		if(this.id === "see-related-content-btn"){
+			Section.change(Section.sections[10], Section.rubrics[Section.sections[10]][3]);
+		}else{
+			var indexes = {"play-video-btn-2":12,"add-remove-to-favorites":14,"see-full-synopsis-btn":15,"share-btn":25};
+			Section.change(Section.sections[indexes[this.id]]);			
+		}
 	}
 });
 

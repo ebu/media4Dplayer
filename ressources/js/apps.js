@@ -72,17 +72,21 @@ Apps.programs.reset = function(){
 	}	
 };
 
-Apps.programs.load = function(appIndex, onSuccess, rubric){
+Apps.programs.load = function(appIndex, callbackList, rubric){
 	this.reset();
 	var app = Apps.list[appIndex];
 	if(typeOf(app) === "object" && app.userProgramsListUrl){
 		API.getAppPlaylistsOfUser(app.userProgramsListUrl, appIndex, function(data, jqXHR){
-			Apps.programs.load.callback(data, jqXHR, onSuccess, appIndex, rubric);
+			Apps.programs.load.callback(data, jqXHR, callbackList, appIndex, rubric);
 		});
+	
+	// TEMPORAIRE : affichera "page en construction" pour les app qui n'ont pas de programmes
+	}else if(typeOf(callbackList) === "object" && typeOf(callbackList.onError) === "function"){
+		callbackList.onError();
 	}
 };
 
-Apps.programs.load.callback = function(data, jqXHR, onSuccess, appIndex, rubric){
+Apps.programs.load.callback = function(data, jqXHR, callbackList, appIndex, rubric){
 	if(typeOf(data) === "object" && !isEmpty(data)){
 		
 		if(!json.cache["programs"]){
@@ -111,8 +115,8 @@ Apps.programs.load.callback = function(data, jqXHR, onSuccess, appIndex, rubric)
 			Apps.programs.generates();
 		}
 		
-		if(typeOf(onSuccess) === "function"){
-			onSuccess();
+		if(typeOf(callbackList) === "object" && typeOf(callbackList.onSuccess) === "function"){
+			callbackList.onSuccess();
 		}
 	}
 };
