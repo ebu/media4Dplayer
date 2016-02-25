@@ -314,7 +314,7 @@ h2 {
 	font-size: 1.5em;
 	height: 70px;
 	line-height: 70px;
-	width: 413px;
+	padding: 0 30px;
 	transition: all 0.2s;
 }
 
