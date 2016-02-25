@@ -814,3 +814,12 @@ function getCookie(name) {
 function eraseCookie(name) {
 	setCookie(name, "", -1);
 }
+
+getTimeText = function(min, sec){
+	if(!min){
+		return sec+' secondes ';
+		
+	}else{
+		return min + ' minutes ' + sec;
+	}
+};

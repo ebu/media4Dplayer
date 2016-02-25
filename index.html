@@ -387,7 +387,7 @@
 				<div class="option-font-size option-slider">
 					<div class="min-font-size">A</div>
 					<div class="slider-horizontal font-size">
-						<input id="fontSlide-sm" min="16" max="24" value="16" step="1" onchange="Settings.change.fontSize(this.value)" type="range"/>
+						<input id="fontSlide-sm" min="16" max="24" step="1" onchange="Settings.change.fontSize(this.value)" type="range" tabindex="3" class="selectable-by-chromevox"/>
 					</div>
 					<div class="max-font-size">A</div>									
 				</div>
@@ -462,9 +462,9 @@
 			</div>
 		</section>
 		<div id="in-construction">
-			<div class="content selectable-by-chromevox" tabindex="1" onclick="Navigation.goBack();">
-				<p class="grey">La page à laquelle vous tenter d'accéder n'existe pas encore.<br/><span class="bold">Pas de panique, nos agents très spéciaux sont sur le coup.</span></p>
-				<a id="back-button-in-construction-section" class="bold" onclick="Navigation.goBack();">Retour à la page précédente</a>
+			<div class="content">
+				<p class="grey selectable-by-chromevox" tabindex="1">La page à laquelle vous tenter d'accéder n'existe pas encore.<br/><span class="bold">Pas de panique, nos agents très spéciaux sont sur le coup.</span></p>
+				<a id="back-button-in-construction-section" class="bold selectable-by-chromevox" onclick="Navigation.goBack();" tabindex="2">Retour à la page précédente</a>
 			</div>
 		</div>
 		<div id="videoPlayerContainer">
@@ -495,17 +495,17 @@
 					</div>	
 				</div>
 				<div id="playerProgressInfos">
-					<div id="playerProgressCurrent" class="selectable-by-chromevox final-option" tabindex="46" title="Position actuelle dans la vidéo">00 : 00</div>
+					<div id="playerProgressCurrent"><span class="selectable-by-chromevox final-option" tabindex="46" aria-labelledby="current-time-label"></span><span id="current-time-label" class="hidden"></span></div>
 					<div id="playerProgressBar">
-						<div id="playerProgressCursor" style="width: 0%;"></div>
+						<div id="playerProgressCursor"></div>
 					</div>
-					<div id="playerProgressTotal" class="selectable-by-chromevox final-option" tabindex="48" title="Temps total de la vidéo">09 : 49</div>
+					<div id="playerProgressTotal"><span class="selectable-by-chromevox final-option" tabindex="48" aria-labelledby="total-time-label"></span><span id="total-time-label" class="hidden"></span></div>
 				</div>
 				<div id="playerControls">
 					<div id="playerControlVolume">
-						<span class="tooltip" style="display: none;"></span> 
+						<span class="tooltip" role="tooltip" style="display: none;"></span> 
 						<span class="icon volume-mute"></span>
-						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" style="left: 58%;" tabindex="49" title="Contrôle du volume"></a></div>
+						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false" title="Volume"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" style="left: 58%;" tabindex="49" title="Contrôle du volume" role="slider" aria-valuenow="0" aria-valuetext="0 pourcent" aria-valuemin="0" aria-valuemax="100"></a></div>
 						<span class="icon volume"></span>
 					</div>
 					<div id="playerControlTrickMode">

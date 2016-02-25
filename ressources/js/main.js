@@ -47,8 +47,9 @@ Main.onLoad = function () {
 			
             var value = ui.value,//slider.slider('value'),
                 volume = $('.volume');
- 
-            tooltip.css('left', $(this).children("a").css("left")).text(ui.value);
+			
+			var $slider = $(this).children("a");
+            tooltip.css('left', $slider.css("left")).text(ui.value);
  
             if(value <= 5) { 
                 volume.css('background-position', '0 0');
@@ -62,6 +63,8 @@ Main.onLoad = function () {
             }else{
                 volume.css('background-position', '0 -75px');
             }
+			
+			$slider.attr("aria-valuenow", value).attr("aria-valuetext", value + " pourcent");
 			
 			try{
 				if(!value){

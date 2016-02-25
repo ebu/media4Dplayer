@@ -348,8 +348,8 @@ InfoBanner.progressBar.reset = function(){
 	
 	Player.stopCheckVideoPosition();
 	
-	$(document.getElementById("playerProgressCurrent")).text("-");
-	$(document.getElementById("playerProgressTotal")).text("-");
+	$(document.getElementById("playerProgressCurrent")).children().empty();
+	$(document.getElementById("playerProgressTotal")).children().empty();
 	$(document.getElementById("playerProgressCursor")).css("width", 0);
 	
 	InfoBanner.hidePauseBtn();
@@ -385,6 +385,6 @@ InfoBanner.progressBar.update = function(time, tT){
 	timeC = (!isNaN(timeMinute) && !isNaN(timeSecond)) ? pad(timeMinute) + " : " + pad(timeSecond) : timeC;
 	timeT = (!isNaN(totalTimeMinute) && !isNaN(totalTimeSecond)) ? pad(totalTimeMinute) + " : " + pad(totalTimeSecond) : timeT;
 
-	$(document.getElementById("playerProgressCurrent")).text(timeC);
-	$(document.getElementById("playerProgressTotal")).text(timeT);
+	$(document.getElementById("playerProgressCurrent")).children("span:first-child").text(timeC).end().children("span:last-child").text('Temps actuel '+getTimeText(timeMinute, timeSecond));
+	$(document.getElementById("playerProgressTotal")).children("span:first-child").text(timeT).end().children("span:last-child").text('Temps total '+getTimeText(totalTimeMinute, totalTimeSecond));
 };
