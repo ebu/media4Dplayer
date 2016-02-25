@@ -85,11 +85,10 @@ Main.onLoad = function () {
 	
 	Main.firstLaunch = true;
 	API.getConfig(function() {
-	    //Main.initApp();
-		Section.change(Section.sections[0]);
 		setTimeout(function(){
+			Section.change(Section.sections[0]);
 			Main.hideSplashScreen();
-		}, 3000);
+		}, 5000);
 	});
 };
 
