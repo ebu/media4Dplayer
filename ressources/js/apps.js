@@ -49,7 +49,7 @@ Apps.generates = function(){
 		if(Main.simplifiedMode){
 			html += '<li class="app menu-item"><a tabindex="'+(i+2)+'" title="'+app.title+'" class="selectable-by-chromevox">'+app.title+'</a></li>';
 		}else{
-			html += '<li tabindex="'+(i+2)+'" class="app icon btn"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
+			html += '<li tabindex="'+(i+2)+'" class="app icon btn selectable-by-chromevox"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
 		}
 	}
 	

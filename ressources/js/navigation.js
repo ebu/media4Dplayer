@@ -622,10 +622,10 @@ Navigation.moveSelecteur = function(Obj){
 };
 
 Navigation.setFocusToFirstItem = function(){
-	if(Main.simplifiedMode){
-		var $defaultFocus = $("body").find("h1:visible span.selectable-by-chromevox, .back-button:visible span, #in-construction:visible .content");
+	//if(Main.simplifiedMode){
+		var $defaultFocus = $("body").find("h1:visible span.selectable-by-chromevox, .back-button:visible span.selectable-by-chromevox, #in-construction:visible .content.selectable-by-chromevox, #switch-to-simplified-mode-btn.selectable-by-chromevox:visible");
 		if($defaultFocus.length){
 			this.moveSelecteur($defaultFocus[0]);
 		}
-	}
+	//}
 };
