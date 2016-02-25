@@ -623,7 +623,7 @@ Navigation.moveSelecteur = function(Obj){
 
 Navigation.setFocusToFirstItem = function(){
 	if(Main.simplifiedMode){
-		var $defaultFocus = $("body").find("h1:visible span, .back-button:visible span, .user:visible:first");
+		var $defaultFocus = $("body").find("h1:visible span, .back-button:visible span, .user:visible:first, #in-construction:visible .content");
 		if($defaultFocus.length){
 			this.moveSelecteur($defaultFocus[0]);
 		}
