@@ -333,8 +333,9 @@ Section.change.toProgramOptions = function(){
 	var data = Dashboard.data;
 	
 	Section.save();
-	$(document.getElementById("epg-fiche-container-sm")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">'+data.title+'</span>').end()
-		.children("h2").html('<span tabindex="2" class="selectable-by-chromevox">'+data.subtitle+'</span>');
+	var title = data.subtitle ? data.title+' : '+data.subtitle : data.title;
+	$(document.getElementById("epg-fiche-container-sm")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Fiche de programme</span>').end()
+		.children("h2").html('<span tabindex="2" class="selectable-by-chromevox">'+title+'</span>');
 	$(document.getElementById("add-remove-to-favorites")).children("a").html(Apps.programs.playlistType === Section.rubrics[Section.sections[10]][0] ? "Supprimer des favoris" : "Mettre en favoris");
 	Section.addClass("epg-fiche");
 };
