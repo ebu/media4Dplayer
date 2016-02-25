@@ -34,9 +34,13 @@
 				</menu>
 			</nav>
 			<section id="profils-list-container">
-				<ul id="profils-list" class="list">
-					<li class="user btn selectable-by-chromevox" tabindex="1" title="Profil de invité"><a>Invité</a></li>
-				</ul>
+				<h1><span tabindex="1" class="selectable-by-chromevox">Choisissez votre profil</span></h1>
+				<div id="profils-list-container-2">
+					
+					<ul id="profils-list" class="list">
+						<li class="user btn"><a title="Profil de invité" tabindex="2" class="selectable-by-chromevox" aria-labelledby="profil0">Invité</a><span id="profil0" aria-hidden="true" class="hidden">Profil de invité</span></li>
+					</ul>
+				</div>
 			</section>
 			<section id="apps-list-container">
 				<a id="switch-to-simplified-mode-btn" class="switch-btn btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode rapide et accessible" onclick="Main.switchToMode();" tabindex="1">Basculer en mode rapide et accessible</a>
