@@ -565,6 +565,7 @@ h2 {
 
 #media-thumb{
 	width: 100%;
+	height: 100%;
 }
 
 #play-icon{
@@ -596,6 +597,7 @@ h2 {
 
 #related-content .item img{
 	width: 100%;
+	height: 93px;
 }
 
 #related-content .item > div {
