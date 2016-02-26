@@ -83,8 +83,8 @@ Main.onLoad = function () {
         stop: function(event, ui) {
           tooltip.fadeOut('fast');
         }
-	});
-	var tooltip = $('.tooltip').hide();	
+	}).children("a").attr("aria-valuenow", defaultValue).attr("aria-valuetext", defaultValue + " pourcent");
+	var tooltip = $('.tooltip').hide();
 	
 	Main.firstLaunch = true;
 	API.getConfig(function() {

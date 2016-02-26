@@ -600,7 +600,7 @@ Navigation.goBack.resetData = function(){
 };
 
 Navigation.moveSelecteur = function(Obj){
-	//log("moveSelecteur start; Obj = "+Obj.innerHTML);
+	log("moveSelecteur start; Obj = "+Obj.innerHTML);
 	try {
 		if (!$(Obj).length) {
 			Obj = document.getElementById(Obj);
@@ -622,7 +622,7 @@ Navigation.moveSelecteur = function(Obj){
 };
 
 Navigation.setFocusToFirstItem = function(){
-	var $defaultFocus = $("body").find("h1:visible span.selectable-by-chromevox, .back-button:visible span.selectable-by-chromevox, #in-construction:visible .selectable-by-chromevox, #switch-to-simplified-mode-btn.selectable-by-chromevox:visible");
+	var $defaultFocus = $("body").find("h1:visible span.selectable-by-chromevox, .back-button:visible span.selectable-by-chromevox, #in-construction:visible .selectable-by-chromevox, #switch-to-simplified-mode-btn.selectable-by-chromevox:visible, .closeBtn:visible");
 	if($defaultFocus.length){
 		this.moveSelecteur($defaultFocus[0]);
 	}

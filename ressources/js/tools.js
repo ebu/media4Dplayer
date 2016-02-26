@@ -818,7 +818,8 @@ function eraseCookie(name) {
 getTimeText = function(min, sec){
 	if(!min){
 		return sec+' secondes ';
-		
+	}else if(!sec){
+		return min + ' minutes';
 	}else{
 		return min + ' minutes ' + sec;
 	}

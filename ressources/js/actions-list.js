@@ -107,6 +107,14 @@ $(document.getElementById('playerUI')).on('click', function(e){
 	
 }).on("mouseover", ".btn", function(){
 	InfoBanner.launchMaskingAfterDelay();
+	
+});
+
+$("body").on("keydown", function(e){
+	if(e.key.toLowerCase() === "enter" && $(this).hasClass("player") && !$(document.getElementById("playerBottomBanner")).is(":visible")){
+		InfoBanner.show();
+		Navigation.moveSelecteur(document.getElementById("playerClose"));
+	}
 });
 	
 																	/* **************/
