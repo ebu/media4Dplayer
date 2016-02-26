@@ -100,14 +100,13 @@ $(document.getElementById('playerUI')).on('click', function(e){
 			InfoBanner.hide();
 		}
 	}else if($(e.target.id).hasClass(".video-option")){
-		InfoBanner.showOptionPopup($(e.target.id));
+		InfoBanner.showOptionPopup($(e.target.id), this);
 	}else{
 		log("id="+e.target.id);
 	}
 	
 }).on("mouseover", ".btn", function(){
 	InfoBanner.launchMaskingAfterDelay();
-	
 });
 
 $("body").on("keydown", function(e){

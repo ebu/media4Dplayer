@@ -229,9 +229,27 @@ InfoBanner.showOptionPopup = function(type, button){
 			InfoBanner.launchMaskingAfterDelay();
 			InfoBanner.hideOptionDropDownMenu();
 		};
+		
+		var getLabel = function(optionName){
+			if(type === "audio"){
+				return optionName === "Aucun" ? "Désactiver l'audio" : "Audio " + optionName;
 
-		for (var i = 0; i < inputsArray.length; i++) {
-			var $bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton">'+inputsArray[i]+'</div>').appendTo($ctn);
+			}else if(type === "subtitle"){
+				return optionName === "Aucun" ? "Désactiver les sous-titres" : "Sous-titre " + optionName;
+
+			}else if(type === "ad"){
+				return optionName === "Aucun" ? "Désactiver l'audio description" : "Audio description " + optionName;
+
+			}else if(type === "ls"){
+				return optionName === "Aucun" ? "Désactiver la langue des signes" : "Langue des signes " + optionName.replace("LSF", "Français");
+			}
+			return "";
+		};
+		
+		var tabIndex = button.tabIndex + 1;
+		var i, l = inputsArray.length;
+		for (i = 0; i < l; i++) {
+			var $bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton btn selectable-by-chromevox" tabindex="'+tabIndex+'" aria-labelledby="label-option-'+i+'">'+inputsArray[i]+'<span id="label-option-'+i+'" aria-hidden="true" class="hidden">'+getLabel(inputsArray[i])+'</span></div>').appendTo($ctn);
 			$bt.data("index", i);
 			(function(bt, optionID){
 				bt.on("click", function(){
@@ -241,6 +259,7 @@ InfoBanner.showOptionPopup = function(type, button){
 			
 			if(type === "subtitle" && inputsArray[i] !== "Aucun"){
 				$bt.append('<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
+				tabIndex++;
 			}
 		}
 		
