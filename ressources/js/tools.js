@@ -161,13 +161,14 @@ getTextWithoutStyleAttr = function (content) {
 
 function getStringDate(year, month, day) {
 	if (year) {
+		var months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
 		var noMonth = !month,
 			noDay = !day;
 
 		month = isNaN(parseInt(month, 10)) ? 0 : parseInt(month, 10) - 1;
 
 		var currentDate = new Date(year, month, day || 1);
-		return (!noDay ? currentDate.getDate() + " " : "") + (!noMonth ? trads.months[currentDate.getMonth()] + " " : "") + currentDate.getFullYear();
+		return (!noDay ? currentDate.getDate() + " " : "") + (!noMonth ? months[currentDate.getMonth()] + " " : "") + currentDate.getFullYear();
 	}
 }
 
@@ -824,3 +825,19 @@ getTimeText = function(min, sec){
 		return min + ' minutes ' + sec;
 	}
 };
+
+getElementFromXML = function($xml, ns, prefix, attr){
+	return $($xml).find(ns).filter(function(){
+		if($(this)[0].prefix === prefix){
+			if(typeOf(attr) === "object" && attr.type && attr.value){
+				return $(this).attr(attr.type) === attr.value;
+			}else{
+				return true;
+			}
+		}
+	}).eq(0);
+}
+
+getTextFromElement = function($el){
+	return $el.length ? $el.text().trim() : "";
+}

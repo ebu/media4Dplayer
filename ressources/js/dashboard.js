@@ -70,19 +70,19 @@ Dashboard.generate = function(){
 	
 	/* OPTIONS ACCESSIBILITEES */
 	$ctn = $(document.getElementById("video-compatibilities-list"));
-	if(mediaData.hasAD){
+	if(mediaData.links.dataAD && mediaData.links.dataAD.url){
 		$ctn.children(".ad").show();
 	}
 	
-	if(mediaData.hasLS){
+	if(mediaData.links.dataLS && mediaData.links.dataLS.url){
 		$ctn.children(".ls").show();
 	}
 	
-	if(mediaData.hasSub){
+	if(mediaData.links.dataSub && mediaData.links.dataSub.url){
 		$ctn.children(".subtitle").show();
 	}
 	
-	if(mediaData.hasAudio){
+	if(mediaData.links.dataMain && mediaData.links.dataMain.url){
 		$ctn.children(".audio").show();
 	}
 };

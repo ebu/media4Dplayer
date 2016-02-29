@@ -6,7 +6,7 @@
 	},{
 		"title":"pluzz",
 		"picture":"ressources/img/temp/home/pluzz.png",
-		"userProgramsListUrl":"ressources/json/programs_pluzz.json"
+		"userProgramsListUrl":"ressources/xml/EBUcore_LMDJ_01.xml"
 	},{
 		"title":"lesite.tv",
 		"picture":"ressources/img/temp/home/lesitetv.png",
