@@ -182,7 +182,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest.mpd</ebucore:locator>
             </ebucore:format>
             
             <!-- NEW ! Type et URL du fichier associé SL (Sign Language) -->
@@ -191,7 +191,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-lsf.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-lsf.mpd</ebucore:locator>
             </ebucore:format>
            
             <!-- NEW ! Type et URL du fichier EA (Enriched Audio) de VF associée (multicanal 5.1 ou 2.0)
@@ -231,7 +231,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ad.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-ad.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-ad.mpd</ebucore:locator>
             </ebucore:format>
             
             <!-- NEW ! Type et URL du fichier EA (Enriched Audio) de VM associée (2.0 ou multicanal 5.1)
@@ -273,7 +273,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea3.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-ea3.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-ea3.mpd</ebucore:locator>
             </ebucore:format>
 
             <!-- NEW ! Type et URL du fichier EA (Enriched Audio) de dialogues associés (monophonique) -->
@@ -292,10 +292,10 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-di.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-di.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-di.mpd</ebucore:locator>
             </ebucore:format>
 
-            <!-- NEW ! Type et URL du fichier associé multicanal
+            <!-- NEW ! Type et URL du fichier associé multicanal-->
             <ebucore:format formatName="MC">
                 <ebucore:audioFormat audioFormatId="1" audioFormatName="PVF" audioPresenceFlag="true">
                     <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
@@ -311,8 +311,8 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-mc.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ4-ondemand/manifest-mc.mpd</ebucore:locator>
-            </ebucore:format>   -->
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-mc.mpd</ebucore:locator>
+            </ebucore:format>   
             
             <!-- NEW ! Type et URL du fichier associé de sous-titrage -->
             <ebucore:format formatName="TTML">

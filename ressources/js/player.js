@@ -25,12 +25,16 @@ var Player = {
 	videoMain: document.getElementById('videoPlayerMain'),
 	videoPip: document.getElementById('videoPlayerPip'),
     videoAudio: document.getElementById('videoPlayerAudio'),
+	audioFiveDotOne:document.getElementById('playerAudioFiveDotOne'),
+	audioFiveDotOne2:document.getElementById('playerAudioFiveDotOne-2'),
 	ttmlDiv: document.getElementById('video-caption'),
 	
 	playerManager:{
     	playerMain: null,
     	playerPip: null,
     	playerAudio: null,
+		playerAudioFiveDotOne:null,
+		playerAudioFiveDotOne2:null,		
     	controller: null,
     	audioContext: null,
     	optionSigne: true,
@@ -41,7 +45,11 @@ var Player = {
 	isPlaying:false,
 	currentPipMode:null,
 	pipControlTimeout:null,
-	checkPositionVideo:null
+	checkPositionVideo:null,
+	
+	mode:"5.1",
+	spatializationMode:"binaural",
+	compressionRatio:2
 };
 
 /**
@@ -57,16 +65,16 @@ Player.load = function(videoData, callback, onClose){
 	
 	this.onClose = onClose;
 
-	if(!this.alreadyInit || (videoData.url !== Media.url)){
+	if(!this.alreadyInit || (videoData.links.dataMain.url !== Media.links.dataMain.url)){
 
 		Media = videoData;
 
-		Media.LSFEnabled = !getCookie("LSFDisabled") && typeOf(Media.ls) === "array" && Media.ls.length ? true : false;
-		Media.audioEnabled = !getCookie("muteEnabled") && typeOf(Media.audiosList) === "array" && Media.audiosList.length ? true : false;
-		Media.subtitleEnabled = !getCookie("subtitlesDisabled") && typeOf(Media.subtitlesList) === "array" && Media.subtitlesList.length ? true : false;
-		Media.audioDescriptionEnabled = !getCookie("audioDescriptionDisabled") && typeOf(Media.audioDescriptions) === "array" && Media.audioDescriptions.length ? true : false;
+		Media.LSFEnabled = !getCookie("LSFDisabled") && Media.links.dataLS && Media.links.dataLS.url ? true : false;
+		Media.audioEnabled = !getCookie("audioDisabled") && Media.links.dataMain && Media.links.dataMain.url ? true : false;
+		Media.subtitleEnabled = !getCookie("subtitlesDisabled") && Media.links.dataSub && Media.links.dataSub.url ? true : false;
+		Media.audioDescriptionEnabled = !getCookie("audioDescriptionDisabled") && Media.links.dataAD && Media.links.dataAD.url ? true : false;
 
-		Media.currentAudioIndex = 0;
+		Media.currentAudioIndex = this.mode === "5.1" && Media.audiosList[1] ? 1 : 0;
 		Media.currentAudioDescriptionIndex = 0;
 		Media.currentLSFIndex = 0;
 		Media.currentSubtitleIndex = 0;
@@ -76,42 +84,49 @@ Player.load = function(videoData, callback, onClose){
 		//LANCEMENT DU PLAYER ATTENTION CODE TOUCHY
 		this.launch();
 	}
+
+	var urlMain 			= Media.links.dataMain.url;
+	var urlPip 				= Media.links.dataLS.url;
+	var urlAudioDescription	= Media.links.dataAD.url;
+	var urlAudioFiveDotOne 	= Media.links.dataEA.url;
+	var urlAudioFiveDotOne2	= Media.links.dataDI.url;
 		
 	this.playerManager.playerMain.attachView(this.videoMain);
-	this.playerManager.playerMain.attachVideoContainer(document.getElementById("videoPlayerContainer"));
-
-	this.playerManager.playerPip.attachView(this.videoPip);
-	if(Media.audioDescriptionEnabled){
-		this.playerManager.playerAudio.attachView(this.videoAudio);
-	}
+	this.playerManager.playerMain.attachSource(urlMain);	
+	if(Media.LSFEnabled){
+		this.playerManager.playerPip.attachView(this.videoPip);
+		this.playerManager.playerPip.attachSource(urlPip);
+	}	
+	this.playerManager.playerAudioFiveDotOne.attachView(this.audioFiveDotOne);
+	this.playerManager.playerAudioFiveDotOne.attachSource(urlAudioFiveDotOne);
+	this.playerManager.playerAudioFiveDotOne2.attachView(this.audioFiveDotOne2);	
+	this.playerManager.playerAudioFiveDotOne2.attachSource(urlAudioFiveDotOne2);
+	this.playerManager.playerAudio.attachView(this.videoAudio);	
+	this.playerManager.playerAudio.attachSource(urlAudioDescription);
 
 	// Add HTML-rendered TTML subtitles
 	this.playerManager.playerMain.attachTTMLRenderingDiv(this.ttmlDiv);
-
-	//Gestion du switch LSF/Vidéo comme vidéo plein taille
-	this.setPIP();
-	if(Media.LSFEnabled){
-
-		this.playerManager.playerMain.attachSource(Media.url);
-		this.playerManager.playerPip.attachSource(Media.ls[Media.currentLSFIndex].url);
-
-	}else{
-		this.playerManager.playerMain.attachSource(Media.url);			
-	}
-
-	if(Media.audioDescriptionEnabled){
-		this.playerManager.playerAudio.attachSource(Media.audioDescriptions[Media.currentAudioDescriptionIndex].url);
-	}
-
-	this.playerManager.playerMain.play();
-
+	
+	this.playerManager.playerMain.play();	
 	if(Media.LSFEnabled){
 		this.playerManager.playerPip.play();
 	}
-
-	if(Media.audioDescriptionEnabled){
-		this.playerManager.playerAudio.play();
-	}
+	this.playerManager.playerAudioFiveDotOne.play();
+	this.playerManager.playerAudioFiveDotOne2.play();
+	this.playerManager.playerAudio.play();
+	
+	this.updateActiveStreams();
+	
+	//Gestion du PIP
+	this.setPIP();
+	
+	//this.initSmartFader();
+	var lastVolumeValue = parseInt(getCookie("volumeValue") || Settings.defaultVolumeValue,10);
+	var volumeValue = isNaN(lastVolumeValue) || !lastVolumeValue ? 0 : lastVolumeValue;
+	this.setVolume(volumeValue);
+	
+	/// prepare the sofa catalog of HRTF
+	//this.prepareSofaCatalog();
 
 	this.initSubtitlesParams();
 
@@ -134,8 +149,9 @@ Player.load = function(videoData, callback, onClose){
  */
 
 Player.launch = function(){
-	var context = new Dash.di.DashContext();
+	var context = new Dash.di.DashContext();	
 
+	//==============================================================================
 	this.playerManager.playerMain = new MediaPlayer(context);
 	this.playerManager.playerMain.startup();
 	this.playerManager.playerMain.setAutoPlay(false);
@@ -144,6 +160,14 @@ Player.launch = function(){
 	this.playerManager.playerPip.startup();
 	this.playerManager.playerPip.setAutoPlay(false);
 
+	this.playerManager.playerAudioFiveDotOne = new MediaPlayer(context);	
+	this.playerManager.playerAudioFiveDotOne.startup();
+	this.playerManager.playerAudioFiveDotOne.setAutoPlay(false);
+
+	this.playerManager.playerAudioFiveDotOne2 = new MediaPlayer(context);	
+	this.playerManager.playerAudioFiveDotOne2.startup();
+	this.playerManager.playerAudioFiveDotOne2.setAutoPlay(false);
+
 	this.playerManager.playerAudio = new MediaPlayer(context);	
 	this.playerManager.playerAudio.startup();
 	this.playerManager.playerAudio.setAutoPlay(false);
@@ -151,20 +175,20 @@ Player.launch = function(){
 	// remove Dash.js logs
 	this.playerManager.playerMain.getDebug().setLogToBrowserConsole(false);
 	this.playerManager.playerPip.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerAudioFiveDotOne.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerAudioFiveDotOne2.getDebug().setLogToBrowserConsole(false);
 	this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);
 
 	this.playerManager.controller = new MediaController();
 
-	log("controller = " + this.playerManager.controller);
-
-	this.videoMain.controller = this.playerManager.controller;
-
+	//log("controller = " + this.playerManager.controller);
+	
+	this.videoMain.controller			= this.playerManager.controller;
+	this.audioFiveDotOne.controller		= this.playerManager.controller;
+	this.audioFiveDotOne2.controller	= this.playerManager.controller;
+	this.videoAudio.controller			= this.playerManager.controller;
 	if(Media.LSFEnabled){
-		this.videoPip.controller = this.playerManager.controller;			
-	}
-
-	if(Media.audioDescriptionEnabled){
-		this.videoAudio.controller = this.playerManager.controller;
+		this.videoPip.controller		= this.playerManager.controller;			
 	}
 
 	if(!this.waaAlreadyInit){
@@ -173,19 +197,129 @@ Player.launch = function(){
 		this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 		log("######### audioContext: " + this.playerManager.audioContext);
 
-		var videoAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoMain);
-		var audioAudioSource = this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
+		//==============================================================================
+		var audioSourceMain 	 	= this.playerManager.audioContext.createMediaElementSource( this.videoMain );
+		var audioSourceFiveDotOne  	= this.playerManager.audioContext.createMediaElementSource( this.audioFiveDotOne );
+		var audioSourceFiveDotOne2 	= this.playerManager.audioContext.createMediaElementSource( this.audioFiveDotOne2 );
+		var audioSourceDescription	= this.playerManager.audioContext.createMediaElementSource(this.videoAudio);
 
-		audioGainNode = this.playerManager.audioContext.createGain();
-		audioAudioSource.connect(audioGainNode);
-		audioGainNode.connect(this.playerManager.audioContext.destination);
+		/// create a 10-channel stream containing all audio materials
+		var channelMerger = this.playerManager.audioContext.createChannelMerger(10);
 
-		videoGainNode = this.playerManager.audioContext.createGain();
-		var lastVolumeValue = parseInt(getCookie("volumeValue") || Settings.defaultVolumeValue,10);
-		var volumeValue = !Media.audioEnabled || isNaN(lastVolumeValue) || !lastVolumeValue ? 0 : lastVolumeValue;
-		Player.setVolume(audioGainNode, videoGainNode, volumeValue);
-		videoAudioSource.connect(videoGainNode);
-		videoGainNode.connect(this.playerManager.audioContext.destination);				
+		var channelSplitterMain 		= this.playerManager.audioContext.createChannelSplitter( 2 );
+		var channelSplitterFiveDotOne	= this.playerManager.audioContext.createChannelSplitter( 6 );
+		var channelSplitterFiveDotOne2	= this.playerManager.audioContext.createChannelSplitter( 1 );
+		var channelSplitterDescription 	= this.playerManager.audioContext.createChannelSplitter( 1 );
+
+		audioSourceMain.connect( channelSplitterMain );
+		audioSourceFiveDotOne.connect( channelSplitterFiveDotOne );
+		audioSourceFiveDotOne2.connect( channelSplitterFiveDotOne2 );
+		audioSourceDescription.connect( channelSplitterDescription );
+
+		channelSplitterMain.connect( channelMerger, 0, 0 );
+		channelSplitterMain.connect( channelMerger, 1, 1 );
+
+		channelSplitterFiveDotOne.connect( channelMerger, 0, 2 );
+		channelSplitterFiveDotOne.connect( channelMerger, 1, 3 );
+		channelSplitterFiveDotOne.connect( channelMerger, 2, 4 );
+		channelSplitterFiveDotOne.connect( channelMerger, 3, 5 );
+		channelSplitterFiveDotOne.connect( channelMerger, 4, 6 );
+		channelSplitterFiveDotOne.connect( channelMerger, 5, 7 );
+		
+		channelSplitterDescription.connect( channelMerger, 0, 8 );
+		
+		channelSplitterFiveDotOne2.connect( channelMerger, 0, 9 );
+	
+		//==============================================================================
+		var mainData = Media.links.dataMain;
+		var eaData = Media.links.dataEA;
+		var adData = Media.links.dataAD;
+		var diData = Media.links.dataDI;
+		
+		// Son principal
+		mainAudioASD = new M4DPAudioModules.AudioStreamDescription(
+				type = mainData.type,
+				active = this.mode === "stereo" && Media.audioEnabled,
+				loudness = parseInt(mainData.loudness,10),
+				maxTruePeak = parseInt(mainData.maxTruePeak,10),
+				dialog = mainData.dialog === "true",
+				ambiance = mainData.ambiance === "true",
+				commentary = mainData.commentary === "true");
+		
+		// Ambiance (pour le 5.1)
+		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
+				type = eaData.type,
+				active = this.mode === "5.1" && Media.audioEnabled,
+				loudness = parseInt(eaData.loudness,10),
+				maxTruePeak = parseInt(eaData.maxTruePeak,10),
+				dialog = eaData.dialog === "true",
+				ambiance = eaData.ambiance === "true",
+				commentary = eaData.commentary === "true");
+		
+		// Audio description
+		extendedCommentsASD = new M4DPAudioModules.AudioStreamDescription(
+				type = adData.type,
+				active = Media.audioDescriptionEnabled,
+				loudness = parseInt(adData.loudness,10),
+				maxTruePeak = parseInt(adData.maxTruePeak,10),
+				dialog = adData.dialog === "true",
+				ambiance = adData.ambiance === "true",
+				commentary = adData.commentary === "true");
+		
+		// Dialogue (pour le 5.1)
+		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
+				type = diData.type,
+				active = this.mode === "5.1" && Media.audioEnabled,
+				loudness = parseInt(diData.loudness,10),
+				maxTruePeak = parseInt(diData.maxTruePeak,10),
+				dialog = diData.dialog === "true",
+				ambiance = diData.ambiance === "true",
+				commentary = diData.commentary === "true");
+
+		var asdc = new M4DPAudioModules.AudioStreamDescriptionCollection(
+				[mainAudioASD, extendedAmbienceASD, extendedCommentsASD, extendedDialogsASD]
+		);
+	
+		//==============================================================================
+		// M4DPAudioModules
+		streamSelector = new M4DPAudioModules.StreamSelector( this.playerManager.audioContext, asdc );
+		smartFader = new M4DPAudioModules.SmartFader( this.playerManager.audioContext, asdc );
+		objectSpatialiserAndMixer = new M4DPAudioModules.ObjectSpatialiserAndMixer( this.playerManager.audioContext, asdc, this.spatializationMode );
+		var noiseAdaptation = new M4DPAudioModules.NoiseAdaptation(this.playerManager.audioContext);
+		multichannelSpatialiser = new M4DPAudioModules.MultichannelSpatialiser( this.playerManager.audioContext, asdc, this.spatializationMode );
+		var dialogEnhancement = new M4DPAudioModules.DialogEnhancement(this.playerManager.audioContext);
+
+		{
+			///@bug : the channelSplitterMain MUST be connected to the AudioContext,
+			/// otherwise the video wont read.
+			/// so as a workaround, we just add a dummuy node, with 0 gain,
+			/// to connect the channelSplitterMain
+			var uselessGain = this.playerManager.audioContext.createGain();
+			channelSplitterMain.connect( uselessGain, 0, 0 );
+			uselessGain.gain.value = 0;
+			
+			uselessGain.connect( this.playerManager.audioContext.destination, 0, 0 );
+		}
+
+
+		/// receives 4 ADSC with 10 channels in total
+		channelMerger.connect( streamSelector._input );
+
+		/// mute or unmute the inactive streams
+		/// (process 10 channels in total)
+		streamSelector.connect( smartFader._input );
+
+		smartFader.connect( multichannelSpatialiser._input );
+
+		/// apply the multichannel spatialiser
+		multichannelSpatialiser.connect( this.playerManager.audioContext.destination );	
+		
+		// retrieves the catalog
+		var url = multichannelSpatialiser._virtualSpeakers.getFallbackUrl();
+
+		/// load the URL in the spatialiser
+		multichannelSpatialiser.loadHrtfSet( url );
+		objectSpatialiserAndMixer.loadHrtfSet( url );		
 	}
 
 	this.playerManager.controller.addEventListener('play', function(e) {
@@ -237,11 +371,22 @@ Player.launch = function(){
  * @param {Object} callbackList Contains a success and error callback
  */
 
-Player.setVolume = function(audioGainNode, videoGainNode, volume){
-	var gain = volume / 100;
-	audioGainNode.gain.value = gain;
-	videoGainNode.gain.value = gain;
-	console.warn("Volume passé à "+gain);
+Player.setVolume = function(volume){
+	
+	var minFader = 0;
+	var maxFader = 100;
+
+	//const [minValue, maxValue] = M4DPAudioModules.SmartFader.dBRange();
+	var minValue = -60;
+	var maxValue = 8;
+
+	/// scale from GUI to DSP
+	var value = M4DPAudioModules.utilities.scale( volume, minFader, maxFader, minValue, maxValue );
+
+	log('Smart Fader = ' + Math.round(value).toString() + ' dB');
+
+	/// sets the smart fader dB gain
+	smartFader.dB = value;
 };
 
 /**
@@ -254,12 +399,10 @@ Player.setVolume = function(audioGainNode, videoGainNode, volume){
  */
 
 Player.setMute = function(){
-	this.setVolume(audioGainNode, videoGainNode, 0);
+	this.setVolume(0);
 	setCookie("volumeValue", 0);
 	setCookie("muteEnabled", 1);
 	$('.volume').css('background-position', '0 0');
-	$(document.getElementById("playerOptionAudioCurrentValue")).html("Aucun");
-	Media.audioEnabled = false;
 };
 
 /**
@@ -426,6 +569,53 @@ Player.initSubtitlesParams = function(){
 	}
 };	
 
+Player.initSmartFader = function(){
+	var minFader = 0;
+	var maxFader = 100;
+
+	/// default value in dB
+	var value = 0.0;
+
+	//const [minValue, maxValue] = M4DPAudioModules.SmartFader.dBRange();
+	var minValue = -60;
+	var maxValue = 8;
+
+	/// scale from dB to GUI
+	var valueFader = M4DPAudioModules.utilities.scale( value, minValue, maxValue, minFader, maxFader );
+
+	this.setVolume(valueFader);	
+};
+
+Player.prepareSofaCatalog = function(){
+
+    /// retrieves the catalog of URLs from the OpenDAP server
+	var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
+	serverDataBase
+         .loadCatalogue()
+         .then( function () {
+             var urls = serverDataBase.getUrls({
+                 convention: 'HRIR',
+                 equalisation: 'compensated',
+                 sampleRate: audioContext.sampleRate
+             });
+
+             defaultUrl = urls.findIndex( function (url) {
+                 return url.match('1018');
+             });
+
+             return urls;
+         })
+         .catch(function(){
+         	/// failed to access the catalog (maybe unauthorized IP)
+         	/// just use the hard-coded sofa data
+
+         	log('could not access bili2.ircam.fr...');
+
+         	sofaUrl = multichannelSpatialiser._virtualSpeakers.getFallbackUrl();
+         	return sofaUrl;
+         });
+};
+
 																								/********************************
 																								*	GESTION DE LA PROGRESSBAR	*
 																								********************************/
@@ -440,6 +630,15 @@ Player.launchCheckPositionVideo = function(){
 	this.stopCheckVideoPosition();
 	this.checkPositionVideo = setInterval(function(){
 		InfoBanner.progressBar.update(Player.playerManager.controller.currentTime, Player.playerManager.controller.duration);
+		
+		var upVol = document.getElementById('up-volume');
+		var isCompressed = smartFader.dynamicCompressionState;
+		if( isCompressed === true){
+			upVol.style.backgroundColor = "rgba(255, 0, 0, 0.7)";
+		}
+		else{
+			upVol.style.backgroundColor = "rgba(0, 0, 0, 0)";
+		}		
 	}, 500);
 };
 
@@ -631,12 +830,13 @@ Player.activeOptionDescription = function(index) {
 	var $textContent = $(document.getElementById("playerOptionDescriptionCurrentValue"));
 	if(index !== Media.audioDescriptions.length){
 
-		this.playerManager.controller.currentTime = this.videoMain.currentTime;
+		/*this.playerManager.controller.currentTime = this.videoMain.currentTime;
 		this.videoAudio.controller = this.playerManager.controller;
 		this.playerManager.playerAudio.startup();
 		this.playerManager.playerAudio.setAutoPlay(false);
 		this.playerManager.playerAudio.attachView(this.videoAudio);
-		this.playerManager.playerAudio.attachSource(Media.audioDescriptions[index].url);
+		this.playerManager.playerAudio.attachSource(Media.audioDescriptions[index].url);*/
+		extendedCommentsASD.active = true;
 
 		Media.currentAudioDescriptionIndex = index;
 		Media.audioDescriptionEnabled = true;
@@ -645,13 +845,16 @@ Player.activeOptionDescription = function(index) {
 
 	}else{
 
-		this.videoAudio.controller = null;
-		this.playerManager.playerAudio.reset();
+		/*this.videoAudio.controller = null;
+		this.playerManager.playerAudio.reset();*/
+		extendedCommentsASD.active = false;
 
 		Media.audioDescriptionEnabled = false;
 		setCookie("audioDescriptionDisabled", 1);
 		$textContent.html("Aucun");
 	}
+	
+	this.updateActiveStreams();
 };
 
 /**
@@ -664,25 +867,48 @@ Player.activeOptionDescription = function(index) {
 Player.activeOptionAudio = function(index) {
 	
 	var $textContent = $(document.getElementById("playerOptionAudioCurrentValue"));
-	var $sliderVolume = $( document.getElementById("slider") );
-	var defaultVol = Settings.defaultVolumeValue;
 	
+	Media.currentAudioIndex = index;
 	if(index !== Media.audiosList.length){
-		// TODO : changer langue audio de la vidéo principale
-		Media.currentAudioIndex = index;
 		Media.audioEnabled = true;
-		eraseCookie("muteEnabled");
-
-		setCookie("volumeValue", defaultVol);
-		this.setVolume(audioGainNode, videoGainNode, defaultVol);	
+		eraseCookie("audioDisabled");
+		
+		if(Media.audiosList[index].search("5.1") !== -1){
+			Player.mode = "5.1";
+			mainAudioASD.active = false;
+		}else{
+			Player.mode = "stereo";
+			extendedAmbienceASD.active = false;
+			extendedDialogsASD.active = false;
+		}
+		
+		if(Player.mode === "5.1"){
+			extendedAmbienceASD.active = true;
+			extendedDialogsASD.active = true;
+		}else{
+			mainAudioASD.active = true;
+		}
 
 		$textContent.html(Media.audiosList[index]);
-		$('.volume').css('background-position', '0 -50px');
-		$('.tooltip').css('left', defaultVol+5).text(defaultVol);
-		$sliderVolume.slider( "option", "value", defaultVol );
 
 	}else{
-		$sliderVolume.slider( "option", "value", 0 );
-		this.setMute();
+		setCookie("audioDisabled", 1);
+		$(document.getElementById("playerOptionAudioCurrentValue")).html("Aucun");
+		if(Player.mode === "5.1"){
+			extendedAmbienceASD.active = false;
+			extendedDialogsASD.active = false;
+		}else{
+			mainAudioASD.active = false;
+		}
 	}
+	this.updateActiveStreams();
+};
+
+Player.updateActiveStreams = function(){
+	
+	/// notify the modification of active streams
+	streamSelector.activeStreamsChanged();
+	smartFader.activeStreamsChanged();
+	multichannelSpatialiser.activeStreamsChanged();
+	objectSpatialiserAndMixer.activeStreamsChanged();	
 };

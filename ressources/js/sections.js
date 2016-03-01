@@ -244,7 +244,7 @@ Section.change.toSettings = function(newSection, rubric){
  */
 
 Section.change.toPlayer = function(data){
-	if(typeOf(data) === "object" && typeOf(data.video) === "object" && data.video.url){
+	if(typeOf(data) === "object" && typeOf(data.video) === "object" && data.video.links.dataMain && data.video.links.dataMain.url){
 		
 		Dashboard.data = data;
 		

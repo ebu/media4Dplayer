@@ -42,23 +42,19 @@ InfoBanner.load = function(){
  */
 
 InfoBanner.generate = function(){
-
+	
 	// AUDIO
-	var $slider = $(document.getElementById("slider"));
 	var $audio = $(document.getElementById("playerOptionAudioCurrentValue"));
 	if(Media.audioEnabled){
 		$audio.text(Media.audiosList[Media.currentAudioIndex]);
-		$slider.slider( "option", "disabled", false );
 		
 	}else{
 		$audio.text("Aucun");
 
 		if(typeOf(Media.audiosList) !== "array" || !Media.audiosList.length){
 			$audio.parent().addClass("hidden");
-			$slider.slider( "option", "disabled", true );
 		}else{
 			$audio.parent().removeClass("hidden");
-			$slider.slider( "option", "disabled", false );
 		}
 	}
 	

@@ -72,8 +72,7 @@ Main.onLoad = function () {
 				}else{
 					eraseCookie("muteEnabled");
 					setCookie("volumeValue", value);
-					Player.setVolume(audioGainNode, videoGainNode, value);		
-					$(document.getElementById("playerOptionAudioCurrentValue")).html(Media.audiosList[Media.currentAudioIndex]);
+					Player.setVolume(value);
 				}
 			}catch(e){
 				console.error(e);

@@ -70,19 +70,19 @@ Dashboard.generate = function(){
 	
 	/* OPTIONS ACCESSIBILITEES */
 	$ctn = $(document.getElementById("video-compatibilities-list"));
-	if(mediaData.links.dataAD && mediaData.links.dataAD.url){
+	if(mediaData.video.links.dataAD && mediaData.video.links.dataAD.url){
 		$ctn.children(".ad").show();
 	}
 	
-	if(mediaData.links.dataLS && mediaData.links.dataLS.url){
+	if(mediaData.video.links.dataLS && mediaData.video.links.dataLS.url){
 		$ctn.children(".ls").show();
 	}
 	
-	if(mediaData.links.dataSub && mediaData.links.dataSub.url){
+	if(mediaData.video.links.dataSub && mediaData.video.links.dataSub.url){
 		$ctn.children(".subtitle").show();
 	}
 	
-	if(mediaData.links.dataMain && mediaData.links.dataMain.url){
+	if(mediaData.video.links.dataMain && mediaData.video.links.dataMain.url){
 		$ctn.children(".audio").show();
 	}
 };

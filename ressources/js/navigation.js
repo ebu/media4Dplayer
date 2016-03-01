@@ -600,7 +600,7 @@ Navigation.goBack.resetData = function(){
 };
 
 Navigation.moveSelecteur = function(Obj){
-	log("moveSelecteur start; Obj = "+Obj.innerHTML);
+	//log("moveSelecteur start; Obj = "+Obj.innerHTML);
 	try {
 		if (!$(Obj).length) {
 			Obj = document.getElementById(Obj);

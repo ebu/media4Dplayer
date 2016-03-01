@@ -56,15 +56,15 @@ Model.getAppPlaylistsOfUser = function(xml, jqXHR, callback){
 				"subtitlesList":["Français"],
 				"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest-ad.mpd"}],
 				"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest-lsf.mpd"}],
-				"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest.mpd"
-			},
-			"links":{
-				dataMain:{},
-				dataAD:{},
-				dataLS:{},
-				dataSub:{},
-				dataEA:{},
-				dataDI:{}
+				"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--JT-20h-ondemand/manifest.mpd",
+				"links":{
+					dataMain:{},
+					dataAD:{},
+					dataLS:{},
+					dataSub:{},
+					dataEA:{},
+					dataDI:{}
+				}
 			}
 		},{
 			"title": "Tchoupi",
@@ -79,15 +79,15 @@ Model.getAppPlaylistsOfUser = function(xml, jqXHR, callback){
 				"subtitlesList":["Français"],
 				"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest-ad.mpd"}],
 				"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest-lsf.mpd"}],
-				"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest.mpd"
-			},
-			"links":{
-				dataMain:{},
-				dataAD:{},
-				dataLS:{},
-				dataSub:{},
-				dataEA:{},
-				dataDI:{}
+				"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--tchoupi-ondemand/manifest.mpd",
+				"links":{
+					dataMain:{},
+					dataAD:{},
+					dataLS:{},
+					dataSub:{},
+					dataEA:{},
+					dataDI:{}
+				}
 			}
 		},{
 			"title": "La météo",
@@ -102,15 +102,15 @@ Model.getAppPlaylistsOfUser = function(xml, jqXHR, callback){
 				"subtitlesList":["Français"],
 				"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest-ad.mpd"}],
 				"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest-lsf.mpd"}],
-				"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest.mpd"
-			},
-			"links":{
-				dataMain:{},
-				dataAD:{},
-				dataLS:{},
-				dataSub:{},
-				dataEA:{},
-				dataDI:{}
+				"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--Meteo-ondemand/manifest.mpd",
+				"links":{
+					dataMain:{},
+					dataAD:{},
+					dataLS:{},
+					dataSub:{},
+					dataEA:{},
+					dataDI:{}
+				}
 			}
 		}]}, jqXHR);
         } else {
@@ -170,7 +170,16 @@ Model.getProgramDetails = function(xml){
 		return type + " du " + formatedDate + durationMin;
 	};
 	var getLinkDetails = function(ctn){
-		var data = {};
+		var data = {
+			dataMain:{},
+			dataLS:{},
+			dataAD:{},
+			dataSub:{},
+			dataEA:{},
+			dataDI:{},
+			dataMC:{}
+		};
+		
 		if($(ctn).length){
 			
 			var getData = function($data){
@@ -183,11 +192,23 @@ Model.getProgramDetails = function(xml){
 				return data;
 			};
 			
+			var convertTrackLanguage = function(value, isFiveDotOne){
+				value = typeOf(value) === "string" ? value.toLowerCase() : "";
+				var values = {fra:"Français"};
+				var lang = values[value] ? values[value] : value;
+				if(isFiveDotOne){
+					lang+= " 5.1";
+				}
+				return lang;
+			};
+			
 			// Main
-			var $data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"Main"}));
+			var $data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"Main"})),
+				$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
 			if($data.length){
-				data.dataMain = getData(getElementFromXML($data, "audioFormat", "ebucore"));
+				data.dataMain = getData($audioFormat);
 				data.dataMain.url = getElementFromXML($data, "locator", "ebucore").text().trim();
+				data.dataMain.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"));
 			}
 			
 			// LS
@@ -200,9 +221,11 @@ Model.getProgramDetails = function(xml){
 			
 			// AD
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"AD"}));
+			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
 			if($data.length){
-				data.dataAD = getData(getElementFromXML($data, "audioFormat", "ebucore"));
+				data.dataAD = getData($audioFormat);
 				data.dataAD.url = getElementFromXML($data, "locator", "ebucore").text().trim();
+				data.dataAD.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"));
 			}
 			
 			// SUB
@@ -213,12 +236,14 @@ Model.getProgramDetails = function(xml){
 				};
 			}
 			
-			// Pour le 5.1; les dialogues et l'ambiance sont séparé. Il faut donc récupérer les 2 sources
+			// Pour le 5.1; les dialogues et l'ambiance sont séparés. Il faut donc récupérer les 2 sources
 			// EA
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"EA3"}));
+			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
 			if($data.length){
-				data.dataEA = getData(getElementFromXML($data, "audioFormat", "ebucore"));
+				data.dataEA = getData($audioFormat);
 				data.dataEA.url = getElementFromXML($data, "locator", "ebucore").text().trim();
+				data.dataEA.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
 			}
 			
 			// DI
@@ -227,8 +252,28 @@ Model.getProgramDetails = function(xml){
 				data.dataDI = getData(getElementFromXML($data, "audioFormat", "ebucore"));
 				data.dataDI.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 			}
+			
+			// Pour le 5.1; les dialogues et l'ambiance incluent
+			// MC
+			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"MC"}));
+			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
+			if($data.length){
+				data.dataMC = getData($audioFormat);
+				data.dataMC.url = getElementFromXML($data, "locator", "ebucore").text().trim();
+				data.dataMC.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
+			}
 		}
 		return data;
+	};
+	
+	var getAudiosList = function(data){
+		var newList = [];
+		newList.push(data.dataMain.lang);
+		
+		if(data.dataEA.lang || data.dataMC.lang){
+			newList.push(data.dataEA.lang || data.dataMC.lang);
+		}
+		return newList;
 	};
 	
 	var program = {
@@ -238,7 +283,6 @@ Model.getProgramDetails = function(xml){
 		"thumbnail":"ressources/img/temp/programs/LMDJ-thumb.png",
 		"picture": "ressources/img/temp/programs/LMDJ.png",
 		"synopsis": getTextFromElement(getElementFromXML(xml, "description", "ebucore", {type:"typeLabel", value:"Synopsis"})),
-		"links":getLinkDetails(getElementFromXML(xml, "part", "ebucore", {type:"partName", value:"Links"})),
 		"relatedContent":[{
 			   "title": "Le Monde de Jamy : A couper le souffle.",
 			   "subtitle": "Des forêts et des hommes",
@@ -255,12 +299,12 @@ Model.getProgramDetails = function(xml){
 	};
 	
 	program.video = {
-		"audiosList":["Français"],
+		"links":getLinkDetails(getElementFromXML(xml, "part", "ebucore", {type:"partName", value:"Links"})),
 		"subtitlesList":["Français"],
 		"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-ad.mpd"}],
-		"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}],
-		"url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest.mpd"
+		"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}]
 	};
 	
+	program.video.audiosList = getAudiosList(program.video.links);	
 	return program;
 };
