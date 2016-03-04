@@ -130,7 +130,6 @@ Player.load = function(videoData, callback, onClose){
 
 	this.initSubtitlesParams();
 
-	this.onPlay(); // pas d'évenement lors du play... alors on le force.
 	this.launchCheckPositionVideo();
 	InfoBanner.show();
 
@@ -301,7 +300,6 @@ Player.launch = function(){
 			uselessGain.connect( this.playerManager.audioContext.destination, 0, 0 );
 		}
 
-
 		/// receives 4 ADSC with 10 channels in total
 		channelMerger.connect( streamSelector._input );
 
@@ -321,13 +319,18 @@ Player.launch = function(){
 		multichannelSpatialiser.loadHrtfSet( url );
 		objectSpatialiserAndMixer.loadHrtfSet( url );		
 	}
-
-	this.playerManager.controller.addEventListener('play', function(e) {
+	
+	this.playerManager.controller.addEventListener('playing', function(e) {
 		Player.onPlay();
 	});
 	
 	this.playerManager.controller.addEventListener('pause', function(e) {
 		Player.onPause();
+	});
+	
+	this.playerManager.controller.addEventListener('ended', function(e) {
+		Player.stop();
+		Player.validClose();
 	});
 
 	var textTrackEvent = function(e){
@@ -695,6 +698,7 @@ Player.rw = function(){
 		if (this.playerManager.controller.seekable.start(i) <= newCurrentPosition && newCurrentPosition <= this.playerManager.controller.seekable.end(i)) {
 			console.log("   range match, do seek");
 			this.playerManager.controller.currentTime = newCurrentPosition;
+			InfoBanner.launchMaskingAfterDelay();
 			break;
 		}
 	}
@@ -726,6 +730,7 @@ Player.ff = function(){
 		if (this.playerManager.controller.seekable.start(i) <= newCurrentPosition && newCurrentPosition <= this.playerManager.controller.seekable.end(i)) {
 			log("   range match, do seek");
 			this.playerManager.controller.currentTime = newCurrentPosition;
+			InfoBanner.launchMaskingAfterDelay();
 			break;
 		}
 	}
