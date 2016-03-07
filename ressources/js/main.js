@@ -27,6 +27,13 @@ Main.onLoad = function () {
 	
 	$(document.getElementById("appVersion")).html("v"+Config.appVersion);
 	
+	var $errorMCSupport = $(document.getElementById("noMCSupport"));
+	if(checkMediaControllerSupport() === "unsupported"){
+		$errorMCSupport.show();
+	}else{
+		$errorMCSupport.hide();
+	}
+	
 	Main.simplifiedMode = statusHtmlStorage("simplifiedMode") && localStorage.getItem("simplifiedMode") === "true" ? true : false;
 	
 	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;

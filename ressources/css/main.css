@@ -170,11 +170,19 @@ a.switch-btn{
 	display: none;
 }
 
-#appVersion{
+#appVersion, #noMCSupport{
 	position: absolute;
-	top: 20px;
 	text-align: center;
 	width: 100%;
+}
+
+#appVersion{
+	top: 20px;	
+}
+
+#noMCSupport{
+	top: 40px;
+	color: #cd0a0a;
 }
 
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */

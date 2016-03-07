@@ -841,3 +841,15 @@ getElementFromXML = function($xml, ns, prefix, attr){
 getTextFromElement = function($el){
 	return $el.length ? $el.text().trim() : "";
 }
+
+function checkMediaControllerSupport() {
+    if (!("MediaController" in window)) {
+        return "unsupported";
+    }
+    var mc = new MediaController();
+    if ("onended" in mc) {
+        return "supported";
+    } else {
+        return "partially supported";
+    }
+}
