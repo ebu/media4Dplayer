@@ -117,6 +117,8 @@ Player.load = function(videoData, callback, onClose){
 	
 	this.updateActiveStreams();
 	
+	this.playerManager.controller.play();
+	
 	//Gestion du PIP
 	this.setPIP();
 	
@@ -130,7 +132,6 @@ Player.load = function(videoData, callback, onClose){
 
 	this.initSubtitlesParams();
 
-	this.launchCheckPositionVideo();
 	InfoBanner.show();
 
 	if(typeOf(callback) === "function"){
@@ -420,6 +421,7 @@ Player.setMute = function(){
 Player.onPause = function() {
 	this.isPlaying = false;
 	InfoBanner.hidePauseBtn();
+	this.stopCheckVideoPosition();
 };	
 
 /**
@@ -433,8 +435,8 @@ Player.onPause = function() {
 
 Player.onPlay = function() {
 	this.isPlaying = true;
+	this.launchCheckPositionVideo();
 	InfoBanner.showPauseBtn();
-	
 };
 
 /**
@@ -450,6 +452,8 @@ Player.validClose = function() {
 	this.playerManager.playerMain.reset();
 	this.playerManager.playerPip.reset();
 	this.playerManager.playerAudio.reset();
+	
+	InfoBanner.progressBar.reset();
 
 	if(typeOf(this.onClose) === "function"){
 		this.onClose();
@@ -629,7 +633,7 @@ Player.prepareSofaCatalog = function(){
  */
 
 Player.launchCheckPositionVideo = function(){
-
+	log("launchCheckPositionVideo() : start; je vais lancer le stop");
 	this.stopCheckVideoPosition();
 	this.checkPositionVideo = setInterval(function(){
 		InfoBanner.progressBar.update(Player.playerManager.controller.currentTime, Player.playerManager.controller.duration);
@@ -651,6 +655,7 @@ Player.launchCheckPositionVideo = function(){
  */
 
 Player.stopCheckVideoPosition = function(){
+	log("stopCheckVideoPosition() : start;");
 	clearInterval(this.checkPositionVideo);
 };
 
@@ -668,7 +673,7 @@ Player.stopCheckVideoPosition = function(){
 Player.stop = function(){
 	this.playerManager.controller.pause();
 	this.playerManager.controller.currentTime = 0;
-	InfoBanner.progressBar.reset();
+	$(this.ttmlDiv).empty();
 };
 
 /**
