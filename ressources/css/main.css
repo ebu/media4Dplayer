@@ -1116,20 +1116,12 @@ h2 {
 	display: none;
 }
 
-#settings.interface #interface-settings{
+#settings.interface #interface-settings, #settings.audio #audio-settings, #settings.subtitles #subtitles-settings, #settings.ls #ls-settings{
 	display: block;
 }
 
-#settings.audio #audio-settings{
-	display: block;
-}
-
-#settings.subtitles #subtitles-settings{
-	display: block;
-}
-
-#settings.ls #ls-settings{
-	display: block;
+#audio-settings .title-subrubric, #ls-settings .title-subrubric{
+	margin-bottom: 30px;
 }
 
 #settings.interface li.interface, #settings.audio li.audio, #settings.subtitles li.subtitles, #settings.ls li.ls{
@@ -1142,7 +1134,6 @@ h2 {
 	font-weight: 300;
 	font-size: 1.2em;
 	text-align: center;
-	margin-bottom: 20px;
 }
 
 #settings-options-container .label {
@@ -1476,6 +1467,51 @@ h2 {
 	font-weight: 500;
 	font-size: 3.5rem;
 	color: #aaa;
+}
+
+/* Settings - Audio */
+#audio-settings .col{
+	width: 405px;
+}
+
+#audio-settings .left-col{
+	float: left;
+}
+
+#audio-settings .right-col{
+	float: right;
+}
+
+#audio-settings .button{
+	height: 89px;
+	line-height: 89px;
+	background-color: #c8c8c8;
+	padding-left: 190px;
+	background-repeat: no-repeat;
+	background-position: 66px center;
+	background-size: 15%;
+	color: #fff;
+	font-weight: 500;
+	cursor: pointer;
+	box-shadow: 0 0 9px #aaa;
+}
+
+#audio-settings .button span{
+	line-height: normal;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#ambiance-adaptation-btn{
+	background-image: url("../img/bruit_ambiant.png");
+}
+
+#dialogues-extended-btn{
+	background-image: url("../img/renforcement_dialogue.png");
+}
+
+#audio-settings .active{
+	background-color: #82c174;
 }
 
 .label-pip-video.main{
