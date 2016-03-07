@@ -444,9 +444,7 @@ Player.onPlay = function() {
  */
 
 Player.validClose = function() {
-	this.playerManager.playerMain.reset();
-	this.playerManager.playerPip.reset();
-	this.playerManager.playerAudio.reset();
+	this.resetPlayers();
 	
 	InfoBanner.progressBar.reset();
 
@@ -455,6 +453,23 @@ Player.validClose = function() {
 	}
 
 	Navigation.goBack();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Player.resetPlayers = function(){
+	this.playerManager.playerMain.reset();
+	this.playerManager.playerPip.reset();
+	this.playerManager.playerAudio.reset();	
+	this.playerManager.playerAudioFiveDotOne.reset();	
+	this.playerManager.playerAudioFiveDotOne2.reset();
 };
 
 Player.setPIP = function(){

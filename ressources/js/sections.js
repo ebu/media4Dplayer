@@ -534,7 +534,7 @@ Section.launchPlayerLoading = function(data){
  */
 
 Section.launchSettingsFromPlayer = function(){
-	Player.playerManager.controller.pause();
+	Player.resetPlayers();
 	
 	Settings.backToPlayerFromSettings = true;
 	
@@ -563,6 +563,4 @@ Section.launchPlayerFromSettings = function(){
 		$(this.oldSelectionInMenu).addClass("sel").siblings(".sel").removeClass("sel");
 	}
 	this.oldSelectionInMenu = null;
-	
-	Player.playerManager.controller.play();
 };
