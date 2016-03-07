@@ -49,7 +49,9 @@ var Player = {
 	
 	mode:"5.1",
 	spatializationMode:"binaural",
-	compressionRatio:2
+	compressionRatio:"2:1",
+	catalogue:[],
+	selectedProfil:null
 };
 
 /**
@@ -128,7 +130,7 @@ Player.load = function(videoData, callback, onClose){
 	this.setVolume(volumeValue);
 	
 	/// prepare the sofa catalog of HRTF
-	//this.prepareSofaCatalog();
+	this.prepareSofaCatalog();
 
 	this.initSubtitlesParams();
 
@@ -311,14 +313,7 @@ Player.launch = function(){
 		smartFader.connect( multichannelSpatialiser._input );
 
 		/// apply the multichannel spatialiser
-		multichannelSpatialiser.connect( this.playerManager.audioContext.destination );	
-		
-		// retrieves the catalog
-		var url = multichannelSpatialiser._virtualSpeakers.getFallbackUrl();
-
-		/// load the URL in the spatialiser
-		multichannelSpatialiser.loadHrtfSet( url );
-		objectSpatialiserAndMixer.loadHrtfSet( url );		
+		multichannelSpatialiser.connect( this.playerManager.audioContext.destination );
 	}
 	
 	this.playerManager.controller.addEventListener('playing', function(e) {
@@ -593,34 +588,67 @@ Player.initSmartFader = function(){
 	this.setVolume(valueFader);	
 };
 
-Player.prepareSofaCatalog = function(){
+Player.prepareSofaCatalog = function(callback){
+	
+	if(this.catalogue.length){
+		Player.onChangeProfil();
+		
+		if(typeOf(callback) === "object" && callback.onSuccess){
+			callback.onSuccess();
+		}
+		return;
+	}
+	
+	var _callback = function(url){
+		Player.selectedProfil = url;
+		Player.onChangeProfil(url);
+
+		if(typeOf(callback) === "object" && callback.onSuccess){
+			callback.onSuccess();
+		}		
+	};
 
     /// retrieves the catalog of URLs from the OpenDAP server
 	var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
 	serverDataBase
          .loadCatalogue()
-         .then( function () {
-             var urls = serverDataBase.getUrls({
-                 convention: 'HRIR',
-                 equalisation: 'compensated',
-                 sampleRate: audioContext.sampleRate
-             });
+         .then( function(){
+            var urls = serverDataBase.getUrls({
+                convention: 'HRIR',
+                equalisation: 'compensated',
+                sampleRate: Player.playerManager.audioContext.sampleRate
+            });
+			
+			Player.catalogue = urls;
+            defaultUrl = urls.findIndex( function (url) {
+                return url.match('1018');
+            });
+			
+			_callback(urls[defaultUrl]);
 
-             defaultUrl = urls.findIndex( function (url) {
-                 return url.match('1018');
-             });
-
-             return urls;
-         })
-         .catch(function(){
-         	/// failed to access the catalog (maybe unauthorized IP)
-         	/// just use the hard-coded sofa data
-
+            return urls;
+        })
+        .catch( function (){
+			 
          	log('could not access bili2.ircam.fr...');
 
          	sofaUrl = multichannelSpatialiser._virtualSpeakers.getFallbackUrl();
+			
+			_callback(sofaUrl);
+
          	return sofaUrl;
-         });
+        });
+};
+
+Player.onChangeProfil = function(){
+	
+	var url = this.selectedProfil;
+	if(url){
+
+		/// load the URL in the spatialiser
+		multichannelSpatialiser.loadHrtfSet( url );
+		objectSpatialiserAndMixer.loadHrtfSet( url );		
+	}
 };
 
 																								/********************************
