@@ -32,7 +32,7 @@ Settings.init = function(section, rubric){
 
 	var rubrics = Section.rubrics[section];
 	if(rubric === rubrics[1]){
-		//this.init.audio();
+		this.init.audio();
 		
 	}else if(rubric === rubrics[2]){
 		this.init.subtitles();
@@ -56,6 +56,24 @@ Settings.init = function(section, rubric){
 
 Settings.init.interface = function(){
 	this.interface.fontSize();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.audio = function(){
+	$(document.getElementById("checkbox-spatialization-option")).switchButton({
+		show_labels: false,
+		width: 50,
+		height: 28,
+		button_width: 28
+	});
 };
 
 /**
