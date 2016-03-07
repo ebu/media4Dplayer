@@ -8,7 +8,7 @@
 		
 		<link href='https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,800' rel='stylesheet' type='text/css'/>
 		<link type="text/css" rel="stylesheet" href="ressources/css/reset.css"/>
-		<link type="text/css" rel="stylesheet" href="ressources/css/jquery-ui.css"/>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
 		<link type="text/css" rel="stylesheet" href="ressources/css/inputRangeSettings.css"/>
 		<link type="text/css" rel="stylesheet" href="ressources/css/main.css"/>
 	</head>
@@ -127,6 +127,13 @@
 						<div class="title-subrubric">Modifiez votre environnement audio</div>
 						<div class="left-col col">
 							<div id="ambiance-adaptation-btn" class="button active"><span>Adaptation aux bruits ambiants</span></div>
+							<div id="spatialisation-options-ctn">
+								<select name="spatialisation-options" id="spatialisation-options">
+									<option value="binaural">Spatialisation au casque</option>
+									<option value="binaural-EQ">Spatialisation au casque EQ</option>
+									<option value="transaural">Spatialisation aux haut-parleurs</option>
+								</select>
+							</div>
 						</div>
 						<div class="right-col col">
 							<div id="dialogues-extended-btn" class="button"><span>Renforcement des dialogues</span></div>							
@@ -546,7 +553,7 @@
 		<div id="splashscreen"></div>		
 
 		<script language="javascript" type="text/javascript" src="ressources/js/lib/jquery-2.2.0.min.js"></script>
-		<script language="javascript" type="text/javascript" src="ressources/js/lib/jquery-ui.min.1.10.3.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script language="javascript" type="text/javascript" src="ressources/js/lib/jquery.ui.touch-punch.min.js"></script>
 
 		

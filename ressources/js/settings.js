@@ -32,7 +32,7 @@ Settings.init = function(section, rubric){
 
 	var rubrics = Section.rubrics[section];
 	if(rubric === rubrics[1]){
-		//this.init.audio();
+		this.init.audio();
 		
 	}else if(rubric === rubrics[2]){
 		this.init.subtitles();
@@ -56,6 +56,35 @@ Settings.init = function(section, rubric){
 
 Settings.init.interface = function(){
 	this.interface.fontSize();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.audio = function(){
+	var val = Player.spatializationMode === Player.spatializationModes[0] && Player.binauralEQ ? "binaural-EQ" : Player.spatializationMode;
+	$(document.getElementById("spatialisation-options")).val(val).selectmenu({
+		select: function( event, ui ) {
+			
+			var val = ui.item.value;
+			var values = Player.spatializationModes;
+			
+			if(values.indexOf(val) !== -1){
+				Player.spatializationMode = val;
+				Player.binauralEQ = false;
+				
+			}else if(val === "binaural-EQ"){
+				Player.spatializationMode = values[0];
+				Player.binauralEQ = true;				
+			}
+		}
+	});
 };
 
 /**

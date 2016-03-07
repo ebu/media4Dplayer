@@ -49,6 +49,8 @@ var Player = {
 	
 	mode:"5.1",
 	spatializationMode:"binaural",
+	spatializationModes:["binaural","transaural"],
+	binauralEQ:false,
 	compressionRatio:"2:1",
 	catalogue:[],
 	selectedProfil:null
@@ -131,6 +133,8 @@ Player.load = function(videoData, callback, onClose){
 	
 	/// prepare the sofa catalog of HRTF
 	this.prepareSofaCatalog();
+	
+	this.onChangeEqualization();
 
 	this.initSubtitlesParams();
 
@@ -664,6 +668,16 @@ Player.onChangeProfil = function(){
 		multichannelSpatialiser.loadHrtfSet( url );
 		objectSpatialiserAndMixer.loadHrtfSet( url );		
 	}
+};
+
+Player.onChangeEqualization = function(){
+	multichannelSpatialiser.eqPreset = "eq1";
+
+	if (this.binauralEQ) {
+		multichannelSpatialiser.bypassHeadphoneEqualization( false );
+	} else {
+		multichannelSpatialiser.bypassHeadphoneEqualization( true );
+	}	
 };
 
 																								/********************************

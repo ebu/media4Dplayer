@@ -1361,6 +1361,10 @@ h2 {
 	background-size: contain;
 }
 
+.ui-icon-gripsmall-diagonal-se{
+	background-position: 0 0;	
+}
+
 .ui-resizable-ne, .ui-resizable-se{
 	right: -11px;	
 }
@@ -1512,6 +1516,33 @@ h2 {
 
 #audio-settings .active{
 	background-color: #82c174;
+}
+
+#spatialisation-options-ctn{
+	margin-top: 60px;
+}
+
+#spatialisation-options{
+	width: 100%;
+}
+
+.ui-selectmenu-button{
+	background: #fff;
+	border: #e7e8e8 2px solid;
+	border-radius: 0;
+    box-sizing: border-box;	
+}
+
+.ui-widget{
+	font-family: inherit;
+}
+
+.ui-selectmenu-text{
+	font-weight: 500;
+}
+
+.ui-selectmenu-button span.ui-icon{
+	background: url("../img/fleche_menu_deroulant.png") center center no-repeat;
 }
 
 .label-pip-video.main{
