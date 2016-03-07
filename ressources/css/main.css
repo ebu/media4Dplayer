@@ -170,6 +170,13 @@ a.switch-btn{
 	display: none;
 }
 
+#appVersion{
+	position: absolute;
+	top: 20px;
+	text-align: center;
+	width: 100%;
+}
+
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
 body:not(.sm).apps-list #apps-list-container, body.in-construction #in-construction{
 	display: table;
