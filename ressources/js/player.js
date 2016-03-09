@@ -50,7 +50,8 @@ var Player = {
 	mode:"5.1",
 	spatializationMode:"binaural",
 	spatializationModes:["binaural","transaural"],
-	dialoguesElevationLevel:23,
+	commentsAzimLevel:0,
+	commentsElevationLevel:23,
 	binauralEQ:false,
 	compressionRatio:"2:1",
 	catalogue:[],
@@ -136,6 +137,9 @@ Player.load = function(videoData, callback, onClose){
 	this.prepareSofaCatalog();
 	
 	this.onChangeEqualization();
+	
+	this.onChangeAzim("commentary");
+	this.onChangeElevation("commentary");
 
 	this.initSubtitlesParams();
 
@@ -679,6 +683,18 @@ Player.onChangeEqualization = function(){
 	} else {
 		multichannelSpatialiser.bypassHeadphoneEqualization( true );
 	}	
+};
+
+Player.onChangeAzim = function(type){
+	if(type === "commentary"){
+		objectSpatialiserAndMixer.setCommentaryAzimuth( parseFloat( this.commentsAzimLevel ) );
+	}
+};
+
+Player.onChangeElevation = function(type){
+	if(type === "commentary"){
+		objectSpatialiserAndMixer.setCommentaryElevation( parseFloat( this.commentsElevationLevel ) );
+	}
 };
 
 																								/********************************

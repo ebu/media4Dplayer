@@ -89,10 +89,16 @@ Settings.init.audio = function(){
 	});
 	
 	/* Le niveau des dialogues */
-	var _onSlide = function(value, el) {			
-
-		Player.dialoguesElevationLevel = value;
-		log("Niveau d'élévation des dialogues : " + value + "°");
+	var _onSlide = function(value, el) {
+		
+		var type = $(el).data("type");
+		if(type === "commentary"){
+			Player.commentsElevationLevel = value;
+			log("Niveau d'élévation des commentaires : " + value + "°");
+			
+		}else if(type === "dialogues"){
+			log("Niveau d'élévation des dialogues : " + value + "°");			
+		}
 
 		var $slider = $(el).children("a");
 
@@ -107,18 +113,18 @@ Settings.init.audio = function(){
 		}
 	};
 	
-	var $vSlider = $( document.getElementById("dialogues-elevation-level") ).slider({
+	var $vSlider = $( document.getElementById("comments-elevation-level") ).slider({
         range: "min",
         min: -45,
 		max: 90,
 		orientation:"vertical",
-        value: Player.dialoguesElevationLevel,
+        value: Player.commentsElevationLevel,
  
         slide: function(event, ui){
 			_onSlide(ui.value, this);
 		}
 	});
-	_onSlide(Player.dialoguesElevationLevel, $vSlider);
+	_onSlide(Player.commentsElevationLevel, $vSlider);
 };
 
 /**
