@@ -50,6 +50,7 @@ var Player = {
 	mode:"5.1",
 	spatializationMode:"binaural",
 	spatializationModes:["binaural","transaural"],
+	dialoguesElevationLevel:23,
 	binauralEQ:false,
 	compressionRatio:"2:1",
 	catalogue:[],

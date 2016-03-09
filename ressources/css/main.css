@@ -1545,6 +1545,57 @@ h2 {
 	background: url("../img/fleche_menu_deroulant.png") center center no-repeat;
 }
 
+.spatialisation-control{
+	margin-top: 35px;
+}
+
+.spatialisation-control .control-container{
+	margin-top: 5px;
+	float: left;
+}
+
+.vertical-slider-container{
+	width: 125px;
+	height: 281px;
+	background: url("../img/spatial__hauteur.png") no-repeat;
+	background-size: contain;
+	padding: 46px 0 46px 14px;
+	box-sizing: border-box;
+}
+
+.vertical-slider-container .ui-slider-vertical{
+	width: 13px;
+	height: 100%;
+	border: 0 none;
+	background: none transparent;
+}
+
+.vertical-slider-container .ui-widget-header{
+	border-radius: 0;
+	background: none transparent;
+}
+
+.vertical-slider-container .ui-slider-handle {
+    width: 80px;
+    height: 33px;
+    cursor: pointer;
+    background: url('../img/spatial__hauteur_sel.png') no-repeat;
+    margin-left: -15px;
+	margin-bottom: -16px;
+    border: 0 none;
+	background-size: contain;
+	padding-left: 36px;
+	box-sizing: border-box;
+    line-height: 33px;
+    text-decoration: none;
+    font-weight: 600;
+	font-size: 1.7rem;
+}
+
+
+
+
+
 .label-pip-video.main{
 	top: 10px;
 }

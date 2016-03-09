@@ -126,13 +126,22 @@
 					<div id="audio-settings">
 						<div class="title-subrubric">Modifiez votre environnement audio</div>
 						<div class="left-col col">
-							<div id="ambiance-adaptation-btn" class="button active"><span>Adaptation aux bruits ambiants</span></div>
+							<div id="ambiance-adaptation-btn" class="button"><span>Adaptation aux bruits ambiants</span></div>
 							<div id="spatialisation-options-ctn">
 								<select name="spatialisation-options" id="spatialisation-options">
 									<option value="binaural">Spatialisation au casque</option>
 									<option value="binaural-EQ">Spatialisation au casque EQ</option>
 									<option value="transaural">Spatialisation aux haut-parleurs</option>
 								</select>
+							</div>
+							<div id="dialogues-spatialisation" class="spatialisation-control">
+								<div>Spatialisation des dialogues</div>
+								<div class="control-container vertical-slider-container">
+									<div id="dialogues-elevation-level" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des dialogues">
+										<a class="ui-slider-handle ui-state-default ui-corner-all oneline" href="#" title="Contrôle du niveau d'élévation des dialogues"></a>
+									</div>
+								</div>
+								<div class="control-container"></div>
 							</div>
 						</div>
 						<div class="right-col col">

@@ -68,6 +68,8 @@ Settings.init.interface = function(){
  */
 
 Settings.init.audio = function(){
+	
+	/* Le choix du mode de spatialisation */
 	var val = Player.spatializationMode === Player.spatializationModes[0] && Player.binauralEQ ? "binaural-EQ" : Player.spatializationMode;
 	$(document.getElementById("spatialisation-options")).val(val).selectmenu({
 		select: function( event, ui ) {
@@ -85,6 +87,38 @@ Settings.init.audio = function(){
 			}
 		}
 	});
+	
+	/* Le niveau des dialogues */
+	var _onSlide = function(value, el) {			
+
+		Player.dialoguesElevationLevel = value;
+		log("Niveau d'élévation des dialogues : " + value + "°");
+
+		var $slider = $(el).children("a");
+
+		if(value >= 45) { 
+			$slider.text("Haut");
+
+		}else if (value <= 0) {
+			$slider.text("Bas");
+
+		}else{
+			$slider.text("Tête");
+		}
+	};
+	
+	var $vSlider = $( document.getElementById("dialogues-elevation-level") ).slider({
+        range: "min",
+        min: -45,
+		max: 90,
+		orientation:"vertical",
+        value: Player.dialoguesElevationLevel,
+ 
+        slide: function(event, ui){
+			_onSlide(ui.value, this);
+		}
+	});
+	_onSlide(Player.dialoguesElevationLevel, $vSlider);
 };
 
 /**
