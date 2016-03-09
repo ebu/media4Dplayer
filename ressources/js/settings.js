@@ -115,7 +115,7 @@ Settings.init.audio = function(){
 	
 	var $vSlider = $( document.getElementById("comments-elevation-level") ).slider({
         range: "min",
-        min: -45,
+        min: -40,
 		max: 90,
 		orientation:"vertical",
         value: Player.commentsElevationLevel,

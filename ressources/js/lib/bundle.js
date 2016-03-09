@@ -2319,10 +2319,10 @@ var VirtualSpeakersNode = function (_AbstractNode) {
         /// at the moment, we load the whole HRTF file
         _this._binauralPanner = new _binaural2.default.audio.BinauralPanner({
             audioContext: audioContext,
-            positionsType: 'sofaSpherical',
+            coordinateSystem: 'sofaSpherical',
             filterPositions: horizontalPositions,
             filterPositionsType: 'sofaSpherical',
-            crossfadeDuration: 0.05,
+            crossfadeDuration: 0.01,
             sourceCount: totalNumberOfChannels_,
             sourcePositions: sofaPositions
         });
@@ -2368,7 +2368,7 @@ var VirtualSpeakersNode = function (_AbstractNode) {
         value: function getFallbackUrl() {
             var sampleRate = this._audioContext.sampleRate;
 
-            var sofaUrl = './hrtf/IRC_1147_C_HRIR_' + sampleRate + '.sofa.json';
+            var sofaUrl = './hrtf/IRC_1147_C_HRIR_M_' + sampleRate + '.sofa.json';
 
             return sofaUrl;
         }
@@ -2549,7 +2549,7 @@ var VirtualSpeakersNode = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = VirtualSpeakersNode;
-},{"../core/index.js":2,"binaural":39}],13:[function(require,module,exports){
+},{"../core/index.js":2,"binaural":40}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2613,7 +2613,7 @@ exports.AudioStreamDescription = _index11.AudioStreamDescription;
 exports.utilities = _utils2.default;
 exports.unittests = _index16.default;
 exports.binaural = _binaural2.default;
-},{"./core/index.js":2,"./core/utils.js":3,"./dialog-enhancement/index.js":4,"./dsp/index.js":8,"./multichannel-spatialiser/index.js":14,"./noise-adaptation/index.js":16,"./object-spatialiser-and-mixer/index.js":17,"./smart-fader/index.js":18,"./stream-selector/index.js":19,"./testing/index.js":20,"binaural":39}],14:[function(require,module,exports){
+},{"./core/index.js":2,"./core/utils.js":3,"./dialog-enhancement/index.js":4,"./dsp/index.js":8,"./multichannel-spatialiser/index.js":14,"./noise-adaptation/index.js":16,"./object-spatialiser-and-mixer/index.js":17,"./smart-fader/index.js":18,"./stream-selector/index.js":19,"./testing/index.js":20,"binaural":40}],14:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3263,38 +3263,23 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 
         _classCallCheck(this, ObjectSpatialiserAndMixer);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(ObjectSpatialiserAndMixer).call(this, audioContext, audioStreamDescriptionCollection, outputType, headphoneEqPresetName, offsetGain, listenerYaw));
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ObjectSpatialiserAndMixer).call(this, audioContext, audioStreamDescriptionCollection, outputType, headphoneEqPresetName, offsetGain, listenerYaw));
+
+        _this._distance = 1;
+        return _this;
     }
 
     //==============================================================================
     /**
-     * Load a new HRTF from a given URL
-     * @type {string} url
+     * Set the position of the additionnal mono commentary     
+     * @param {number} azimuth - azimuth @todo values to be defined
+     * @param {number} elevation - elevation @todo values to be defined
+     * @param {number} distance - distance @todo values to be defined
+     *
+     * @details The values are expressed with Spat4 navigational coordinates
      */
 
     _createClass(ObjectSpatialiserAndMixer, [{
-        key: 'loadHrtfSet',
-        value: function loadHrtfSet(url) {
-            var _this2 = this;
-
-            return;
-            this._virtualSpeakers.loadHrtfSet(url).then(function () {
-                /// we need to update the position of the commentary after loading a new hrtf set
-                _this2._updateCommentaryPosition();
-            });
-        }
-
-        //==============================================================================
-        /**
-         * Set the position of the additionnal mono commentary     
-         * @param {number} azimuth - azimuth @todo values to be defined
-         * @param {number} elevation - elevation @todo values to be defined
-         * @param {number} distance - distance @todo values to be defined
-         *
-         * @details The values are expressed with Spat4 navigational coordinates
-         */
-
-    }, {
         key: 'setCommentaryPosition',
         value: function setCommentaryPosition(azimuth, elevation, distance) {
             this._azimuth = azimuth;
@@ -3312,6 +3297,51 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
         key: 'setCommentaryElevation',
         value: function setCommentaryElevation(elev) {
             this.setCommentaryPosition(this._azimuth, elev, this._distance);
+        }
+    }, {
+        key: 'setCommentaryAzimuthFromGui',
+        value: function setCommentaryAzimuthFromGui(theSlider) {
+
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = -180;
+            var maxValue = 180;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this.setCommentaryAzimuth(value);
+
+            return Math.round(value);
+        }
+    }, {
+        key: 'setCommentaryElevationFromGui',
+        value: function setCommentaryElevationFromGui(theSlider) {
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = -40;
+            var maxValue = 90;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this.setCommentaryElevation(value);
+
+            return Math.round(value);
         }
 
         /**
@@ -3346,6 +3376,7 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 
                 if (typeof this._virtualSpeakers._binauralPanner !== 'undefined') {
                     this._virtualSpeakers._binauralPanner.setSourcePositionByIndex(sourceIndex, sofaPos);
+                    this._virtualSpeakers._binauralPanner.update();
                 }
             } else {
                 /// there is no commentary stream
@@ -5062,7 +5093,7 @@ var sofatests = {
 };
 
 exports.default = sofatests;
-},{"../core/utils.js":3,"binaural":39}],27:[function(require,module,exports){
+},{"../core/utils.js":3,"binaural":40}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5234,19 +5265,19 @@ exports.default = transauraltests;
 },{"../core/bufferutils.js":1,"../dsp/transaural.js":11}],29:[function(require,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @fileOverview Multi-source binaural panner.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author Jean-Philippe.Lambert@ircam.fr
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright 2016 IRCAM, Paris, France
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license CECILL-2.1
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-var _templateObject = _taggedTemplateLiteral(['for use with BinauralPannerNode'], ['for use with BinauralPannerNode']);
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.BinauralPanner = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @fileOverview Multi-source binaural panner.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author Jean-Philippe.Lambert@ircam.fr
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright 2016 IRCAM, Paris, France
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license BSD-3-Clause
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+var _templateObject = _taggedTemplateLiteral(['for use with BinauralPannerNode'], ['for use with BinauralPannerNode']);
 
 var _glMatrix = require('gl-matrix');
 
@@ -5262,6 +5293,10 @@ var _Source = require('./Source');
 
 var _Source2 = _interopRequireDefault(_Source);
 
+var _Listener = require('../geometry/Listener');
+
+var _Listener2 = _interopRequireDefault(_Listener);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -5275,29 +5310,43 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var BinauralPanner = exports.BinauralPanner = function () {
 
   /**
-   /**
    * Constructs an HRTF set. Note that the filter positions are applied
    * during the load of an HRTF URL.
    *
-   * @see HrtfSet
-   * @see loadHrtfSet
+   * @see {@link HrtfSet}
+   * @see {@link BinauralPanner#loadHrtfSet}
    *
    * @param {Object} options
    * @param {AudioContext} options.audioContext mandatory for the creation
    * of FIR audio buffers
-   * @param {coordinatesType} [options.positionsType='gl']
-   * @param {coordinatesType} [options.filterPositionsType=options.positionsType]
-   * @param {Array.<coordinates>} [options.filterPositions=undefined]
-   * array of positions to filter. Use undefined to use all positions.
-   * @param {Boolean} [options.filterAfterLoad = false] true to filter after
-   * full load of SOFA file
-   * @param {coordinates} [options.listenerPosition=[0, 0, 0]]
-   * @param {coordinates} [options.listenerUp=[0, 1, 0]]
-   * @param {coordinates} [options.listenerView=[0, 0, -1]]
+   * @param {CoordinateSystem} [options.coordinateSystem='gl']
+   * {@link BinauralPanner#coordinateSystem}
    * @param {Number} [options.sourceCount=1]
    * @param {Array.<coordinates>} [options.sourcePositions=undefined] must
-   * be of length options.sourceCount
-   */
+   * be of length options.sourceCount {@link BinauralPanner#sourcePositions}
+   * @param {Number} [options.crossfadeDuration] in seconds.
+   * @param {HrtfSet} [options.hrtfSet] refer an external HRTF set.
+   * {@link BinauralPanner#hrtfSet}
+   * @param {CoordinateSystem} [options.filterCoordinateSystem=options.coordinateSystem]
+   * {@link BinauralPanner#filterCoordinateSystem}
+   * @param {Array.<coordinates>} [options.filterPositions=undefined]
+   * array of positions to filter. Use undefined to use all positions from the HRTF set.
+   * {@link BinauralPanner#filterPositions}
+   * @param {Boolean} [options.filterAfterLoad=false] true to filter after
+   * full load of SOFA file
+   * @param {Listener} [options.listener] refer an external listener.
+   * {@link BinauralPanner#listener}
+   * @param {CoordinateSystem} [options.listenerCoordinateSystem=options.coordinateSystem]
+   * {@link BinauralPanner#listenerCoordinateSystem}
+   * @param {Coordinates} [options.listenerPosition=[0,0,0]]
+   * {@link BinauralPanner#listenerPosition}
+   * @param {Coordinates} [options.listenerUp=[0,1,0]]
+   * {@link BinauralPanner#listenerUp}
+   * @param {Coordinates} [options.listenerView=[0,0,-1]]
+   * {@link BinauralPanner#listenerView}
+   * @param {Boolean} [options.listenerViewIsRelative=false]
+   * {@link Listener#viewIsRelative}
+    */
 
   function BinauralPanner() {
     var _this = this;
@@ -5308,21 +5357,23 @@ var BinauralPanner = exports.BinauralPanner = function () {
 
     this._audioContext = options.audioContext;
 
-    this.positionsType = options.positionsType;
+    this.coordinateSystem = options.coordinateSystem;
 
     var sourceCount = typeof options.sourceCount !== 'undefined' ? options.sourceCount : 1;
+    // allocate first
+    this._listener = typeof options.listener !== 'undefined' ? options.listener : new _Listener2.default();
 
-    this._listenerOutdated = true;
-    this._listenerLookAt = [];
+    // set coordinate system, that defaults to BinauralPanner's own system
+    this.listenerCoordinateSystem = options.listenerCoordinateSystem;
 
-    this._listenerPosition = [];
-    this.listenerPosition = typeof options.listenerPosition !== 'undefined' ? options.listenerPosition : (0, _coordinates.glToTyped)([], [0, 0, 0], this.positionsType);
+    // use setters for internal or external listener
+    this.listenerPosition = typeof options.listenerPosition !== 'undefined' ? options.listenerPosition : (0, _coordinates.glToSystem)([], [0, 0, 0], this._listener.coordinateSystem);
 
-    this._listenerUp = [];
-    this.listenerUp = typeof options.listenerUp !== 'undefined' ? options.listenerUp : (0, _coordinates.glToTyped)([], [0, 1, 0], this.positionsType);
+    this.listenerView = typeof options.listenerView !== 'undefined' ? options.listenerView : (0, _coordinates.glToSystem)([], [0, 0, -1], this._listener.coordinateSystem);
+    // undefined is fine
+    this.listenerViewIsRelative = options.listenerViewIsRelative;
 
-    this._listenerView = [];
-    this.listenerView = typeof options.listenerView !== 'undefined' ? options.listenerView : (0, _coordinates.glToTyped)([], [0, 0, -1], this.positionsType);
+    this.listenerUp = typeof options.listenerUp !== 'undefined' ? options.listenerUp : (0, _coordinates.glToSystem)([], [0, 1, 0], this._listener.coordinateSystem);
 
     this._sourcesOutdated = new Array(sourceCount).fill(true);
 
@@ -5343,10 +5394,10 @@ var BinauralPanner = exports.BinauralPanner = function () {
 
     this.hrtfSet = typeof options.hrtfSet !== 'undefined' ? options.hrtfSet : new _HrtfSet2.default({
       audioContext: this._audioContext,
-      positionsType: 'gl'
+      coordinateSystem: 'gl'
     });
 
-    this.filterPositionsType = options.filterPositionsType;
+    this.filterCoordinateSystem = options.filterCoordinateSystem;
     this.filterPositions = options.filterPositions;
     this.filterAfterLoad = options.filterAfterLoad;
 
@@ -5360,38 +5411,44 @@ var BinauralPanner = exports.BinauralPanner = function () {
   // ----------- accessors
 
   /**
-   * Set coordinates type for positions.
-   * @param {coordinatesType} [type='gl']
+   * Set coordinate system.
+   *
+   * @param {CoordinateSystem} [system='gl']
    */
+
 
   _createClass(BinauralPanner, [{
     key: 'setSourcePositionByIndex',
 
+
     /**
-     * Set the position of one source.
+     * Set the position of one source. It will update the corresponding
+     * relative position after a call to the update method.
+     *
+     * @see {@link BinauralPanner#update}
      *
      * @param {Number} index
-     * @param {coordinates} positionRequest
+     * @param {Coordinates} positionRequest
      * @returns {this}
      */
     value: function setSourcePositionByIndex(index, positionRequest) {
       this._sourcesOutdated[index] = true;
-      (0, _coordinates.typedToGl)(this._sourcePositionsAbsolute[index], positionRequest, this.positionsType);
+      (0, _coordinates.systemToGl)(this._sourcePositionsAbsolute[index], positionRequest, this.coordinateSystem);
 
       return this;
     }
 
     /**
-     * Get the position of one source
+     * Get the position of one source.
      *
      * @param {Number} index
-     * @returns {coordinates}
+     * @returns {Coordinates}
      */
 
   }, {
     key: 'getSourcePositionByIndex',
     value: function getSourcePositionByIndex(index) {
-      return (0, _coordinates.glToTyped)([], this._sourcePositionsAbsolute[index], this.positionsType);
+      return (0, _coordinates.glToSystem)([], this._sourcePositionsAbsolute[index], this.coordinateSystem);
     }
 
     // ----------- public methods
@@ -5399,10 +5456,10 @@ var BinauralPanner = exports.BinauralPanner = function () {
     /**
      * Load an HRTF set form an URL, and update sources.
      *
-     * @see HrtfSet#load
+     * @see {@link HrtfSet#load}
      *
      * @param {String} sourceUrl
-     * @returns {Promise.<(this|Error)>} resolve when URL successfully
+     * @returns {Promise.<this|Error>} resolve when URL successfully
      * loaded.
      */
 
@@ -5440,7 +5497,8 @@ var BinauralPanner = exports.BinauralPanner = function () {
      * Disconnect the input of one source.
      *
      * @param {Number} index
-     * @param {(AudioNode|Array.<AudioNode>)} nodesToDisconnect
+     * @param {(AudioNode|Array.<AudioNode>)} nodesToDisconnect disconnect
+     * all when undefined.
      * @returns {this}
      */
 
@@ -5455,7 +5513,8 @@ var BinauralPanner = exports.BinauralPanner = function () {
     /**
      * Disconnect the input of each source.
      *
-     * @param {(AudioNode|Array.<AudioNode>)} nodesToDisconnect
+     * @param {(AudioNode|Array.<AudioNode>)} nodesToDisconnect disconnect
+     * all when undefined.
      * @returns {this}
      */
 
@@ -5493,7 +5552,8 @@ var BinauralPanner = exports.BinauralPanner = function () {
      * Disconnect the output of a source.
      *
      * @param {Number} index
-     * @param {(AudioNode|Array.<AudioNode>)} nodesToDisconnect
+     * @param {(AudioNode|Array.<AudioNode>)} nodesToDisconnect disconnect
+     * all when undefined.
      * @returns {this}
      */
 
@@ -5506,12 +5566,10 @@ var BinauralPanner = exports.BinauralPanner = function () {
     }
 
     /**
-     * Connect each output of each source. Note that the number of nodes to
-     * connect must match the number of sources.
+     * Connect the output of each source.
      *
-     * @see BinauralPanner#connectOutputByIndex
+     * @see {@link BinauralPanner#connectOutputByIndex}
      *
-     * @param {Number} index
      * @param {(AudioNode|Array.<AudioNode>)} nodesToConnect
      * @param {Number} [output=0] output to connect from
      * @param {Number} [input=0] input to connect to
@@ -5546,10 +5604,10 @@ var BinauralPanner = exports.BinauralPanner = function () {
     }
 
     /**
-     * Update the sources filters, according to possible changes in listener,
+     * Update the sources filters, according to pending changes in listener,
      * and source positions.
      *
-     * @returns {this}
+     * @returns {Boolean} true when at least a change occurred.
      */
 
   }, {
@@ -5557,50 +5615,52 @@ var BinauralPanner = exports.BinauralPanner = function () {
     value: function update() {
       var _this3 = this;
 
-      if (this._listenerOutdated) {
-        _glMatrix2.default.mat4.lookAt(this._listenerLookAt, this._listenerPosition, this._listenerView, this._listenerUp);
-
+      var updated = false;
+      if (this._listener.update()) {
         this._sourcesOutdated.fill(true);
+        updated = true;
       }
 
       if (this._hrtfSet.isReady) {
         this._sourcePositionsAbsolute.forEach(function (positionAbsolute, index) {
           if (_this3._sourcesOutdated[index]) {
-            _glMatrix2.default.vec3.transformMat4(_this3._sourcePositionsRelative[index], positionAbsolute, _this3._listenerLookAt);
+            _glMatrix2.default.vec3.transformMat4(_this3._sourcePositionsRelative[index], positionAbsolute, _this3._listener.lookAt);
 
             _this3._sources[index].position = _this3._sourcePositionsRelative[index];
 
             _this3._sourcesOutdated[index] = false;
+            updated = true;
           }
         });
       }
 
-      return this;
+      return updated;
     }
   }, {
-    key: 'positionsType',
-    set: function set(type) {
-      this._positionsType = typeof type !== 'undefined' ? type : 'gl';
+    key: 'coordinateSystem',
+    set: function set(system) {
+      this._coordinateSystem = typeof system !== 'undefined' ? system : 'gl';
     }
 
     /**
-     * Get coordinates type for positions.
-     * @returns {coordinatesType}
+     * Get coordinate system.
+     *
+     * @returns {CoordinateSystem}
      */
     ,
     get: function get() {
-      return this._positionsType;
+      return this._coordinateSystem;
     }
 
     /**
      * Refer an external HRTF set, and update sources. Its positions
-     * coordinate type must be 'gl'.
+     * coordinate system must be 'gl'.
      *
-     * @see HrtfSet
-     * @see BinauralPanner#update
+     * @see {@link HrtfSet}
+     * @see {@link BinauralPanner#update}
      *
      * @param {HrtfSet} hrtfSet
-     * @throws {Error} when hrtfSet in undefined or hrtfSet.positionsType is
+     * @throws {Error} when hrtfSet in undefined or hrtfSet.coordinateSystem is
      * not 'gl'.
      */
 
@@ -5610,8 +5670,8 @@ var BinauralPanner = exports.BinauralPanner = function () {
       var _this4 = this;
 
       if (typeof hrtfSet !== 'undefined') {
-        if (hrtfSet.positionsType !== 'gl') {
-          throw new Error('positions type of HRTF set must be \'gl\' ' + ('(and not \'' + hrtfSet.positionsType + '\') ')(_templateObject));
+        if (hrtfSet.coordinateSystem !== 'gl') {
+          throw new Error('coordinate system of HRTF set must be \'gl\' ' + ('(and not \'' + hrtfSet.coordinateSystem + '\') ')(_templateObject));
         }
         this._hrtfSet = hrtfSet;
       } else {
@@ -5642,9 +5702,9 @@ var BinauralPanner = exports.BinauralPanner = function () {
     /**
      * Set the filter positions of the HRTF set
      *
-     * @see HrtfSet#filterPositions
+     * @see {@link HrtfSet#filterPositions}
      *
-     * @param {Array.<coordinates>} positions
+     * @param {Array.<Coordinates>} positions
      */
 
   }, {
@@ -5656,64 +5716,232 @@ var BinauralPanner = exports.BinauralPanner = function () {
     /**
      * Get the filter positions of the HRTF set
      *
-     * @see HrtfSet#filterPositions
+     * @see {@link HrtfSet#filterPositions}
      *
-     * @return {Array.<coordinates>} positions
+     * @return {Array.<Coordinates>} positions
      */
     ,
     get: function get() {
       return this._hrtfSet.filterPositions;
     }
+
+    /**
+     * Set coordinate system for filter positions.
+     *
+     * @param {CoordinateSystem} [system='gl']
+     */
+
   }, {
-    key: 'filterPositionsType',
-    set: function set(type) {
-      this._hrtfSet.filterPositionsType = type;
-    },
-    get: function get() {
-      return this._hrtfSet.filterPositionsType;
+    key: 'filterCoordinateSystem',
+    set: function set(system) {
+      this._hrtfSet.filterCoordinateSystem = typeof system !== 'undefined' ? system : this.coordinateSystem;
     }
+
+    /**
+     * Get coordinate system for filter positions.
+     *
+     * @returns {CoordinateSystem}
+     */
+    ,
+    get: function get() {
+      return this._hrtfSet.filterCoordinateSystem;
+    }
+
+    /**
+     * Set post-filtering flag. When false, try to load a partial set of
+     * HRTF.
+     *
+     * @param {Boolean} [post=false]
+     */
+
   }, {
     key: 'filterAfterLoad',
     set: function set(post) {
       this._hrtfSet.filterAfterLoad = post;
-    },
-    get: function get() {
-      return this._hrtfSet.filterAfterLoad;
-    }
-  }, {
-    key: 'listenerPosition',
-    set: function set(positionRequest) {
-      (0, _coordinates.typedToGl)(this._listenerPosition, positionRequest, this._positionsType);
-      this._listenerOutdated = true;
-    },
-    get: function get() {
-      return (0, _coordinates.glToTyped)([], this._listenerPosition, this._positionsType);
-    }
-  }, {
-    key: 'listenerUp',
-    set: function set(upRequest) {
-      (0, _coordinates.typedToGl)(this._listenerUp, upRequest, this._positionsType);
-      this._listenerOutdated = true;
-    },
-    get: function get() {
-      return (0, _coordinates.glToTyped)([], this._listenerUp, this._positionsType);
-    }
-  }, {
-    key: 'listenerView',
-    set: function set(viewRequest) {
-      (0, _coordinates.typedToGl)(this._listenerView, viewRequest, this._positionsType);
-      this._listenerOutdated = true;
-    },
-    get: function get() {
-      return (0, _coordinates.glToTyped)([], this._listenerView, this._positionsType);
     }
 
     /**
-     * Set the sources positions.
+     * Get post-filtering flag. When false, try to load a partial set of
+     * HRTF.
      *
-     * @see BinauralPanner#setSourcePositionByIndex
+     * @returns {Boolean}
+     */
+    ,
+    get: function get() {
+      return this._hrtfSet.filterAfterLoad;
+    }
+
+    /**
+     * Refer an external listener, and update sources.
      *
-     * @param {Array.<coordinates>} positionsRequest
+     * @see {@link Listener}
+     * @see {@link BinauralPanner#update}
+     *
+     * @param {Listener} listener
+     * @throws {Error} when listener in undefined.
+     */
+
+  }, {
+    key: 'listener',
+    set: function set(listener) {
+      if (typeof listener !== 'undefined') {
+        this._listener = listener;
+      } else {
+        throw new Error('Undefined listener for BinauralPanner');
+      }
+
+      this._sourcesOutdated.fill(true);
+      this.update();
+    }
+
+    // ---------- Listener proxies
+
+    /**
+     * Set coordinate system for listener.
+     *
+     * @see {@link Listener#coordinateSystem}
+     *
+     * @param {CoordinateSystem} [system='gl']
+     */
+
+  }, {
+    key: 'listenerCoordinateSystem',
+    set: function set(coordinateSystem) {
+      this._listener.coordinateSystem = typeof coordinateSystem !== 'undefined' ? coordinateSystem : this.coordinateSystem;
+    }
+
+    /**
+     * Get coordinate system for listener.
+     *
+     * @returns {CoordinateSystem}
+     */
+    ,
+    get: function get() {
+      return this._listener.coordinateSystem;
+    }
+
+    /**
+     * Set listener position. It will update the relative positions of the
+     * sources after a call to the update method.
+     *
+     * Default value is [0, 0, 0] in 'gl' coordinates.
+     *
+     * @see {@link Listener#position}
+     * @see {@link BinauralPanner#update}
+     *
+     * @param {Coordinates} positionRequest
+     */
+
+  }, {
+    key: 'listenerPosition',
+    set: function set(positionRequest) {
+      this._listener.position = positionRequest;
+    }
+
+    /**
+     * Get listener position.
+     *
+     * @returns {Coordinates}
+     */
+    ,
+    get: function get() {
+      return this._listener.position;
+    }
+
+    /**
+     * Set listener up direction (not an absolute position). It will update
+     * the relative positions of the sources after a call to the update
+     * method.
+     *
+     * Default value is [0, 1, 0] in 'gl' coordinates.
+     *
+     * @see {@link Listener#up}
+     * @see {@link BinauralPanner#update}
+     *
+     * @param {Coordinates} positionRequest
+     */
+
+  }, {
+    key: 'listenerUp',
+    set: function set(upRequest) {
+      this._listener.up = upRequest;
+    }
+
+    /**
+     * Get listener up direction.
+     *
+     * @returns {Coordinates}
+     */
+    ,
+    get: function get() {
+      return this._listener.up;
+    }
+
+    /**
+     * Set listener view, as an aiming position or a relative direction, if
+     * viewIsRelative is respectively false or true. It will update the
+     * relative positions of the sources after a call to the update method.
+     *
+     * Default value is [0, 0, -1] in 'gl' coordinates.
+     *
+     * @see {@link Listener#view}
+     * @see {@link Listener#viewIsRelative}
+     * @see {@link BinauralPanner#update}
+     *
+     * @param {Coordinates} positionRequest
+     */
+
+  }, {
+    key: 'listenerView',
+    set: function set(viewRequest) {
+      this._listener.view = viewRequest;
+    }
+
+    /**
+     * Get listener view.
+     *
+     * @returns {Coordinates}
+     */
+    ,
+    get: function get() {
+      return this._listener.view;
+    }
+
+    /**
+     * Set the type of view: absolute to an aiming position (when false), or
+     * a relative direction (when true). It will update the relative
+     * positions after a call to the update method.
+     *
+     * @see {@link Listener#view}
+     *
+     * @param {Boolean} [relative=false] true when view is a direction, false
+     * when it is an absolute position.
+     */
+
+  }, {
+    key: 'listenerViewIsRelative',
+    set: function set(relative) {
+      this._listener.viewIsRelative = relative;
+    }
+
+    /**
+     * Get the type of view.
+     *
+     * @returns {Boolean}
+     */
+    ,
+    get: function get() {
+      return this._listerner.viewIsRelative;
+    }
+
+    /**
+     * Set the sources positions. It will update the relative positions after
+     * a call to the update method.
+     *
+     * @see {@link BinauralPanner#update}
+     * @see {@link BinauralPanner#setSourcePositionByIndex}
+     *
+     * @param {Array.<Coordinates>} positionsRequest
      * @throws {Error} if the length of positionsRequest is not the same as
      * the number of sources
      */
@@ -5736,14 +5964,14 @@ var BinauralPanner = exports.BinauralPanner = function () {
     /**
      * Get the source positions.
      *
-     * @returns {Array.<coordinates>}
+     * @returns {Array.<Coordinates>}
      */
     ,
     get: function get() {
       var _this6 = this;
 
       return this._sourcePositionsAbsolute.map(function (position) {
-        return (0, _coordinates.glToTyped)([], position, _this6.positionsType);
+        return (0, _coordinates.glToSystem)([], position, _this6.coordinateSystem);
       });
     }
   }]);
@@ -5752,14 +5980,14 @@ var BinauralPanner = exports.BinauralPanner = function () {
 }();
 
 exports.default = BinauralPanner;
-},{"../geometry/coordinates":36,"../sofa/HrtfSet":40,"./Source":30,"gl-matrix":46}],30:[function(require,module,exports){
+},{"../geometry/Listener":36,"../geometry/coordinates":37,"../sofa/HrtfSet":42,"./Source":30,"gl-matrix":48}],30:[function(require,module,exports){
 'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5773,10 +6001,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Single source.
  *
- * @see BinauralPanner
+ * @see {@link BinauralPanner}
  */
 
 var Source = exports.Source = function () {
+
+  /**
+   * Construct a source, with and AudioContext and an HrtfSet.
+   *
+   * @see {@link HrtfSet}
+   *
+   * @param {Object} options
+   * @param {AudioContext} options.audioContext mandatory for the creation
+   * of FIR audio buffers
+   * @param {HrtfSet} hrtfSet {@link Source#hrtfSet}
+   * @param {coordinate} [position=[0,0,0]] in 'gl' coordinate system.
+   * {@link Source#position}
+   * @param {Number} [crossfadeDuration] in seconds
+   * {@link Source#crossfadeDuration}
+   */
+
   function Source() {
     var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
@@ -5810,11 +6054,27 @@ var Source = exports.Source = function () {
 
   // ----------- accessors
 
+  /**
+   * Set the crossfade duration when the position changes.
+   *
+   * @param {Number} [duration=0.02] in seconds
+   */
+
+
   _createClass(Source, [{
     key: 'connectInput',
 
+
     // ----------- public methods
 
+    /**
+     * Connect the input of a source.
+     *
+     * @param {(AudioNode|Array.<AudioNode>)} nodesToConnect
+     * @param {Number} [output=0] output to connect from
+     * @param {Number} [input=0] input to connect to
+     * @returns {this}
+     */
     value: function connectInput(nodesToConnect, output, input) {
       var _this = this;
 
@@ -5827,6 +6087,15 @@ var Source = exports.Source = function () {
 
       return this;
     }
+
+    /**
+     * Disconnect the input of a source.
+     *
+     * @param {(AudioNode|Array.<AudioNode>)} nodesToDisconnect disconnect
+     * all when undefined.
+     * @returns {this}
+     */
+
   }, {
     key: 'disconnectInput',
     value: function disconnectInput(nodesToDisconnect) {
@@ -5841,6 +6110,16 @@ var Source = exports.Source = function () {
 
       return this;
     }
+
+    /**
+     * Connect the output of a source.
+     *
+     * @param {(AudioNode|Array.<AudioNode>)} nodesToConnect
+     * @param {Number} [output=0] output to connect from
+     * @param {Number} [input=0] input to connect to
+     * @returns {this}
+     */
+
   }, {
     key: 'connectOutput',
     value: function connectOutput(nodesToConnect, output, input) {
@@ -5855,6 +6134,15 @@ var Source = exports.Source = function () {
 
       return this;
     }
+
+    /**
+     * Disconnect the output of a source.
+     *
+     * @param {(AudioNode|Array.<AudioNode>)} nodesToDisconnect disconnect
+     * all when undefined.
+     * @returns {this}
+     */
+
   }, {
     key: 'disconnectOutput',
     value: function disconnectOutput(nodesToDisconnect) {
@@ -5881,18 +6169,46 @@ var Source = exports.Source = function () {
       var duration = arguments.length <= 0 || arguments[0] === undefined ? 0.02 : arguments[0];
 
       this._crossfadeDuration = duration;
-    },
+    }
+
+    /**
+     * Get the crossfade duration when the position changes.
+     *
+     * @returns {Number} in seconds
+     */
+    ,
     get: function get() {
       return this._crossfadeDuration;
     }
+
+    /**
+     * Refer an external HRTF set.
+     *
+     * @param {HrtfSet} hrtfSet
+     */
+
   }, {
     key: 'hrtfSet',
     set: function set(hrtfSet) {
       this._hrtfSet = hrtfSet;
-    },
+    }
+
+    /**
+     * Get the HrtfSet.
+     *
+     * @returns {HrtfSet}
+     */
+    ,
     get: function get() {
       return this._hrtfSet;
     }
+
+    /**
+     * Set the position of the source and updates.
+     *
+     * @param {Coordinates} positionRequest
+     */
+
   }, {
     key: 'position',
     set: function set(positionRequest) {
@@ -5901,8 +6217,6 @@ var Source = exports.Source = function () {
       clearTimeout(this._crossfadeTimeout);
       var now = this._audioContext.currentTime;
       if (now >= this._crossfadeAfterTime) {
-        this._crossfadeAfterTime = now + this._crossfadeDuration;
-
         // swap
         var tmp = this._convolverCurrent;
         this._convolverCurrent = this._convolverNext;
@@ -5913,6 +6227,11 @@ var Source = exports.Source = function () {
         this._gainNext = tmp;
 
         this._convolverNext.buffer = this._hrtfSet.nearestFir(positionRequest);
+
+        // reschedule after setting the buffer, as it may take time
+        // (currentTime updates at least on Chrome 48)
+        now = this._audioContext.currentTime;
+        this._crossfadeAfterTime = now + this._crossfadeDuration;
 
         // fade in next
         this._gainNext.gain.cancelScheduledValues(now);
@@ -5964,8 +6283,6 @@ exports.default = {
 };
 },{"./BinauralPanner":29,"./Source":30,"./utilities":32}],32:[function(require,module,exports){
 'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6027,9 +6344,6 @@ function createDiracBuffer() {
 /**
  * Create a noise buffer.
  *
- * Warning: the default length is 2 samples,
- * to by-pass a bug in Safari ≤ 9.
- *
  * @param {Object} options
  * @param {AudioContext} options.audioContext must be defined
  * @param {Number} [options.channelCount=1]
@@ -6045,7 +6359,7 @@ function createNoiseBuffer() {
 
   var gain = typeof options.gain !== 'undefined' ? options.gain : -30; // dB
 
-  var channelCount = _typeof(options.channelCount) ? options.channelCount : context.destination.channelCount;
+  var channelCount = typeof options.channelCount !== 'undefined' ? options.channelCount : context.destination.channelCount;
 
   var length = duration * context.sampleRate;
   var amplitude = dBToLin(gain);
@@ -6066,7 +6380,7 @@ function createNoiseBuffer() {
  * @param {Array} options.inputSamples input array
  * @param {Number} options.inputSampleRate in Hertz
  * @param {Number} [options.outputSampleRate=options.inputSampleRate]
- * @returns {Promise.<(Float32Array|Error)>}
+ * @returns {Promise.<Float32Array|Error>}
  */
 function resampleFloat32Array() {
   var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
@@ -6147,12 +6461,30 @@ exports.almostEqualsModulo = almostEqualsModulo;
  * @license BSD-3-Clause
  */
 
+/**
+ * Test whether a value is around a reference, given a tolerance.
+ *
+ * @param {Number} value
+ * @param {Number} reference
+ * @param {Number} [tolerance=Number.EPSILON]
+ * @returns {Number} Math.abs(value - reference) <= tolerance;
+ */
 function almostEquals(value, reference) {
   var tolerance = arguments.length <= 2 || arguments[2] === undefined ? Number.EPSILON : arguments[2];
 
   return Math.abs(value - reference) <= tolerance;
 }
 
+/**
+ * Test whether a value is around a reference, given a tolerance and a
+ * modulo.
+ *
+ * @param {Number} value
+ * @param {Number} reference
+ * @param {Number} modulo
+ * @param {Number} [tolerance=Number.EPSILON]
+ * @returns {Number} Math.abs(value - reference) % modulo <= tolerance;
+ */
 function almostEqualsModulo(value, reference, modulo) {
   var tolerance = arguments.length <= 3 || arguments[3] === undefined ? Number.EPSILON : arguments[3];
 
@@ -6179,12 +6511,29 @@ var _kd2 = _interopRequireDefault(_kd);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.tree = _kd2.default; /**
-                              * @fileOverview Helpers for k-d tree.
-                              * @author Jean-Philippe.Lambert@ircam.fr
-                              * @copyright 2015-2016 IRCAM, Paris, France
-                              * @license BSD-3-Clause
-                              */
+exports.tree = _kd2.default;
+
+/**
+ * Get the squared distance between to points.
+ *
+ * (Avoid computing the square-root when unnecessary.)
+ *
+ * @param {Object} a in cartesian coordinates.
+ * @param {Number} a.x
+ * @param {Number} a.y
+ * @param {Number} a.z
+ * @param {Object} b in cartesian coordinates.
+ * @param {Number} b.x
+ * @param {Number} b.y
+ * @param {Number} b.z
+ * @returns {Number}
+ */
+/**
+ * @fileOverview Helpers for k-d tree.
+ * @author Jean-Philippe.Lambert@ircam.fr
+ * @copyright 2015-2016 IRCAM, Paris, France
+ * @license BSD-3-Clause
+ */
 
 function distanceSquared(a, b) {
   var x = b.x - a.x;
@@ -6193,6 +6542,19 @@ function distanceSquared(a, b) {
   return x * x + y * y + z * z;
 }
 
+/**
+ * Get the distance between to points.
+ *
+ * @param {Object} a in cartesian coordinates.
+ * @param {Number} a.x
+ * @param {Number} a.y
+ * @param {Number} a.z
+ * @param {Object} b in cartesian coordinates.
+ * @param {Number} b.x
+ * @param {Number} b.y
+ * @param {Number} b.z
+ * @returns {Number}
+ */
 function distance(a, b) {
   return Math.sqrt(this.distanceSquared(a, b));
 }
@@ -6202,7 +6564,259 @@ exports.default = {
   distanceSquared: distanceSquared,
   tree: _kd2.default
 };
-},{"kd.tree":56}],36:[function(require,module,exports){
+},{"kd.tree":58}],36:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Listener = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @fileOverview Listener.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author Jean-Philippe.Lambert@ircam.fr
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright 2016 IRCAM, Paris, France
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license BSD-3-Clause
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+var _glMatrix = require('gl-matrix');
+
+var _glMatrix2 = _interopRequireDefault(_glMatrix);
+
+var _coordinates = require('../geometry/coordinates');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Camera-like listener. It generates a look-at matrix from a position, a
+ * view point, and an up direction.
+ *
+ */
+
+var Listener = exports.Listener = function () {
+
+  /**
+   * Constructs a listener.
+   *
+   * @param {CoordinateSystem} [options.coordinateSystem='gl']
+   * {@link Listener#coordinateSystem}
+   * @param {Coordinates} [options.position=[0,0,0]]
+   * {@link Listener#position}
+   * @param {Coordinates} [options.up=[0,1,0]]
+   * {@link Listener#up}
+   * @param {Coordinates} [options.view=[0,0,-1]]
+   * {@link Listener#view}
+   * @param {Boolean} [options.viewIsRelative=false]
+   * {@link Listener#viewIsRelative}
+   */
+
+  function Listener() {
+    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+    _classCallCheck(this, Listener);
+
+    this._outdated = true;
+    this._lookAt = [];
+
+    this.coordinateSystem = options.coordinateSystem;
+
+    this._position = [];
+    this.position = typeof options.position !== 'undefined' ? options.position : (0, _coordinates.glToSystem)([], [0, 0, 0], this.coordinateSystem);
+
+    this._up = [];
+    this.up = typeof options.up !== 'undefined' ? options.up : (0, _coordinates.glToSystem)([], [0, 1, 0], this.coordinateSystem);
+
+    this.viewIsRelative = options.viewIsRelative; // undefined is fine
+
+    this._view = [];
+    this.view = typeof options.view !== 'undefined' ? options.view : (0, _coordinates.glToSystem)([], [0, 0, -1], this.coordinateSystem);
+
+    this.update();
+  }
+
+  // ------------- accessors
+
+  /**
+   * Get the current look-at matrix. Note is updated only after a call to
+   * the update method.
+   *
+   * @see {@link Listener#update}
+   *
+   * @returns {mat4} look-at matrix
+   */
+
+
+  _createClass(Listener, [{
+    key: 'update',
+
+
+    // --------- public methods
+
+    /**
+     * Updates the look-at matrix, according to the pending changes in
+     * position, view, viewIsRelative, and up.
+     *
+     * @returns {Boolean} true when at least a change occurred.
+     */
+    value: function update() {
+      var updated = this._outdated;
+      if (this._outdated) {
+        var view = this._viewIsRelative ? _glMatrix2.default.vec3.add([], this._view, this._position) : this._view;
+        _glMatrix2.default.mat4.lookAt(this._lookAt, this._position, view, this._up);
+        this._outdated = false;
+      }
+
+      return updated;
+    }
+  }, {
+    key: 'lookAt',
+    get: function get() {
+      return this._lookAt;
+    }
+
+    /**
+     * Set coordinate system.
+     *
+     * @param {CoordinateSystem} [type='gl']
+     */
+
+  }, {
+    key: 'coordinateSystem',
+    set: function set(coordinateSystem) {
+      this._coordinateSystem = typeof coordinateSystem !== 'undefined' ? coordinateSystem : 'gl';
+    }
+
+    /**
+     * Get coordinate system.
+     *
+     * @returns {CoordinateSystem}
+     */
+    ,
+    get: function get() {
+      return this._coordinateSystem;
+    }
+
+    /**
+     * Set listener position. It will update the look-at matrix after a call
+     * to the update method.
+     *
+     * Default value is [0, 0, 0] in 'gl' coordinates.
+     *
+     * @see {@link Listener#update}
+     *
+     * @param {Coordinates} positionRequest
+     */
+
+  }, {
+    key: 'position',
+    set: function set(positionRequest) {
+      (0, _coordinates.systemToGl)(this._position, positionRequest, this._coordinateSystem);
+      this._outdated = true;
+    }
+
+    /**
+     * Get listener position.
+     *
+     * @returns {Coordinates}
+     */
+    ,
+    get: function get() {
+      return (0, _coordinates.glToSystem)([], this._position, this._coordinateSystem);
+    }
+
+    /**
+     * Set listener up direction (not an absolute position). It will update
+     * the look-at matrix after a call to the update method.
+     *
+     * Default value is [0, 1, 0] in 'gl' coordinates.
+     *
+     * @see {@link Listener#update}
+     *
+     * @param {Coordinates} positionRequest
+     */
+
+  }, {
+    key: 'up',
+    set: function set(upRequest) {
+      (0, _coordinates.systemToGl)(this._up, upRequest, this._coordinateSystem);
+      this._outdated = true;
+    }
+
+    /**
+     * Get listener up direction.
+     *
+     * @returns {Coordinates}
+     */
+    ,
+    get: function get() {
+      return (0, _coordinates.glToSystem)([], this._up, this._coordinateSystem);
+    }
+
+    /**
+     * Set listener view, as an aiming position or a relative direction, if
+     * viewIsRelative is respectively false or true. It will update the
+     * look-at matrix after a call to the update method.
+     *
+     * Default value is [0, 0, -1] in 'gl' coordinates.
+     *
+     * @see {@link Listener#viewIsRelative}
+     * @see {@link Listener#update}
+     *
+     * @param {Coordinates} positionRequest
+     */
+
+  }, {
+    key: 'view',
+    set: function set(viewRequest) {
+      (0, _coordinates.systemToGl)(this._view, viewRequest, this._coordinateSystem);
+      this._outdated = true;
+    }
+
+    /**
+     * Get listener view.
+     *
+     * @returns {Coordinates}
+     */
+    ,
+    get: function get() {
+      return (0, _coordinates.glToSystem)([], this._view, this._coordinateSystem);
+    }
+
+    /**
+     * Set the type of view: absolute to an aiming position (when false), or
+     * a relative direction (when true). It will update the look-at matrix
+     * after a call to the update method.
+     *
+     * @see {@link Listener#view}
+     *
+     * @param {Boolean} [relative=false] true when view is a direction, false
+     * when it is an absolute position.
+     */
+
+  }, {
+    key: 'viewIsRelative',
+    set: function set(relative) {
+      this._viewIsRelative = typeof relative !== 'undefined' ? relative : false;
+    }
+
+    /**
+     * Get the type of view.
+     *
+     * @returns {Boolean}
+     */
+    ,
+    get: function get() {
+      return this._viewIsRelative;
+    }
+  }]);
+
+  return Listener;
+}();
+
+exports.default = Listener;
+},{"../geometry/coordinates":37,"gl-matrix":48}],37:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -6214,9 +6828,16 @@ exports.sofaCartesianToSofaSpherical = sofaCartesianToSofaSpherical;
 exports.sofaSphericalToSofaCartesian = sofaSphericalToSofaCartesian;
 exports.sofaSphericalToGl = sofaSphericalToGl;
 exports.glToSofaSpherical = glToSofaSpherical;
-exports.typedToSofaCartesian = typedToSofaCartesian;
-exports.typedToGl = typedToGl;
-exports.glToTyped = glToTyped;
+exports.sofaToSofaCartesian = sofaToSofaCartesian;
+exports.spat4CartesianToGl = spat4CartesianToGl;
+exports.glToSpat4Cartesian = glToSpat4Cartesian;
+exports.spat4CartesianToSpat4Spherical = spat4CartesianToSpat4Spherical;
+exports.spat4SphericalToSpat4Cartesian = spat4SphericalToSpat4Cartesian;
+exports.spat4SphericalToGl = spat4SphericalToGl;
+exports.glToSpat4Spherical = glToSpat4Spherical;
+exports.systemType = systemType;
+exports.systemToGl = systemToGl;
+exports.glToSystem = glToSystem;
 
 var _degree = require('./degree');
 
@@ -6226,59 +6847,94 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
  * Coordinates as an array of 3 values:
- * [x, y, z] or [azimuth, elevation, distance], depending on type
+ * [x, y, z] or [azimuth, elevation, distance], depending on system
  *
- * @typedef coordinates
- * @type {vec3}
+ * @typedef {vec3} Coordinates
  */
 
 /**
- * Coordinates system type: sofaCartesian', 'sofaSpherical', or'gl'.
+ * Coordinate system: `gl`, `sofaCartesian`, `sofaSpherical`,
+ * `spat4Cartesian`, or `spat4Spherical`.
  *
- * @typedef coordinatesType
- * @type {String}
+ * @typedef {String} CoordinateSystem
  */
 
+// ----------------------------- SOFA
+
+/**
+ * SOFA cartesian coordinate system: `sofaCartesian`.
+ *
+ * SOFA distances are in metres.
+ *
+ * <pre>
+ *
+ * SOFA          +z  +x             openGL    +y
+ *                | /                          |
+ *                |/                           |
+ *         +y ----o                            o---- +x
+ *                                            /
+ *                                           /
+ *                                          +z
+ *
+ * SOFA.x = -openGL.z               openGL.x = -SOFA.y
+ * SOFA.y = -openGL.x               openGL.y =  SOFA.z
+ * SOFA.z =  openGL.y               openGL.z = -SOFA.x
+ *
+ * </pre>
+ *
+ * @typedef {Coordinates} SofaCartesian
+ */
+
+/**
+ * SOFA spherical coordinate system:  `sofaSpherical`.
+ *
+ * SOFA angles are in degrees.
+ *
+ * <pre>
+ *
+ * SOFA.azimuth = atan2(SOFA.y, SOFA.x)
+ * SOFA.elevation = atan2(SOFA.z, sqrt(SOFA.x * SOFA.x + SOFA.y * SOFA.y) );
+ * SOFA.distance = sqrt(SOFA.x * SOFA.x + SOFA.y * SOFA.y + SOFA.z * SOFA.z)
+ *
+ * </pre>
+ *
+ * @typedef {Coordinates} SofaSpherical
+ */
+
+/**
+ * Convert SOFA cartesian coordinates to openGL.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
 function sofaCartesianToGl(out, a) {
   // copy to handle in-place
   var x = a[0];
   var y = a[1];
   var z = a[2];
 
-  out[0] = -y;
+  out[0] = 0 - y;
   out[1] = z;
-  out[2] = -x;
+  out[2] = 0 - x;
 
   return out;
-} /**
-   * @fileOverview SOFA convention to and from openGL convention.
-   *
-   * SOFA distances are in metres, angles in degrees.
-   *
-   * <pre>
-   *
-   * SOFA          +z  +x             openGL    +y
-   *                | /                          |
-   *                |/                           |
-   *         +y ----o                            o---- +x
-   *                                            /
-   *                                           /
-   *                                          +z
-   *
-   * SOFA.x = -openGL.z               openGL.x = -SOFA.y
-   * SOFA.y = -openGL.x               openGL.y =  SOFA.z
-   * SOFA.z =  openGL.y               openGL.z = -SOFA.x
-   *
-   * SOFA.azimuth = atan2(SOFA.y, SOFA.x)
-   * SOFA.elevation = atan2(SOFA.z, sqrt(SOFA.x * SOFA.x + SOFA.y * SOFA.y) );
-   * SOFA.distance = sqrt(SOFA.x * SOFA.x + SOFA.y * SOFA.y + SOFA.z * SOFA.z)
-   *
-   * </pre>
-   *
-   * @author Jean-Philippe.Lambert@ircam.fr
-   * @copyright 2015-2016 IRCAM, Paris, France
-   * @license BSD-3-Clause
-   */
+}
+
+/**
+ * Convert openGL coordinates to SOFA cartesian.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
+/**
+ * @fileOverview Coordinate systems conversions. openGL, SOFA, and Spat4 (Ircam).
+ *
+ * @author Jean-Philippe.Lambert@ircam.fr
+ * @copyright 2015-2016 IRCAM, Paris, France
+ * @license BSD-3-Clause
+ */
 
 function glToSofaCartesian(out, a) {
   // copy to handle in-place
@@ -6286,13 +6942,20 @@ function glToSofaCartesian(out, a) {
   var y = a[1];
   var z = a[2];
 
-  out[0] = -z;
-  out[1] = -x;
+  out[0] = 0 - z;
+  out[1] = 0 - x;
   out[2] = y;
 
   return out;
 }
 
+/**
+ * Convert SOFA cartesian coordinates to SOFA spherical.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
 function sofaCartesianToSofaSpherical(out, a) {
   // copy to handle in-place
   var x = a[0];
@@ -6310,6 +6973,13 @@ function sofaCartesianToSofaSpherical(out, a) {
   return out;
 }
 
+/**
+ * Convert SOFA spherical coordinates to SOFA spherical.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
 function sofaSphericalToSofaCartesian(out, a) {
   // copy to handle in-place
   var azimuth = a[0];
@@ -6325,12 +6995,11 @@ function sofaSphericalToSofaCartesian(out, a) {
 }
 
 /**
- * Convert sofaSpherical coordinates in SOFA convention, to cartesian in openGL
- * convention.
+ * Convert SOFA spherical coordinates to openGL.
  *
- * @param {vec3} out as an array of [x, y, z]. In-place if out === a
- * @param {vec3} a as an array of [azimuth, elevation, distance]
- * @returns {vec3} out
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
  */
 function sofaSphericalToGl(out, a) {
   // copy to handle in-place
@@ -6339,13 +7008,20 @@ function sofaSphericalToGl(out, a) {
   var distance = a[2];
 
   var cosE = _degree2.default.cos(elevation);
-  out[0] = -distance * cosE * _degree2.default.sin(azimuth); // -SOFA.y
+  out[0] = 0 - distance * cosE * _degree2.default.sin(azimuth); // -SOFA.y
   out[1] = distance * _degree2.default.sin(elevation); // SOFA.z
-  out[2] = -distance * cosE * _degree2.default.cos(azimuth); // -SOFA.x
+  out[2] = 0 - distance * cosE * _degree2.default.cos(azimuth); // -SOFA.x
 
   return out;
 }
 
+/**
+ * Convert openGL coordinates to SOFA spherical.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
 function glToSofaSpherical(out, a) {
   // copy to handle in-place
   // difference to avoid generating -0 out of 0
@@ -6364,8 +7040,17 @@ function glToSofaSpherical(out, a) {
   return out;
 }
 
-function typedToSofaCartesian(out, a, type) {
-  switch (type) {
+/**
+ * Convert coordinates to SOFA cartesian.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @param {CoordinateSystem} system
+ * @returns {Coordinates} out
+ * @throws {Error} when the system is unknown.
+ */
+function sofaToSofaCartesian(out, a, system) {
+  switch (system) {
     case 'sofaCartesian':
       out[0] = a[0];
       out[1] = a[1];
@@ -6377,13 +7062,212 @@ function typedToSofaCartesian(out, a, type) {
       break;
 
     default:
-      throw new Error('Bad SOFA type');
+      throw new Error('Bad coordinate system');
   }
   return out;
 }
 
-function typedToGl(out, a, type) {
-  switch (type) {
+// ---------------- Spat4
+
+/**
+ * Spat4 cartesian coordinate system: `spat4Cartesian`.
+ *
+ * Spat4 distances are in metres.
+ *
+ * <pre>
+ *
+ * Spat4         +z  +y             openGL    +y
+ *                | /                          |
+ *                |/                           |
+ *                o---- +x                     o---- +x
+ *                                            /
+ *                                           /
+ *                                         +z
+ *
+ * Spat4.x =  openGL.x               openGL.x =  Spat4.x
+ * Spat4.y = -openGL.z               openGL.y =  Spat4.z
+ * Spat4.z =  openGL.y               openGL.z = -Spat4.y
+ *
+ * </pre>
+ *
+ * @typedef {Coordinates} Spat4Cartesian
+ */
+
+/**
+ * Spat4 spherical coordinate system: `spat4Spherical`.
+ *
+ * Spat4 angles are in degrees.
+ *
+ * <pre>
+ *
+ * Spat4.azimuth = atan2(Spat4.x, Spat4.y)
+ * Spat4.elevation = atan2(Spat4.z, sqrt(Spat4.x * Spat4.x + Spat4.y * Spat4.y) );
+ * Spat4.distance = sqrt(Spat4.x * Spat4.x + Spat4.y * Spat4.y + Spat4.z * Spat4.z)
+ *
+ * </pre>
+ *
+ * @typedef {Coordinates} Spat4Spherical
+ */
+
+/**
+ * Convert Spat4 cartesian coordinates to openGL.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
+function spat4CartesianToGl(out, a) {
+  // copy to handle in-place
+  var x = a[0];
+  var y = a[1];
+  var z = a[2];
+
+  out[0] = x;
+  out[1] = z;
+  out[2] = 0 - y;
+
+  return out;
+}
+
+/**
+ * Convert openGL coordinates to Spat4 cartesian.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
+function glToSpat4Cartesian(out, a) {
+  // copy to handle in-place
+  var x = a[0];
+  var y = a[1];
+  var z = a[2];
+
+  out[0] = x;
+  out[1] = 0 - z;
+  out[2] = y;
+
+  return out;
+}
+
+/**
+ * Convert Spat4 cartesian coordinates to Spat4 spherical.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
+function spat4CartesianToSpat4Spherical(out, a) {
+  // copy to handle in-place
+  var x = a[0];
+  var y = a[1];
+  var z = a[2];
+
+  var x2y2 = x * x + y * y;
+
+  out[0] = _degree2.default.atan2(x, y);
+  out[1] = _degree2.default.atan2(z, Math.sqrt(x2y2));
+  out[2] = Math.sqrt(x2y2 + z * z);
+
+  return out;
+}
+
+/**
+ * Convert Spat4 spherical coordinates to Spat4 spherical.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
+function spat4SphericalToSpat4Cartesian(out, a) {
+  // copy to handle in-place
+  var azimuth = a[0];
+  var elevation = a[1];
+  var distance = a[2];
+
+  var cosE = _degree2.default.cos(elevation);
+  out[0] = distance * cosE * _degree2.default.sin(azimuth); // Spat4.x
+  out[1] = distance * cosE * _degree2.default.cos(azimuth); // Spat4.y
+  out[2] = distance * _degree2.default.sin(elevation); // Spat4.z
+
+  return out;
+}
+
+/**
+ * Convert Spat4 spherical coordinates to openGL.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
+function spat4SphericalToGl(out, a) {
+  // copy to handle in-place
+  var azimuth = a[0];
+  var elevation = a[1];
+  var distance = a[2];
+
+  var cosE = _degree2.default.cos(elevation);
+  out[0] = distance * cosE * _degree2.default.sin(azimuth); // Spat4.x
+  out[1] = distance * _degree2.default.sin(elevation); // Spat4.z
+  out[2] = 0 - distance * cosE * _degree2.default.cos(azimuth); // -Spat4.y
+
+  return out;
+}
+
+/**
+ * Convert openGL coordinates to Spat4 spherical.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @returns {Coordinates} out
+ */
+function glToSpat4Spherical(out, a) {
+  // copy to handle in-place
+  // difference to avoid generating -0 out of 0
+  var x = a[0]; // openGL.x
+  var y = 0 - a[2]; // -openGL.z
+  var z = a[1]; // openGL.y
+
+  var x2y2 = x * x + y * y;
+
+  out[0] = _degree2.default.atan2(x, y);
+  out[1] = _degree2.default.atan2(z, Math.sqrt(x2y2));
+  out[2] = Math.sqrt(x2y2 + z * z);
+
+  return out;
+}
+
+// ---------------- named coordinate systems
+
+/**
+ * Get the coordinate system general type (cartesian or spherical).
+ *
+ * @param {String} system
+ * @returns {String} 'cartesian' or 'spherical', if `system` if of cartesian
+ * or spherical type.
+ */
+function systemType(system) {
+  var type = undefined;
+  if (system === 'sofaCartesian' || system === 'spat4Cartesian' || system === 'gl') {
+    type = 'cartesian';
+  } else if (system === 'sofaSpherical' || system === 'spat4Spherical') {
+    type = 'spherical';
+  } else {
+    throw new Error('Unknown coordinate system type ' + system);
+  }
+  return type;
+}
+
+/**
+ * Convert coordinates to openGL.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @param {CoordinateSystem} system
+ * @returns {Coordinates} out
+ * @throws {Error} when the system is unknown.
+ */
+function systemToGl(out, a, system) {
+  switch (system) {
     case 'gl':
       out[0] = a[0];
       out[1] = a[1];
@@ -6398,14 +7282,31 @@ function typedToGl(out, a, type) {
       sofaSphericalToGl(out, a);
       break;
 
+    case 'spat4Cartesian':
+      spat4CartesianToGl(out, a);
+      break;
+
+    case 'spat4Spherical':
+      spat4SphericalToGl(out, a);
+      break;
+
     default:
-      throw new Error('Bad SOFA type');
+      throw new Error('Bad coordinate system');
   }
   return out;
 }
 
-function glToTyped(out, a, type) {
-  switch (type) {
+/**
+ * Convert openGL coordinates to other system.
+ *
+ * @param {Coordinates} out in-place if out === a.
+ * @param {Coordinates} a
+ * @param {CoordinateSystem} system
+ * @returns {Coordinates} out
+ * @throws {Error} when the system is unknown.
+ */
+function glToSystem(out, a, system) {
+  switch (system) {
     case 'gl':
       out[0] = a[0];
       out[1] = a[1];
@@ -6420,24 +7321,39 @@ function glToTyped(out, a, type) {
       glToSofaSpherical(out, a);
       break;
 
+    case 'spat4Cartesian':
+      glToSpat4Cartesian(out, a);
+      break;
+
+    case 'spat4Spherical':
+      glToSpat4Spherical(out, a);
+      break;
+
     default:
-      throw new Error('Bad SOFA type');
+      throw new Error('Bad coordinate system');
   }
   return out;
 }
 
 exports.default = {
-  sofaCartesianToGl: sofaCartesianToGl,
-  sofaCartesianToSofaSpherical: sofaCartesianToSofaSpherical,
   glToSofaCartesian: glToSofaCartesian,
   glToSofaSpherical: glToSofaSpherical,
-  glToTyped: glToTyped,
-  sofaSphericalToSofaCartesian: sofaSphericalToSofaCartesian,
+  glToSpat4Cartesian: glToSpat4Cartesian,
+  glToSpat4Spherical: glToSpat4Spherical,
+  glToSystem: glToSystem,
+  sofaCartesianToGl: sofaCartesianToGl,
+  sofaCartesianToSofaSpherical: sofaCartesianToSofaSpherical,
   sofaSphericalToGl: sofaSphericalToGl,
-  typedToSofaCartesian: typedToSofaCartesian,
-  typedToGl: typedToGl
+  sofaSphericalToSofaCartesian: sofaSphericalToSofaCartesian,
+  sofaToSofaCartesian: sofaToSofaCartesian,
+  spat4CartesianToGl: spat4CartesianToGl,
+  spat4CartesianToSpat4Spherical: spat4CartesianToSpat4Spherical,
+  spat4SphericalToGl: spat4SphericalToGl,
+  spat4SphericalToSpat4Cartesian: spat4SphericalToSpat4Cartesian,
+  systemToGl: systemToGl,
+  systemType: systemType
 };
-},{"./degree":37}],37:[function(require,module,exports){
+},{"./degree":38}],38:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6455,25 +7371,67 @@ exports.atan2 = atan2;
  * @license BSD-3-Clause
  */
 
+/**
+ * Degree to radian multiplication factor.
+ *
+ * @type {Number}
+ */
 var toRadianFactor = exports.toRadianFactor = Math.PI / 180;
+
+/**
+ * Radian to degree multiplication factor.
+ *
+ * @type {Number}
+ */
 var fromRadianFactor = exports.fromRadianFactor = 1 / toRadianFactor;
 
+/**
+ * Convert an angle in degrees to radians.
+ *
+ * @param {Number} angle in degrees
+ * @returns {Number} angle in radians
+ */
 function toRadian(angle) {
   return angle * toRadianFactor;
 }
 
+/**
+ * Convert an angle in radians to degrees.
+ *
+ * @param {Number} angle in radians
+ * @returns {Number} angle in degrees
+ */
 function fromRadian(angle) {
   return angle * fromRadianFactor;
 }
 
+/**
+ * Get the cosinus of an angle in degrees.
+ *
+ * @param {Number} angle
+ * @returns {Number}
+ */
 function cos(angle) {
   return Math.cos(angle * toRadianFactor);
 }
 
+/**
+ * Get the sinus of an angle in degrees.
+ *
+ * @param {Number} angle
+ * @returns {Number}
+ */
 function sin(angle) {
   return Math.sin(angle * toRadianFactor);
 }
 
+/**
+ * Get the arc-tangent (2 arguments) of 2 angles in degrees.
+ *
+ * @param {Number} y
+ * @param {Number} x
+ * @returns {Number}
+ */
 function atan2(y, x) {
   return Math.atan2(y, x) * fromRadianFactor;
 }
@@ -6487,7 +7445,7 @@ exports.default = {
   toRadian: toRadian,
   toRadianFactor: toRadianFactor
 };
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -6506,20 +7464,25 @@ var _KdTree = require('./KdTree');
 
 var _KdTree2 = _interopRequireDefault(_KdTree);
 
+var _Listener = require('./Listener');
+
+var _Listener2 = _interopRequireDefault(_Listener);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
   coordinates: _coordinates2.default,
   degree: _degree2.default,
-  KdTree: _KdTree2.default
+  KdTree: _KdTree2.default,
+  Listener: _Listener2.default
 };
-},{"./KdTree":35,"./coordinates":36,"./degree":37}],39:[function(require,module,exports){
+},{"./KdTree":35,"./Listener":36,"./coordinates":37,"./degree":38}],40:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sofa = exports.geometry = exports.common = exports.audio = undefined;
+exports.sofa = exports.info = exports.geometry = exports.common = exports.audio = undefined;
 
 var _audio = require('./audio');
 
@@ -6533,6 +7496,10 @@ var _geometry = require('./geometry');
 
 var _geometry2 = _interopRequireDefault(_geometry);
 
+var _info = require('./info');
+
+var _info2 = _interopRequireDefault(_info);
+
 var _sofa = require('./sofa');
 
 var _sofa2 = _interopRequireDefault(_sofa);
@@ -6542,31 +7509,104 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.audio = _audio2.default;
 exports.common = _common2.default;
 exports.geometry = _geometry2.default;
+exports.info = _info2.default;
 exports.sofa = _sofa2.default;
 exports.default = {
   audio: _audio2.default,
   common: _common2.default,
   geometry: _geometry2.default,
+  info: _info2.default,
   sofa: _sofa2.default
 };
-},{"./audio":31,"./common":33,"./geometry":38,"./sofa":42}],40:[function(require,module,exports){
+},{"./audio":31,"./common":33,"./geometry":39,"./info":41,"./sofa":44}],41:[function(require,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @fileOverview Container for HRTF set.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author Jean-Philippe.Lambert@ircam.fr
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright 2015-2016 IRCAM, Paris, France
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license BSD-3-Clause
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.version = exports.name = exports.license = exports.description = undefined;
+
+var _package = require('../package.json');
+
+var _package2 = _interopRequireDefault(_package);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * @module info
+ */
+
+/**
+ * Short description of the library.
+ *
+ * @type {String}
+ */
+var description = _package2.default.description;
+
+/**
+ * License of the library.
+ *
+ * @type {String}
+ */
+/**
+ * @fileOverview Information on the library, from the `package.json` file.
+ *
+ * @author Jean-Philippe.Lambert@ircam.fr
+ * @copyright 2016 IRCAM, Paris, France
+ * @license BSD-3-Clause
+ */
+
+exports.description = description;
+var license = _package2.default.license;
+
+/**
+ * Name of the library.
+ *
+ * @type {String}
+ */
+
+exports.license = license;
+var name = _package2.default.name;
+
+/**
+ * Semantic version of the library.
+ *
+ * @type {String}
+ */
+
+exports.name = name;
+var version = _package2.default.version;
+exports.version = version;
+exports.default = {
+  description: description,
+  license: license,
+  name: name,
+  version: version
+};
+},{"../package.json":59}],42:[function(require,module,exports){
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.HrtfSet = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @fileOverview Container for HRTF set: load a set from an URL and get
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * filters from corresponding positions.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author Jean-Philippe.Lambert@ircam.fr
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright 2015-2016 IRCAM, Paris, France
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license BSD-3-Clause
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
 var _glMatrix = require('gl-matrix');
 
 var _glMatrix2 = _interopRequireDefault(_glMatrix);
+
+var _info = require('../info');
+
+var _info2 = _interopRequireDefault(_info);
 
 var _parseDataSet = require('./parseDataSet');
 
@@ -6598,17 +7638,21 @@ var HrtfSet = exports.HrtfSet = function () {
    * Constructs an HRTF set. Note that the filter positions are applied
    * during the load of an URL.
    *
-   * @see Hrtfset#load
+   * @see {@link HrtfSet#load}
    *
    * @param {Object} options
    * @param {AudioContext} options.audioContext mandatory for the creation
    * of FIR audio buffers
-   * @param {coordinatesType} [options.positionsType='gl']
-   * @param {coordinatesType} [options.filterPositionsType=options.positionsType]
-   * @param {Array.<coordinates>} [options.filterPositions=undefined]
+   * @param {CoordinateSystem} [options.coordinateSystem='gl']
+   * {@link HrtfSet#coordinateSystem}
+   * @param {CoordinateSystem} [options.filterCoordinateSystem=options.coordinateSystem]
+   * {@link HrtfSet#filterCoordinateSystem}
+   * @param {Array.<Coordinates>} [options.filterPositions=undefined]
+   * {@link HrtfSet#filterPositions}
    * array of positions to filter. Use undefined to use all positions.
-   * @param {Boolean} [options.filterAfterLoad = false] true to filter after
-   * full load of SOFA file
+   * @param {Boolean} [options.filterAfterLoad=false] true to filter after
+   * full load of SOFA file, instead of multiple partial loading.
+   * {@link HrtfSet#filterAfterLoad}
    */
 
   function HrtfSet() {
@@ -6616,13 +7660,13 @@ var HrtfSet = exports.HrtfSet = function () {
 
     _classCallCheck(this, HrtfSet);
 
-    this.audioContext = options.audioContext;
+    this._audioContext = options.audioContext;
 
     this._ready = false;
 
-    this.positionsType = options.positionsType;
+    this.coordinateSystem = options.coordinateSystem;
 
-    this.filterPositionsType = options.filterPositionsType;
+    this.filterCoordinateSystem = options.filterCoordinateSystem;
     this.filterPositions = options.filterPositions;
 
     this.filterAfterLoad = options.filterAfterLoad;
@@ -6631,12 +7675,14 @@ var HrtfSet = exports.HrtfSet = function () {
   // ------------ accessors
 
   /**
-   * Set coordinates type for positions.
-   * @param {coordinatesType} [type='gl']
+   * Set coordinate system for positions.
+   * @param {CoordinateSystem} [system='gl']
    */
+
 
   _createClass(HrtfSet, [{
     key: 'applyFilterPositions',
+
 
     // ------------- public methods
 
@@ -6646,27 +7692,27 @@ var HrtfSet = exports.HrtfSet = function () {
      *
      * This is destructive.
      *
-     * @see HrtfSet#load
+     * @see {@link HrtfSet#load}
      */
     value: function applyFilterPositions() {
       var _this = this;
 
       // do not use getter for gl positions
       var filteredPositions = this._filterPositions.map(function (current) {
-        return _this.kdt.nearest({ x: current[0], y: current[1], z: current[2] }, 1).pop()[0]; // nearest data
+        return _this._kdt.nearest({ x: current[0], y: current[1], z: current[2] }, 1).pop()[0]; // nearest data
       });
 
       // filter out duplicates
       filteredPositions = [].concat(_toConsumableArray(new Set(filteredPositions)));
 
-      this.kdt = _KdTree2.default.tree.createKdTree(filteredPositions, _KdTree2.default.distanceSquared, ['x', 'y', 'z']);
+      this._kdt = _KdTree2.default.tree.createKdTree(filteredPositions, _KdTree2.default.distanceSquared, ['x', 'y', 'z']);
     }
 
     /**
      * Load an URL and generate the corresponding set of IR buffers.
      *
      * @param {String} sourceUrl
-     * @returns {Promise.<(this|Error)>} resolve when the URL sucessfully
+     * @returns {Promise.<this|Error>} resolve when the URL sucessfully
      * loaded.
      */
 
@@ -6716,35 +7762,106 @@ var HrtfSet = exports.HrtfSet = function () {
     }
 
     /**
-     * @typedef HrtfSet.nearestType
-     * @type {Object}
+     * Export the current HRTF set as a JSON string.
+     *
+     * When set, `this.filterPositions` reduce the actual number of filter, and
+     * thus the exported set. The coordinate system of the export is
+     * `this.filterCoordinateSystem`.
+     *
+     * @see {@link HrtfSet#filterCoordinateSystem}
+     * @see {@link HrtfSet#filterPositions}
+     *
+     * @returns {String} as a SOFA JSON file.
+     * @throws {Error} when this.filterCoordinateSystem is unknown.
+     */
+
+  }, {
+    key: 'export',
+    value: function _export() {
+      var _this3 = this;
+
+      // in a SOFA file, the source positions are the HrtfSet filter positions.
+
+      // SOFA listener is the reference for HrtfSet filter positions
+      // which is normalised in HrtfSet
+
+      var SourcePosition = undefined;
+      var SourcePositionType = _coordinates2.default.systemType(this.filterCoordinateSystem);
+      switch (SourcePositionType) {
+        case 'cartesian':
+          SourcePosition = this._sofaSourcePosition.map(function (position) {
+            return _coordinates2.default.glToSofaCartesian([], position);
+          });
+          break;
+
+        case 'spherical':
+          SourcePosition = this._sofaSourcePosition.map(function (position) {
+            return _coordinates2.default.glToSofaSpherical([], position);
+          });
+          break;
+
+        default:
+          throw new Error('Bad source position type ' + SourcePositionType + ' ' + 'for export.');
+      }
+
+      var DataIR = this._sofaSourcePosition.map(function (position) {
+        // retrieve fir for each position, without conversion
+        var fir = _this3._kdt.nearest({ x: position[0], y: position[1], z: position[2] }, 1).pop()[0].fir; // nearest data
+        var ir = [];
+        for (var channel = 0; channel < fir.numberOfChannels; ++channel) {
+          // Float32Array to array for stringify
+          ir.push([].concat(_toConsumableArray(fir.getChannelData(channel))));
+        }
+        return ir;
+      });
+
+      return (0, _parseSofa.stringifySofa)({
+        name: this._sofaName,
+        metaData: this._sofaMetaData,
+        ListenerPosition: [0, 0, 0],
+        ListenerPositionType: 'cartesian',
+        ListenerUp: [0, 0, 1],
+        ListenerUpType: 'cartesian',
+        ListenerView: [1, 0, 0],
+        ListenerViewType: 'cartesian',
+        SourcePositionType: SourcePositionType,
+        SourcePosition: SourcePosition,
+        DataSamplingRate: this._audioContext.sampleRate,
+        DataDelay: this._sofaDelay,
+        DataIR: DataIR,
+        RoomVolume: this._sofaRoomVolume
+      });
+    }
+
+    /**
+     * @typedef {Object} HrtfSet.nearestType
      * @property {Number} distance from the request
      * @property {AudioBuffer} fir 2-channels impulse response
      * @property {Number} index original index in the SOFA set
-     * @property {coordinates} position using positionsType coordinates
+     * @property {Coordinates} position using coordinateSystem coordinates
      * system.
      */
 
     /**
      * Get the nearest point in the HRTF set, after a successful load.
      *
-     * @see HrtfSet#load
+     * @see {@link HrtfSet#load}
      *
-     * @param {coordinates} positionRequest
+     * @param {Coordinates} positionRequest
      * @returns {HrtfSet.nearestType}
      */
 
   }, {
     key: 'nearest',
     value: function nearest(positionRequest) {
-      var position = _coordinates2.default.typedToGl([], positionRequest, this.positionsType);
-      var nearest = this.kdt.nearest({
+      var position = _coordinates2.default.systemToGl([], positionRequest, this.coordinateSystem);
+      var nearest = this._kdt.nearest({
         x: position[0],
         y: position[1],
         z: position[2]
       }, 1).pop(); // nearest only
       var data = nearest[0];
-      _coordinates2.default.glToTyped(position, [data.x, data.y, data.z], this.positionsType);
+      _coordinates2.default.glToSystem(position, [data.x, data.y, data.z], this.coordinateSystem);
       return {
         distance: nearest[1],
         fir: data.fir,
@@ -6756,7 +7873,7 @@ var HrtfSet = exports.HrtfSet = function () {
     /**
      * Get the FIR AudioBuffer that corresponds to the closest position in
      * the set.
-     * @param {coordinates} positionRequest
+     * @param {Coordinates} positionRequest
      * @returns {AudioBuffer}
      */
 
@@ -6781,11 +7898,11 @@ var HrtfSet = exports.HrtfSet = function () {
   }, {
     key: '_createKdTree',
     value: function _createKdTree(indicesPositionsFirs) {
-      var _this3 = this;
+      var _this4 = this;
 
       var positions = indicesPositionsFirs.map(function (value) {
         var impulseResponses = value[2];
-        var fir = _this3.audioContext.createBuffer(impulseResponses.length, impulseResponses[0].length, _this3.audioContext.sampleRate);
+        var fir = _this4._audioContext.createBuffer(impulseResponses.length, impulseResponses[0].length, _this4._audioContext.sampleRate);
         impulseResponses.forEach(function (samples, channel) {
           // do not use copyToChannel because of Safari <= 9
           fir.getChannelData(channel).set(samples);
@@ -6800,7 +7917,11 @@ var HrtfSet = exports.HrtfSet = function () {
         };
       });
 
-      this.kdt = _KdTree2.default.tree.createKdTree(positions, _KdTree2.default.distanceSquared, ['x', 'y', 'z']);
+      this._sofaSourcePosition = positions.map(function (position) {
+        return [position.x, position.y, position.z];
+      });
+
+      this._kdt = _KdTree2.default.tree.createKdTree(positions, _KdTree2.default.distanceSquared, ['x', 'y', 'z']);
       return this;
     }
 
@@ -6810,16 +7931,16 @@ var HrtfSet = exports.HrtfSet = function () {
      * @private
      *
      * @param {Array.<Number>} indices
-     * @param {Array.<coordinates>} positions
+     * @param {Array.<Coordinates>} positions
      * @param {Array.<Float32Array>} firs
-     * @returns {Promise.<(Array|Error)>}
+     * @returns {Promise.<Array|Error>}
      * @throws {Error} assertion that the channel count is 2
      */
 
   }, {
     key: '_generateIndicesPositionsFirs',
     value: function _generateIndicesPositionsFirs(indices, positions, firs) {
-      var _this4 = this;
+      var _this5 = this;
 
       var sofaFirsPromises = firs.map(function (sofaFirChannels, index) {
         var channelCount = sofaFirChannels.length;
@@ -6830,8 +7951,8 @@ var HrtfSet = exports.HrtfSet = function () {
         var sofaFirsChannelsPromises = sofaFirChannels.map(function (fir) {
           return (0, _utilities.resampleFloat32Array)({
             inputSamples: fir,
-            inputSampleRate: _this4.sofaSampleRate,
-            outputSampleRate: _this4.audioContext.sampleRate
+            inputSampleRate: _this5._sofaSampleRate,
+            outputSampleRate: _this5._audioContext.sampleRate
           });
         });
         return Promise.all(sofaFirsChannelsPromises).then(function (firChannels) {
@@ -6850,7 +7971,7 @@ var HrtfSet = exports.HrtfSet = function () {
      * @private
      *
      * @param {String} sourceUrl
-     * @returns {Promise.<(Object|Error)>}
+     * @returns {Promise.<Object|Error>}
      */
 
   }, {
@@ -6892,13 +8013,13 @@ var HrtfSet = exports.HrtfSet = function () {
      * @private
      *
      * @param {String} sourceUrl
-     * @returns {(Promise.<Array.<Number>>|Error)}
+     * @returns {Promise.<Array.<Number>|Error>}
      */
 
   }, {
     key: '_loadMetaAndPositions',
     value: function _loadMetaAndPositions(sourceUrl) {
-      var _this5 = this;
+      var _this6 = this;
 
       var promise = new Promise(function (resolve, reject) {
         var positionsUrl = sourceUrl + '.json?' + 'ListenerPosition,ListenerUp,ListenerView,SourcePosition,' + 'Data.Delay,Data.SamplingRate,' + 'EmitterPosition,ReceiverPosition,RoomVolume'; // meta
@@ -6918,9 +8039,9 @@ var HrtfSet = exports.HrtfSet = function () {
           try {
             (function () {
               var data = (0, _parseSofa.parseSofa)(request.response);
-              _this5._setMetaData(data);
+              _this6._setMetaData(data, sourceUrl);
 
-              var sourcePositions = _this5._sourcePositionsToGl(data);
+              var sourcePositions = _this6._sourcePositionsToGl(data);
               var hrtfPositions = sourcePositions.map(function (position, index) {
                 return {
                   x: position[0],
@@ -6932,7 +8053,7 @@ var HrtfSet = exports.HrtfSet = function () {
 
               var kdt = _KdTree2.default.tree.createKdTree(hrtfPositions, _KdTree2.default.distanceSquared, ['x', 'y', 'z']);
 
-              var nearestIndices = _this5._filterPositions.map(function (current) {
+              var nearestIndices = _this6._filterPositions.map(function (current) {
                 return kdt.nearest({ x: current[0], y: current[1], z: current[2] }, 1).pop()[0] // nearest data
                 .index;
               });
@@ -6940,7 +8061,7 @@ var HrtfSet = exports.HrtfSet = function () {
               // filter out duplicates
               nearestIndices = [].concat(_toConsumableArray(new Set(nearestIndices)));
 
-              _this5.sofaUrl = sourceUrl;
+              _this6._sofaUrl = sourceUrl;
               resolve(nearestIndices);
             })();
           } catch (error) {
@@ -6961,13 +8082,13 @@ var HrtfSet = exports.HrtfSet = function () {
      * @private
      *
      * @param {String} url
-     * @returns {Promise.<(this|Error)>}
+     * @returns {Promise.<this|Error>}
      */
 
   }, {
     key: '_loadSofaFull',
     value: function _loadSofaFull(url) {
-      var _this6 = this;
+      var _this7 = this;
 
       var promise = new Promise(function (resolve, reject) {
         var request = new window.XMLHttpRequest();
@@ -6984,15 +8105,15 @@ var HrtfSet = exports.HrtfSet = function () {
 
           try {
             var data = (0, _parseSofa.parseSofa)(request.response);
-            _this6._setMetaData(data);
-            var sourcePositions = _this6._sourcePositionsToGl(data);
-            _this6._generateIndicesPositionsFirs(sourcePositions.map(function (position, index) {
+            _this7._setMetaData(data, url);
+            var sourcePositions = _this7._sourcePositionsToGl(data);
+            _this7._generateIndicesPositionsFirs(sourcePositions.map(function (position, index) {
               return index;
             }), // full
             sourcePositions, data['Data.IR'].data).then(function (indicesPositionsFirs) {
-              _this6._createKdTree(indicesPositionsFirs);
-              _this6.sofaUrl = url;
-              resolve(_this6);
+              _this7._createKdTree(indicesPositionsFirs);
+              _this7._sofaUrl = url;
+              resolve(_this7);
             });
           } catch (error) {
             // re-throw
@@ -7014,13 +8135,13 @@ var HrtfSet = exports.HrtfSet = function () {
      * @param {Array.<String>} sourceUrl
      * @param {Array.<Number>} indices
      * @param {Object} dataSet
-     * @returns {Promise.<(this|Error)>}
+     * @returns {Promise.<this|Error>}
      */
 
   }, {
     key: '_loadSofaPartial',
     value: function _loadSofaPartial(sourceUrl, indices, dataSet) {
-      var _this7 = this;
+      var _this8 = this;
 
       var urlPromises = indices.map(function (index) {
         var urlPromise = new Promise(function (resolve, reject) {
@@ -7041,8 +8162,8 @@ var HrtfSet = exports.HrtfSet = function () {
               var data = (0, _parseSofa.parseSofa)(request.response);
               // (meta-data is already loaded)
 
-              var sourcePositions = _this7._sourcePositionsToGl(data);
-              _this7._generateIndicesPositionsFirs([index], sourcePositions, data['Data.IR'].data).then(function (indicesPositionsFirs) {
+              var sourcePositions = _this8._sourcePositionsToGl(data);
+              _this8._generateIndicesPositionsFirs([index], sourcePositions, data['Data.IR'].data).then(function (indicesPositionsFirs) {
                 // One position per URL here
                 // Array made of multiple promises, later
                 resolve(indicesPositionsFirs[0]);
@@ -7060,13 +8181,13 @@ var HrtfSet = exports.HrtfSet = function () {
       });
 
       return Promise.all(urlPromises).then(function (indicesPositionsFirs) {
-        _this7._createKdTree(indicesPositionsFirs);
-        return _this7; // final resolve
+        _this8._createKdTree(indicesPositionsFirs);
+        return _this8; // final resolve
       });
     }
 
     /**
-     * Set meta-data.
+     * Set meta-data, and assert for supported HRTF type.
      *
      * @private
      *
@@ -7076,23 +8197,43 @@ var HrtfSet = exports.HrtfSet = function () {
 
   }, {
     key: '_setMetaData',
-    value: function _setMetaData(data) {
-      if (data.metaData.DataType !== 'FIR') {
-        throw new Error('SOFA data type is not FIR');
+    value: function _setMetaData(data, sourceUrl) {
+      if (typeof data.metaData.DataType !== 'undefined' && data.metaData.DataType !== 'FIR') {
+        throw new Error('According to meta-data, SOFA data type is not FIR');
       }
 
-      this.sofaMetaData = data.metaData;
-      this.sofaSampleRate = data['Data.SamplingRate'].data[0];
+      var dateString = new Date().toISOString();
+
+      this._sofaName = typeof data.name !== 'undefined' ? '' + data.name : 'HRTF.sofa';
+
+      this._sofaMetaData = typeof data.metaData !== 'undefined' ? data.metaData : {};
+
+      // append conversion information
+      if (typeof sourceUrl !== 'undefined') {
+        this._sofaMetaData.OriginalUrl = sourceUrl;
+      }
+
+      this._sofaMetaData.Converter = 'Ircam ' + _info2.default.name + ' ' + _info2.default.version + ' ' + 'javascript API ';
+      this._sofaMetaData.DateConverted = dateString;
+
+      this._sofaSampleRate = typeof data['Data.SamplingRate'] !== 'undefined' ? data['Data.SamplingRate'].data[0] : 48000; // Table C.1
+      if (this._sofaSampleRate !== this._audioContext.sampleRate) {
+        this._sofaMetaData.OriginalSampleRate = this._sofaSampleRate;
+      }
+
+      this._sofaDelay = typeof data['Data.Delay'] !== 'undefined' ? data['Data.Delay'].data[0] : 0;
+
+      this._sofaRoomVolume = typeof data.RoomVolume !== 'undefined' ? data.RoomVolume.data[0] : undefined;
 
       // Convert listener position, up, and view to SOFA cartesian,
       // to generate a SOFA-to-GL look-at mat4.
       // Default SOFA type is 'cartesian' (see table D.4A).
 
-      var listenerPosition = _coordinates2.default.typedToSofaCartesian([], data.ListenerPosition.data[0], (0, _parseSofa.conformSofaType)(data.ListenerPosition.Type || 'cartesian'));
+      var listenerPosition = _coordinates2.default.sofaToSofaCartesian([], data.ListenerPosition.data[0], (0, _parseSofa.conformSofaCoordinateSystem)(data.ListenerPosition.Type || 'cartesian'));
 
-      var listenerView = _coordinates2.default.typedToSofaCartesian([], data.ListenerView.data[0], (0, _parseSofa.conformSofaType)(data.ListenerView.Type || 'cartesian'));
+      var listenerView = _coordinates2.default.sofaToSofaCartesian([], data.ListenerView.data[0], (0, _parseSofa.conformSofaCoordinateSystem)(data.ListenerView.Type || 'cartesian'));
 
-      var listenerUp = _coordinates2.default.typedToSofaCartesian([], data.ListenerUp.data[0], (0, _parseSofa.conformSofaType)(data.ListenerUp.Type || 'cartesian'));
+      var listenerUp = _coordinates2.default.sofaToSofaCartesian([], data.ListenerUp.data[0], (0, _parseSofa.conformSofaCoordinateSystem)(data.ListenerUp.Type || 'cartesian'));
 
       this._sofaToGl = _glMatrix2.default.mat4.lookAt([], listenerPosition, listenerView, listenerUp);
     }
@@ -7103,28 +8244,28 @@ var HrtfSet = exports.HrtfSet = function () {
      * @private
      *
      * @param {Object} data
-     * @returns {Array.<coordinates>}
+     * @returns {Array.<Coordinates>}
      * @throws {Error}
      */
 
   }, {
     key: '_sourcePositionsToGl',
     value: function _sourcePositionsToGl(data) {
-      var _this8 = this;
+      var _this9 = this;
 
       var sourcePositions = data.SourcePosition.data; // reference
-      var sourcePositionsType = typeof data.SourcePosition.Type !== 'undefined' ? data.SourcePosition.Type : 'spherical'; // default (SOFA Table D.4C)
-      switch (sourcePositionsType) {
+      var sourceCoordinateSystem = typeof data.SourcePosition.Type !== 'undefined' ? data.SourcePosition.Type : 'spherical'; // default (SOFA Table D.4C)
+      switch (sourceCoordinateSystem) {
         case 'cartesian':
           sourcePositions.forEach(function (position) {
-            _glMatrix2.default.vec3.transformMat4(position, position, _this8._sofaToGl);
+            _glMatrix2.default.vec3.transformMat4(position, position, _this9._sofaToGl);
           });
           break;
 
         case 'spherical':
           sourcePositions.forEach(function (position) {
             _coordinates2.default.sofaSphericalToSofaCartesian(position, position); // in-place
-            _glMatrix2.default.vec3.transformMat4(position, position, _this8._sofaToGl);
+            _glMatrix2.default.vec3.transformMat4(position, position, _this9._sofaToGl);
           });
           break;
 
@@ -7135,43 +8276,47 @@ var HrtfSet = exports.HrtfSet = function () {
       return sourcePositions;
     }
   }, {
-    key: 'positionsType',
-    set: function set(type) {
-      this._positionsType = typeof type !== 'undefined' ? type : 'gl';
+    key: 'coordinateSystem',
+    set: function set(system) {
+      this._coordinateSystem = typeof system !== 'undefined' ? system : 'gl';
     }
 
     /**
-     * Get coordinates type for positions.
-     * @returns {coordinatesType}
+     * Get coordinate system for positions.
+     *
+     * @returns {CoordinateSystem}
      */
     ,
     get: function get() {
-      return this._positionsType;
+      return this._coordinateSystem;
     }
 
     /**
-     * Set coordinates type for filter positions.
-     * @param {coordinatesType} [type] undefined to use positionsType
+     * Set coordinate system for filter positions.
+     *
+     * @param {CoordinateSystem} [system] undefined to use coordinateSystem
      */
 
   }, {
-    key: 'filterPositionsType',
-    set: function set(type) {
-      this._filterPositionsType = typeof type !== 'undefined' ? type : this.positionsType;
+    key: 'filterCoordinateSystem',
+    set: function set(system) {
+      this._filterCoordinateSystem = typeof system !== 'undefined' ? system : this.coordinateSystem;
     }
 
     /**
-     * Get coordinates type for filter positions.
-     * @param {coordinatesType} type
+     * Get coordinate system for filter positions.
+     *
+     * @param {CoordinateSystem} system
      */
     ,
     get: function get() {
-      return this._filterPositionsType;
+      return this._filterCoordinateSystem;
     }
 
     /**
      * Set filter positions.
-     * @param {Array.<coordinates>} [positions] undefined for no filtering.
+     *
+     * @param {Array.<Coordinates>} [positions] undefined for no filtering.
      */
 
   }, {
@@ -7180,7 +8325,7 @@ var HrtfSet = exports.HrtfSet = function () {
       if (typeof positions === 'undefined') {
         this._filterPositions = undefined;
       } else {
-        switch (this.filterPositionsType) {
+        switch (this.filterCoordinateSystem) {
           case 'gl':
             this._filterPositions = positions.map(function (current) {
               return current.slice(0); // copy
@@ -7200,20 +8345,21 @@ var HrtfSet = exports.HrtfSet = function () {
             break;
 
           default:
-            throw new Error('Bad filter type');
+            throw new Error('Bad filter coordinate system');
         }
       }
     }
 
     /**
      * Get filter positions.
-     * @param {Array.<coordinates>} positions
+     *
+     * @param {Array.<Coordinates>} positions
      */
     ,
     get: function get() {
       var positions = undefined;
       if (typeof this._filterPositions !== 'undefined') {
-        switch (this.filterPositionsType) {
+        switch (this.filterCoordinateSystem) {
           case 'gl':
             positions = this._filterPositions.map(function (current) {
               return current.slice(0); // copy
@@ -7233,14 +8379,16 @@ var HrtfSet = exports.HrtfSet = function () {
             break;
 
           default:
-            throw new Error('Bad filter type');
+            throw new Error('Bad filter coordinate system');
         }
       }
       return positions;
     }
 
     /**
-     * Set post-filtering flag.
+     * Set post-filtering flag. When false, try to load a partial set of
+     * HRTF.
+     *
      * @param {Boolean} [post=false]
      */
 
@@ -7251,7 +8399,9 @@ var HrtfSet = exports.HrtfSet = function () {
     }
 
     /**
-     * Get post-filtering flag.
+     * Get post-filtering flag. When false, try to load a partial set of
+     * HRTF.
+     *
      * @returns {Boolean}
      */
     ,
@@ -7262,7 +8412,7 @@ var HrtfSet = exports.HrtfSet = function () {
     /**
      * Test whether an HRTF set is actually loaded.
      *
-     * @see HrtfSet#load
+     * @see {@link HrtfSet#load}
      *
      * @returns {Boolean} false before any successful load, true after.
      *
@@ -7273,26 +8423,76 @@ var HrtfSet = exports.HrtfSet = function () {
     get: function get() {
       return this._ready;
     }
+
+    /**
+     * Get the original name of the HRTF set.
+     *
+     * @returns {String} that is undefined before a successfully load.
+     */
+
+  }, {
+    key: 'sofaName',
+    get: function get() {
+      return this._sofaName;
+    }
+
+    /**
+     * Get the URL used to actually load the HRTF set.
+     *
+     * @returns {String} that is undefined before a successfully load.
+     */
+
+  }, {
+    key: 'sofaUrl',
+    get: function get() {
+      return this._sofaUrl;
+    }
+
+    /**
+     * Get the original sample-rate from the SOFA URL already loaded.
+     *
+     * @returns {Number} that is undefined before a successfully load.
+     */
+
+  }, {
+    key: 'sofaSampleRate',
+    get: function get() {
+      return this._sofaSampleRate;
+    }
+
+    /**
+     * Get the meta-data from the SOFA URL already loaded.
+     *
+     * @returns {Object} that is undefined before a successfully load.
+     */
+
+  }, {
+    key: 'sofaMetaData',
+    get: function get() {
+      return this._sofaMetaData;
+    }
   }]);
 
   return HrtfSet;
 }();
 
 exports.default = HrtfSet;
-},{"../audio/utilities":32,"../geometry/KdTree":35,"../geometry/coordinates":36,"./parseDataSet":43,"./parseSofa":44,"gl-matrix":46}],41:[function(require,module,exports){
+},{"../audio/utilities":32,"../geometry/KdTree":35,"../geometry/coordinates":37,"../info":41,"./parseDataSet":45,"./parseSofa":46,"gl-matrix":48}],43:[function(require,module,exports){
 'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @fileOverview Access a remote data-base from a SOFA server.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author Jean-Philippe.Lambert@ircam.fr
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright 2015-2016 IRCAM, Paris, France
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license BSD-3-Clause
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ServerDataBase = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @fileOverview Access a remote catalogue from a SOFA server, and get URLs
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * with filtering.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author Jean-Philippe.Lambert@ircam.fr
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright 2015-2016 IRCAM, Paris, France
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license BSD-3-Clause
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 
 var _parseXml = require('./parseXml');
 
@@ -7312,11 +8512,13 @@ var ServerDataBase = exports.ServerDataBase = function () {
   /**
    * This is only a constructor, it does not load any thing.
    *
-   * @see loadCatalogue
+   * @see {@link ServerDataBase#loadCatalogue}
    *
    * @param {Object} [options]
    * @param {String} [options.serverUrl] base URL of server, including
-   * protocol, eg. 'http://bili2.ircam.fr'.
+   * protocol, eg. 'http://bili2.ircam.fr'. Default protocol is `https:` if
+   * `window.location.protocol` is also `https:`, or `http:`, to avoid
+   * mixed contents (that are often blocked).
    */
 
   function ServerDataBase() {
@@ -7324,7 +8526,13 @@ var ServerDataBase = exports.ServerDataBase = function () {
 
     _classCallCheck(this, ServerDataBase);
 
-    this._server = typeof options.serverUrl !== 'undefined' ? options.serverUrl : 'http://bili2.ircam.fr';
+    this._server = options.serverUrl;
+
+    if (typeof this._server === 'undefined') {
+      var protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+
+      this._server = protocol + '//bili2.ircam.fr';
+    }
 
     this._catalogue = {};
     this._urls = [];
@@ -7337,13 +8545,14 @@ var ServerDataBase = exports.ServerDataBase = function () {
    * @param {String} [sourceUrl] URL of the root catalogue, including the
    * server, like 'http://bili2.ircam.fr/catalog.xml'.
    *  Default is 'catalog.xml' at serverURL supplied at
-   * {@link constructor}.
+   * {@link ServerDataBase#constructor}.
    * @param {Object} [destination] Catalogue to update. Default is
    * internal.
-   * @returns {Promise.<(String|Error)>} The promise will resolve (with
+   * @returns {Promise.<String|Error>} The promise will resolve (with
    * sourceUrl) when every sub-catalogue will successfully load, or will
    * reject (with an error) as soon as one transfer fails.
    */
+
 
   _createClass(ServerDataBase, [{
     key: 'loadCatalogue',
@@ -7413,7 +8622,8 @@ var ServerDataBase = exports.ServerDataBase = function () {
      * Get URLs, possibly filtered.
      *
      * Any filter can be partial, and is case-insensitive. The result must
-     * match every supplied filter. Undefined filters are not applied.
+     * match every supplied filter. Undefined filters are not applied. For
+     * any filter, `|` is the or operator.
      *
      * @param {Object} [options] optional filters
      * @param {String} [options.convention] 'HRIR' or 'SOS'
@@ -7424,7 +8634,8 @@ var ServerDataBase = exports.ServerDataBase = function () {
      * @param {String} [options.freePattern] any pattern matched
      * globally. Use separators (spaces, tabs, etc.) to combine multiple
      * patterns: '44100 listen' will restrict on URLs matching '44100' and
-     * 'listen'
+     * 'listen'; '44100|48000 bili|listen' matches ('44100' or '48000') and
+     * ('bili' or 'listen').
      * @returns {Array.<String>} URLs that match every filter.
      */
 
@@ -7439,11 +8650,11 @@ var ServerDataBase = exports.ServerDataBase = function () {
 
       // any where in URL
       // in file name
-      var freePattern = options.freePattern;
+      var freePattern = typeof options.freePattern === 'number' ? options.freePattern.toString() : options.freePattern;
 
       var pattern = filters.reduce(function (global, local) {
         // partial filter inside slashes
-        return global + '/' + (typeof local !== 'undefined' ? '[^/]*' + local + '[^/]*' : '[^/]*');
+        return global + '/' + (typeof local !== 'undefined' ? '[^/]*(?:' + local + ')[^/]*' : '[^/]*');
       }, '');
 
       var regExp = new RegExp(pattern, 'i');
@@ -7468,13 +8679,13 @@ var ServerDataBase = exports.ServerDataBase = function () {
     }
 
     /**
-     * Get all source positions of a given URL.
+     * Get the data-set definitions of a given URL.
      *
      * @param {String} sourceUrl is the complete SOFA URL, with the
      * server, like
      * 'http://bili2.ircam.fr/SimpleFreeFieldHRIR/BILI/COMPENSATED/44100/IRC_1100_C_HRIR.sofa'
      *
-     * @returns {Promise.<(Object|String)>} The promise will resolve after
+     * @returns {Promise.<Object|String>} The promise will resolve after
      * successfully loading, with definitions as * `{definition: {key: values}}`
      * objects; the promise will reject is the transfer fails, with an error.
      */
@@ -7511,7 +8722,7 @@ var ServerDataBase = exports.ServerDataBase = function () {
      * server, like
      * 'http://bili2.ircam.fr/SimpleFreeFieldHRIR/BILI/COMPENSATED/44100/IRC_1100_C_HRIR.sofa'
      *
-     * @returns {Promise.<(Array<Array.<Number>> | String)>} The promise will resolve
+     * @returns {Promise.<Array<Array.<Number>>|Error>} The promise will resolve
      * after successfully loading, with an array of positions (which are
      * arrays of 3 numbers); the promise will reject is the transfer fails,
      * with an error.
@@ -7559,7 +8770,7 @@ var ServerDataBase = exports.ServerDataBase = function () {
 }();
 
 exports.default = ServerDataBase;
-},{"./parseDataSet":43,"./parseXml":45}],42:[function(require,module,exports){
+},{"./parseDataSet":45,"./parseXml":47}],44:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7588,7 +8799,7 @@ exports.default = {
   HrtfSet: _HrtfSet2.default,
   ServerDataBase: _ServerDataBase2.default
 };
-},{"./HrtfSet":40,"./ServerDataBase":41}],43:[function(require,module,exports){
+},{"./HrtfSet":42,"./ServerDataBase":43}],45:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7737,16 +8948,18 @@ function parseDataSet(input) {
 }
 
 exports.default = parseDataSet;
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 exports.parseSofa = parseSofa;
-exports.conformSofaType = conformSofaType;
+exports.stringifySofa = stringifySofa;
+exports.conformSofaCoordinateSystem = conformSofaCoordinateSystem;
 /**
  * @fileOverview Parser functions for SOFA files
  * @author Jean-Philippe.Lambert@ircam.fr
@@ -7755,10 +8968,12 @@ exports.conformSofaType = conformSofaType;
  */
 
 /**
- * Parses a SOFA JSON string with into an object with `data` and `metaData`
- * attributes.
+ * Parses a SOFA JSON string with into an object with `name`, `data` and
+ * `metaData` attributes.
  *
- * @param {String} sofaString
+ * @see {@link stringifySofa}
+ *
+ * @param {String} sofaString in SOFA JSON format
  * @returns {Object} with `data` and `metaData` attributes
  * @throws {Error} when the parsing fails
  */
@@ -7766,18 +8981,18 @@ function parseSofa(sofaString) {
   try {
     var _ret = function () {
       var sofa = JSON.parse(sofaString);
-      var hrtf = {};
+      var sofaSet = {};
 
-      hrtf.name = sofa.name;
+      sofaSet.name = sofa.name;
 
       if (typeof sofa.attributes !== 'undefined') {
-        hrtf.metaData = {};
+        sofaSet.metaData = {};
         var metaData = sofa.attributes.find(function (e) {
           return e.name === 'NC_GLOBAL';
         });
         if (typeof metaData !== 'undefined') {
           metaData.attributes.forEach(function (e) {
-            hrtf.metaData[e.name] = e.value[0];
+            sofaSet.metaData[e.name] = e.value[0];
           });
         }
       }
@@ -7785,17 +9000,17 @@ function parseSofa(sofaString) {
       if (typeof sofa.leaves !== 'undefined') {
         var data = sofa.leaves;
         data.forEach(function (d) {
-          hrtf[d.name] = {};
+          sofaSet[d.name] = {};
           d.attributes.forEach(function (a) {
-            hrtf[d.name][a.name] = a.value[0];
+            sofaSet[d.name][a.name] = a.value[0];
           });
-          hrtf[d.name].shape = d.shape;
-          hrtf[d.name].data = d.data;
+          sofaSet[d.name].shape = d.shape;
+          sofaSet[d.name].data = d.data;
         });
       }
 
       return {
-        v: hrtf
+        v: sofaSet
       };
     }();
 
@@ -7806,16 +9021,175 @@ function parseSofa(sofaString) {
 }
 
 /**
- * Prefix SOFA coordinates type with `sofa`.
+ * Generates a SOFA JSON string from an object.
  *
- * @param {String} sofaType : either `cartesian` or `spherical`
- * @returns {String} either `sofaCartesian` or `sofaSpherical`
- * @throws {Error} if sofaType is unknown
+ * Note that the properties differ from either an {@link HrtfSet} and from
+ * the result of the parsing of a SOFA JSON. In particular, the listener
+ * attributes correspond to the reference for the filters; the source
+ * positions are the positions in the data-base.
+ *
+ * @see {@link parseSofa}
+ * @see {@link HrtfSet}
+ *
+ * @param {Object} sofaSet
+ * @param {Coordinates} sofaSet.ListenerPosition
+ * @param {CoordinateSystem} sofaSet.ListenerPositionType
+ * @param {Coordinates} sofaSet.ListenerUp
+ * @param {CoordinateSystem} sofaSet.ListenerUpType
+ * @param {Coordinates} sofaSet.ListenerView
+ * @param {CoordinateSystem} sofaSet.ListenerViewType
+ * @param {Array.<Array.<Number>>} sofaSet.SourcePosition
+ * @param {CoordinateSystem} sofaSet.SourcePositionType
+ * @param {Number} sofaSet.DataSamplingRate
+ * @param {Array.<Array.<Array.<Number>>>} sofaSet.DataIR
+ * @param {Array.<Number>} sofaSet.RoomVolume
+ * @returns {String} in SOFA JSON format
+ * @throws {Error} when the export fails, because of missing data or
+ * unknown coordinate system
  */
-function conformSofaType(sofaType) {
+function stringifySofa(sofaSet) {
+  var sofa = {};
+
+  if (typeof sofaSet.name !== 'undefined') {
+    sofa.name = sofaSet.name;
+  }
+
+  if (typeof sofaSet.metaData !== 'undefined') {
+    sofa.attributes = [];
+    var ncGlobal = {
+      name: 'NC_GLOBAL',
+      attributes: []
+    };
+
+    for (var attribute in sofaSet.metaData) {
+      if (sofaSet.metaData.hasOwnProperty(attribute)) {
+        ncGlobal.attributes.push({
+          name: attribute,
+          value: [sofaSet.metaData[attribute]]
+        });
+      }
+    }
+
+    sofa.attributes.push(ncGlobal);
+  }
+
+  // always the same;
+  var type = 'Float64';
+
+  var attributes = undefined;
+
+  sofa.leaves = [];
+
+  [['ListenerPosition', 'ListenerPositionType'], ['ListenerUp', 'ListenerUpType'], ['ListenerView', 'ListenerViewType']].forEach(function (listenerAttributeAndType) {
+    var listenerAttributeName = listenerAttributeAndType[0];
+    var listenerAttribute = sofaSet[listenerAttributeName];
+    var listenerType = sofaSet[listenerAttributeAndType[1]];
+    if (typeof listenerAttribute !== 'undefined') {
+      switch (listenerType) {
+        case 'cartesian':
+          attributes = [{ name: 'Type', value: ['cartesian'] }, { name: 'Units', value: ['metre, metre, metre'] }];
+          break;
+
+        case 'spherical':
+          attributes = [{ name: 'Type', value: ['spherical'] }, { name: 'Units', value: ['degree, degree, metre'] }];
+          break;
+
+        default:
+          throw new Error('Unknown coordinate system type ' + (listenerType + ' for ' + listenerAttribute));
+      }
+      // in SOFA, everything is contained by an array, even an array.
+      sofa.leaves.push({
+        name: listenerAttributeName,
+        type: type,
+        attributes: attributes,
+        shape: [1, 3],
+        data: [listenerAttribute]
+      });
+    }
+  });
+
+  if (typeof sofaSet.SourcePosition !== 'undefined') {
+    switch (sofaSet.SourcePositionType) {
+      case 'cartesian':
+        attributes = [{ name: 'Type', value: ['cartesian'] }, { name: 'Units', value: ['metre, metre, metre'] }];
+        break;
+
+      case 'spherical':
+        attributes = [{ name: 'Type', value: ['spherical'] }, { name: 'Units', value: ['degree, degree, metre'] }];
+        break;
+
+      default:
+        throw new Error('Unknown coordinate system type ' + ('' + sofaSet.SourcePositionType));
+    }
+    sofa.leaves.push({
+      name: 'SourcePosition',
+      type: type,
+      attributes: attributes,
+      shape: [sofaSet.SourcePosition.length, sofaSet.SourcePosition[0].length],
+      data: sofaSet.SourcePosition
+    });
+  }
+
+  if (typeof sofaSet.DataSamplingRate !== 'undefined') {
+    sofa.leaves.push({
+      name: 'Data.SamplingRate',
+      type: type,
+      attributes: [{ name: 'Unit', value: 'hertz' }],
+      shape: [1],
+      data: [sofaSet.DataSamplingRate]
+    });
+  } else {
+    throw new Error('No data sampling-rate');
+  }
+
+  if (typeof sofaSet.DataDelay !== 'undefined') {
+    sofa.leaves.push({
+      name: 'Data.Delay',
+      type: type,
+      attributes: [],
+      shape: [1, sofaSet.DataDelay.length],
+      data: [sofaSet.DataDelay]
+    });
+  }
+
+  if (typeof sofaSet.DataIR !== 'undefined') {
+    sofa.leaves.push({
+      name: 'Data.IR',
+      type: type,
+      attributes: [],
+      shape: [sofaSet.DataIR.length, sofaSet.DataIR[0].length, sofaSet.DataIR[0][0].length],
+      data: sofaSet.DataIR
+    });
+  } else {
+    throw new Error('No data IR');
+  }
+
+  if (typeof sofaSet.RoomVolume !== 'undefined') {
+    sofa.leaves.push({
+      name: 'RoomVolume',
+      type: type,
+      attributes: [{ name: 'Units', value: ['cubic metre'] }],
+      shape: [1],
+      data: [sofaSet.RoomVolume]
+    });
+  }
+
+  sofa.nodes = [];
+
+  return JSON.stringify(sofa);
+}
+
+/**
+ * Prefix SOFA coordinate system with `sofa`.
+ *
+ * @param {String} system : either `cartesian` or `spherical`
+ * @returns {String} either `sofaCartesian` or `sofaSpherical`
+ * @throws {Error} if system is unknown
+ */
+function conformSofaCoordinateSystem(system) {
   var type = undefined;
 
-  switch (sofaType) {
+  switch (system) {
     case 'cartesian':
       type = 'sofaCartesian';
       break;
@@ -7825,16 +9199,16 @@ function conformSofaType(sofaType) {
       break;
 
     default:
-      throw new Error('Bad SOFA type ' + sofaType);
+      throw new Error('Bad SOFA type ' + system);
   }
   return type;
 }
 
 exports.default = {
   parseSofa: parseSofa,
-  conformSofaType: conformSofaType
+  conformSofaCoordinateSystem: conformSofaCoordinateSystem
 };
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7888,12 +9262,12 @@ if (typeof window.DOMParser !== 'undefined') {
 }
 
 exports.default = parseXml;
-},{}],46:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 /**
  * @fileoverview gl-matrix - High performance matrix and vector operations
  * @author Brandon Jones
  * @author Colin MacKenzie IV
- * @version 2.3.0
+ * @version 2.3.2
  */
 
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
@@ -7926,7 +9300,7 @@ exports.quat = require("./gl-matrix/quat.js");
 exports.vec2 = require("./gl-matrix/vec2.js");
 exports.vec3 = require("./gl-matrix/vec3.js");
 exports.vec4 = require("./gl-matrix/vec4.js");
-},{"./gl-matrix/common.js":47,"./gl-matrix/mat2.js":48,"./gl-matrix/mat2d.js":49,"./gl-matrix/mat3.js":50,"./gl-matrix/mat4.js":51,"./gl-matrix/quat.js":52,"./gl-matrix/vec2.js":53,"./gl-matrix/vec3.js":54,"./gl-matrix/vec4.js":55}],47:[function(require,module,exports){
+},{"./gl-matrix/common.js":49,"./gl-matrix/mat2.js":50,"./gl-matrix/mat2d.js":51,"./gl-matrix/mat3.js":52,"./gl-matrix/mat4.js":53,"./gl-matrix/quat.js":54,"./gl-matrix/vec2.js":55,"./gl-matrix/vec3.js":56,"./gl-matrix/vec4.js":57}],49:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -7953,10 +9327,15 @@ THE SOFTWARE. */
  */
 var glMatrix = {};
 
-// Constants
+// Configuration Constants
 glMatrix.EPSILON = 0.000001;
 glMatrix.ARRAY_TYPE = (typeof Float32Array !== 'undefined') ? Float32Array : Array;
 glMatrix.RANDOM = Math.random;
+glMatrix.ENABLE_SIMD = false;
+
+// Capability detection
+glMatrix.SIMD_AVAILABLE = (glMatrix.ARRAY_TYPE === Float32Array) && ('SIMD' in this);
+glMatrix.USE_SIMD = glMatrix.ENABLE_SIMD && glMatrix.SIMD_AVAILABLE;
 
 /**
  * Sets the type of array used when creating new vectors and matrices
@@ -7964,7 +9343,7 @@ glMatrix.RANDOM = Math.random;
  * @param {Type} type Array type, such as Float32Array or Array
  */
 glMatrix.setMatrixArrayType = function(type) {
-    GLMAT_ARRAY_TYPE = type;
+    glMatrix.ARRAY_TYPE = type;
 }
 
 var degree = Math.PI / 180;
@@ -7978,9 +9357,22 @@ glMatrix.toRadian = function(a){
      return a * degree;
 }
 
+/**
+ * Tests whether or not the arguments have approximately the same value, within an absolute
+ * or relative tolerance of glMatrix.EPSILON (an absolute tolerance is used for values less 
+ * than or equal to 1.0, and a relative tolerance is used for larger values)
+ * 
+ * @param {Number} a The first number to test.
+ * @param {Number} b The second number to test.
+ * @returns {Boolean} True if the numbers are approximately equal, false otherwise.
+ */
+glMatrix.equals = function(a, b) {
+	return Math.abs(a - b) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a), Math.abs(b));
+}
+
 module.exports = glMatrix;
 
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -8066,6 +9458,43 @@ mat2.identity = function(out) {
     out[3] = 1;
     return out;
 };
+
+/**
+ * Create a new mat2 with the given values
+ *
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m10 Component in column 1, row 0 position (index 2)
+ * @param {Number} m11 Component in column 1, row 1 position (index 3)
+ * @returns {mat2} out A new 2x2 matrix
+ */
+mat2.fromValues = function(m00, m01, m10, m11) {
+    var out = new glMatrix.ARRAY_TYPE(4);
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m10;
+    out[3] = m11;
+    return out;
+};
+
+/**
+ * Set the components of a mat2 to the given values
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m10 Component in column 1, row 0 position (index 2)
+ * @param {Number} m11 Component in column 1, row 1 position (index 3)
+ * @returns {mat2} out
+ */
+mat2.set = function(out, m00, m01, m10, m11) {
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m10;
+    out[3] = m11;
+    return out;
+};
+
 
 /**
  * Transpose the values of a mat2
@@ -8281,10 +9710,107 @@ mat2.LDU = function (L, D, U, a) {
     return [L, D, U];       
 }; 
 
+/**
+ * Adds two mat2's
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the first operand
+ * @param {mat2} b the second operand
+ * @returns {mat2} out
+ */
+mat2.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    return out;
+};
+
+/**
+ * Subtracts matrix b from matrix a
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the first operand
+ * @param {mat2} b the second operand
+ * @returns {mat2} out
+ */
+mat2.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    return out;
+};
+
+/**
+ * Alias for {@link mat2.subtract}
+ * @function
+ */
+mat2.sub = mat2.subtract;
+
+/**
+ * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {mat2} a The first matrix.
+ * @param {mat2} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat2.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+};
+
+/**
+ * Returns whether or not the matrices have approximately the same elements in the same position.
+ *
+ * @param {mat2} a The first matrix.
+ * @param {mat2} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat2.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)));
+};
+
+/**
+ * Multiply each element of the matrix by a scalar.
+ *
+ * @param {mat2} out the receiving matrix
+ * @param {mat2} a the matrix to scale
+ * @param {Number} b amount to scale the matrix's elements by
+ * @returns {mat2} out
+ */
+mat2.multiplyScalar = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    return out;
+};
+
+/**
+ * Adds two mat2's after multiplying each element of the second operand by a scalar value.
+ *
+ * @param {mat2} out the receiving vector
+ * @param {mat2} a the first operand
+ * @param {mat2} b the second operand
+ * @param {Number} scale the amount to scale b's elements by before adding
+ * @returns {mat2} out
+ */
+mat2.multiplyScalarAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    return out;
+};
 
 module.exports = mat2;
 
-},{"./common.js":47}],49:[function(require,module,exports){
+},{"./common.js":49}],51:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -8390,6 +9916,50 @@ mat2d.identity = function(out) {
     out[3] = 1;
     out[4] = 0;
     out[5] = 0;
+    return out;
+};
+
+/**
+ * Create a new mat2d with the given values
+ *
+ * @param {Number} a Component A (index 0)
+ * @param {Number} b Component B (index 1)
+ * @param {Number} c Component C (index 2)
+ * @param {Number} d Component D (index 3)
+ * @param {Number} tx Component TX (index 4)
+ * @param {Number} ty Component TY (index 5)
+ * @returns {mat2d} A new mat2d
+ */
+mat2d.fromValues = function(a, b, c, d, tx, ty) {
+    var out = new glMatrix.ARRAY_TYPE(6);
+    out[0] = a;
+    out[1] = b;
+    out[2] = c;
+    out[3] = d;
+    out[4] = tx;
+    out[5] = ty;
+    return out;
+};
+
+/**
+ * Set the components of a mat2d to the given values
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {Number} a Component A (index 0)
+ * @param {Number} b Component B (index 1)
+ * @param {Number} c Component C (index 2)
+ * @param {Number} d Component D (index 3)
+ * @param {Number} tx Component TX (index 4)
+ * @param {Number} ty Component TY (index 5)
+ * @returns {mat2d} out
+ */
+mat2d.set = function(out, a, b, c, d, tx, ty) {
+    out[0] = a;
+    out[1] = b;
+    out[2] = c;
+    out[3] = d;
+    out[4] = tx;
+    out[5] = ty;
     return out;
 };
 
@@ -8601,9 +10171,117 @@ mat2d.frob = function (a) {
     return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
 }; 
 
+/**
+ * Adds two mat2d's
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the first operand
+ * @param {mat2d} b the second operand
+ * @returns {mat2d} out
+ */
+mat2d.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    out[4] = a[4] + b[4];
+    out[5] = a[5] + b[5];
+    return out;
+};
+
+/**
+ * Subtracts matrix b from matrix a
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the first operand
+ * @param {mat2d} b the second operand
+ * @returns {mat2d} out
+ */
+mat2d.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    out[4] = a[4] - b[4];
+    out[5] = a[5] - b[5];
+    return out;
+};
+
+/**
+ * Alias for {@link mat2d.subtract}
+ * @function
+ */
+mat2d.sub = mat2d.subtract;
+
+/**
+ * Multiply each element of the matrix by a scalar.
+ *
+ * @param {mat2d} out the receiving matrix
+ * @param {mat2d} a the matrix to scale
+ * @param {Number} b amount to scale the matrix's elements by
+ * @returns {mat2d} out
+ */
+mat2d.multiplyScalar = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    out[4] = a[4] * b;
+    out[5] = a[5] * b;
+    return out;
+};
+
+/**
+ * Adds two mat2d's after multiplying each element of the second operand by a scalar value.
+ *
+ * @param {mat2d} out the receiving vector
+ * @param {mat2d} a the first operand
+ * @param {mat2d} b the second operand
+ * @param {Number} scale the amount to scale b's elements by before adding
+ * @returns {mat2d} out
+ */
+mat2d.multiplyScalarAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    out[4] = a[4] + (b[4] * scale);
+    out[5] = a[5] + (b[5] * scale);
+    return out;
+};
+
+/**
+ * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {mat2d} a The first matrix.
+ * @param {mat2d} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat2d.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5];
+};
+
+/**
+ * Returns whether or not the matrices have approximately the same elements in the same position.
+ *
+ * @param {mat2d} a The first matrix.
+ * @param {mat2d} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat2d.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+            Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+            Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)));
+};
+
 module.exports = mat2d;
 
-},{"./common.js":47}],50:[function(require,module,exports){
+},{"./common.js":49}],52:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -8708,6 +10386,62 @@ mat3.copy = function(out, a) {
     out[6] = a[6];
     out[7] = a[7];
     out[8] = a[8];
+    return out;
+};
+
+/**
+ * Create a new mat3 with the given values
+ *
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m10 Component in column 1, row 0 position (index 3)
+ * @param {Number} m11 Component in column 1, row 1 position (index 4)
+ * @param {Number} m12 Component in column 1, row 2 position (index 5)
+ * @param {Number} m20 Component in column 2, row 0 position (index 6)
+ * @param {Number} m21 Component in column 2, row 1 position (index 7)
+ * @param {Number} m22 Component in column 2, row 2 position (index 8)
+ * @returns {mat3} A new mat3
+ */
+mat3.fromValues = function(m00, m01, m02, m10, m11, m12, m20, m21, m22) {
+    var out = new glMatrix.ARRAY_TYPE(9);
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m02;
+    out[3] = m10;
+    out[4] = m11;
+    out[5] = m12;
+    out[6] = m20;
+    out[7] = m21;
+    out[8] = m22;
+    return out;
+};
+
+/**
+ * Set the components of a mat3 to the given values
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m10 Component in column 1, row 0 position (index 3)
+ * @param {Number} m11 Component in column 1, row 1 position (index 4)
+ * @param {Number} m12 Component in column 1, row 2 position (index 5)
+ * @param {Number} m20 Component in column 2, row 0 position (index 6)
+ * @param {Number} m21 Component in column 2, row 1 position (index 7)
+ * @param {Number} m22 Component in column 2, row 2 position (index 8)
+ * @returns {mat3} out
+ */
+mat3.set = function(out, m00, m01, m02, m10, m11, m12, m20, m21, m22) {
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m02;
+    out[3] = m10;
+    out[4] = m11;
+    out[5] = m12;
+    out[6] = m20;
+    out[7] = m21;
+    out[8] = m22;
     return out;
 };
 
@@ -9167,10 +10901,135 @@ mat3.frob = function (a) {
     return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2)))
 };
 
+/**
+ * Adds two mat3's
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the first operand
+ * @param {mat3} b the second operand
+ * @returns {mat3} out
+ */
+mat3.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    out[4] = a[4] + b[4];
+    out[5] = a[5] + b[5];
+    out[6] = a[6] + b[6];
+    out[7] = a[7] + b[7];
+    out[8] = a[8] + b[8];
+    return out;
+};
+
+/**
+ * Subtracts matrix b from matrix a
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the first operand
+ * @param {mat3} b the second operand
+ * @returns {mat3} out
+ */
+mat3.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    out[4] = a[4] - b[4];
+    out[5] = a[5] - b[5];
+    out[6] = a[6] - b[6];
+    out[7] = a[7] - b[7];
+    out[8] = a[8] - b[8];
+    return out;
+};
+
+/**
+ * Alias for {@link mat3.subtract}
+ * @function
+ */
+mat3.sub = mat3.subtract;
+
+/**
+ * Multiply each element of the matrix by a scalar.
+ *
+ * @param {mat3} out the receiving matrix
+ * @param {mat3} a the matrix to scale
+ * @param {Number} b amount to scale the matrix's elements by
+ * @returns {mat3} out
+ */
+mat3.multiplyScalar = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    out[4] = a[4] * b;
+    out[5] = a[5] * b;
+    out[6] = a[6] * b;
+    out[7] = a[7] * b;
+    out[8] = a[8] * b;
+    return out;
+};
+
+/**
+ * Adds two mat3's after multiplying each element of the second operand by a scalar value.
+ *
+ * @param {mat3} out the receiving vector
+ * @param {mat3} a the first operand
+ * @param {mat3} b the second operand
+ * @param {Number} scale the amount to scale b's elements by before adding
+ * @returns {mat3} out
+ */
+mat3.multiplyScalarAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    out[4] = a[4] + (b[4] * scale);
+    out[5] = a[5] + (b[5] * scale);
+    out[6] = a[6] + (b[6] * scale);
+    out[7] = a[7] + (b[7] * scale);
+    out[8] = a[8] + (b[8] * scale);
+    return out;
+};
+
+/*
+ * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {mat3} a The first matrix.
+ * @param {mat3} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat3.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && 
+           a[3] === b[3] && a[4] === b[4] && a[5] === b[5] &&
+           a[6] === b[6] && a[7] === b[7] && a[8] === b[8];
+};
+
+/**
+ * Returns whether or not the matrices have approximately the same elements in the same position.
+ *
+ * @param {mat3} a The first matrix.
+ * @param {mat3} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat3.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5], a6 = a[6], a7 = a[7], a8 = a[8];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = a[6], b7 = b[7], b8 = b[8];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+            Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+            Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)) &&
+            Math.abs(a6 - b6) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a6), Math.abs(b6)) &&
+            Math.abs(a7 - b7) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a7), Math.abs(b7)) &&
+            Math.abs(a8 - b8) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a8), Math.abs(b8)));
+};
+
 
 module.exports = mat3;
 
-},{"./common.js":47}],51:[function(require,module,exports){
+},{"./common.js":49}],53:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -9197,7 +11056,10 @@ var glMatrix = require("./common.js");
  * @class 4x4 Matrix
  * @name mat4
  */
-var mat4 = {};
+var mat4 = {
+  scalar: {},
+  SIMD: {},
+};
 
 /**
  * Creates a new identity mat4
@@ -9280,6 +11142,91 @@ mat4.copy = function(out, a) {
 };
 
 /**
+ * Create a new mat4 with the given values
+ *
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m03 Component in column 0, row 3 position (index 3)
+ * @param {Number} m10 Component in column 1, row 0 position (index 4)
+ * @param {Number} m11 Component in column 1, row 1 position (index 5)
+ * @param {Number} m12 Component in column 1, row 2 position (index 6)
+ * @param {Number} m13 Component in column 1, row 3 position (index 7)
+ * @param {Number} m20 Component in column 2, row 0 position (index 8)
+ * @param {Number} m21 Component in column 2, row 1 position (index 9)
+ * @param {Number} m22 Component in column 2, row 2 position (index 10)
+ * @param {Number} m23 Component in column 2, row 3 position (index 11)
+ * @param {Number} m30 Component in column 3, row 0 position (index 12)
+ * @param {Number} m31 Component in column 3, row 1 position (index 13)
+ * @param {Number} m32 Component in column 3, row 2 position (index 14)
+ * @param {Number} m33 Component in column 3, row 3 position (index 15)
+ * @returns {mat4} A new mat4
+ */
+mat4.fromValues = function(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+    var out = new glMatrix.ARRAY_TYPE(16);
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m02;
+    out[3] = m03;
+    out[4] = m10;
+    out[5] = m11;
+    out[6] = m12;
+    out[7] = m13;
+    out[8] = m20;
+    out[9] = m21;
+    out[10] = m22;
+    out[11] = m23;
+    out[12] = m30;
+    out[13] = m31;
+    out[14] = m32;
+    out[15] = m33;
+    return out;
+};
+
+/**
+ * Set the components of a mat4 to the given values
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {Number} m00 Component in column 0, row 0 position (index 0)
+ * @param {Number} m01 Component in column 0, row 1 position (index 1)
+ * @param {Number} m02 Component in column 0, row 2 position (index 2)
+ * @param {Number} m03 Component in column 0, row 3 position (index 3)
+ * @param {Number} m10 Component in column 1, row 0 position (index 4)
+ * @param {Number} m11 Component in column 1, row 1 position (index 5)
+ * @param {Number} m12 Component in column 1, row 2 position (index 6)
+ * @param {Number} m13 Component in column 1, row 3 position (index 7)
+ * @param {Number} m20 Component in column 2, row 0 position (index 8)
+ * @param {Number} m21 Component in column 2, row 1 position (index 9)
+ * @param {Number} m22 Component in column 2, row 2 position (index 10)
+ * @param {Number} m23 Component in column 2, row 3 position (index 11)
+ * @param {Number} m30 Component in column 3, row 0 position (index 12)
+ * @param {Number} m31 Component in column 3, row 1 position (index 13)
+ * @param {Number} m32 Component in column 3, row 2 position (index 14)
+ * @param {Number} m33 Component in column 3, row 3 position (index 15)
+ * @returns {mat4} out
+ */
+mat4.set = function(out, m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+    out[0] = m00;
+    out[1] = m01;
+    out[2] = m02;
+    out[3] = m03;
+    out[4] = m10;
+    out[5] = m11;
+    out[6] = m12;
+    out[7] = m13;
+    out[8] = m20;
+    out[9] = m21;
+    out[10] = m22;
+    out[11] = m23;
+    out[12] = m30;
+    out[13] = m31;
+    out[14] = m32;
+    out[15] = m33;
+    return out;
+};
+
+
+/**
  * Set a mat4 to the identity matrix
  *
  * @param {mat4} out the receiving matrix
@@ -9306,13 +11253,13 @@ mat4.identity = function(out) {
 };
 
 /**
- * Transpose the values of a mat4
+ * Transpose the values of a mat4 not using SIMD
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the source matrix
  * @returns {mat4} out
  */
-mat4.transpose = function(out, a) {
+mat4.scalar.transpose = function(out, a) {
     // If we are transposing ourselves we can skip a few steps but have to cache some values
     if (out === a) {
         var a01 = a[1], a02 = a[2], a03 = a[3],
@@ -9349,18 +11296,61 @@ mat4.transpose = function(out, a) {
         out[14] = a[11];
         out[15] = a[15];
     }
-    
+
     return out;
 };
 
 /**
- * Inverts a mat4
+ * Transpose the values of a mat4 using SIMD
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the source matrix
  * @returns {mat4} out
  */
-mat4.invert = function(out, a) {
+mat4.SIMD.transpose = function(out, a) {
+    var a0, a1, a2, a3,
+        tmp01, tmp23,
+        out0, out1, out2, out3;
+
+    a0 = SIMD.Float32x4.load(a, 0);
+    a1 = SIMD.Float32x4.load(a, 4);
+    a2 = SIMD.Float32x4.load(a, 8);
+    a3 = SIMD.Float32x4.load(a, 12);
+
+    tmp01 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
+    tmp23 = SIMD.Float32x4.shuffle(a2, a3, 0, 1, 4, 5);
+    out0  = SIMD.Float32x4.shuffle(tmp01, tmp23, 0, 2, 4, 6);
+    out1  = SIMD.Float32x4.shuffle(tmp01, tmp23, 1, 3, 5, 7);
+    SIMD.Float32x4.store(out, 0,  out0);
+    SIMD.Float32x4.store(out, 4,  out1);
+
+    tmp01 = SIMD.Float32x4.shuffle(a0, a1, 2, 3, 6, 7);
+    tmp23 = SIMD.Float32x4.shuffle(a2, a3, 2, 3, 6, 7);
+    out2  = SIMD.Float32x4.shuffle(tmp01, tmp23, 0, 2, 4, 6);
+    out3  = SIMD.Float32x4.shuffle(tmp01, tmp23, 1, 3, 5, 7);
+    SIMD.Float32x4.store(out, 8,  out2);
+    SIMD.Float32x4.store(out, 12, out3);
+
+    return out;
+};
+
+/**
+ * Transpse a mat4 using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.transpose = glMatrix.USE_SIMD ? mat4.SIMD.transpose : mat4.scalar.transpose;
+
+/**
+ * Inverts a mat4 not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.scalar.invert = function(out, a) {
     var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
         a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
         a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
@@ -9382,8 +11372,8 @@ mat4.invert = function(out, a) {
         // Calculate the determinant
         det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
-    if (!det) { 
-        return null; 
+    if (!det) {
+        return null;
     }
     det = 1.0 / det;
 
@@ -9408,13 +11398,122 @@ mat4.invert = function(out, a) {
 };
 
 /**
- * Calculates the adjugate of a mat4
+ * Inverts a mat4 using SIMD
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the source matrix
  * @returns {mat4} out
  */
-mat4.adjoint = function(out, a) {
+mat4.SIMD.invert = function(out, a) {
+  var row0, row1, row2, row3,
+      tmp1,
+      minor0, minor1, minor2, minor3,
+      det,
+      a0 = SIMD.Float32x4.load(a, 0),
+      a1 = SIMD.Float32x4.load(a, 4),
+      a2 = SIMD.Float32x4.load(a, 8),
+      a3 = SIMD.Float32x4.load(a, 12);
+
+  // Compute matrix adjugate
+  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
+  row1 = SIMD.Float32x4.shuffle(a2, a3, 0, 1, 4, 5);
+  row0 = SIMD.Float32x4.shuffle(tmp1, row1, 0, 2, 4, 6);
+  row1 = SIMD.Float32x4.shuffle(row1, tmp1, 1, 3, 5, 7);
+  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 2, 3, 6, 7);
+  row3 = SIMD.Float32x4.shuffle(a2, a3, 2, 3, 6, 7);
+  row2 = SIMD.Float32x4.shuffle(tmp1, row3, 0, 2, 4, 6);
+  row3 = SIMD.Float32x4.shuffle(row3, tmp1, 1, 3, 5, 7);
+
+  tmp1   = SIMD.Float32x4.mul(row2, row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor0 = SIMD.Float32x4.mul(row1, tmp1);
+  minor1 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row1, tmp1), minor0);
+  minor1 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor1);
+  minor1 = SIMD.Float32x4.swizzle(minor1, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(row1, row2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor0);
+  minor3 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row3, tmp1));
+  minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor3);
+  minor3 = SIMD.Float32x4.swizzle(minor3, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(row1, 2, 3, 0, 1), row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  row2   = SIMD.Float32x4.swizzle(row2, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor0);
+  minor2 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row2, tmp1));
+  minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor2);
+  minor2 = SIMD.Float32x4.swizzle(minor2, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(row0, row1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor2);
+  minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row2, tmp1), minor3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row3, tmp1), minor2);
+  minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row2, tmp1));
+
+  tmp1   = SIMD.Float32x4.mul(row0, row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row2, tmp1));
+  minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor1);
+  minor2 = SIMD.Float32x4.sub(minor2, SIMD.Float32x4.mul(row1, tmp1));
+
+  tmp1   = SIMD.Float32x4.mul(row0, row2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor1);
+  minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row1, tmp1));
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row3, tmp1));
+  minor3 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor3);
+
+  // Compute matrix determinant
+  det   = SIMD.Float32x4.mul(row0, minor0);
+  det   = SIMD.Float32x4.add(SIMD.Float32x4.swizzle(det, 2, 3, 0, 1), det);
+  det   = SIMD.Float32x4.add(SIMD.Float32x4.swizzle(det, 1, 0, 3, 2), det);
+  tmp1  = SIMD.Float32x4.reciprocalApproximation(det);
+  det   = SIMD.Float32x4.sub(
+               SIMD.Float32x4.add(tmp1, tmp1),
+               SIMD.Float32x4.mul(det, SIMD.Float32x4.mul(tmp1, tmp1)));
+  det   = SIMD.Float32x4.swizzle(det, 0, 0, 0, 0);
+  if (!det) {
+      return null;
+  }
+
+  // Compute matrix inverse
+  SIMD.Float32x4.store(out, 0,  SIMD.Float32x4.mul(det, minor0));
+  SIMD.Float32x4.store(out, 4,  SIMD.Float32x4.mul(det, minor1));
+  SIMD.Float32x4.store(out, 8,  SIMD.Float32x4.mul(det, minor2));
+  SIMD.Float32x4.store(out, 12, SIMD.Float32x4.mul(det, minor3));
+  return out;
+}
+
+/**
+ * Inverts a mat4 using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.invert = glMatrix.USE_SIMD ? mat4.SIMD.invert : mat4.scalar.invert;
+
+/**
+ * Calculates the adjugate of a mat4 not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.scalar.adjoint = function(out, a) {
     var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
         a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
         a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
@@ -9438,6 +11537,103 @@ mat4.adjoint = function(out, a) {
     out[15] =  (a00 * (a11 * a22 - a12 * a21) - a10 * (a01 * a22 - a02 * a21) + a20 * (a01 * a12 - a02 * a11));
     return out;
 };
+
+/**
+ * Calculates the adjugate of a mat4 using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+mat4.SIMD.adjoint = function(out, a) {
+  var a0, a1, a2, a3;
+  var row0, row1, row2, row3;
+  var tmp1;
+  var minor0, minor1, minor2, minor3;
+
+  var a0 = SIMD.Float32x4.load(a, 0);
+  var a1 = SIMD.Float32x4.load(a, 4);
+  var a2 = SIMD.Float32x4.load(a, 8);
+  var a3 = SIMD.Float32x4.load(a, 12);
+
+  // Transpose the source matrix.  Sort of.  Not a true transpose operation
+  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
+  row1 = SIMD.Float32x4.shuffle(a2, a3, 0, 1, 4, 5);
+  row0 = SIMD.Float32x4.shuffle(tmp1, row1, 0, 2, 4, 6);
+  row1 = SIMD.Float32x4.shuffle(row1, tmp1, 1, 3, 5, 7);
+
+  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 2, 3, 6, 7);
+  row3 = SIMD.Float32x4.shuffle(a2, a3, 2, 3, 6, 7);
+  row2 = SIMD.Float32x4.shuffle(tmp1, row3, 0, 2, 4, 6);
+  row3 = SIMD.Float32x4.shuffle(row3, tmp1, 1, 3, 5, 7);
+
+  tmp1   = SIMD.Float32x4.mul(row2, row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor0 = SIMD.Float32x4.mul(row1, tmp1);
+  minor1 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row1, tmp1), minor0);
+  minor1 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor1);
+  minor1 = SIMD.Float32x4.swizzle(minor1, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(row1, row2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor0);
+  minor3 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row3, tmp1));
+  minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor3);
+  minor3 = SIMD.Float32x4.swizzle(minor3, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(row1, 2, 3, 0, 1), row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  row2   = SIMD.Float32x4.swizzle(row2, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor0);
+  minor2 = SIMD.Float32x4.mul(row0, tmp1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row2, tmp1));
+  minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor2);
+  minor2 = SIMD.Float32x4.swizzle(minor2, 2, 3, 0, 1);
+
+  tmp1   = SIMD.Float32x4.mul(row0, row1);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor2);
+  minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row2, tmp1), minor3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row3, tmp1), minor2);
+  minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row2, tmp1));
+
+  tmp1   = SIMD.Float32x4.mul(row0, row3);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row2, tmp1));
+  minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor1);
+  minor2 = SIMD.Float32x4.sub(minor2, SIMD.Float32x4.mul(row1, tmp1));
+
+  tmp1   = SIMD.Float32x4.mul(row0, row2);
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+  minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor1);
+  minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row1, tmp1));
+  tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+  minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row3, tmp1));
+  minor3 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor3);
+
+  SIMD.Float32x4.store(out, 0,  minor0);
+  SIMD.Float32x4.store(out, 4,  minor1);
+  SIMD.Float32x4.store(out, 8,  minor2);
+  SIMD.Float32x4.store(out, 12, minor3);
+  return out;
+};
+
+/**
+ * Calculates the adjugate of a mat4 using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the source matrix
+ * @returns {mat4} out
+ */
+ mat4.adjoint = glMatrix.USE_SIMD ? mat4.SIMD.adjoint : mat4.scalar.adjoint;
 
 /**
  * Calculates the determinant of a mat4
@@ -9469,21 +11665,78 @@ mat4.determinant = function (a) {
 };
 
 /**
- * Multiplies two mat4's
+ * Multiplies two mat4's explicitly using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand, must be a Float32Array
+ * @param {mat4} b the second operand, must be a Float32Array
+ * @returns {mat4} out
+ */
+mat4.SIMD.multiply = function (out, a, b) {
+    var a0 = SIMD.Float32x4.load(a, 0);
+    var a1 = SIMD.Float32x4.load(a, 4);
+    var a2 = SIMD.Float32x4.load(a, 8);
+    var a3 = SIMD.Float32x4.load(a, 12);
+
+    var b0 = SIMD.Float32x4.load(b, 0);
+    var out0 = SIMD.Float32x4.add(
+                   SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b0, 0, 0, 0, 0), a0),
+                   SIMD.Float32x4.add(
+                       SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b0, 1, 1, 1, 1), a1),
+                       SIMD.Float32x4.add(
+                           SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b0, 2, 2, 2, 2), a2),
+                           SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b0, 3, 3, 3, 3), a3))));
+    SIMD.Float32x4.store(out, 0, out0);
+
+    var b1 = SIMD.Float32x4.load(b, 4);
+    var out1 = SIMD.Float32x4.add(
+                   SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b1, 0, 0, 0, 0), a0),
+                   SIMD.Float32x4.add(
+                       SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b1, 1, 1, 1, 1), a1),
+                       SIMD.Float32x4.add(
+                           SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b1, 2, 2, 2, 2), a2),
+                           SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b1, 3, 3, 3, 3), a3))));
+    SIMD.Float32x4.store(out, 4, out1);
+
+    var b2 = SIMD.Float32x4.load(b, 8);
+    var out2 = SIMD.Float32x4.add(
+                   SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b2, 0, 0, 0, 0), a0),
+                   SIMD.Float32x4.add(
+                       SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b2, 1, 1, 1, 1), a1),
+                       SIMD.Float32x4.add(
+                               SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b2, 2, 2, 2, 2), a2),
+                               SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b2, 3, 3, 3, 3), a3))));
+    SIMD.Float32x4.store(out, 8, out2);
+
+    var b3 = SIMD.Float32x4.load(b, 12);
+    var out3 = SIMD.Float32x4.add(
+                   SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b3, 0, 0, 0, 0), a0),
+                   SIMD.Float32x4.add(
+                        SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b3, 1, 1, 1, 1), a1),
+                        SIMD.Float32x4.add(
+                            SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b3, 2, 2, 2, 2), a2),
+                            SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(b3, 3, 3, 3, 3), a3))));
+    SIMD.Float32x4.store(out, 12, out3);
+
+    return out;
+};
+
+/**
+ * Multiplies two mat4's explicitly not using SIMD
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the first operand
  * @param {mat4} b the second operand
  * @returns {mat4} out
  */
-mat4.multiply = function (out, a, b) {
+mat4.scalar.multiply = function (out, a, b) {
     var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
         a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
         a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
         a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
 
     // Cache only the current line of the second matrix
-    var b0  = b[0], b1 = b[1], b2 = b[2], b3 = b[3];  
+    var b0  = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
     out[0] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
     out[1] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
     out[2] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
@@ -9510,20 +11763,30 @@ mat4.multiply = function (out, a, b) {
 };
 
 /**
+ * Multiplies two mat4's using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @returns {mat4} out
+ */
+mat4.multiply = glMatrix.USE_SIMD ? mat4.SIMD.multiply : mat4.scalar.multiply;
+
+/**
  * Alias for {@link mat4.multiply}
  * @function
  */
 mat4.mul = mat4.multiply;
 
 /**
- * Translate a mat4 by the given vector
+ * Translate a mat4 by the given vector not using SIMD
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the matrix to translate
  * @param {vec3} v vector to translate by
  * @returns {mat4} out
  */
-mat4.translate = function (out, a, v) {
+mat4.scalar.translate = function (out, a, v) {
     var x = v[0], y = v[1], z = v[2],
         a00, a01, a02, a03,
         a10, a11, a12, a13,
@@ -9553,14 +11816,55 @@ mat4.translate = function (out, a, v) {
 };
 
 /**
- * Scales the mat4 by the dimensions in the given vec3
+ * Translates a mat4 by the given vector using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to translate
+ * @param {vec3} v vector to translate by
+ * @returns {mat4} out
+ */
+mat4.SIMD.translate = function (out, a, v) {
+    var a0 = SIMD.Float32x4.load(a, 0),
+        a1 = SIMD.Float32x4.load(a, 4),
+        a2 = SIMD.Float32x4.load(a, 8),
+        a3 = SIMD.Float32x4.load(a, 12),
+        vec = SIMD.Float32x4(v[0], v[1], v[2] , 0);
+
+    if (a !== out) {
+        out[0] = a[0]; out[1] = a[1]; out[2] = a[2]; out[3] = a[3];
+        out[4] = a[4]; out[5] = a[5]; out[6] = a[6]; out[7] = a[7];
+        out[8] = a[8]; out[9] = a[9]; out[10] = a[10]; out[11] = a[11];
+    }
+
+    a0 = SIMD.Float32x4.mul(a0, SIMD.Float32x4.swizzle(vec, 0, 0, 0, 0));
+    a1 = SIMD.Float32x4.mul(a1, SIMD.Float32x4.swizzle(vec, 1, 1, 1, 1));
+    a2 = SIMD.Float32x4.mul(a2, SIMD.Float32x4.swizzle(vec, 2, 2, 2, 2));
+
+    var t0 = SIMD.Float32x4.add(a0, SIMD.Float32x4.add(a1, SIMD.Float32x4.add(a2, a3)));
+    SIMD.Float32x4.store(out, 12, t0);
+
+    return out;
+};
+
+/**
+ * Translates a mat4 by the given vector using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to translate
+ * @param {vec3} v vector to translate by
+ * @returns {mat4} out
+ */
+mat4.translate = glMatrix.USE_SIMD ? mat4.SIMD.translate : mat4.scalar.translate;
+
+/**
+ * Scales the mat4 by the dimensions in the given vec3 not using vectorization
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the matrix to scale
  * @param {vec3} v the vec3 to scale the matrix by
  * @returns {mat4} out
  **/
-mat4.scale = function(out, a, v) {
+mat4.scalar.scale = function(out, a, v) {
     var x = v[0], y = v[1], z = v[2];
 
     out[0] = a[0] * x;
@@ -9583,6 +11887,47 @@ mat4.scale = function(out, a, v) {
 };
 
 /**
+ * Scales the mat4 by the dimensions in the given vec3 using vectorization
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to scale
+ * @param {vec3} v the vec3 to scale the matrix by
+ * @returns {mat4} out
+ **/
+mat4.SIMD.scale = function(out, a, v) {
+    var a0, a1, a2;
+    var vec = SIMD.Float32x4(v[0], v[1], v[2], 0);
+
+    a0 = SIMD.Float32x4.load(a, 0);
+    SIMD.Float32x4.store(
+        out, 0, SIMD.Float32x4.mul(a0, SIMD.Float32x4.swizzle(vec, 0, 0, 0, 0)));
+
+    a1 = SIMD.Float32x4.load(a, 4);
+    SIMD.Float32x4.store(
+        out, 4, SIMD.Float32x4.mul(a1, SIMD.Float32x4.swizzle(vec, 1, 1, 1, 1)));
+
+    a2 = SIMD.Float32x4.load(a, 8);
+    SIMD.Float32x4.store(
+        out, 8, SIMD.Float32x4.mul(a2, SIMD.Float32x4.swizzle(vec, 2, 2, 2, 2)));
+
+    out[12] = a[12];
+    out[13] = a[13];
+    out[14] = a[14];
+    out[15] = a[15];
+    return out;
+};
+
+/**
+ * Scales the mat4 by the dimensions in the given vec3 using SIMD if available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to scale
+ * @param {vec3} v the vec3 to scale the matrix by
+ * @returns {mat4} out
+ */
+mat4.scale = glMatrix.USE_SIMD ? mat4.SIMD.scale : mat4.scalar.scale;
+
+/**
  * Rotates a mat4 by the given angle around the given axis
  *
  * @param {mat4} out the receiving matrix
@@ -9603,7 +11948,7 @@ mat4.rotate = function (out, a, rad, axis) {
         b20, b21, b22;
 
     if (Math.abs(len) < glMatrix.EPSILON) { return null; }
-    
+
     len = 1 / len;
     x *= len;
     y *= len;
@@ -9646,14 +11991,14 @@ mat4.rotate = function (out, a, rad, axis) {
 };
 
 /**
- * Rotates a matrix by the given angle around the X axis
+ * Rotates a matrix by the given angle around the X axis not using SIMD
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the matrix to rotate
  * @param {Number} rad the angle to rotate the matrix by
  * @returns {mat4} out
  */
-mat4.rotateX = function (out, a, rad) {
+mat4.scalar.rotateX = function (out, a, rad) {
     var s = Math.sin(rad),
         c = Math.cos(rad),
         a10 = a[4],
@@ -9689,14 +12034,57 @@ mat4.rotateX = function (out, a, rad) {
 };
 
 /**
- * Rotates a matrix by the given angle around the Y axis
+ * Rotates a matrix by the given angle around the X axis using SIMD
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the matrix to rotate
  * @param {Number} rad the angle to rotate the matrix by
  * @returns {mat4} out
  */
-mat4.rotateY = function (out, a, rad) {
+mat4.SIMD.rotateX = function (out, a, rad) {
+    var s = SIMD.Float32x4.splat(Math.sin(rad)),
+        c = SIMD.Float32x4.splat(Math.cos(rad));
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged rows
+      out[0]  = a[0];
+      out[1]  = a[1];
+      out[2]  = a[2];
+      out[3]  = a[3];
+      out[12] = a[12];
+      out[13] = a[13];
+      out[14] = a[14];
+      out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    var a_1 = SIMD.Float32x4.load(a, 4);
+    var a_2 = SIMD.Float32x4.load(a, 8);
+    SIMD.Float32x4.store(out, 4,
+                         SIMD.Float32x4.add(SIMD.Float32x4.mul(a_1, c), SIMD.Float32x4.mul(a_2, s)));
+    SIMD.Float32x4.store(out, 8,
+                         SIMD.Float32x4.sub(SIMD.Float32x4.mul(a_2, c), SIMD.Float32x4.mul(a_1, s)));
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the X axis using SIMD if availabe and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.rotateX = glMatrix.USE_SIMD ? mat4.SIMD.rotateX : mat4.scalar.rotateX;
+
+/**
+ * Rotates a matrix by the given angle around the Y axis not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.scalar.rotateY = function (out, a, rad) {
     var s = Math.sin(rad),
         c = Math.cos(rad),
         a00 = a[0],
@@ -9732,14 +12120,57 @@ mat4.rotateY = function (out, a, rad) {
 };
 
 /**
- * Rotates a matrix by the given angle around the Z axis
+ * Rotates a matrix by the given angle around the Y axis using SIMD
  *
  * @param {mat4} out the receiving matrix
  * @param {mat4} a the matrix to rotate
  * @param {Number} rad the angle to rotate the matrix by
  * @returns {mat4} out
  */
-mat4.rotateZ = function (out, a, rad) {
+mat4.SIMD.rotateY = function (out, a, rad) {
+    var s = SIMD.Float32x4.splat(Math.sin(rad)),
+        c = SIMD.Float32x4.splat(Math.cos(rad));
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged rows
+        out[4]  = a[4];
+        out[5]  = a[5];
+        out[6]  = a[6];
+        out[7]  = a[7];
+        out[12] = a[12];
+        out[13] = a[13];
+        out[14] = a[14];
+        out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    var a_0 = SIMD.Float32x4.load(a, 0);
+    var a_2 = SIMD.Float32x4.load(a, 8);
+    SIMD.Float32x4.store(out, 0,
+                         SIMD.Float32x4.sub(SIMD.Float32x4.mul(a_0, c), SIMD.Float32x4.mul(a_2, s)));
+    SIMD.Float32x4.store(out, 8,
+                         SIMD.Float32x4.add(SIMD.Float32x4.mul(a_0, s), SIMD.Float32x4.mul(a_2, c)));
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the Y axis if SIMD available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+ mat4.rotateY = glMatrix.USE_SIMD ? mat4.SIMD.rotateY : mat4.scalar.rotateY;
+
+/**
+ * Rotates a matrix by the given angle around the Z axis not using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.scalar.rotateZ = function (out, a, rad) {
     var s = Math.sin(rad),
         c = Math.cos(rad),
         a00 = a[0],
@@ -9773,6 +12204,49 @@ mat4.rotateZ = function (out, a, rad) {
     out[7] = a13 * c - a03 * s;
     return out;
 };
+
+/**
+ * Rotates a matrix by the given angle around the Z axis using SIMD
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+mat4.SIMD.rotateZ = function (out, a, rad) {
+    var s = SIMD.Float32x4.splat(Math.sin(rad)),
+        c = SIMD.Float32x4.splat(Math.cos(rad));
+
+    if (a !== out) { // If the source and destination differ, copy the unchanged last row
+        out[8]  = a[8];
+        out[9]  = a[9];
+        out[10] = a[10];
+        out[11] = a[11];
+        out[12] = a[12];
+        out[13] = a[13];
+        out[14] = a[14];
+        out[15] = a[15];
+    }
+
+    // Perform axis-specific matrix multiplication
+    var a_0 = SIMD.Float32x4.load(a, 0);
+    var a_1 = SIMD.Float32x4.load(a, 4);
+    SIMD.Float32x4.store(out, 0,
+                         SIMD.Float32x4.add(SIMD.Float32x4.mul(a_0, c), SIMD.Float32x4.mul(a_1, s)));
+    SIMD.Float32x4.store(out, 4,
+                         SIMD.Float32x4.sub(SIMD.Float32x4.mul(a_1, c), SIMD.Float32x4.mul(a_0, s)));
+    return out;
+};
+
+/**
+ * Rotates a matrix by the given angle around the Z axis if SIMD available and enabled
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to rotate
+ * @param {Number} rad the angle to rotate the matrix by
+ * @returns {mat4} out
+ */
+ mat4.rotateZ = glMatrix.USE_SIMD ? mat4.SIMD.rotateZ : mat4.scalar.rotateZ;
 
 /**
  * Creates a matrix from a vector translation
@@ -9852,18 +12326,18 @@ mat4.fromRotation = function(out, rad, axis) {
     var x = axis[0], y = axis[1], z = axis[2],
         len = Math.sqrt(x * x + y * y + z * z),
         s, c, t;
-    
+
     if (Math.abs(len) < glMatrix.EPSILON) { return null; }
-    
+
     len = 1 / len;
     x *= len;
     y *= len;
     z *= len;
-    
+
     s = Math.sin(rad);
     c = Math.cos(rad);
     t = 1 - c;
-    
+
     // Perform rotation-specific matrix multiplication
     out[0] = x * x * t + c;
     out[1] = y * x * t + z * s;
@@ -9898,7 +12372,7 @@ mat4.fromRotation = function(out, rad, axis) {
 mat4.fromXRotation = function(out, rad) {
     var s = Math.sin(rad),
         c = Math.cos(rad);
-    
+
     // Perform axis-specific matrix multiplication
     out[0]  = 1;
     out[1]  = 0;
@@ -9933,7 +12407,7 @@ mat4.fromXRotation = function(out, rad) {
 mat4.fromYRotation = function(out, rad) {
     var s = Math.sin(rad),
         c = Math.cos(rad);
-    
+
     // Perform axis-specific matrix multiplication
     out[0]  = c;
     out[1]  = 0;
@@ -9968,7 +12442,7 @@ mat4.fromYRotation = function(out, rad) {
 mat4.fromZRotation = function(out, rad) {
     var s = Math.sin(rad),
         c = Math.cos(rad);
-    
+
     // Perform axis-specific matrix multiplication
     out[0]  = c;
     out[1]  = s;
@@ -10037,8 +12511,68 @@ mat4.fromRotationTranslation = function (out, q, v) {
     out[13] = v[1];
     out[14] = v[2];
     out[15] = 1;
-    
+
     return out;
+};
+
+/**
+ * Returns the translation vector component of a transformation
+ *  matrix. If a matrix is built with fromRotationTranslation,
+ *  the returned vector will be the same as the translation vector
+ *  originally supplied.
+ * @param  {vec3} out Vector to receive translation component
+ * @param  {mat4} mat Matrix to be decomposed (input)
+ * @return {vec3} out
+ */
+mat4.getTranslation = function (out, mat) {
+  out[0] = mat[12];
+  out[1] = mat[13];
+  out[2] = mat[14];
+
+  return out;
+};
+
+/**
+ * Returns a quaternion representing the rotational component
+ *  of a transformation matrix. If a matrix is built with
+ *  fromRotationTranslation, the returned quaternion will be the
+ *  same as the quaternion originally supplied.
+ * @param {quat} out Quaternion to receive the rotation component
+ * @param {mat4} mat Matrix to be decomposed (input)
+ * @return {quat} out
+ */
+mat4.getRotation = function (out, mat) {
+  // Algorithm taken from http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
+  var trace = mat[0] + mat[5] + mat[10];
+  var S = 0;
+
+  if (trace > 0) { 
+    S = Math.sqrt(trace + 1.0) * 2;
+    out[3] = 0.25 * S;
+    out[0] = (mat[6] - mat[9]) / S;
+    out[1] = (mat[8] - mat[2]) / S; 
+    out[2] = (mat[1] - mat[4]) / S; 
+  } else if ((mat[0] > mat[5])&(mat[0] > mat[10])) { 
+    S = Math.sqrt(1.0 + mat[0] - mat[5] - mat[10]) * 2;
+    out[3] = (mat[6] - mat[9]) / S;
+    out[0] = 0.25 * S;
+    out[1] = (mat[1] + mat[4]) / S; 
+    out[2] = (mat[8] + mat[2]) / S; 
+  } else if (mat[5] > mat[10]) { 
+    S = Math.sqrt(1.0 + mat[5] - mat[0] - mat[10]) * 2;
+    out[3] = (mat[8] - mat[2]) / S;
+    out[0] = (mat[1] + mat[4]) / S; 
+    out[1] = 0.25 * S;
+    out[2] = (mat[6] + mat[9]) / S; 
+  } else { 
+    S = Math.sqrt(1.0 + mat[10] - mat[0] - mat[5]) * 2;
+    out[3] = (mat[1] - mat[4]) / S;
+    out[0] = (mat[8] + mat[2]) / S;
+    out[1] = (mat[6] + mat[9]) / S;
+    out[2] = 0.25 * S;
+  }
+
+  return out;
 };
 
 /**
@@ -10094,7 +12628,7 @@ mat4.fromRotationTranslationScale = function (out, q, v, s) {
     out[13] = v[1];
     out[14] = v[2];
     out[15] = 1;
-    
+
     return out;
 };
 
@@ -10134,7 +12668,7 @@ mat4.fromRotationTranslationScaleOrigin = function (out, q, v, s, o) {
       wx = w * x2,
       wy = w * y2,
       wz = w * z2,
-      
+
       sx = s[0],
       sy = s[1],
       sz = s[2],
@@ -10142,7 +12676,7 @@ mat4.fromRotationTranslationScaleOrigin = function (out, q, v, s, o) {
       ox = o[0],
       oy = o[1],
       oz = o[2];
-      
+
   out[0] = (1 - (yy + zz)) * sx;
   out[1] = (xy + wz) * sx;
   out[2] = (xz - wy) * sx;
@@ -10159,10 +12693,18 @@ mat4.fromRotationTranslationScaleOrigin = function (out, q, v, s, o) {
   out[13] = v[1] + oy - (out[1] * ox + out[5] * oy + out[9] * oz);
   out[14] = v[2] + oz - (out[2] * ox + out[6] * oy + out[10] * oz);
   out[15] = 1;
-        
+
   return out;
 };
 
+/**
+ * Calculates a 4x4 matrix from the given quaternion
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {quat} q Quaternion to create matrix from
+ *
+ * @returns {mat4} out
+ */
 mat4.fromQuat = function (out, q) {
     var x = q[0], y = q[1], z = q[2], w = q[3],
         x2 = x + x,
@@ -10275,7 +12817,7 @@ mat4.perspective = function (out, fovy, aspect, near, far) {
  * with the still experiemental WebVR API.
  *
  * @param {mat4} out mat4 frustum matrix will be written into
- * @param {number} fov Object containing the following values: upDegrees, downDegrees, leftDegrees, rightDegrees
+ * @param {Object} fov Object containing the following values: upDegrees, downDegrees, leftDegrees, rightDegrees
  * @param {number} near Near bound of the frustum
  * @param {number} far Far bound of the frustum
  * @returns {mat4} out
@@ -10438,7 +12980,7 @@ mat4.lookAt = function (out, eye, center, up) {
 mat4.str = function (a) {
     return 'mat4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' +
                     a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ', ' +
-                    a[8] + ', ' + a[9] + ', ' + a[10] + ', ' + a[11] + ', ' + 
+                    a[8] + ', ' + a[9] + ', ' + a[10] + ', ' + a[11] + ', ' +
                     a[12] + ', ' + a[13] + ', ' + a[14] + ', ' + a[15] + ')';
 };
 
@@ -10452,10 +12994,180 @@ mat4.frob = function (a) {
     return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ))
 };
 
+/**
+ * Adds two mat4's
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @returns {mat4} out
+ */
+mat4.add = function(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    out[3] = a[3] + b[3];
+    out[4] = a[4] + b[4];
+    out[5] = a[5] + b[5];
+    out[6] = a[6] + b[6];
+    out[7] = a[7] + b[7];
+    out[8] = a[8] + b[8];
+    out[9] = a[9] + b[9];
+    out[10] = a[10] + b[10];
+    out[11] = a[11] + b[11];
+    out[12] = a[12] + b[12];
+    out[13] = a[13] + b[13];
+    out[14] = a[14] + b[14];
+    out[15] = a[15] + b[15];
+    return out;
+};
+
+/**
+ * Subtracts matrix b from matrix a
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @returns {mat4} out
+ */
+mat4.subtract = function(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    out[3] = a[3] - b[3];
+    out[4] = a[4] - b[4];
+    out[5] = a[5] - b[5];
+    out[6] = a[6] - b[6];
+    out[7] = a[7] - b[7];
+    out[8] = a[8] - b[8];
+    out[9] = a[9] - b[9];
+    out[10] = a[10] - b[10];
+    out[11] = a[11] - b[11];
+    out[12] = a[12] - b[12];
+    out[13] = a[13] - b[13];
+    out[14] = a[14] - b[14];
+    out[15] = a[15] - b[15];
+    return out;
+};
+
+/**
+ * Alias for {@link mat4.subtract}
+ * @function
+ */
+mat4.sub = mat4.subtract;
+
+/**
+ * Multiply each element of the matrix by a scalar.
+ *
+ * @param {mat4} out the receiving matrix
+ * @param {mat4} a the matrix to scale
+ * @param {Number} b amount to scale the matrix's elements by
+ * @returns {mat4} out
+ */
+mat4.multiplyScalar = function(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    out[3] = a[3] * b;
+    out[4] = a[4] * b;
+    out[5] = a[5] * b;
+    out[6] = a[6] * b;
+    out[7] = a[7] * b;
+    out[8] = a[8] * b;
+    out[9] = a[9] * b;
+    out[10] = a[10] * b;
+    out[11] = a[11] * b;
+    out[12] = a[12] * b;
+    out[13] = a[13] * b;
+    out[14] = a[14] * b;
+    out[15] = a[15] * b;
+    return out;
+};
+
+/**
+ * Adds two mat4's after multiplying each element of the second operand by a scalar value.
+ *
+ * @param {mat4} out the receiving vector
+ * @param {mat4} a the first operand
+ * @param {mat4} b the second operand
+ * @param {Number} scale the amount to scale b's elements by before adding
+ * @returns {mat4} out
+ */
+mat4.multiplyScalarAndAdd = function(out, a, b, scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    out[3] = a[3] + (b[3] * scale);
+    out[4] = a[4] + (b[4] * scale);
+    out[5] = a[5] + (b[5] * scale);
+    out[6] = a[6] + (b[6] * scale);
+    out[7] = a[7] + (b[7] * scale);
+    out[8] = a[8] + (b[8] * scale);
+    out[9] = a[9] + (b[9] * scale);
+    out[10] = a[10] + (b[10] * scale);
+    out[11] = a[11] + (b[11] * scale);
+    out[12] = a[12] + (b[12] * scale);
+    out[13] = a[13] + (b[13] * scale);
+    out[14] = a[14] + (b[14] * scale);
+    out[15] = a[15] + (b[15] * scale);
+    return out;
+};
+
+/**
+ * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {mat4} a The first matrix.
+ * @param {mat4} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat4.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && 
+           a[4] === b[4] && a[5] === b[5] && a[6] === b[6] && a[7] === b[7] && 
+           a[8] === b[8] && a[9] === b[9] && a[10] === b[10] && a[11] === b[11] &&
+           a[12] === b[12] && a[13] === b[13] && a[14] === b[14] && a[15] === b[15];
+};
+
+/**
+ * Returns whether or not the matrices have approximately the same elements in the same position.
+ *
+ * @param {mat4} a The first matrix.
+ * @param {mat4} b The second matrix.
+ * @returns {Boolean} True if the matrices are equal, false otherwise.
+ */
+mat4.equals = function (a, b) {
+    var a0  = a[0],  a1  = a[1],  a2  = a[2],  a3  = a[3],
+        a4  = a[4],  a5  = a[5],  a6  = a[6],  a7  = a[7], 
+        a8  = a[8],  a9  = a[9],  a10 = a[10], a11 = a[11], 
+        a12 = a[12], a13 = a[13], a14 = a[14], a15 = a[15];
+
+    var b0  = b[0],  b1  = b[1],  b2  = b[2],  b3  = b[3],
+        b4  = b[4],  b5  = b[5],  b6  = b[6],  b7  = b[7], 
+        b8  = b[8],  b9  = b[9],  b10 = b[10], b11 = b[11], 
+        b12 = b[12], b13 = b[13], b14 = b[14], b15 = b[15];
+
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+            Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+            Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)) &&
+            Math.abs(a6 - b6) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a6), Math.abs(b6)) &&
+            Math.abs(a7 - b7) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a7), Math.abs(b7)) &&
+            Math.abs(a8 - b8) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a8), Math.abs(b8)) &&
+            Math.abs(a9 - b9) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a9), Math.abs(b9)) &&
+            Math.abs(a10 - b10) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a10), Math.abs(b10)) &&
+            Math.abs(a11 - b11) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a11), Math.abs(b11)) &&
+            Math.abs(a12 - b12) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a12), Math.abs(b12)) &&
+            Math.abs(a13 - b13) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a13), Math.abs(b13)) &&
+            Math.abs(a14 - b14) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a14), Math.abs(b14)) &&
+            Math.abs(a15 - b15) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a15), Math.abs(b15)));
+};
+
+
 
 module.exports = mat4;
 
-},{"./common.js":47}],52:[function(require,module,exports){
+},{"./common.js":49}],54:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -10648,6 +13360,35 @@ quat.setAxisAngle = function(out, axis, rad) {
     out[2] = s * axis[2];
     out[3] = Math.cos(rad);
     return out;
+};
+
+/**
+ * Gets the rotation axis and angle for a given
+ *  quaternion. If a quaternion is created with
+ *  setAxisAngle, this method will return the same
+ *  values as providied in the original parameter list
+ *  OR functionally equivalent values.
+ * Example: The quaternion formed by axis [0, 0, 1] and
+ *  angle -90 is the same as the quaternion formed by
+ *  [0, 0, 1] and 270. This method favors the latter.
+ * @param  {vec3} out_axis  Vector receiving the axis of rotation
+ * @param  {quat} q     Quaternion to be decomposed
+ * @return {Number}     Angle, in radians, of the rotation
+ */
+quat.getAxisAngle = function(out_axis, q) {
+    var rad = Math.acos(q[3]) * 2.0;
+    var s = Math.sin(rad / 2.0);
+    if (s != 0.0) {
+        out_axis[0] = q[0] / s;
+        out_axis[1] = q[1] / s;
+        out_axis[2] = q[2] / s;
+    } else {
+        // If s is zero, return any axis (no rotation - axis does not matter)
+        out_axis[0] = 1;
+        out_axis[1] = 0;
+        out_axis[2] = 0;
+    }
+    return rad;
 };
 
 /**
@@ -11008,9 +13749,27 @@ quat.str = function (a) {
     return 'quat(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
 };
 
+/**
+ * Returns whether or not the quaternions have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {quat} a The first quaternion.
+ * @param {quat} b The second quaternion.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+quat.exactEquals = vec4.exactEquals;
+
+/**
+ * Returns whether or not the quaternions have approximately the same elements in the same position.
+ *
+ * @param {quat} a The first vector.
+ * @param {quat} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+quat.equals = vec4.equals;
+
 module.exports = quat;
 
-},{"./common.js":47,"./mat3.js":50,"./vec3.js":54,"./vec4.js":55}],53:[function(require,module,exports){
+},{"./common.js":49,"./mat3.js":52,"./vec3.js":56,"./vec4.js":57}],55:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -11180,6 +13939,32 @@ vec2.divide = function(out, a, b) {
 vec2.div = vec2.divide;
 
 /**
+ * Math.ceil the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to ceil
+ * @returns {vec2} out
+ */
+vec2.ceil = function (out, a) {
+    out[0] = Math.ceil(a[0]);
+    out[1] = Math.ceil(a[1]);
+    return out;
+};
+
+/**
+ * Math.floor the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to floor
+ * @returns {vec2} out
+ */
+vec2.floor = function (out, a) {
+    out[0] = Math.floor(a[0]);
+    out[1] = Math.floor(a[1]);
+    return out;
+};
+
+/**
  * Returns the minimum of two vec2's
  *
  * @param {vec2} out the receiving vector
@@ -11204,6 +13989,19 @@ vec2.min = function(out, a, b) {
 vec2.max = function(out, a, b) {
     out[0] = Math.max(a[0], b[0]);
     out[1] = Math.max(a[1], b[1]);
+    return out;
+};
+
+/**
+ * Math.round the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to round
+ * @returns {vec2} out
+ */
+vec2.round = function (out, a) {
+    out[0] = Math.round(a[0]);
+    out[1] = Math.round(a[1]);
     return out;
 };
 
@@ -11533,9 +14331,34 @@ vec2.str = function (a) {
     return 'vec2(' + a[0] + ', ' + a[1] + ')';
 };
 
+/**
+ * Returns whether or not the vectors exactly have the same elements in the same position (when compared with ===)
+ *
+ * @param {vec2} a The first vector.
+ * @param {vec2} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec2.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1];
+};
+
+/**
+ * Returns whether or not the vectors have approximately the same elements in the same position.
+ *
+ * @param {vec2} a The first vector.
+ * @param {vec2} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec2.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1];
+    var b0 = b[0], b1 = b[1];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)));
+};
+
 module.exports = vec2;
 
-},{"./common.js":47}],54:[function(require,module,exports){
+},{"./common.js":49}],56:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -11716,6 +14539,34 @@ vec3.divide = function(out, a, b) {
 vec3.div = vec3.divide;
 
 /**
+ * Math.ceil the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to ceil
+ * @returns {vec3} out
+ */
+vec3.ceil = function (out, a) {
+    out[0] = Math.ceil(a[0]);
+    out[1] = Math.ceil(a[1]);
+    out[2] = Math.ceil(a[2]);
+    return out;
+};
+
+/**
+ * Math.floor the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to floor
+ * @returns {vec3} out
+ */
+vec3.floor = function (out, a) {
+    out[0] = Math.floor(a[0]);
+    out[1] = Math.floor(a[1]);
+    out[2] = Math.floor(a[2]);
+    return out;
+};
+
+/**
  * Returns the minimum of two vec3's
  *
  * @param {vec3} out the receiving vector
@@ -11742,6 +14593,20 @@ vec3.max = function(out, a, b) {
     out[0] = Math.max(a[0], b[0]);
     out[1] = Math.max(a[1], b[1]);
     out[2] = Math.max(a[2], b[2]);
+    return out;
+};
+
+/**
+ * Math.round the components of a vec3
+ *
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to round
+ * @returns {vec3} out
+ */
+vec3.round = function (out, a) {
+    out[0] = Math.round(a[0]);
+    out[1] = Math.round(a[1]);
+    out[2] = Math.round(a[2]);
     return out;
 };
 
@@ -12244,9 +15109,35 @@ vec3.str = function (a) {
     return 'vec3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ')';
 };
 
+/**
+ * Returns whether or not the vectors have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {vec3} a The first vector.
+ * @param {vec3} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec3.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+};
+
+/**
+ * Returns whether or not the vectors have approximately the same elements in the same position.
+ *
+ * @param {vec3} a The first vector.
+ * @param {vec3} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec3.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2];
+    var b0 = b[0], b1 = b[1], b2 = b[2];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)));
+};
+
 module.exports = vec3;
 
-},{"./common.js":47}],55:[function(require,module,exports){
+},{"./common.js":49}],57:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -12438,6 +15329,36 @@ vec4.divide = function(out, a, b) {
 vec4.div = vec4.divide;
 
 /**
+ * Math.ceil the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to ceil
+ * @returns {vec4} out
+ */
+vec4.ceil = function (out, a) {
+    out[0] = Math.ceil(a[0]);
+    out[1] = Math.ceil(a[1]);
+    out[2] = Math.ceil(a[2]);
+    out[3] = Math.ceil(a[3]);
+    return out;
+};
+
+/**
+ * Math.floor the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to floor
+ * @returns {vec4} out
+ */
+vec4.floor = function (out, a) {
+    out[0] = Math.floor(a[0]);
+    out[1] = Math.floor(a[1]);
+    out[2] = Math.floor(a[2]);
+    out[3] = Math.floor(a[3]);
+    return out;
+};
+
+/**
  * Returns the minimum of two vec4's
  *
  * @param {vec4} out the receiving vector
@@ -12466,6 +15387,21 @@ vec4.max = function(out, a, b) {
     out[1] = Math.max(a[1], b[1]);
     out[2] = Math.max(a[2], b[2]);
     out[3] = Math.max(a[3], b[3]);
+    return out;
+};
+
+/**
+ * Math.round the components of a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to round
+ * @returns {vec4} out
+ */
+vec4.round = function (out, a) {
+    out[0] = Math.round(a[0]);
+    out[1] = Math.round(a[1]);
+    out[2] = Math.round(a[2]);
+    out[3] = Math.round(a[3]);
     return out;
 };
 
@@ -12783,9 +15719,36 @@ vec4.str = function (a) {
     return 'vec4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
 };
 
+/**
+ * Returns whether or not the vectors have exactly the same elements in the same position (when compared with ===)
+ *
+ * @param {vec4} a The first vector.
+ * @param {vec4} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec4.exactEquals = function (a, b) {
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+};
+
+/**
+ * Returns whether or not the vectors have approximately the same elements in the same position.
+ *
+ * @param {vec4} a The first vector.
+ * @param {vec4} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */
+vec4.equals = function (a, b) {
+    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
+    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+            Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)));
+};
+
 module.exports = vec4;
 
-},{"./common.js":47}],56:[function(require,module,exports){
+},{"./common.js":49}],58:[function(require,module,exports){
 /**
  * AUTHOR OF INITIAL JS LIBRARY
  * k-d Tree JavaScript - V 1.0
@@ -13242,6 +16205,71 @@ module.exports = {
   createKdTree: function (points, metric, dimensions) {
     return new KdTree(points, metric, dimensions)
   }
+}
+
+},{}],59:[function(require,module,exports){
+module.exports={
+  "name": "binaural",
+  "exports": "binaural",
+  "version": "0.3.7",
+  "description": "Processing audio node which spatializes an incoming audio stream in three-dimensional space for binaural audio",
+  "main": "./dist/",
+  "standalone": "binaural",
+  "scripts": {
+    "lint": "eslint ./src/ ./test/ && jscs --verbose ./src/ ./test/ ",
+    "compile": "rm -rf ./dist && babel ./src/ --out-dir ./dist/",
+    "browserify": "browserify ./src/index.js -t [ babelify ] --standalone binaural > binaural.js",
+    "bundle": "npm run lint && npm run test && npm run doc && npm run compile && npm run browserify",
+    "doc": "esdoc -c esdoc.json",
+    "test": "browserify test/*/*.js -t [ babelify ] --exclude 'test/*/*_listen.js*' --exclude 'test/*/*_issues.js' | tape-run",
+    "test-listen": "browserify test/*/*_listen.js -t [ babelify ] | tape-run",
+    "test-issues": "browserify test/*/*_issues.js -t [ babelify ] | tape-run",
+    "watch": "watch 'npm run browserify && echo $( date ): browserified' ./src/"
+  },
+  "authors": [
+    "Jean-Philippe.Lambert@ircam.fr",
+    "Arnau Julià <arnau.julia@gmail.com>",
+    "Samuel.Goldszmidt@ircam.fr"
+  ],
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "gl-matrix": "^2.3.1",
+    "kd.tree": "git+https://github.com/akshaylive/node-kdt#39bc780704a324393bca68a17cf7bc71be8544c6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ircam-RnD/binauralFIR"
+  },
+  "engines": {
+    "node": "0.12 || 4.2",
+    "npm": ">=1.0.0 <3.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-eslint": "^4.1.8",
+    "babel-preset-es2015": "^6.5.0",
+    "babelify": "^7.2.0",
+    "blue-tape": "^0.1.11",
+    "browserify": "^12.0.2",
+    "esdoc": "^0.4.4",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^1.0.2",
+    "jscs": "^2.8.0",
+    "tape": "^4.4.0",
+    "tape-run": "^2.1.2",
+    "testling": "^1.7.1",
+    "watch": "^0.17.1"
+  },
+  "readme": "# Binaural #\n\nThis library permits to render sources in three-dimensional space with\nbinaural audio.\n\nThis library provides an access to a server, in order to load a set of\n[HRTF]. The set of filters applies to any number of sources, given their\nposition, and a listener.\n\nThis library is compatible with the [Web Audio API]. The novelty of this\nlibrary is that it permits to use a custom [HRTF] dataset (see\n[T. Carpentier article]).\n\nIt is possible to use it without a server, with a direct URL to an [HRTF]\nset.\n\n## Documentation ##\n\nYou can consult the [API documentation] for the complete documentation.\n\n### BinauralPanner ###\n\nA `BinauralPanner` is a panner for use with the [Web Audio API]. It\nspatialises multiple audio sources, given a set of head-related transfer\nfunctions [HRTF]s, and a listener.\n\n### ServerDataBase ###\n\n**The public server that hosts a database of individual [HRTF]s is available\nfor beta-testers only and will open to public in 2016.**\n\nThe `ServerDataBase` retrieves a catalogue from a [SOFA] server. From the\ncatalogue, it get URLs matching optional filters: data-base, sample-rate,\nand any free pattern.\n\n### HRTF dataset ###\n\nYou can use any [HRTF] data-set that follows the [SOFA] standard, in JSON\nformat, using finite impulse responses (FIR). Second-order sections (SOS)\nare not supported, yet. See the [examples HRTF directory] for a few samples.\n\n### Coordinate system types ###\n\nSee the files in [src/geometry], for conversions:\n- openGL, [SOFA], and Spat4 (Ircam) conventions\n- cartesian and spherical coordinates\n- radian and degree angles\n\n\n## Examples ##\n\nPlease see the [examples directory] for complete code, and the [examples online].\n\nSee also the [API documentation] for the complete options.\n\n### BinauralPanner ###\nGiven an audio element, and a global binaural module,\n\n```html\n<html>\n    <head>\n        <script src=\"../binaural.js\"></script>\n    </head>\n    <body>\n        <audio id=\"source\" src=\"./snd/breakbeat.wav\" controls loop></audio>\n    </body>\n</html>\n```\n\ncreate a source audio node,\n\n```js\nvar audioContext = new AudioContext();\nvar $mediaElement = document.querySelector('#source');\nvar player = audioContext.createMediaElementSource($mediaElement);\n```\n\ninstantiate a `BinauralPanner` and connect it.\n\n```js\nvar binauralPanner = new binaural.audio.BinauralPanner({\n    audioContext,\n    crossfadeDuration: 0.05, // in seconds\n    coordinateSystem: 'sofaSpherical', // [azimuth, elevation, distance]\n    sourceCount: 1,\n    sourcePositions: [ [0, 0, 1] ], // initial position\n});\nbinauralPanner.connectOutputs(audioContext.destination);\nbinauralPanner.connectInputByIndex(0, player);\n\n```\n\nLoad an HRTF set (this returns a promise).\n\n```js\nbinauralPanner.loadHrtfSet(url)\n    .then(function () {\n        console.log('loaded');\n    })\n    .catch(function (error) {\n        console.log('Error while loading ' + url\n                    + error.message);\n    });\n```\n\nThen, any source can move:\n\n```js\n$azimuth.on(\"input\", function(event) {\n    // get current position\n    var position = binauralPanner.getSourcePositionByIndex(0);\n\n    // update azimuth\n    position[0] = event.target.value;\n    binauralPanner.setSourcePositionByIndex(0, position);\n\n    // update filters\n    window.requestAnimationFrame(function () {\n        binauralPanner.update();\n    });\n}\n```\n\nNote that a call to the `update` method actually updates the filters.\n\n### ServerDataBase ###\n\nInstantiate a `ServerDataBase`\n\n```js\nvar serverDataBase = new binaural.sofa.ServerDataBase();\n```\n\nand load the catalogue from the server. This returns a promise.\n\n```js\nvar catalogLoaded = serverDataBase.loadCatalogue();\n```\n\nFind URLs with `HRIR` convention, `COMPENSATED` equalisation, and a\nsample-rate matching those of the audio context.\n\n```js\nvar urlsFound = catalogLoaded.then(function () {\n    var urls = serverDataBase.getUrls({\n        convention: 'HRIR',\n        equalisation: 'COMPENSATED',\n        sampleRate: audioContext.sampleRate,\n    });\n    return urls;\n})\n.catch(function(error) {\n    console.log('Error accessing HRTF server. ' + error.message);\n});\n```\n\nThen, a `BinauralPanner` can load one of these URLs\n\n```js\nurlsFound.then(function(urls) {\n    binauralPanner.loadHrtfSet(urls[0])\n        .then(function () {\n            console.log('loaded');\n        })\n        .catch(function (error) {\n            console.log('Error while loading ' + url\n                + error.message);\n        });\n});\n```\n\n## Issues ##\n\n- the [examples HRTF directory] is too big for a repository: this is a\n  problem for cloning, and for installing with npm.\n- documentation and distribution files should go to a release branch\n  (`gh-pages`?) to limit the history on real commits.\n- re-sampling is broken on full set (Chrome 48 issue): too many parallel\n  audio contexts?\n- no HTTPS on SOFA server, yet (mixed content blocked). Let's Encrypt is on\n  the way.\n- clicks on Firefox 44-45 (during update of `convolver.buffer`)\n- in documentation, links to BinauralPanner methods are broken (esdoc)\n- ServerDataBase: avoid server with free pattern filter?\n\n## To do ##\n\n- attenuation with distance\n- dry/wet outputs for (shared) reverberation\n- support for infinite impulse responses, once [IIRFilterNode] is\n  implemented.\n\n## Developers ##\n\nThe source code is in the [src directory], in [ES2015] standard. `npm run\ncompile` with [Babel] to the [dist directory]. Note that there is a\n[.babelrc] file. `npm run bundle` runs the linters, the tests,\ngenerates the documentation, and compiles the code.\n\nBe sure to commit the distribution files and the documentation for any\nrelease, and tag it.\n\n### Style ###\n\n`npm run lint` to check that the code conforms with [.eslintrc] and\n[.jscsrc] files. The rules derive from [AirBnB] with these\nmajor points:\n- [ES2015]\n- no `'strict'` globally (already there via babel)\n- enforce curly braces (`if`, `for`, etc.)\n- allow spaces and new lines, with fewer requirements: use them for clarity\n\n### Test ###\n\nFor any function or method, there is at least a test. The hierarchy in the\n[test directory] is the same as in the [src directory].\n\n- `npm run test` for all automated tests\n- `npm run test-listen` for supervised listening tests. The test files must\n  end with `_listen.js`\n- `npm run test-issues` for unsolved issues. The issues may depend on the\n  host: operating system, user-agent, sound-device, sample-rate, etc. The\n  test files must end with `_issues.js`\n\n### Documentation ###\n\nDocument any public function and method with [JSDoc], and generate the HTML\npages with `npm run doc`. At this point, neither\n[jsdoc](https://www.npmjs.com/package/jsdoc) nor\n[esdoc](https://www.npmjs.com/package/esdoc) gives perfect\ntranscription. (See the [jsdoc.json] and [esdoc.json] files.)\n\n## License\n\nThis module is released under the [BSD-3-Clause] license.\n\n## Acknowledgements\n\nThis research was developped by both [Acoustic And Cognitive Spaces] and\n[Analysis of Musical Practices] IRCAM research teams. A previous version\nwas part of the WAVE project, funded by ANR (French National Research\nAgency). The current version, supporting multiple sources and a listener,\nthe SOFA standard, and the access to a server, is part of the [CoSiMa]\nproject, funded by ANR.\n\n[//]: # (Avoid relative links for use with https://github.com/README.md)\n[//]: # (and http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/doc/index.html)\n\n[AirBnB]: https://github.com/airbnb/javascript/\n[API documentation directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/doc/\n[API documentation]: http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/doc/index.html\n[Acoustic And Cognitive Spaces]: http://recherche.ircam.fr/equipes/salles/\n[Analysis of Musical Practices]: http://apm.ircam.fr/\n[Babel]: https://babeljs.io/\n[.babelrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.babelrc\n[BSD-3-Clause]: http://opensource.org/licenses/BSD-3-Clause\n[T. Carpentier article]: http://wac.ircam.fr/pdf/demo/wac15_submission_16.pdf\n[CoSiMa]: http://cosima.ircam.fr/\n[dist directory]:  https://github.com/Ircam-RnD/binauralFIR/tree/next/dist/\n[documentation]: #documentation\n[ES2015]: https://babeljs.io/docs/learn-es2015/\n[.eslintrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.eslintrc\n[esdoc.json]: https://github.com/Ircam-RnD/binauralFIR/tree/next/esdoc.json\n[examples directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/examples/\n[examples HRTF directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/examples/hrtf/\n[examples online]: http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/examples/index.html\n[.jscsrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.jscsrc\n[JSDoc]: http://usejsdoc.org/\n[jsdoc.json]: https://github.com/Ircam-RnD/binauralFIR/tree/next/jsdoc.json\n[HRTF]: http://en.wikipedia.org/wiki/Head-related_transfer_function\n[IIRFilterNode]: https://webaudio.github.io/web-audio-api/#idl-def-IIRFilterNode\n[SOFA]: http://www.aes.org/publications/standards/search.cfm?docID=99\n[test directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/test\n[src directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/src\n[src/geometry]: https://github.com/Ircam-RnD/binauralFIR/tree/next/src/geometry\n[Web Audio API]: https://webaudio.github.io/web-audio-api/",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/Ircam-RnD/binauralFIR/issues"
+  },
+  "homepage": "https://github.com/Ircam-RnD/binauralFIR",
+  "_id": "binaural@0.3.7",
+  "_shasum": "995aa879fd5cb31b796f707b5da3c7bcbec2ea37",
+  "_resolved": "git+https://github.com/Ircam-RnD/binauralFIR#243186477809856778c0978fbbfbf9623b303bbf",
+  "_from": "binaural@git+https://github.com/Ircam-RnD/binauralFIR#0.3.7"
 }
 
 },{}]},{},[13])(13)

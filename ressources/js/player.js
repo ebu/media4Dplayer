@@ -51,11 +51,11 @@ var Player = {
 	spatializationMode:"binaural",
 	spatializationModes:["binaural","transaural"],
 	commentsAzimLevel:0,
-	commentsElevationLevel:23,
+	commentsElevationLevel:90,
 	binauralEQ:false,
-	compressionRatio:"2:1",
 	catalogue:[],
-	selectedProfil:null
+	selectedProfil:null,
+	config:null
 };
 
 /**
@@ -128,20 +128,23 @@ Player.load = function(videoData, callback, onClose){
 	//Gestion du PIP
 	this.setPIP();
 	
-	//this.initSmartFader();
 	var lastVolumeValue = parseInt(getCookie("volumeValue") || Settings.defaultVolumeValue,10);
 	var volumeValue = isNaN(lastVolumeValue) || !lastVolumeValue ? 0 : lastVolumeValue;
 	this.setVolume(volumeValue);
-	
-	/// prepare the sofa catalog of HRTF
-	this.prepareSofaCatalog();
-	
-	this.onChangeEqualization();
-	
-	this.onChangeAzim("commentary");
-	this.onChangeElevation("commentary");
 
 	this.initSubtitlesParams();
+	
+	this.onChangeEqualization();	
+	this.onChangeAzim("commentary");
+	this.onChangeElevation("commentary");
+	
+	// update the WAA connections
+	this.updateWAAConnections();
+	
+	// prepare the sofa catalog of HRTF
+	this.prepareSofaCatalog();
+	
+	this.onChangeSpatilisationMode();
 
 	InfoBanner.show();
 
@@ -293,12 +296,21 @@ Player.launch = function(){
 	
 		//==============================================================================
 		// M4DPAudioModules
+
+		/// connect either the multichannel spatializer or the object spatializer
+		ModulesConfiguration = {
+			kMultichannelSpatialiser : 0,
+			kObjectSpatialiserAndMixer : 1
+		};
+
+		this.config = ModulesConfiguration.kObjectSpatialiserAndMixer;
+
 		streamSelector = new M4DPAudioModules.StreamSelector( this.playerManager.audioContext, asdc );
 		smartFader = new M4DPAudioModules.SmartFader( this.playerManager.audioContext, asdc );
-		objectSpatialiserAndMixer = new M4DPAudioModules.ObjectSpatialiserAndMixer( this.playerManager.audioContext, asdc, this.spatializationMode );
-		var noiseAdaptation = new M4DPAudioModules.NoiseAdaptation(this.playerManager.audioContext);
+		//var noiseAdaptation = new M4DPAudioModules.NoiseAdaptation(this.playerManager.audioContext);
 		multichannelSpatialiser = new M4DPAudioModules.MultichannelSpatialiser( this.playerManager.audioContext, asdc, this.spatializationMode );
-		var dialogEnhancement = new M4DPAudioModules.DialogEnhancement(this.playerManager.audioContext);
+		objectSpatialiserAndMixer = new M4DPAudioModules.ObjectSpatialiserAndMixer( this.playerManager.audioContext, asdc, this.spatializationMode );
+		//var dialogEnhancement = new M4DPAudioModules.DialogEnhancement(this.playerManager.audioContext);
 
 		{
 			///@bug : the channelSplitterMain MUST be connected to the AudioContext,
@@ -312,17 +324,15 @@ Player.launch = function(){
 			uselessGain.connect( this.playerManager.audioContext.destination, 0, 0 );
 		}
 
-		/// receives 4 ADSC with 10 channels in total
-		channelMerger.connect( streamSelector._input );
+		/// WAA connections
+		{
+			/// receives 4 ADSC with 10 channels in total
+			channelMerger.connect( streamSelector._input );
 
-		/// mute or unmute the inactive streams
-		/// (process 10 channels in total)
-		streamSelector.connect( smartFader._input );
-
-		smartFader.connect( multichannelSpatialiser._input );
-
-		/// apply the multichannel spatialiser
-		multichannelSpatialiser.connect( this.playerManager.audioContext.destination );
+			/// mute or unmute the inactive streams
+			/// (process 10 channels in total)
+			streamSelector.connect( smartFader._input );
+		}
 	}
 	
 	this.playerManager.controller.addEventListener('playing', function(e) {
@@ -612,6 +622,32 @@ Player.initSmartFader = function(){
 	this.setVolume(valueFader);	
 };
 
+Player.updateWAAConnections = function(){
+    
+    smartFader.disconnect();
+    multichannelSpatialiser.disconnect();
+    objectSpatialiserAndMixer.disconnect();
+
+    var processor;
+
+    if( this.config === ModulesConfiguration.kMultichannelSpatialiser ){
+        processor = multichannelSpatialiser;  
+		
+    }else if( this.config === ModulesConfiguration.kObjectSpatialiserAndMixer ){
+        processor = objectSpatialiserAndMixer;
+		
+    }else{
+        throw new Error( "Invalid configuration" );
+    }
+    
+    smartFader.connect( processor._input );
+
+    /// apply the multichannel spatialiser
+    processor.connect( this.playerManager.audioContext.destination );
+	
+	Player.onChangeProfil();
+};
+
 Player.prepareSofaCatalog = function(callback){
 	
 	if(this.catalogue.length){
@@ -656,7 +692,15 @@ Player.prepareSofaCatalog = function(callback){
 			 
          	log('could not access bili2.ircam.fr...');
 
-         	sofaUrl = multichannelSpatialiser._virtualSpeakers.getFallbackUrl();
+			var currentProcessor;
+			if( this.config === ModulesConfiguration.kMultichannelSpatialiser ){
+				currentProcessor = multichannelSpatialiser;
+
+			}else{
+				currentProcessor = objectSpatialiserAndMixer;
+			}
+
+			var sofaUrl = currentProcessor._virtualSpeakers.getFallbackUrl();
 			
 			_callback(sofaUrl);
 
@@ -669,9 +713,21 @@ Player.onChangeProfil = function(){
 	var url = this.selectedProfil;
 	if(url){
 
-		/// load the URL in the spatialiser
-		multichannelSpatialiser.loadHrtfSet( url );
-		objectSpatialiserAndMixer.loadHrtfSet( url );		
+        var currentProcessor;
+        if( this.config === ModulesConfiguration.kMultichannelSpatialiser ){
+            currentProcessor = multichannelSpatialiser;
+        }
+        else{
+            currentProcessor = objectSpatialiserAndMixer;
+        }
+
+        /// load the URL in the spatialiser
+        currentProcessor.loadHrtfSet( url )
+        .then( function(){
+            objectSpatialiserAndMixer._updateCommentaryPosition();
+        });
+	}else{
+		log("Il n'y pas d'url de profil");
 	}
 };
 
@@ -695,6 +751,11 @@ Player.onChangeElevation = function(type){
 	if(type === "commentary"){
 		objectSpatialiserAndMixer.setCommentaryElevation( parseFloat( this.commentsElevationLevel ) );
 	}
+};
+
+Player.onChangeSpatilisationMode = function(){
+	multichannelSpatialiser.outputType = this.spatializationMode;
+	objectSpatialiserAndMixer.outputType = this.spatializationMode;
 };
 
 																								/********************************
