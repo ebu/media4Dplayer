@@ -1550,7 +1550,6 @@ h2 {
 }
 
 .spatialisation-control .control-container{
-	margin-top: 5px;
 	float: left;
 }
 
@@ -1561,6 +1560,7 @@ h2 {
 	background-size: contain;
 	padding: 46px 0 46px 14px;
 	box-sizing: border-box;
+	margin-top: 5px;
 }
 
 .vertical-slider-container .ui-slider-vertical{
@@ -1590,6 +1590,34 @@ h2 {
     text-decoration: none;
     font-weight: 600;
 	font-size: 1.7rem;
+}
+
+.spatialisation-zone-ctn{
+	background: url("../img/spatial_.png") no-repeat center center red;
+	background-size: contain;
+	width: 255px;
+	height: 255px;
+	position: relative;
+	margin-top: 18px;
+	margin-left: 25px;
+	border-radius: 127.5px;
+}
+
+.spatialisation-zone{
+	position: relative;
+	width: 50px;
+	height: 38px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	margin: -19px 0 0 -25px;
+}
+
+.spatialisation-zone.ad{
+	background-image: url("../img/spatial_AD_.png");
+}
+
+.spatialisation-zone.di{
+	background-image: url("../img/spatial_AU_.png");
 }
 
 
