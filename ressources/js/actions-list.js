@@ -102,7 +102,7 @@ $(document.getElementById('playerUI')).on('click', function(e){
 	}else if($(e.target.id).hasClass(".video-option")){
 		InfoBanner.showOptionPopup($(e.target.id), this);
 	}else{
-		log("id="+e.target.id);
+		//log("id="+e.target.id);
 	}
 	
 }).on("mouseover", ".btn", function(){
@@ -200,6 +200,6 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 	$(this).mouseout();
 	
 }).on("focus", "#videoPlayerContainer .selectable-by-chromevox", function(){
-	log("focus déclenché");
+	//log("focus déclenché");
 	InfoBanner.launchMaskingAfterDelay();
 });

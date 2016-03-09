@@ -355,7 +355,7 @@ Player.launch = function(){
 			Player.playerManager.playerMain.setTextTrack(Media.currentSubtitleIndex);
 		}
 
-		console.debug("MediaPlayer.events.TEXT_TRACKS_ADDED");
+		//log("MediaPlayer.events.TEXT_TRACKS_ADDED");
 
 		var xPos = getCookie("LSFPipSubtitles_position_x"),
 			yPos = getCookie("LSFPipSubtitles_position_y");
@@ -768,7 +768,7 @@ Player.onChangeSpatilisationMode = function(){
  */
 
 Player.launchCheckPositionVideo = function(){
-	log("launchCheckPositionVideo() : start; je vais lancer le stop");
+	//log("launchCheckPositionVideo() : start; je vais lancer le stop");
 	this.stopCheckVideoPosition();
 	this.checkPositionVideo = setInterval(function(){
 		InfoBanner.progressBar.update(Player.playerManager.controller.currentTime, Player.playerManager.controller.duration);
@@ -790,7 +790,7 @@ Player.launchCheckPositionVideo = function(){
  */
 
 Player.stopCheckVideoPosition = function(){
-	log("stopCheckVideoPosition() : start;");
+	//log("stopCheckVideoPosition() : start;");
 	clearInterval(this.checkPositionVideo);
 };
 
