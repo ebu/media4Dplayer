@@ -570,43 +570,41 @@ Player.initSubtitlesParams = function(){
 
 	// subtitles
 	var $container = $(this.ttmlDiv).removeClass("Arial OpenDyslexic Andika Helvetica Lexia");
-	var selectedFont = getHtmlStorage("subtitleFont");
+	var selectedFont = getHtmlStorage("subtitleFont") || Settings.defaultFont;
 	if(selectedFont){
 		$container.addClass(selectedFont);
 	}
 
 	// color
-	$container.removeClass("multiColor whiteColor yellowColor blueColor");
-	var selectedFontColor = getHtmlStorage("subtitleFontColor");
+	$container.removeClass("transparentColor whiteColor yellowColor blueColor");
+	var selectedFontColor = getHtmlStorage("subtitleFontColor") || Settings.defaultSubtitlesColor;
 	if(selectedFontColor){
 		$container.addClass(selectedFontColor+"Color");
 	}	
 
-	// background color & Opacité du background
+	// background color
 	$container.removeClass("blackBGColor whiteBGColor");
-	var selectedFontBGColor = getHtmlStorage("subtitleBGColor");
+	var selectedFontBGColor = getHtmlStorage("subtitleBGColor") || Settings.defaultSubtitlesBGColor;
 	if(selectedFontBGColor){
 		$container.addClass(selectedFontBGColor+"BGColor");
 	}
 
 	// Opacité du background
 	$container.removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1");
-	var selectedFontBGColor = getHtmlStorage("subtitleBackgroundOpacity");
+	var selectedFontBGColor = getHtmlStorage("subtitleBackgroundOpacity") || Settings.minOpacity;
 	if(selectedFontBGColor){
 		$container.addClass("opacity_"+selectedFontBGColor.replace(".",""));
 	}
 
 	// font-size
 	$container.css("font-size", "inherit");
-	var selectedFontSize = getHtmlStorage("subtitleFontSize");
+	var selectedFontSize = getHtmlStorage("subtitleFontSize") || Settings.minSubtitlesSize;
 	if(selectedFontSize){
 		$container.css("font-size", selectedFontSize+"px");
-	}	
+	}
 
-	var xPos = getHtmlStorage("LSFPipSubtitles_position_x"),
-		yPos = getHtmlStorage("LSFPipSubtitles_position_y");
-
-	if(xPos !== "undefined" && yPos !== "undefined"){
+	var yPos = getHtmlStorage("LSFPipSubtitles_position_y") || Settings.subtitlesDefaultPosition;
+	if(yPos !== "undefined"){
 		var top = Math.round(yPos);
 		if(top <= 0){
 			top = 0;
@@ -616,7 +614,6 @@ Player.initSubtitlesParams = function(){
 			top = top / 2;
 		}
 		$container.css("top", top + "%")
-			.css("left", xPos + "%")
 			.css("width", "100%");
 	}
 };	

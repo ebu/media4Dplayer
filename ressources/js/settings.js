@@ -5,6 +5,9 @@ var Settings = {
 	subtitlesDefaultPosition:71,
 	defaultLSPIPCoordonates: {x:75,y:4.5,w:22.51131221719457,h:40.04024144869215},
 	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Lexia"],
+	defaultFont:"Arial",
+	defaultSubtitlesColor:"transparent",
+	defaultSubtitlesBGColor:"black",
 	init:{},
 	change:{},
 	defaultVolumeValue:70,
@@ -321,8 +324,8 @@ Settings.init.subtitles.fontFamily = function(){
 		Settings.change.subtitlesFontFamily(selectedFont);
 		
 	}else{
-		setHtmlStorage("subtitleFont", Settings.fontList[0]);
-		Settings.change.subtitlesFontFamily(Settings.fontList[0]);
+		setHtmlStorage("subtitleFont", Settings.defaultFont);
+		Settings.change.subtitlesFontFamily(Settings.defaultFont);
 	}	
 };
 
@@ -336,11 +339,9 @@ Settings.init.subtitles.fontFamily = function(){
  */
 
 Settings.init.subtitles.color = function(){
-	var selectedFontColor = getHtmlStorage("subtitleFontColor");
+	var selectedFontColor = getHtmlStorage("subtitleFontColor") || Settings.defaultSubtitlesColor;
 	if(selectedFontColor){
 		Settings.change.subtitlesColor(selectedFontColor);
-	}else{
-		Settings.change.subtitlesColor("transparent");
 	}
 };
 
@@ -354,12 +355,10 @@ Settings.init.subtitles.color = function(){
  */
 
 Settings.init.subtitles.BGColor = function(){
-	var selectedFontBGColor = getHtmlStorage("subtitleBGColor");
+	var selectedFontBGColor = getHtmlStorage("subtitleBGColor") || Settings.defaultSubtitlesBGColor;
 	if(selectedFontBGColor){
 		Settings.change.subtitlesBackgroundColor(selectedFontBGColor);
-	}else{
-		Settings.change.subtitlesBackgroundColor("black");
-	}	
+	}
 };
 
 /**
@@ -499,7 +498,7 @@ Settings.change.subtitlesBackgroundColor = function(color){
 Settings.change.subtitlesColor = function(color){
 	setHtmlStorage("subtitleFontColor", color);
 	$(".option-text-color .color[data-color='"+color+"']").addClass("selected").siblings().removeClass("selected");
-	$(".ui-subtitles .pip-text").removeClass("multiColor whiteColor yellowColor blueColor").addClass(color+"Color");
+	$(".ui-subtitles .pip-text").removeClass("transparentColor whiteColor yellowColor blueColor").addClass(color+"Color");
 };
 
 /**
