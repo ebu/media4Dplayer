@@ -8,7 +8,8 @@ var Settings = {
 	init:{},
 	change:{},
 	defaultVolumeValue:70,
-	backToPlayerFromSettings:false
+	backToPlayerFromSettings:false,
+	minDistance:30
 };
 
 /**
@@ -69,8 +70,7 @@ Settings.init.interface = function(){
 
 Settings.init.audio = function(){
 	
-	var azimRange = Player.azimRange,
-		elevationRange = Player.elevationRange,
+	var elevationRange = Player.elevationRange,
 		distanceRange = Player.distanceRange;
 	
 	/* Le choix du mode de spatialisation */
@@ -145,9 +145,11 @@ Settings.init.audio = function(){
 	
 	/* La zone des commentaires */
 	var _onDrag = function(e, ui){
-
-		var $ctn = $(this).parent();
-		var canvas = {
+		
+		var minDistance = Settings.minDistance,
+			type = $(this).data("type"),
+			$ctn = $(this).parent(),
+			canvas = {
 			width: $ctn.width(),
 			height: $ctn.height(),
 			top: 0,
@@ -158,13 +160,11 @@ Settings.init.audio = function(){
 
 		function limit(x, y) {
 			var dist = distance([x, y], canvas.center);
-			//var dist2 = dist < 30 ? 30 : dist > canvas.radius ? canvas.radius : 
-			//log("distance = " + dist+" ("+(dist/60)+"), x = " + x+", y = " + y);
-			if (dist <= canvas.radius && dist >= 30) {
+			if (dist <= canvas.radius && dist >= minDistance) {
 				return {x: x, y: y};
 
 			}else{
-				var radius = dist <= 30 ? 30 : canvas.radius;
+				var radius = dist <= minDistance ? minDistance : canvas.radius;
 				x = x - canvas.center[0];
 				y = y - canvas.center[1];
 				var radians = Math.atan2(y, x);
@@ -187,23 +187,71 @@ Settings.init.audio = function(){
 		ui.position.left = result.x;
 		ui.position.top = result.y;
 
-		// Récupère la distance en mètre
+		// Récupère la distance
+		function getDistanceInMeter(d, rangePx, rangeMeter){
+			var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
+			return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
+		}
+		function saveDistance(value, type){
+			if(type === "commentary"){
+				Player.commentsDistance = value;
+				setHtmlStorage("commentsDistance", value);
+				
+			}else if(type === "dialogues"){
+				Player.dialoguesDistance = value;
+				setHtmlStorage("dialoguesDistance", value);				
+			}
+		}
 		var dist = distance([result.x, result.y], canvas.center);
-		var dist2 = dist < 30 ? 30 : dist > canvas.radius ? canvas.radius : dist;
-		var distanceMeter = ((dist - 30) * 9.5 / 97.5) + 0.5;
+		var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
+		var distanceMeter = getDistanceInMeter(dist2, [minDistance, canvas.radius], distanceRange);
+		saveDistance(distanceMeter, type);
+		//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
 		
 		// Récupère l'angle
-		// TODO : Si sinus est + c'est angle 1, sinon c'est - angle1
+		function getAzim(sinus, angle){
+			if(sinus <= 0){
+				return  0 - angle;
+			}else{
+				return angle;
+			}
+		}
+		function saveAzim(value, type){
+			if(type === "commentary"){
+				Player.commentsAzim = value;
+				setHtmlStorage("commentsAzim", value);
+				
+			}else if(type === "dialogues"){
+				Player.dialoguesAzim = value;
+				setHtmlStorage("dialoguesAzim", value);				
+			}
+		}
 		var cosinus = -(ui.position.top - canvas.center[1]) / dist;
 		var sinus = (ui.position.left - canvas.center[0]) / dist;
 		
-		var angle1 = Math.acos(cosinus) * 180 / Math.PI;
-		var angle2 = Math.asin(sinus) * 180 / Math.PI;
-		//log("distance = " + dist+"; x = " + result.x+"; y = " + result.y+"; angle1 = " + angle1+", angle2 = " +angle2+"; sinus = " + sinus+"; cosinus = " + cosinus);
-		log("distance = " + dist + "px ("+distanceMeter+"m)");
+		var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
+		var azim = Math.round(getAzim(sinus, angle1));
+		saveAzim(azim, type);
+		//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
+		
+		// Mémorise la position
+		if(type === "commentary"){
+			setHtmlStorage("commentsDistanceAzimPosition", JSON.stringify(ui.position));
+
+		}else if(type === "dialogues"){
+			setHtmlStorage("dialoguesDistanceAzimPosition", ui.position);				
+		}
+		log("distance = "+distanceMeter+"m; azim = " + azim + "°");
 	};
+	
+	var positions = getHtmlStorage("commentsDistanceAzimPosition");
+	if(positions){
+		positions = JSON.parse(positions);
+	}else{
+		positions = {top:92,left:127};
+	}
 	var $container = $(document.getElementById("comments-spatialisation-zone-ctn")); 
-	$container.find(".spatialisation-zone").css("top", "97px").css("left", "127px").draggable({
+	$container.find(".spatialisation-zone").css(positions).draggable({
 		scroll:false,
 		drag: _onDrag
 	});	

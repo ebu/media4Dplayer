@@ -50,13 +50,13 @@ var Player = {
 	mode:"5.1",
 	spatializationMode:"binaural",
 	spatializationModes:["binaural","transaural"],
-	commentsAzimLevel:0,
+	commentsAzim:0,
 	commentsElevationLevel:0,
-	commentsDistanceLevel:1,
-	dialoguesAzimLevel:0,
+	commentsDistance:1,
+	dialoguesAzim:0,
 	dialoguesElevationLevel:0,
-	dialoguesDistanceLevel:1,
-	azimRange:[-180,180],
+	dialoguesDistance:1,
+	azimRadius:180,
 	distanceRange:[0.5, 10],
 	elevationRange:[-40, 90],
 	binauralEQ:false,
@@ -81,6 +81,10 @@ Player.load = function(videoData, callback, onClose){
 	this.spatializationMode = getHtmlStorage("spatializationMode") || this.spatializationMode;
 	this.commentsElevationLevel = getHtmlStorage("commentsElevationLevel") || this.commentsElevationLevel;
 	this.dialoguesElevationLevel = getHtmlStorage("dialoguesElevationLevel") || this.dialoguesElevationLevel;
+	this.commentsDistance = getHtmlStorage("commentsDistance") || this.commentsDistance;
+	this.dialoguesDistance = getHtmlStorage("dialoguesDistance") || this.dialoguesDistance;
+	this.commentsAzim = getHtmlStorage("commentsAzim") || this.commentsAzim;
+	this.dialoguesAzim = getHtmlStorage("dialoguesAzim") || this.dialoguesAzim;
 
 	if(!this.alreadyInit || (videoData.links.dataMain.url !== Media.links.dataMain.url)){
 
@@ -755,10 +759,10 @@ Player.onChangeEqualization = function(){
 
 Player.onChangeAzim = function(type){
 	if(type === "commentary"){
-		objectSpatialiserAndMixer.setCommentaryAzimuth( parseFloat( this.commentsAzimLevel ) );
+		objectSpatialiserAndMixer.setCommentaryAzimuth( parseFloat( this.commentsAzim ) );
 		
 	}else if(type === "dialogues"){
-		objectSpatialiserAndMixer.setDialogAzimuth( this.dialoguesAzimLevel );
+		objectSpatialiserAndMixer.setDialogAzimuth( this.dialoguesAzim );
 	}
 };
 
@@ -773,10 +777,10 @@ Player.onChangeElevation = function(type){
 
 Player.onChangeDistance = function(type){
 	if(type === "commentary"){
-		objectSpatialiserAndMixer.setCommentaryDistance( parseFloat( this.commentsDistanceLevel ) );
+		objectSpatialiserAndMixer.setCommentaryDistance( parseFloat( this.commentsDistance ) );
 		
 	}else if(type === "dialogues"){
-		objectSpatialiserAndMixer.setDialogDistance( this.dialoguesDistanceLevel );
+		objectSpatialiserAndMixer.setDialogDistance( this.dialoguesDistance );
 	}
 };
 
