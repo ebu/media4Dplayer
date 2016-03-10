@@ -88,7 +88,7 @@ Settings.init.audio = function(){
 		}
 	});
 	
-	/* Le niveau des dialogues */
+	/* Le niveau des commentaires */
 	var _onSlide = function(value, el) {
 		
 		var type = $(el).data("type");
@@ -124,113 +124,54 @@ Settings.init.audio = function(){
 			_onSlide(ui.value, this);
 		}
 	});
-	_onSlide(Player.commentsElevationLevel, $vSlider);
+	_onSlide(Player.commentsElevationLevel, $vSlider);	
 	
-	
-	
-	
-	
-	var $container = $(document.getElementById("comments-spatialisation-zone-ctn")); 
-	var $pipVideo = $container.find(".spatialisation-zone").css("top", "127px").css("left", "127px");
-	$pipVideo.draggable({ 	
-		containment: $container,
-		scroll:false,
-		drag: function (e, ui) {
-			
-			/*var pointerEl = this;
-			var canvasEl = $container[0];
-			var canvas = {
-				width: canvasEl.offsetWidth,
-				height: canvasEl.offsetHeight,
-				top: canvasEl.offsetTop,
-				left: canvasEl.offsetLeft
-			};
-			canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
-			canvas.radius = canvas.width / 2;			
-			
-			function limit(x, y) {
-				var dist = distance([x, y], canvas.center);
-				if (dist <= canvas.radius) {
-					log("yes++++++++++++++++++++++++");
-					return {x: x, y: y};
-				} 
-				else {
-					log("no--------------------");
-					x = x - canvas.center[0];
-					y = y - canvas.center[1];
-					var radians = Math.atan2(y, x)
-				   return {
-					   x: Math.cos(radians) * canvas.radius + canvas.center[0],
-					   y: Math.sin(radians) * canvas.radius + canvas.center[1]
-				   }
-				} 
-			}
+	/* La zone des commentaires */
+	var _onDrag = function(e, ui){
 
-			function distance(dot1, dot2) {
-				var x1 = dot1[0],
-					y1 = dot1[1],
-					x2 = dot2[0],
-					y2 = dot2[1];
-				return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-			}
-			
-			var result = limit(ui.offset.left, ui.offset.top);
-			if(!result){
-				
-			}
-			pointerEl.style.left = result.x + "px";
-			pointerEl.style.top = result.y + "px";		*/	
+		var $ctn = $(this).parent();
+		var canvas = {
+			width: $ctn.width(),
+			height: $ctn.height(),
+			top: 0,
+			left: 0
+		};
+		canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
+		canvas.radius = canvas.width / 2;			
 
-			
-			
-			
-		},
-		stop: function(e, ui) {
-			/*log("stop event");
-			
-			var canvasEl = $container[0];
-			var canvas = {
-				width: canvasEl.offsetWidth,
-				height: canvasEl.offsetHeight,
-				top: canvasEl.offsetTop,
-				left: canvasEl.offsetLeft
-			};
-			canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
-			canvas.radius = canvas.width / 2;			
-			
-			function limit(x, y) {
-				var dist = distance([x, y], canvas.center);
-				if (dist <= canvas.radius) {
-					log("yes++++++++++++++++++++++++");
-					return {x: x, y: y};
-				} 
-				else {
-					log("no--------------------");
-					x = x - canvas.center[0];
-					y = y - canvas.center[1];
-					var radians = Math.atan2(y, x)
-				   return {
-					   x: Math.cos(radians) * canvas.radius + canvas.center[0],
-					   y: Math.sin(radians) * canvas.radius + canvas.center[1]
-				   }
-				} 
-			}
+		function limit(x, y) {
+			var dist = distance([x, y], canvas.center);
+			if (dist <= canvas.radius) {
+				return {x: x, y: y};
 
-			function distance(dot1, dot2) {
-				var x1 = dot1[0],
-					y1 = dot1[1],
-					x2 = dot2[0],
-					y2 = dot2[1];
-				return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-			}
-			
-			var result = limit(ui.offset.left, ui.offset.top);
-			log($(this).offset().left+" > "+result.x);
-			log($(this).offset().top+" > "+result.y);
-			$(this).offset().left = result.x;
-			$(this).offset().top = result.y;	*/		
+			}else{
+				x = x - canvas.center[0];
+				y = y - canvas.center[1];
+				var radians = Math.atan2(y, x);
+			   return {
+				   x: Math.cos(radians) * canvas.radius + canvas.center[0],
+				   y: Math.sin(radians) * canvas.radius + canvas.center[1]
+			   };
+			} 
 		}
-	});			
+
+		function distance(dot1, dot2) {
+			var x1 = dot1[0],
+				y1 = dot1[1],
+				x2 = dot2[0],
+				y2 = dot2[1];
+			return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+		}
+
+		var result = limit(ui.position.left, ui.position.top);			
+		ui.position.left = result.x;
+		ui.position.top = result.y;
+	};
+	var $container = $(document.getElementById("comments-spatialisation-zone-ctn")); 
+	$container.find(".spatialisation-zone").css("top", "127px").css("left", "127px").draggable({
+		scroll:false,
+		drag: _onDrag
+	});	
 };
 
 /**
