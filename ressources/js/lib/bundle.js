@@ -2305,6 +2305,7 @@ var VirtualSpeakersNode = function (_AbstractNode) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VirtualSpeakersNode).call(this, audioContext, audioStreamDescriptionCollection));
 
         _this._splitterNode = undefined;
+        _this._gainNodes = [];
 
         /// retrieves the positions of all streams
         var horizontalPositions = _this._getHorizontalPlane();
@@ -2332,9 +2333,24 @@ var VirtualSpeakersNode = function (_AbstractNode) {
 
         _this._splitterNode = audioContext.createChannelSplitter(totalNumberOfChannels_);
 
-        /// connect the inputs
+        /// create one gain Node for each virtual speaker
+        /// i.e. each virtual speaker has an independent gain setting
         for (var i = 0; i < totalNumberOfChannels_; i++) {
-            _this._binauralPanner.connectInputByIndex(i, _this._splitterNode, i, 0);
+            var newGainNode = audioContext.createGain();
+            _this._gainNodes.push(newGainNode);
+
+            /// also initialize the gain to 1.0
+            _this._gainNodes[i].gain.value = 1.0;
+        }
+
+        /// connect the output of the splitter to the respective gain nodes
+        for (var i = 0; i < totalNumberOfChannels_; i++) {
+            _this._splitterNode.connect(_this._gainNodes[i], i);
+        }
+
+        /// connect the output of the gain nodes to the respective binaural source
+        for (var i = 0; i < totalNumberOfChannels_; i++) {
+            _this._binauralPanner.connectInputByIndex(i, _this._gainNodes[i], 0, 0);
         }
 
         /// sanity checks
@@ -2352,12 +2368,35 @@ var VirtualSpeakersNode = function (_AbstractNode) {
     }
 
     //==============================================================================
-    /**
-     * Set listenerYaw
-     * @type {number} yaw angle in degrees
-     */
 
     _createClass(VirtualSpeakersNode, [{
+        key: 'getNumChannels',
+        value: function getNumChannels() {
+            return this._gainNodes.length;
+        }
+
+        //==============================================================================
+
+    }, {
+        key: 'setGainForVirtualSource',
+        value: function setGainForVirtualSource(sourceIndex, linearGain) {
+
+            var numChannels = this.getNumChannels();
+
+            if (sourceIndex < 0 || sourceIndex >= numChannels) {
+                throw new Error("Invalid source index : " + sourceIndex);
+            }
+
+            this._gainNodes[sourceIndex].gain.value = linearGain;
+        }
+
+        //==============================================================================
+        /**
+         * Set listenerYaw
+         * @type {number} yaw angle in degrees
+         */
+
+    }, {
         key: 'getFallbackUrl',
 
         //==============================================================================
@@ -3225,6 +3264,10 @@ var _index = require('../multichannel-spatialiser/index.js');
 
 var _index2 = _interopRequireDefault(_index);
 
+var _utils = require('../core/utils.js');
+
+var _utils2 = _interopRequireDefault(_utils);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3265,7 +3308,8 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ObjectSpatialiserAndMixer).call(this, audioContext, audioStreamDescriptionCollection, outputType, headphoneEqPresetName, offsetGain, listenerYaw));
 
-        _this._distance = 1;
+        _this._DialogDistance = 1;
+        _this._CommentaryDistance = 1;
         return _this;
     }
 
@@ -3282,21 +3326,26 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
     _createClass(ObjectSpatialiserAndMixer, [{
         key: 'setCommentaryPosition',
         value: function setCommentaryPosition(azimuth, elevation, distance) {
-            this._azimuth = azimuth;
-            this._elevation = elevation;
-            this._distance = distance;
+            this._CommentaryAzimuth = azimuth;
+            this._CommentaryElevation = elevation;
+            this._CommentaryDistance = distance;
 
             this._updateCommentaryPosition();
         }
     }, {
         key: 'setCommentaryAzimuth',
         value: function setCommentaryAzimuth(azim) {
-            this.setCommentaryPosition(azim, this._elevation, this._distance);
+            this.setCommentaryPosition(azim, this._CommentaryElevation, this._CommentaryDistance);
         }
     }, {
         key: 'setCommentaryElevation',
         value: function setCommentaryElevation(elev) {
-            this.setCommentaryPosition(this._azimuth, elev, this._distance);
+            this.setCommentaryPosition(this._CommentaryAzimuth, elev, this._CommentaryDistance);
+        }
+    }, {
+        key: 'setCommentaryDistance',
+        value: function setCommentaryDistance(dist) {
+            this.setCommentaryPosition(this._CommentaryAzimuth, this._CommentaryElevation, dist);
         }
     }, {
         key: 'setCommentaryAzimuthFromGui',
@@ -3343,6 +3392,28 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 
             return Math.round(value);
         }
+    }, {
+        key: 'setCommentaryDistanceFromGui',
+        value: function setCommentaryDistanceFromGui(theSlider) {
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 0.5;
+            var maxValue = 10;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this.setCommentaryDistance(value);
+
+            return value;
+        }
 
         /**
          * Returns the position of the additionnal mono commentary     
@@ -3354,7 +3425,7 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
     }, {
         key: 'getCommentaryPosition',
         value: function getCommentaryPosition() {
-            return [this._azimuth, this._elevation, this._distance];
+            return [this._CommentaryAzimuth, this._CommentaryElevation, this._CommentaryDistance];
         }
 
         //==============================================================================
@@ -3368,8 +3439,8 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
             if (sourceIndex >= 0) {
 
                 /// convert to SOFA spherical coordinate
-                var sofaAzim = -1. * this._azimuth;
-                var sofaElev = this._elevation;
+                var sofaAzim = -1. * this._CommentaryAzimuth;
+                var sofaElev = this._CommentaryElevation;
                 var sofaDist = 1.; /// fow now, the distance is not take into account
 
                 var sofaPos = [sofaAzim, sofaElev, sofaDist];
@@ -3377,6 +3448,12 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
                 if (typeof this._virtualSpeakers._binauralPanner !== 'undefined') {
                     this._virtualSpeakers._binauralPanner.setSourcePositionByIndex(sourceIndex, sofaPos);
                     this._virtualSpeakers._binauralPanner.update();
+
+                    /// now, apply a simple gain to attenuate according to distance
+                    var drop = ObjectSpatialiserAndMixer.distanceToDrop(this._CommentaryDistance);
+                    var dropLin = _utils2.default.dB2lin(drop);
+
+                    this._virtualSpeakers.setGainForVirtualSource(sourceIndex, dropLin);
                 }
             } else {
                 /// there is no commentary stream
@@ -3401,7 +3478,7 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 
             var sourceIndex = 0;
 
-            /// go through all the streams and mute/unmute according to their 'active' flag
+            /// go through all the streams
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
@@ -3443,20 +3520,238 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 
         //==============================================================================
         /**
-         * Process: "position" + "gain"
-         * @todo: how to automatically set the gain, how to have RMS from "the other signal" here
+         * Set the position of the additionnal mono dialog     
+         * @param {number} azimuth - azimuth @todo values to be defined
+         * @param {number} elevation - elevation @todo values to be defined
+         * @param {number} distance - distance @todo values to be defined
+         *
+         * @details The values are expressed with Spat4 navigational coordinates
+         */
+
+    }, {
+        key: 'setDialogPosition',
+        value: function setDialogPosition(azimuth, elevation, distance) {
+            this._DialogAzimuth = azimuth;
+            this._DialogElevation = elevation;
+            this._DialogDistance = distance;
+
+            this._updateDialogPosition();
+        }
+    }, {
+        key: 'setDialogAzimuth',
+        value: function setDialogAzimuth(azim) {
+            this.setDialogPosition(azim, this._DialogElevation, this._DialogDistance);
+        }
+    }, {
+        key: 'setDialogElevation',
+        value: function setDialogElevation(elev) {
+            this.setDialogPosition(this._DialogAzimuth, elev, this._DialogDistance);
+        }
+    }, {
+        key: 'setDialogDistance',
+        value: function setDialogDistance(dist) {
+            this.setDialogPosition(this._DialogAzimuth, this._DialogElevation, dist);
+        }
+    }, {
+        key: 'setDialogAzimuthFromGui',
+        value: function setDialogAzimuthFromGui(theSlider) {
+
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = -180;
+            var maxValue = 180;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this.setDialogAzimuth(value);
+
+            return Math.round(value);
+        }
+    }, {
+        key: 'setDialogElevationFromGui',
+        value: function setDialogElevationFromGui(theSlider) {
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = -40;
+            var maxValue = 90;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this.setDialogElevation(value);
+
+            return Math.round(value);
+        }
+    }, {
+        key: 'setDialogDistanceFromGui',
+        value: function setDialogDistanceFromGui(theSlider) {
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 0.5;
+            var maxValue = 10;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this.setDialogDistance(value);
+
+            return value;
+        }
+
+        /**
+         * Returns the position of the additionnal mono dialog     
+         * @return {array}
+         *
+         * @details The values are expressed with Spat4 navigational coordinates
+         */
+
+    }, {
+        key: 'getDialogPosition',
+        value: function getDialogPosition() {
+            return [this._DialogAzimuth, this._DialogElevation, this._DialogDistance];
+        }
+
+        //==============================================================================
+
+    }, {
+        key: '_updateDialogPosition',
+        value: function _updateDialogPosition() {
+
+            var sourceIndex = this._getSourceIndexForDialog();
+
+            if (sourceIndex >= 0) {
+
+                /// convert to SOFA spherical coordinate
+                var sofaAzim = -1. * this._DialogAzimuth;
+                var sofaElev = this._DialogElevation;
+                var sofaDist = 1.; /// fow now, the distance is not take into account
+
+                var sofaPos = [sofaAzim, sofaElev, sofaDist];
+
+                if (typeof this._virtualSpeakers._binauralPanner !== 'undefined') {
+                    this._virtualSpeakers._binauralPanner.setSourcePositionByIndex(sourceIndex, sofaPos);
+                    this._virtualSpeakers._binauralPanner.update();
+
+                    /// now, apply a simple gain to attenuate according to distance
+                    var drop = ObjectSpatialiserAndMixer.distanceToDrop(this._DialogDistance);
+                    var dropLin = _utils2.default.dB2lin(drop);
+
+                    this._virtualSpeakers.setGainForVirtualSource(sourceIndex, dropLin);
+                }
+            } else {
+                /// there is no dialog stream
+            }
+        }
+
+        //==============================================================================
+        /**
+         * The binaural processor handles up to 10 sources, considering all the streams.
+         * This function returns the index of the source which corresponds to the dialog
+         * (that needs to be spatialized)
+         * Returns -1 if there is no dialog
+         */
+
+    }, {
+        key: '_getSourceIndexForDialog',
+        value: function _getSourceIndexForDialog() {
+
+            /// retrieves the AudioStreamDescriptionCollection
+            /// (mainAudio, extendedAmbience, extendedComments and extendedDialogs)
+            var asdc = this._audioStreamDescriptionCollection.streams;
+
+            var sourceIndex = 0;
+
+            /// go through all the streams
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = asdc[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var stream = _step2.value;
+
+                    if (stream.dialog === true && stream.type === "Mono") {
+                        return sourceIndex;
+                    } else {
+                        var numChannelsForThisStream = stream.numChannels;
+
+                        sourceIndex += numChannelsForThisStream;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        /**
+         * Computes a drop in dB, according to distance
+         * @type {number} value : the distance in meters
          */
 
     }, {
         key: '_process',
+
+        //==============================================================================
+        /**
+         * Process: "position" + "gain"
+         * @todo: how to automatically set the gain, how to have RMS from "the other signal" here
+         */
         value: function _process() {}
+    }], [{
+        key: 'distanceToDrop',
+        value: function distanceToDrop(value) {
+
+            var clampDist = _utils2.default.clamp(value, 0.5, 10.0);
+            var refDist = 1.0;
+
+            /// 6dB each time the distance is x2
+
+            var drop = -6.0 * Math.log2(clampDist / refDist);
+
+            return drop;
+        }
     }]);
 
     return ObjectSpatialiserAndMixer;
 }(_index2.default);
 
 exports.default = ObjectSpatialiserAndMixer;
-},{"../multichannel-spatialiser/index.js":14}],18:[function(require,module,exports){
+},{"../core/utils.js":3,"../multichannel-spatialiser/index.js":14}],18:[function(require,module,exports){
 'use strict';
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();

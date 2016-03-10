@@ -51,7 +51,14 @@ var Player = {
 	spatializationMode:"binaural",
 	spatializationModes:["binaural","transaural"],
 	commentsAzimLevel:0,
-	commentsElevationLevel:90,
+	commentsElevationLevel:0,
+	commentsDistanceLevel:1,
+	dialoguesAzimLevel:0,
+	dialoguesElevationLevel:0,
+	dialoguesDistanceLevel:1,
+	azimRange:[-180,180],
+	distanceRange:[0.5, 10],
+	elevationRange:[-40, 90],
 	binauralEQ:false,
 	catalogue:[],
 	selectedProfil:null,
@@ -137,6 +144,7 @@ Player.load = function(videoData, callback, onClose){
 	this.onChangeEqualization();	
 	this.onChangeAzim("commentary");
 	this.onChangeElevation("commentary");
+	this.onChangeDistance("commentary");
 	
 	// update the WAA connections
 	this.updateWAAConnections();
@@ -744,12 +752,27 @@ Player.onChangeEqualization = function(){
 Player.onChangeAzim = function(type){
 	if(type === "commentary"){
 		objectSpatialiserAndMixer.setCommentaryAzimuth( parseFloat( this.commentsAzimLevel ) );
+		
+	}else if(type === "dialogues"){
+		objectSpatialiserAndMixer.setDialogAzimuth( this.dialoguesAzimLevel );
 	}
 };
 
 Player.onChangeElevation = function(type){
 	if(type === "commentary"){
 		objectSpatialiserAndMixer.setCommentaryElevation( parseFloat( this.commentsElevationLevel ) );
+		
+	}else if(type === "dialogues"){
+		objectSpatialiserAndMixer.setDialogElevation( this.dialoguesElevationLevel );
+	}
+};
+
+Player.onChangeDistance = function(type){
+	if(type === "commentary"){
+		objectSpatialiserAndMixer.setCommentaryDistance( parseFloat( this.commentsDistanceLevel ) );
+		
+	}else if(type === "dialogues"){
+		objectSpatialiserAndMixer.setDialogDistance( this.dialoguesDistanceLevel );
 	}
 };
 
