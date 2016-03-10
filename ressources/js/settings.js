@@ -69,21 +69,35 @@ Settings.init.interface = function(){
 
 Settings.init.audio = function(){
 	
+	var azimRange = Player.azimRange,
+		elevationRange = Player.elevationRange,
+		distanceRange = Player.distanceRange;
+	
 	/* Le choix du mode de spatialisation */
-	var val = Player.spatializationMode === Player.spatializationModes[0] && Player.binauralEQ ? "binaural-EQ" : Player.spatializationMode;
+	var spatMode = getHtmlStorage("spatializationMode") || Player.spatializationMode,
+		binauralEQ = getHtmlStorage("binauralEQ") || Player.binauralEQ,
+		val = spatMode === Player.spatializationModes[0] && binauralEQ ? "binaural-EQ" : spatMode;
+	
 	$(document.getElementById("spatialisation-options")).val(val).selectmenu({
 		select: function( event, ui ) {
 			
 			var val = ui.item.value;
 			var values = Player.spatializationModes;
 			
+			var _save = function(){
+				setHtmlStorage("spatializationMode", Player.spatializationMode);
+				setHtmlStorage("binauralEQ", Player.binauralEQ);				
+			};
+			
 			if(values.indexOf(val) !== -1){
 				Player.spatializationMode = val;
 				Player.binauralEQ = false;
+				_save();
 				
 			}else if(val === "binaural-EQ"){
 				Player.spatializationMode = values[0];
-				Player.binauralEQ = true;				
+				Player.binauralEQ = true;
+				_save();		
 			}
 		}
 	});
@@ -94,9 +108,12 @@ Settings.init.audio = function(){
 		var type = $(el).data("type");
 		if(type === "commentary"){
 			Player.commentsElevationLevel = value;
+			setHtmlStorage("commentsElevationLevel", value);
 			log("Niveau d'élévation des commentaires : " + value + "°");
 			
 		}else if(type === "dialogues"){
+			Player.dialoguesElevationLevel = value;
+			setHtmlStorage("dialoguesElevationLevel", value);
 			log("Niveau d'élévation des dialogues : " + value + "°");			
 		}
 
@@ -112,19 +129,19 @@ Settings.init.audio = function(){
 			$slider.text("Tête");
 		}
 	};
-	
+	var commentsElLlv = getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel;
 	var $vSlider = $( document.getElementById("comments-elevation-level") ).slider({
         range: "min",
-        min: -40,
-		max: 90,
+        min: elevationRange[0],
+		max: elevationRange[1],
 		orientation:"vertical",
-        value: Player.commentsElevationLevel,
+        value: commentsElLlv,
  
         slide: function(event, ui){
 			_onSlide(ui.value, this);
 		}
 	});
-	_onSlide(Player.commentsElevationLevel, $vSlider);	
+	_onSlide(commentsElLlv, $vSlider);	
 	
 	/* La zone des commentaires */
 	var _onDrag = function(e, ui){
@@ -141,18 +158,21 @@ Settings.init.audio = function(){
 
 		function limit(x, y) {
 			var dist = distance([x, y], canvas.center);
-			if (dist <= canvas.radius) {
+			//var dist2 = dist < 30 ? 30 : dist > canvas.radius ? canvas.radius : 
+			//log("distance = " + dist+" ("+(dist/60)+"), x = " + x+", y = " + y);
+			if (dist <= canvas.radius && dist >= 30) {
 				return {x: x, y: y};
 
 			}else{
+				var radius = dist <= 30 ? 30 : canvas.radius;
 				x = x - canvas.center[0];
 				y = y - canvas.center[1];
 				var radians = Math.atan2(y, x);
-			   return {
-				   x: Math.cos(radians) * canvas.radius + canvas.center[0],
-				   y: Math.sin(radians) * canvas.radius + canvas.center[1]
-			   };
-			} 
+				return {
+					x: Math.cos(radians) * radius + canvas.center[0],
+					y: Math.sin(radians) * radius + canvas.center[1]
+				};		
+			}
 		}
 
 		function distance(dot1, dot2) {
@@ -166,9 +186,24 @@ Settings.init.audio = function(){
 		var result = limit(ui.position.left, ui.position.top);			
 		ui.position.left = result.x;
 		ui.position.top = result.y;
+
+		// Récupère la distance en mètre
+		var dist = distance([result.x, result.y], canvas.center);
+		var dist2 = dist < 30 ? 30 : dist > canvas.radius ? canvas.radius : dist;
+		var distanceMeter = ((dist - 30) * 9.5 / 97.5) + 0.5;
+		
+		// Récupère l'angle
+		// TODO : Si sinus est + c'est angle 1, sinon c'est - angle1
+		var cosinus = -(ui.position.top - canvas.center[1]) / dist;
+		var sinus = (ui.position.left - canvas.center[0]) / dist;
+		
+		var angle1 = Math.acos(cosinus) * 180 / Math.PI;
+		var angle2 = Math.asin(sinus) * 180 / Math.PI;
+		//log("distance = " + dist+"; x = " + result.x+"; y = " + result.y+"; angle1 = " + angle1+", angle2 = " +angle2+"; sinus = " + sinus+"; cosinus = " + cosinus);
+		log("distance = " + dist + "px ("+distanceMeter+"m)");
 	};
 	var $container = $(document.getElementById("comments-spatialisation-zone-ctn")); 
-	$container.find(".spatialisation-zone").css("top", "127px").css("left", "127px").draggable({
+	$container.find(".spatialisation-zone").css("top", "97px").css("left", "127px").draggable({
 		scroll:false,
 		drag: _onDrag
 	});	

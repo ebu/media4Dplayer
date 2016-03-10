@@ -77,6 +77,10 @@ var Player = {
 Player.load = function(videoData, callback, onClose){
 	
 	this.onClose = onClose;
+	
+	this.spatializationMode = getHtmlStorage("spatializationMode") || this.spatializationMode;
+	this.commentsElevationLevel = getHtmlStorage("commentsElevationLevel") || this.commentsElevationLevel;
+	this.dialoguesElevationLevel = getHtmlStorage("dialoguesElevationLevel") || this.dialoguesElevationLevel;
 
 	if(!this.alreadyInit || (videoData.links.dataMain.url !== Media.links.dataMain.url)){
 
