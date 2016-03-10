@@ -75,10 +75,10 @@ Player.load = function(videoData, callback, onClose){
 
 		Media = videoData;
 
-		Media.LSFEnabled = !getCookie("LSFDisabled") && Media.links.dataLS && Media.links.dataLS.url ? true : false;
-		Media.audioEnabled = !getCookie("audioDisabled") && Media.links.dataMain && Media.links.dataMain.url ? true : false;
-		Media.subtitleEnabled = !getCookie("subtitlesDisabled") && Media.links.dataSub && Media.links.dataSub.url ? true : false;
-		Media.audioDescriptionEnabled = !getCookie("audioDescriptionDisabled") && Media.links.dataAD && Media.links.dataAD.url ? true : false;
+		Media.LSFEnabled = !getHtmlStorage("LSFDisabled") && Media.links.dataLS && Media.links.dataLS.url ? true : false;
+		Media.audioEnabled = !getHtmlStorage("audioDisabled") && Media.links.dataMain && Media.links.dataMain.url ? true : false;
+		Media.subtitleEnabled = !getHtmlStorage("subtitlesDisabled") && Media.links.dataSub && Media.links.dataSub.url ? true : false;
+		Media.audioDescriptionEnabled = !getHtmlStorage("audioDescriptionDisabled") && Media.links.dataAD && Media.links.dataAD.url ? true : false;
 
 		Media.currentAudioIndex = this.mode === "5.1" && Media.audiosList[1] ? 1 : 0;
 		Media.currentAudioDescriptionIndex = 0;
@@ -128,7 +128,7 @@ Player.load = function(videoData, callback, onClose){
 	//Gestion du PIP
 	this.setPIP();
 	
-	var lastVolumeValue = parseInt(getCookie("volumeValue") || Settings.defaultVolumeValue,10);
+	var lastVolumeValue = parseInt(getHtmlStorage("volumeValue") || Settings.defaultVolumeValue,10);
 	var volumeValue = isNaN(lastVolumeValue) || !lastVolumeValue ? 0 : lastVolumeValue;
 	this.setVolume(volumeValue);
 
@@ -349,7 +349,7 @@ Player.launch = function(){
 	});
 
 	var textTrackEvent = function(e){
-		if(getCookie("subtitlesDisabled")){
+		if(getHtmlStorage("subtitlesDisabled")){
 			Player.playerManager.playerMain.setTextTrack(-1);					
 		}else{
 			Player.playerManager.playerMain.setTextTrack(Media.currentSubtitleIndex);
@@ -357,8 +357,8 @@ Player.launch = function(){
 
 		//log("MediaPlayer.events.TEXT_TRACKS_ADDED");
 
-		var xPos = getCookie("LSFPipSubtitles_position_x"),
-			yPos = getCookie("LSFPipSubtitles_position_y");
+		var xPos = getHtmlStorage("LSFPipSubtitles_position_x"),
+			yPos = getHtmlStorage("LSFPipSubtitles_position_y");
 
 		if(xPos !== "undefined" && yPos !== "undefined"){
 			var top = Math.round(yPos);
@@ -418,8 +418,8 @@ Player.setVolume = function(volume){
 
 Player.setMute = function(){
 	this.setVolume(0);
-	setCookie("volumeValue", 0);
-	setCookie("muteEnabled", 1);
+	setHtmlStorage("volumeValue", 0);
+	setHtmlStorage("muteEnabled", 1);
 	$('.volume').css('background-position', '0 0');
 };
 
@@ -493,10 +493,10 @@ Player.resetPlayers = function(){
 
 Player.setPIP = function(){
 	var $ctn = $(document.getElementById("pipContainer"));
-	var $pipVideo = $(document.getElementById("pipVideo")).css("left", (getCookie("LSFPip_position_x") || Settings.defaultLSPIPCoordonates.x) + "%" )
-		.css("top", (getCookie("LSFPip_position_y") || Settings.defaultLSPIPCoordonates.y) + "%" )
-		.css("width", (getCookie("LSFPip_size_width") || Settings.defaultLSPIPCoordonates.w) + "%" )
-		.css("height", (getCookie("LSFPip_size_height") || Settings.defaultLSPIPCoordonates.h) + "%" )
+	var $pipVideo = $(document.getElementById("pipVideo")).css("left", (getHtmlStorage("LSFPip_position_x") || Settings.defaultLSPIPCoordonates.x) + "%" )
+		.css("top", (getHtmlStorage("LSFPip_position_y") || Settings.defaultLSPIPCoordonates.y) + "%" )
+		.css("width", (getHtmlStorage("LSFPip_size_width") || Settings.defaultLSPIPCoordonates.w) + "%" )
+		.css("height", (getHtmlStorage("LSFPip_size_height") || Settings.defaultLSPIPCoordonates.h) + "%" )
 		.draggable({
 			containment: $ctn.parent(),
 			scroll:false,
@@ -554,41 +554,41 @@ Player.initSubtitlesParams = function(){
 
 	// subtitles
 	var $container = $(this.ttmlDiv).removeClass("Arial OpenDyslexic Andika Helvetica Lexia");
-	var selectedFont = getCookie("subtitleFont");
+	var selectedFont = getHtmlStorage("subtitleFont");
 	if(selectedFont){
 		$container.addClass(selectedFont);
 	}
 
 	// color
 	$container.removeClass("multiColor whiteColor yellowColor blueColor");
-	var selectedFontColor = getCookie("subtitleFontColor");
+	var selectedFontColor = getHtmlStorage("subtitleFontColor");
 	if(selectedFontColor){
 		$container.addClass(selectedFontColor+"Color");
 	}	
 
 	// background color & Opacité du background
 	$container.removeClass("blackBGColor whiteBGColor");
-	var selectedFontBGColor = getCookie("subtitleBGColor");
+	var selectedFontBGColor = getHtmlStorage("subtitleBGColor");
 	if(selectedFontBGColor){
 		$container.addClass(selectedFontBGColor+"BGColor");
 	}
 
 	// Opacité du background
 	$container.removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1");
-	var selectedFontBGColor = getCookie("subtitleBackgroundOpacity");
+	var selectedFontBGColor = getHtmlStorage("subtitleBackgroundOpacity");
 	if(selectedFontBGColor){
 		$container.addClass("opacity_"+selectedFontBGColor.replace(".",""));
 	}
 
 	// font-size
 	$container.css("font-size", "inherit");
-	var selectedFontSize = getCookie("subtitleFontSize");
+	var selectedFontSize = getHtmlStorage("subtitleFontSize");
 	if(selectedFontSize){
 		$container.css("font-size", selectedFontSize+"px");
 	}	
 
-	var xPos = getCookie("LSFPipSubtitles_position_x"),
-		yPos = getCookie("LSFPipSubtitles_position_y");
+	var xPos = getHtmlStorage("LSFPipSubtitles_position_x"),
+		yPos = getHtmlStorage("LSFPipSubtitles_position_y");
 
 	if(xPos !== "undefined" && yPos !== "undefined"){
 		var top = Math.round(yPos);
@@ -932,7 +932,7 @@ Player.activeOptionSigne = function(index) {
 		playerPIP.reset();
 
 		Media.LSFEnabled = false;
-		setCookie("LSFDisabled", 1);
+		setHtmlStorage("LSFDisabled", 1);
 		$textContent.html("Aucun");
 	}
 };
@@ -959,7 +959,7 @@ Player.activeOptionSub = function(index) {
 		
 		Media.subtitleEnabled = false;
 		Media.currentSubtitleIndex = 0;
-		setCookie("subtitlesDisabled", 1);
+		setHtmlStorage("subtitlesDisabled", 1);
 		$textContent.html("Aucun");
 	}
 };
@@ -996,7 +996,7 @@ Player.activeOptionDescription = function(index) {
 		extendedCommentsASD.active = false;
 
 		Media.audioDescriptionEnabled = false;
-		setCookie("audioDescriptionDisabled", 1);
+		setHtmlStorage("audioDescriptionDisabled", 1);
 		$textContent.html("Aucun");
 	}
 	
@@ -1038,7 +1038,7 @@ Player.activeOptionAudio = function(index) {
 		$textContent.html(Media.audiosList[index]);
 
 	}else{
-		setCookie("audioDisabled", 1);
+		setHtmlStorage("audioDisabled", 1);
 		$(document.getElementById("playerOptionAudioCurrentValue")).html("Aucun");
 		if(Player.mode === "5.1"){
 			extendedAmbienceASD.active = false;

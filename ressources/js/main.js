@@ -34,12 +34,12 @@ Main.onLoad = function () {
 		$errorMCSupport.hide();
 	}
 	
-	Main.simplifiedMode = statusHtmlStorage("simplifiedMode") && localStorage.getItem("simplifiedMode") === "true" ? true : false;
+	Main.simplifiedMode = getHtmlStorage("simplifiedMode") === "true" ? true : false;
 	
-	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
+	var valueMinSize = getHtmlStorage("settings_min_size") || Settings.minFontSize;
 	Settings.change.fontSize(valueMinSize);
 	
-	var defaultValue = getCookie("volumeValue") || Settings.defaultVolumeValue;
+	var defaultValue = getHtmlStorage("volumeValue") || Settings.defaultVolumeValue;
 	$( document.getElementById("slider") ).slider({
         range: "min",
         min: 0,
@@ -78,7 +78,7 @@ Main.onLoad = function () {
 					Player.setMute();
 				}else{
 					eraseCookie("muteEnabled");
-					setCookie("volumeValue", value);
+					setHtmlStorage("volumeValue", value);
 					Player.setVolume(value);
 				}
 			}catch(e){

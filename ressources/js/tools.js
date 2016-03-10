@@ -452,6 +452,12 @@ function setHtmlStorage(name, value, expires){
     localStorage.setItem(name+'_time', schedule);
 }
 
+function getHtmlStorage(name){
+	if(statusHtmlStorage(name)){
+		return localStorage.getItem(name);
+	}
+}
+
 function statusHtmlStorage(name){
  
     var date = new Date();

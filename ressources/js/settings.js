@@ -184,7 +184,7 @@ Settings.init.audio = function(){
  */
 
 Settings.init.interface.fontSize = function(){
-	var valueMinSize = (getCookie("settings_min_size") != null) ? getCookie("settings_min_size") : Settings.minFontSize;
+	var valueMinSize = getHtmlStorage("settings_min_size") || Settings.minFontSize;
 	$(document.getElementById(Main.simplifiedMode ? "fontSlide-sm" : "fontSlide")).val(valueMinSize);
 	Settings.change.fontSize(valueMinSize);
 };
@@ -210,12 +210,12 @@ Settings.init.subtitles = function(){
 	this.subtitles.color();
 	
 	/* OPACITE DE L'ARRIERE PLAN DES SOUS-TITRES */
-	var valueMinOpacity = (getCookie("subtitleBackgroundOpacity") != null) ? getCookie("subtitleBackgroundOpacity") : Settings.minOpacity;
+	var valueMinOpacity = getHtmlStorage("subtitleBackgroundOpacity") || Settings.minOpacity;
 	$(document.getElementById("opacitySlide")).val(valueMinOpacity);
 	Settings.change.subtitlesOpacity(valueMinOpacity);
 	
 	/* TAILLE DES SOUS-TITRES */
-	var valueMinSize = (getCookie("subtitleFontSize") != null) ? getCookie("subtitleFontSize") : Settings.minSubtitlesSize;
+	var valueMinSize = getHtmlStorage("subtitleFontSize") || Settings.minSubtitlesSize;
 	$(document.getElementById("subtitlesFontSlide")).val(valueMinSize);
 	Settings.change.subtitlesFontSize(valueMinSize);
 	
@@ -233,12 +233,12 @@ Settings.init.subtitles = function(){
  */
 
 Settings.init.subtitles.fontFamily = function(){
-	var selectedFont = getCookie("subtitleFont");
+	var selectedFont = getHtmlStorage("subtitleFont");
 	if(selectedFont && Settings.fontList.indexOf(selectedFont) !== -1){
 		Settings.change.subtitlesFontFamily(selectedFont);
 		
 	}else{
-		setCookie("subtitleFont", Settings.fontList[0]);
+		setHtmlStorage("subtitleFont", Settings.fontList[0]);
 		Settings.change.subtitlesFontFamily(Settings.fontList[0]);
 	}	
 };
@@ -253,7 +253,7 @@ Settings.init.subtitles.fontFamily = function(){
  */
 
 Settings.init.subtitles.color = function(){
-	var selectedFontColor = getCookie("subtitleFontColor");
+	var selectedFontColor = getHtmlStorage("subtitleFontColor");
 	if(selectedFontColor){
 		Settings.change.subtitlesColor(selectedFontColor);
 	}else{
@@ -271,7 +271,7 @@ Settings.init.subtitles.color = function(){
  */
 
 Settings.init.subtitles.BGColor = function(){
-	var selectedFontBGColor = getCookie("subtitleBGColor");
+	var selectedFontBGColor = getHtmlStorage("subtitleBGColor");
 	if(selectedFontBGColor){
 		Settings.change.subtitlesBackgroundColor(selectedFontBGColor);
 	}else{
@@ -291,7 +291,7 @@ Settings.init.subtitles.BGColor = function(){
 Settings.init.subtitles.pip = function(){
 	
 	/* PIP SUBTITLES */
-	var pipTopPercent = (getCookie("LSFPipSubtitles_position_y") != null && !isNaN(getCookie("LSFPipSubtitles_position_y"))) ? getCookie("LSFPipSubtitles_position_y") : Settings.subtitlesDefaultPosition;
+	var pipTopPercent = (getHtmlStorage("LSFPipSubtitles_position_y") && !isNaN(getHtmlStorage("LSFPipSubtitles_position_y"))) ? getHtmlStorage("LSFPipSubtitles_position_y") : Settings.subtitlesDefaultPosition;
 	var $container = $(document.getElementById(Main.simplifiedMode ? "uiSubtitles-sm-container" : "uiSubtitles-container")); 
 	var $pipVideo = $container.find(".pip-video").css("top", pipTopPercent+"%");
 	$pipVideo.draggable({ 	
@@ -319,11 +319,11 @@ Settings.init.subtitles.pip = function(){
 
 Settings.init.ls = function(){
 	var defaultCoordonates = Settings.defaultLSPIPCoordonates;
-	var pipLeftPercent = (getCookie("LSFPip_position_x") != null && !isNaN(getCookie("LSFPip_position_x"))) ? getCookie("LSFPip_position_x") : defaultCoordonates.x;
-	var pipTopPercent = (getCookie("LSFPip_position_y") != null && !isNaN(getCookie("LSFPip_position_y"))) ? getCookie("LSFPip_position_y") : defaultCoordonates.y;
+	var pipLeftPercent = (getHtmlStorage("LSFPip_position_x") && !isNaN(getHtmlStorage("LSFPip_position_x"))) ? getHtmlStorage("LSFPip_position_x") : defaultCoordonates.x;
+	var pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
 
-	var pipWidthReal = (getCookie("LSFPip_size_width") != null) ? getCookie("LSFPip_size_width") : defaultCoordonates.w;
-	var pipHeightReal = (getCookie("LSFPip_size_height") != null) ? getCookie("LSFPip_size_height") : defaultCoordonates.h;	
+	var pipWidthReal = getHtmlStorage("LSFPip_size_width") || defaultCoordonates.w;
+	var pipHeightReal = getHtmlStorage("LSFPip_size_height") || defaultCoordonates.h;	
 	
 	var $container = $(document.getElementById(Main.simplifiedMode ? "uiLS-container-sm" : "uiLS-container")); 
 	var $pipVideo = $container.find(".pip-video").attr("style",'left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%');
@@ -365,7 +365,7 @@ Settings.init.ls = function(){
  */
 
 Settings.change.fontSize = function(newValue){	
-	setCookie("settings_min_size", newValue);
+	setHtmlStorage("settings_min_size", newValue);
 	$("body > div").css("font-size", (newValue / 16) + "em");
 };
 
@@ -379,7 +379,7 @@ Settings.change.fontSize = function(newValue){
  */
 
 Settings.change.subtitlesFontFamily = function(ff){
-	setCookie("subtitleFont", ff);
+	setHtmlStorage("subtitleFont", ff);
 	$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Lexia").addClass(ff);
 	
 	if(Main.simplifiedMode){
@@ -399,7 +399,7 @@ Settings.change.subtitlesFontFamily = function(ff){
  */
 
 Settings.change.subtitlesBackgroundColor = function(color){
-	setCookie("subtitleBGColor", color);
+	setHtmlStorage("subtitleBGColor", color);
 	$(".option-background-color .color[data-color='"+color+"']").addClass("selected").siblings().removeClass("selected");
 	$(".ui-subtitles .pip-text").removeClass("blackBGColor whiteBGColor").addClass(color+"BGColor");
 };
@@ -414,7 +414,7 @@ Settings.change.subtitlesBackgroundColor = function(color){
  */
 
 Settings.change.subtitlesColor = function(color){
-	setCookie("subtitleFontColor", color);
+	setHtmlStorage("subtitleFontColor", color);
 	$(".option-text-color .color[data-color='"+color+"']").addClass("selected").siblings().removeClass("selected");
 	$(".ui-subtitles .pip-text").removeClass("multiColor whiteColor yellowColor blueColor").addClass(color+"Color");
 };
@@ -429,7 +429,7 @@ Settings.change.subtitlesColor = function(color){
  */
 
 Settings.change.subtitlesOpacity = function(newValue){
-	setCookie("subtitleBackgroundOpacity", newValue);
+	setHtmlStorage("subtitleBackgroundOpacity", newValue);
 	$(".ui-subtitles .pip-text").removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1").addClass("opacity_"+newValue.toString().replace(".",""));
 };
 
@@ -443,7 +443,7 @@ Settings.change.subtitlesOpacity = function(newValue){
  */
 
 Settings.change.subtitlesFontSize = function(newValue){
-	setCookie("subtitleFontSize", newValue);
+	setHtmlStorage("subtitleFontSize", newValue);
 	$(".ui-subtitles .pip-text").css("font-size", newValue+"px");
 };
 
@@ -452,7 +452,7 @@ Settings.saveSubtitlesPIPPosition = function($container){
 	newTopPercent -= Math.round(2 * $container.height() / 100 * 2);
 	log("Pourcentage sans les marges : "+newTopPercent);
 
-	setCookie("LSFPipSubtitles_position_y", newTopPercent<0?0:newTopPercent);
+	setHtmlStorage("LSFPipSubtitles_position_y", newTopPercent<0?0:newTopPercent);
 };
 
 Settings.saveLSPIPPosition = function($container, $pip){
@@ -462,8 +462,8 @@ Settings.saveLSPIPPosition = function($container, $pip){
 
 	//log("Pourcentage sans les marges = left:"+ newLeftPercent+ ", top:" + newTopPercent);
 
-	setCookie("LSFPip_position_x", newLeftPercent<0?0:newLeftPercent);
-	setCookie("LSFPip_position_y", newTopPercent<0?0:newTopPercent);		
+	setHtmlStorage("LSFPip_position_x", newLeftPercent<0?0:newLeftPercent);
+	setHtmlStorage("LSFPip_position_y", newTopPercent<0?0:newTopPercent);		
 };
 
 Settings.saveLSPIPSize = function($container, $pip){
@@ -476,6 +476,6 @@ Settings.saveLSPIPSize = function($container, $pip){
 	var newHeightPercent = (pipHeight/containerHeight)*100;
 
 	//log("saveLSFSize :"+newWidthPercent+"x"+newHeightPercent+" dans un container de "+containerWidth+"x"+containerHeight);
-	setCookie("LSFPip_size_width", newWidthPercent);
-	setCookie("LSFPip_size_height", newHeightPercent);	
+	setHtmlStorage("LSFPip_size_width", newWidthPercent);
+	setHtmlStorage("LSFPip_size_height", newHeightPercent);	
 };
