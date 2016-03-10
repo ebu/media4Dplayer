@@ -2320,8 +2320,8 @@ var VirtualSpeakersNode = function (_AbstractNode) {
         _this._binauralPanner = new _binaural2.default.audio.BinauralPanner({
             audioContext: audioContext,
             coordinateSystem: 'sofaSpherical',
-            filterPositions: horizontalPositions,
-            filterPositionsType: 'sofaSpherical',
+            //filterPositions: horizontalPositions,
+            //filterPositionsType : 'sofaSpherical',
             crossfadeDuration: 0.01,
             sourceCount: totalNumberOfChannels_,
             sourcePositions: sofaPositions
