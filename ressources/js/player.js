@@ -776,6 +776,7 @@ Player.launchCheckPositionVideo = function(){
 		var upVol = document.getElementById('up-volume');
 		var isCompressed = smartFader.dynamicCompressionState;
 		if( isCompressed === true){
+			console.error("compressed at "+ Player.playerManager.controller.currentTime);
 			upVol.style.backgroundColor = "rgba(255, 0, 0, 0.7)";
 		}
 		else{
