@@ -535,6 +535,7 @@ Section.launchPlayerLoading = function(data){
 
 Section.launchSettingsFromPlayer = function(){
 	Player.resetPlayers();
+	InfoBanner.progressBar.reset();
 	
 	Settings.backToPlayerFromSettings = true;
 	

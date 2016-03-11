@@ -21,7 +21,7 @@ var Media = {
 var Player = {
 	alreadyInit:false,
 	onClose:null,
-	waaAlreadyInit:false,
+	waaAlreadyInit:false,// Ne doit être fait qu'une fois par session
 	videoMain: document.getElementById('videoPlayerMain'),
 	videoPip: document.getElementById('videoPlayerPip'),
     videoAudio: document.getElementById('videoPlayerAudio'),
@@ -363,7 +363,7 @@ Player.launch = function(){
 	});
 	
 	this.playerManager.controller.addEventListener('ended', function(e) {
-		Player.stop();
+		Player.alreadyInit = false;
 		Player.validClose();
 	});
 
@@ -829,19 +829,6 @@ Player.stopCheckVideoPosition = function(){
 																								/****************************
 																								*	GESTION DU TRICK MODE	*
 																								****************************/
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Updates the progress bar
- * @param {Integer} time The current position inside the video (in milliseconds)
- * @param {Integer} tT Total time of the video (in milliseconds)
- */
-
-Player.stop = function(){
-	this.playerManager.controller.pause();
-	this.playerManager.controller.currentTime = 0;
-	$(this.ttmlDiv).empty();
-};
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
