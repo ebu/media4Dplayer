@@ -149,10 +149,13 @@ Player.load = function(videoData, callback, onClose){
 
 	this.initSubtitlesParams();
 	
-	this.onChangeEqualization();	
+	this.onChangeEqualization();
 	this.onChangeAzim("commentary");
+	this.onChangeAzim("dialogues");
 	this.onChangeElevation("commentary");
+	this.onChangeElevation("dialogues");
 	this.onChangeDistance("commentary");
+	this.onChangeDistance("dialogues");
 	
 	// update the WAA connections
 	this.updateWAAConnections();

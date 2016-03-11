@@ -247,7 +247,7 @@ h2{font-size:1.6em;font-weight:600}
 #settings-options-container .left-col, #separator{float:left}
 #separator{width:2px;height:180px;background-color:#e7e8e8;margin-left:36px;margin-top:26px}
 #settings-options-container .right-col{float:right}
-#settings-options-container .col{width:405px}
+#settings-options-container .col, .spatialisation-control{width:405px}
 .option-slider{font-weight:500;height:30px;line-height:30px}
 
 /* Settings - Interface */
@@ -332,7 +332,6 @@ h2{font-size:1.6em;font-weight:600}
 .label-pip-video.main{top:10px}
 
 /* Settings - Audio */
-#audio-settings .col{width:405px}
 #audio-settings .left-col{float:left}
 #audio-settings .right-col{float:right}
 #audio-settings .button{height:89px;line-height:89px;background-color:#c8c8c8;padding-left:190px;background-repeat:no-repeat;background-position:66px center;background-size:15%;color:#fff;font-weight:500;cursor:pointer;box-shadow:0 0 9px #aaa}
@@ -340,19 +339,22 @@ h2{font-size:1.6em;font-weight:600}
 #ambiance-adaptation-btn{background-image:url(../img/bruit_ambiant.png)}
 #dialogues-extended-btn{background-image:url(../img/renforcement_dialogue.png)}
 #audio-settings .active{background-color:#82c174}
-#spatialisation-options-ctn{margin-top:60px}
+#spatialisation-options-ctn{margin-top:40px;}
 #spatialisation-options{width:100%}
 .ui-selectmenu-button{background:#fff;border:#e7e8e8 2px solid;border-radius:0;box-sizing:border-box}
 .ui-widget{font-family:inherit}
 .ui-selectmenu-text{font-weight:500}
 .ui-selectmenu-button span.ui-icon{background:url(../img/fleche_menu_deroulant.png) center center no-repeat}
-.spatialisation-control{margin-top:35px}
+.spatialisation-control{margin-top:25px;}
+.spatialisation-control:first-child{float: left;}
+.spatialisation-control:last-child{float: right;}
+.spatialisation-control .title{margin-bottom: 15px;}
 .spatialisation-control .control-container{float:left}
-.vertical-slider-container{width:125px;height:281px;background:url(../img/spatial__hauteur.png) no-repeat;background-size:contain;padding:46px 0 46px 14px;box-sizing:border-box;margin-top:5px}
+.vertical-slider-container{width:125px;height:281px;background:url(../img/spatial__hauteur.png) no-repeat;background-size:contain;padding:46px 0 46px 14px;box-sizing:border-box;}
 .vertical-slider-container .ui-slider-vertical{width:13px;height:100%;border:0 none;background:none transparent}
 .vertical-slider-container .ui-widget-header{border-radius:0;background:none transparent}
 .vertical-slider-container .ui-slider-handle{width:80px;height:33px;cursor:pointer;background:url(../img/spatial__hauteur_sel.png) no-repeat;margin-left:-15px;margin-bottom:-16px;border:0 none;background-size:contain;padding-left:36px;box-sizing:border-box;line-height:33px;text-decoration:none;font-weight:600;font-size:1.7rem}
-.spatialisation-zone-ctn{background:url(../img/spatial_.png) no-repeat center center;background-size:contain;width:255px;height:255px;position:relative;margin-top:18px;margin-left:25px;border-radius:127.5px}
+.spatialisation-zone-ctn{background:url(../img/spatial_.png) no-repeat center center;background-size:contain;width:255px;height:255px;position:relative;margin-top:13px;margin-left:25px;border-radius:127.5px}
 .spatialisation-zone{position:relative;width:50px;height:38px;background-repeat:no-repeat;background-size:contain;margin:-18px 0 0 -25px;cursor:pointer}
 .spatialisation-zone.ad{background-image:url(../img/spatial_AD_.png)}
 .spatialisation-zone.di{background-image:url(../img/spatial_AU_.png)}

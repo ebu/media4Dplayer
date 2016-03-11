@@ -72,10 +72,7 @@ Settings.init.interface = function(){
  */
 
 Settings.init.audio = function(){
-	
-	var elevationRange = Player.elevationRange,
-		distanceRange = Player.distanceRange;
-	
+		
 	/* Le choix du mode de spatialisation */
 	var spatMode = getHtmlStorage("spatializationMode") || Player.spatializationMode,
 		binauralEQ = getHtmlStorage("binauralEQ") || Player.binauralEQ,
@@ -106,158 +103,191 @@ Settings.init.audio = function(){
 	});
 	
 	/* Le niveau des commentaires */
-	var _onSlide = function(value, el) {
-		
+	this.audio.elevationLevel($(document.getElementById("comments-elevation-level")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel);
+	
+	/* Le niveau des dialogues */
+	this.audio.elevationLevel($(document.getElementById("dialogues-elevation-level")), getHtmlStorage("dialoguesElevationLevel") || Player.dialoguesElevationLevel);
+	
+	/* La zone des commentaires */
+	this.audio.azimDistance($(document.getElementById("comments-spatialisation-zone")), getHtmlStorage("commentsDistanceAzimPosition"));
+	
+	/* La zone des dialogues */
+	this.audio.azimDistance($(document.getElementById("dialogues-spatialisation-zone")), getHtmlStorage("dialoguesDistanceAzimPosition"));
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.audio.elevationLevel = function($slider, lvl){
+	var _onSlide = function(value, el){
+
 		var type = $(el).data("type");
-		if(type === "commentary"){
-			Player.commentsElevationLevel = value;
-			setHtmlStorage("commentsElevationLevel", value);
-			log("Niveau d'élévation des commentaires : " + value + "°");
-			
-		}else if(type === "dialogues"){
-			Player.dialoguesElevationLevel = value;
-			setHtmlStorage("dialoguesElevationLevel", value);
-			log("Niveau d'élévation des dialogues : " + value + "°");			
-		}
+		if(["commentary", "dialogues"].indexOf(type) !== -1){
+			if(type === "commentary"){
+				Player.commentsElevationLevel = value;
+				setHtmlStorage("commentsElevationLevel", value);
+				log("Niveau d'élévation des commentaires : " + value + "°");
 
-		var $slider = $(el).children("a");
+			}else{
+				Player.dialoguesElevationLevel = value;
+				setHtmlStorage("dialoguesElevationLevel", value);
+				log("Niveau d'élévation des dialogues : " + value + "°");			
+			}
 
-		if(value >= 45) { 
-			$slider.text("Haut");
+			var $slider = $(el).children("a");
 
-		}else if (value <= 0) {
-			$slider.text("Bas");
+			if(value >= 45) { 
+				$slider.text("Haut");
 
-		}else{
-			$slider.text("Tête");
+			}else if (value <= 0) {
+				$slider.text("Bas");
+
+			}else{
+				$slider.text("Tête");
+			}
 		}
 	};
-	var commentsElLlv = getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel;
-	var $vSlider = $( document.getElementById("comments-elevation-level") ).slider({
-        range: "min",
-        min: elevationRange[0],
-		max: elevationRange[1],
+
+	$slider.slider({
+		range: "min",
+		min: Player.elevationRange[0],
+		max: Player.elevationRange[1],
 		orientation:"vertical",
-        value: commentsElLlv,
- 
-        slide: function(event, ui){
+		value: lvl,
+
+		slide: function(event, ui){
 			_onSlide(ui.value, this);
 		}
 	});
-	_onSlide(commentsElLlv, $vSlider);	
-	
-	/* La zone des commentaires */
-	var _onDrag = function(e, ui){
-		
-		var minDistance = Settings.minDistance,
-			type = $(this).data("type"),
-			$ctn = $(this).parent(),
-			canvas = {
-			width: $ctn.width(),
-			height: $ctn.height(),
-			top: 0,
-			left: 0
+	_onSlide(lvl, $slider);
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.audio.azimDistance = function($drag, positions){
+	if($($drag).length){
+		var _onDrag = function(e, ui){
+			
+			var type = $(this).data("type");
+			if(["commentary", "dialogues"].indexOf(type) !== -1){
+
+				var minDistance = Settings.minDistance,
+					$ctn = $(this).parent(),
+					canvas = {
+					width: $ctn.width(),
+					height: $ctn.height(),
+					top: 0,
+					left: 0
+				};
+				canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
+				canvas.radius = canvas.width / 2;			
+
+				function limit(x, y){
+					var dist = distance([x, y], canvas.center);
+					if (dist <= canvas.radius && dist >= minDistance) {
+						return {x: x, y: y};
+
+					}else{
+						var radius = dist <= minDistance ? minDistance : canvas.radius;
+						x = x - canvas.center[0];
+						y = y - canvas.center[1];
+						var radians = Math.atan2(y, x);
+						return {
+							x: Math.cos(radians) * radius + canvas.center[0],
+							y: Math.sin(radians) * radius + canvas.center[1]
+						};		
+					}
+				}
+
+				function distance(dot1, dot2){
+					var x1 = dot1[0],
+						y1 = dot1[1],
+						x2 = dot2[0],
+						y2 = dot2[1];
+					return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+				}
+
+				var result = limit(ui.position.left, ui.position.top);			
+				ui.position.left = result.x;
+				ui.position.top = result.y;
+
+				// Récupère la distance
+				function getDistanceInMeter(d, rangePx, rangeMeter){
+					var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
+					return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
+				}
+				function saveDistance(value, type){
+					if(type === "commentary"){
+						Player.commentsDistance = value;
+						setHtmlStorage("commentsDistance", value);
+
+					}else{
+						Player.dialoguesDistance = value;
+						setHtmlStorage("dialoguesDistance", value);				
+					}
+				}
+				var dist = distance([result.x, result.y], canvas.center);
+				var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
+				var distanceMeter = getDistanceInMeter(dist2, [minDistance, canvas.radius], Player.distanceRange);
+				saveDistance(distanceMeter, type);
+				//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
+
+				// Récupère l'angle
+				function getAzim(sinus, angle){
+					if(sinus <= 0){
+						return  0 - angle;
+					}else{
+						return angle;
+					}
+				}
+				function saveAzim(value, type){
+					if(type === "commentary"){
+						Player.commentsAzim = value;
+						setHtmlStorage("commentsAzim", value);
+
+					}else{
+						Player.dialoguesAzim = value;
+						setHtmlStorage("dialoguesAzim", value);				
+					}
+				}
+				var cosinus = -(ui.position.top - canvas.center[1]) / dist;
+				var sinus = (ui.position.left - canvas.center[0]) / dist;
+
+				var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
+				var azim = Math.round(getAzim(sinus, angle1));
+				saveAzim(azim, type);
+				//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
+
+				// Mémorise la position
+				setHtmlStorage(type === "commentary" ? "commentsDistanceAzimPosition" : "dialoguesDistanceAzimPosition", JSON.stringify(ui.position));
+				log(type + " > distance = "+distanceMeter+"m; azim = " + azim + "°");				
+			}
 		};
-		canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
-		canvas.radius = canvas.width / 2;			
 
-		function limit(x, y) {
-			var dist = distance([x, y], canvas.center);
-			if (dist <= canvas.radius && dist >= minDistance) {
-				return {x: x, y: y};
-
-			}else{
-				var radius = dist <= minDistance ? minDistance : canvas.radius;
-				x = x - canvas.center[0];
-				y = y - canvas.center[1];
-				var radians = Math.atan2(y, x);
-				return {
-					x: Math.cos(radians) * radius + canvas.center[0],
-					y: Math.sin(radians) * radius + canvas.center[1]
-				};		
-			}
+		if(positions){
+			positions = JSON.parse(positions);
+		}else{
+			positions = {top:92,left:127};
 		}
-
-		function distance(dot1, dot2) {
-			var x1 = dot1[0],
-				y1 = dot1[1],
-				x2 = dot2[0],
-				y2 = dot2[1];
-			return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-		}
-
-		var result = limit(ui.position.left, ui.position.top);			
-		ui.position.left = result.x;
-		ui.position.top = result.y;
-
-		// Récupère la distance
-		function getDistanceInMeter(d, rangePx, rangeMeter){
-			var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
-			return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
-		}
-		function saveDistance(value, type){
-			if(type === "commentary"){
-				Player.commentsDistance = value;
-				setHtmlStorage("commentsDistance", value);
-				
-			}else if(type === "dialogues"){
-				Player.dialoguesDistance = value;
-				setHtmlStorage("dialoguesDistance", value);				
-			}
-		}
-		var dist = distance([result.x, result.y], canvas.center);
-		var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
-		var distanceMeter = getDistanceInMeter(dist2, [minDistance, canvas.radius], distanceRange);
-		saveDistance(distanceMeter, type);
-		//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
 		
-		// Récupère l'angle
-		function getAzim(sinus, angle){
-			if(sinus <= 0){
-				return  0 - angle;
-			}else{
-				return angle;
-			}
-		}
-		function saveAzim(value, type){
-			if(type === "commentary"){
-				Player.commentsAzim = value;
-				setHtmlStorage("commentsAzim", value);
-				
-			}else if(type === "dialogues"){
-				Player.dialoguesAzim = value;
-				setHtmlStorage("dialoguesAzim", value);				
-			}
-		}
-		var cosinus = -(ui.position.top - canvas.center[1]) / dist;
-		var sinus = (ui.position.left - canvas.center[0]) / dist;
-		
-		var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
-		var azim = Math.round(getAzim(sinus, angle1));
-		saveAzim(azim, type);
-		//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
-		
-		// Mémorise la position
-		if(type === "commentary"){
-			setHtmlStorage("commentsDistanceAzimPosition", JSON.stringify(ui.position));
-
-		}else if(type === "dialogues"){
-			setHtmlStorage("dialoguesDistanceAzimPosition", ui.position);				
-		}
-		log("distance = "+distanceMeter+"m; azim = " + azim + "°");
-	};
-	
-	var positions = getHtmlStorage("commentsDistanceAzimPosition");
-	if(positions){
-		positions = JSON.parse(positions);
-	}else{
-		positions = {top:92,left:127};
+		$drag.css(positions).draggable({
+			scroll:false,
+			drag: _onDrag
+		});
 	}
-	var $container = $(document.getElementById("comments-spatialisation-zone-ctn")); 
-	$container.find(".spatialisation-zone").css(positions).draggable({
-		scroll:false,
-		drag: _onDrag
-	});	
 };
 
 /**
