@@ -832,21 +832,41 @@ getTimeText = function(min, sec){
 	}
 };
 
-getElementFromXML = function($xml, ns, prefix, attr){
-	return $($xml).find(ns).filter(function(){
-		if($(this)[0].prefix === prefix){
-			if(typeOf(attr) === "object" && attr.type && attr.value){
-				return $(this).attr(attr.type) === attr.value;
-			}else{
+var getElementFromXML = function(item, ns, prefix, attr){
+	if($(item).length){
+		
+		// Ne doit pas utiliser getElementsByTagName avec un object jQuery
+		if(item.length){
+			item = item[0];
+		}
+		
+		// Méthode pour Chrome
+		var collection = $(item).find(ns).filter(function(){
+			if($(this)[0].prefix === prefix){
 				return true;
 			}
+		});
+		
+		// Méthode pour Firefox
+		if(!collection.length){
+			collection = $(item.getElementsByTagName(prefix+':'+ns));
 		}
-	}).eq(0);
-}
+		
+		if(collection.length){			
+			return collection.filter(function(){
+				if(typeOf(attr) === "object" && attr.type && attr.value){
+					return $(this).attr(attr.type) === attr.value;
+				}else{
+					return true;
+				}
+			}).eq(0);		
+		}
+	}
+};
 
-getTextFromElement = function($el){
+var getTextFromElement = function($el){
 	return $el.length ? $el.text().trim() : "";
-}
+};
 
 function checkMediaControllerSupport() {
     if (!("MediaController" in window)) {

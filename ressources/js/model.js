@@ -28,7 +28,7 @@ Model.getAppsList = function(data, jqXHR, callback){
 Model.getAppPlaylistsOfUser = function(xml, jqXHR, callback){
     if (jqXHR.status === 200) {
 
-        if ((typeOf(xml) === "document" || typeOf(xml) === "xmldocument") && $(xml).find("ebuCoreMain").length) {
+        if ((typeOf(xml) === "document" || typeOf(xml) === "xmldocument") && xml.getElementsByTagName('ebucore:ebuCoreMain')) {
            callback({
 			   favorites:[
 				   this.getProgramDetails(xml),{
@@ -117,7 +117,7 @@ Model.getAppPlaylistsOfUser = function(xml, jqXHR, callback){
 			callback(null, jqXHR);
         }
     } else {
-            log("Subtitles.load.callback; status = " + jqXHR.status + " : " + jqXHR.statusText + " : " + url, "error");
+            log("Subtitles.load.callback; status = " + jqXHR.status + " : " + jqXHR.statusText, "error");
     }
 };
 

@@ -49,7 +49,7 @@ API.getAppPlaylistsOfUser = function(url, appIndex, callback_function){
 	}else{
 		json.load({url:url, callback:function(data, jqXhr){
 			Model.getAppPlaylistsOfUser(data, jqXhr, callback_function);
-		}, dataType:"xml",contentType:"application/xml; charset=utf-8"});
+		}, dataType:"xml",contentType:"text/xml; charset=utf-8"});
 	}
 };
 
