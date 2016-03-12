@@ -228,7 +228,7 @@ Player.launch = function(){
 		this.waaAlreadyInit = true;
 
 		this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
-		log("######### audioContext: " + this.playerManager.audioContext);
+		//log("######### audioContext: " + this.playerManager.audioContext);
 
 		//==============================================================================
 		var audioSourceMain 	 	= this.playerManager.audioContext.createMediaElementSource( this.videoMain );
@@ -376,10 +376,8 @@ Player.launch = function(){
 
 		//log("MediaPlayer.events.TEXT_TRACKS_ADDED");
 
-		var xPos = getHtmlStorage("LSFPipSubtitles_position_x"),
-			yPos = getHtmlStorage("LSFPipSubtitles_position_y");
-
-		if(xPos !== "undefined" && yPos !== "undefined"){
+		var yPos = getHtmlStorage("subtitlePositionY");
+		if(yPos !== "undefined"){
 			var top = Math.round(yPos);
 			if(top <= 0){
 				top = 0;
@@ -388,9 +386,7 @@ Player.launch = function(){
 			}else{
 				top = top / 2;
 			}
-			$(Player.ttmlDiv).css("top", top + "%")
-				.css("left", xPos + "%")
-				.css("width", "100%");
+			$(Player.ttmlDiv).css({top:top + "%"});
 		}
 	};
 	
@@ -606,7 +602,7 @@ Player.initSubtitlesParams = function(){
 		$container.css("font-size", selectedFontSize+"px");
 	}
 
-	var yPos = getHtmlStorage("LSFPipSubtitles_position_y") || Settings.subtitlesDefaultPosition;
+	var yPos = getHtmlStorage("subtitlePositionY") || Settings.subtitlesDefaultPosition;
 	if(yPos !== "undefined"){
 		var top = Math.round(yPos);
 		if(top <= 0){

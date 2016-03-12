@@ -403,7 +403,7 @@ Settings.init.subtitles.BGColor = function(){
 Settings.init.subtitles.pip = function(){
 	
 	/* PIP SUBTITLES */
-	var pipTopPercent = (getHtmlStorage("LSFPipSubtitles_position_y") && !isNaN(getHtmlStorage("LSFPipSubtitles_position_y"))) ? getHtmlStorage("LSFPipSubtitles_position_y") : Settings.subtitlesDefaultPosition;
+	var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
 	var $container = $(document.getElementById(Main.simplifiedMode ? "uiSubtitles-sm-container" : "uiSubtitles-container")); 
 	var $pipVideo = $container.find(".pip-video").css("top", pipTopPercent+"%");
 	$pipVideo.draggable({ 	
@@ -412,10 +412,8 @@ Settings.init.subtitles.pip = function(){
 		axis: "y",
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
-			Settings.saveSubtitlesPIPPosition($( this ).parent($( this ).draggable( "option", "containment" )));
-		},
-		create: function(){
-			log("create event");
+			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
+			Settings.saveSubtitlesPIPPosition($parent);
 		}
 	});		
 };
@@ -444,7 +442,8 @@ Settings.init.ls = function(){
 		scroll:false,
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
-			Settings.saveLSPIPPosition($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
+			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
+			Settings.saveLSPIPPosition($parent, $(this));
 		}
 	}).resizable( {
 		containment: "parent",
@@ -453,11 +452,9 @@ Settings.init.ls = function(){
       	aspectRatio: true,
 		stop: function() {
 			log("Resize terminé !!!");
-			Settings.saveLSPIPSize($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
-			Settings.saveLSPIPPosition($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
-		},
-		create: function(){
-			log("create event");
+			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
+			Settings.saveLSPIPSize($parent, $(this));
+			Settings.saveLSPIPPosition($parent, $(this));
 		}
 	});
 	
@@ -560,34 +557,41 @@ Settings.change.subtitlesFontSize = function(newValue){
 };
 
 Settings.saveSubtitlesPIPPosition = function($container){
-	var newTopPercent = ($container.children(".pip-video").position().top / $container.height()) * 100;
-	newTopPercent -= Math.round(2 * $container.height() / 100 * 2);
-	log("Pourcentage sans les marges : "+newTopPercent);
+	if($($container).length){
+		var newTopPercent = ($container.children(".pip-video").position().top / $container.height()) * 100;
+		newTopPercent -= Math.round(2 * $container.height() / 100 * 2);
+		log("Pourcentage sans les marges : "+newTopPercent);
 
-	setHtmlStorage("LSFPipSubtitles_position_y", newTopPercent<0?0:newTopPercent);
+		setHtmlStorage("subtitlePositionY", newTopPercent<0?0:newTopPercent);
+	}
 };
 
 Settings.saveLSPIPPosition = function($container, $pip){
+	if($($container).length && $($pip).length){
 	
-	var newLeftPercent = ($pip.position().left / $container.width()) * 100;
-	var newTopPercent = ($pip.position().top / $container.height()) * 100;
+		var newLeftPercent = ($pip.position().left / $container.width()) * 100;
+		var newTopPercent = ($pip.position().top / $container.height()) * 100;
 
-	//log("Pourcentage sans les marges = left:"+ newLeftPercent+ ", top:" + newTopPercent);
+		//log("Pourcentage sans les marges = left:"+ newLeftPercent+ ", top:" + newTopPercent);
 
-	setHtmlStorage("LSFPip_position_x", newLeftPercent<0?0:newLeftPercent);
-	setHtmlStorage("LSFPip_position_y", newTopPercent<0?0:newTopPercent);		
+		setHtmlStorage("LSFPip_position_x", newLeftPercent<0?0:newLeftPercent);
+		setHtmlStorage("LSFPip_position_y", newTopPercent<0?0:newTopPercent);
+	}
 };
 
 Settings.saveLSPIPSize = function($container, $pip){
-	var pipWidth = $pip.width();
-	var pipHeight = $pip.height();
-	var containerWidth = $container.width();
-	var containerHeight = $container.height();
+	if($($container).length && $($pip).length){
+		
+		var pipWidth = $pip.width();
+		var pipHeight = $pip.height();
+		var containerWidth = $container.width();
+		var containerHeight = $container.height();
 
-	var newWidthPercent = (pipWidth/containerWidth)*100;
-	var newHeightPercent = (pipHeight/containerHeight)*100;
+		var newWidthPercent = (pipWidth/containerWidth)*100;
+		var newHeightPercent = (pipHeight/containerHeight)*100;
 
-	//log("saveLSFSize :"+newWidthPercent+"x"+newHeightPercent+" dans un container de "+containerWidth+"x"+containerHeight);
-	setHtmlStorage("LSFPip_size_width", newWidthPercent);
-	setHtmlStorage("LSFPip_size_height", newHeightPercent);	
+		//log("saveLSFSize :"+newWidthPercent+"x"+newHeightPercent+" dans un container de "+containerWidth+"x"+containerHeight);
+		setHtmlStorage("LSFPip_size_width", newWidthPercent);
+		setHtmlStorage("LSFPip_size_height", newHeightPercent);
+	}
 };
