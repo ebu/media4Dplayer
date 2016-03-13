@@ -448,10 +448,12 @@ InfoBanner.progressBar.init = function(){
 		start:function(){
 			Player.pause();
 		},
+		slide:function(){
+			InfoBanner.launchMaskingAfterDelay();			
+		},
         stop: function(event, ui) {
 			
 			var value = ui.value;
-			InfoBanner.launchMaskingAfterDelay();
 
 			// Récupère la temps
 			var time = value * (Player.playerManager.controller.duration / 100);
