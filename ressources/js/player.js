@@ -840,19 +840,7 @@ Player.rw = function(){
 	}
 
 	// check if the new position is seekable
-	console.log("newCurrentPosition = "+newCurrentPosition);
-	for (var i=0; i<this.playerManager.controller.seekable.length; i++) {
-		
-		console.log("check range seekable #" + i + " -> "+this.playerManager.controller.seekable.start(i)+", "+this.playerManager.controller.seekable.end(i));
-		console.log("check range buffered #" + i + " -> "+this.playerManager.controller.buffered.start(i)+", "+this.playerManager.controller.buffered.end(i));
-		
-		if (this.playerManager.controller.seekable.start(i) <= newCurrentPosition && newCurrentPosition <= this.playerManager.controller.seekable.end(i)) {
-			console.log("   range match, do seek");
-			this.playerManager.controller.currentTime = newCurrentPosition;
-			InfoBanner.launchMaskingAfterDelay();
-			break;
-		}
-	}
+	this.doSeek(newCurrentPosition);
 };
 
 /**
@@ -868,24 +856,36 @@ Player.ff = function(){
 	var saut = Math.round(totalTimeSecond*(5/100));
 	var currentPosition = this.playerManager.controller.currentTime;
 	var newCurrentPosition = currentPosition + saut;
-	if (newCurrentPosition > totalTimeSecond) {
+	/*if (newCurrentPosition > totalTimeSecond) {
 		newCurrentPosition = totalTimeSecond;
-	}
+	}*/
 
 	// check if the new position is seekable
-	log("newCurrentPosition = "+newCurrentPosition);
-	for (var i=0; i<this.playerManager.controller.seekable.length; i++) {
+	this.doSeek(newCurrentPosition);
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Updates the progress bar
+ * @param {Integer} time The current position inside the video (in milliseconds)
+ * @param {Integer} tT Total time of the video (in milliseconds)
+ */
+
+Player.doSeek = function(position){
+	log("doSeek() : position to seek  = "+position);
+	
+	var i, l = this.playerManager.controller.seekable.length;
+	for (i=0; i<l; i++) {
 		
-		log("check range #" + i + " -> "+this.playerManager.controller.seekable.start(i)+", "+this.playerManager.controller.seekable.end(i));
+		//log("check range seekable #" + i + " -> "+this.playerManager.controller.seekable.start(i)+", "+this.playerManager.controller.seekable.end(i));
+		//log("check range buffered #" + i + " -> "+this.playerManager.controller.buffered.start(i)+", "+this.playerManager.controller.buffered.end(i));
 		
-		if (this.playerManager.controller.seekable.start(i) <= newCurrentPosition && newCurrentPosition <= this.playerManager.controller.seekable.end(i)) {
-			log("   range match, do seek");
-			this.playerManager.controller.currentTime = newCurrentPosition;
+		if (this.playerManager.controller.seekable.start(i) <= position && position <= this.playerManager.controller.seekable.end(i)) {
+			this.playerManager.controller.currentTime = position;
 			InfoBanner.launchMaskingAfterDelay();
 			break;
 		}
-	}
-	//Note: if the newCurrentPosition is not seekable, we do nothing for now. It could be interesting to seek to the last seekable position instead.
+	}	
 };
 
 /**
@@ -899,13 +899,35 @@ Player.playPause = function() {
 	//log("playPause : ", this.isPlaying);
 
 	if(this.isPlaying) {
-		this.playerManager.controller.pause();
+		this.pause();
 		
 	}else{
-		this.playerManager.controller.play();	
+		this.play();	
 	}
 
 	InfoBanner.launchMaskingAfterDelay();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Updates the progress bar
+ * @param {Integer} time The current position inside the video (in milliseconds)
+ * @param {Integer} tT Total time of the video (in milliseconds)
+ */
+
+Player.play = function() {
+	this.playerManager.controller.play();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Updates the progress bar
+ * @param {Integer} time The current position inside the video (in milliseconds)
+ * @param {Integer} tT Total time of the video (in milliseconds)
+ */
+
+Player.pause = function() {
+	this.playerManager.controller.pause();
 };
 
 /**
