@@ -260,7 +260,7 @@ h2{font-size:1.6em;font-weight:600}
 .slider-horizontal input{height:100%;margin:0}
 
 /* Settings - Sous-titres */
-.font-family{float:left;width:20%;height:65%;color:rgba(0,0,0,0.6);cursor:pointer}
+.font-family{float:left;width:20%;height:65%;color:rgba(0,0,0,0.6);cursor:pointer;text-align: center;}
 .Arial, #video-caption.Arial span{font-family:Arial!important}
 .OpenDyslexic, #video-caption.OpenDyslexic span{font-family:OpenDyslexic!important}
 .Andika, #video-caption.Andika span{font-family:Andika!important}
