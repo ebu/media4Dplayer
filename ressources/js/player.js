@@ -99,11 +99,11 @@ Player.load = function(videoData, callback, onClose){
 		Media.currentAudioDescriptionIndex = 0;
 		Media.currentLSFIndex = 0;
 		Media.currentSubtitleIndex = 0;
-		
-		InfoBanner.load();
 
 		//LANCEMENT DU PLAYER ATTENTION CODE TOUCHY
 		this.launch();
+		
+		InfoBanner.load();
 	}
 
 	var urlMain 			= Media.links.dataMain.url;
@@ -142,10 +142,6 @@ Player.load = function(videoData, callback, onClose){
 	
 	//Gestion du PIP
 	this.setPIP();
-	
-	var lastVolumeValue = parseInt(getHtmlStorage("volumeValue") || Settings.defaultVolumeValue,10);
-	var volumeValue = isNaN(lastVolumeValue) || !lastVolumeValue ? 0 : lastVolumeValue;
-	this.setVolume(volumeValue);
 
 	this.initSubtitlesParams();
 	
@@ -938,7 +934,7 @@ Player.activeOptionSigne = function(index) {
 
 		Media.currentLSFIndex = index;
 		Media.LSFEnabled = true;
-		eraseCookie("LSFDisabled");
+		removeHtmlStorage("LSFDisabled");
 		$textContent.html(Media.ls[index].lang);
 
 	}else{
@@ -965,7 +961,7 @@ Player.activeOptionSub = function(index) {
 
 		Media.currentSubtitleIndex = index;
 		Media.subtitleEnabled = true;
-		eraseCookie("subtitlesDisabled");
+		removeHtmlStorage("subtitlesDisabled");
 		$textContent.html(Media.subtitlesList[index] + '<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
 
 	}else{
@@ -1000,7 +996,7 @@ Player.activeOptionDescription = function(index) {
 
 		Media.currentAudioDescriptionIndex = index;
 		Media.audioDescriptionEnabled = true;
-		eraseCookie("audioDescriptionDisabled");
+		removeHtmlStorage("audioDescriptionDisabled");
 		$textContent.html(Media.audioDescriptions[index].lang);
 
 	}else{
@@ -1031,7 +1027,7 @@ Player.activeOptionAudio = function(index) {
 	Media.currentAudioIndex = index;
 	if(index !== Media.audiosList.length){
 		Media.audioEnabled = true;
-		eraseCookie("audioDisabled");
+		removeHtmlStorage("audioDisabled");
 		
 		if(Media.audiosList[index].search("5.1") !== -1){
 			Player.mode = "5.1";

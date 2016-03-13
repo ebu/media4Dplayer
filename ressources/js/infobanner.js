@@ -96,6 +96,9 @@ InfoBanner.generate = function(){
 			$ls.parent().addClass("hidden");
 		}
 	}
+	
+	// VOLUME
+	this.initVolumeSlider();
 };
 
 /**
@@ -348,6 +351,65 @@ InfoBanner.getOptionsDropDownMenuLeft = function(optionID) {
 
 	var leftDDM = leftOption + 57;
 	return leftDDM + "px";
+};
+
+InfoBanner.initVolumeSlider = function(){
+
+	var defaultValue = getHtmlStorage("volumeValue") || Settings.defaultVolumeValue;
+	var $tooltip = $(document.getElementById("volume-tooltip")).hide();
+	var _onSlide = function(el, value) {
+		
+		InfoBanner.launchMaskingAfterDelay();
+
+		var $volume = $(document.getElementById("up-volume"));
+		var $sliderControl = $(el).children("a");
+		$tooltip.css('left', $sliderControl.css("left")).text(value);
+
+		if(value <= 5) { 
+			$volume.css('background-position', '0 0');
+
+		}else if (value <= 25) {
+			$volume.css('background-position', '0 -25px');
+
+		}else if (value <= 75) {
+			$volume.css('background-position', '0 -50px');
+
+		}else{
+			$volume.css('background-position', '0 -75px');
+		}
+
+		$sliderControl.attr("aria-valuenow", value).attr("aria-valuetext", value + " pourcent");
+
+		try{
+			if(!value){
+				Player.setMute();
+			}else{
+				removeHtmlStorage("muteEnabled");
+				setHtmlStorage("volumeValue", value);
+				Player.setVolume(value);
+			}
+		}catch(e){
+			log(e);
+		}			
+	};
+	var $slider = $( document.getElementById("slider") ).slider({
+        range: "min",
+        min: 0,
+        value: defaultValue,
+ 
+        start: function(event,ui) {
+          $tooltip.fadeIn('fast');
+        },
+ 
+        slide: function(event, ui){
+			_onSlide(this, ui.value);
+		},
+ 
+        stop: function(event, ui) {
+          $tooltip.fadeOut('fast');
+        }
+	});
+	_onSlide($slider, defaultValue);
 };
 
 																								/************************************************

@@ -334,7 +334,7 @@ h2{font-size:1.6em;font-weight:600}
 /* Settings - Audio */
 #audio-settings .left-col{float:left}
 #audio-settings .right-col{float:right}
-#audio-settings .button{height:89px;line-height:89px;background-color:#c8c8c8;padding-left:190px;background-repeat:no-repeat;background-position:66px center;background-size:15%;color:#fff;font-weight:500;cursor:pointer;box-shadow:0 0 9px #aaa}
+#audio-settings .button{height:89px;line-height:89px;background-color:#c8c8c8;padding:0 25px 0 190px;background-repeat:no-repeat;background-position:66px center;background-size:15%;color:#fff;font-weight:500;cursor:pointer;box-shadow:0 0 9px #aaa;}
 #audio-settings .button span{line-height:normal;display:inline-block;vertical-align:middle}
 #ambiance-adaptation-btn{background-image:url(../img/bruit_ambiant.png)}
 #dialogues-extended-btn{background-image:url(../img/renforcement_dialogue.png)}

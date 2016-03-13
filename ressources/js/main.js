@@ -39,65 +39,12 @@ Main.onLoad = function () {
 	var valueMinSize = getHtmlStorage("settings_min_size") || Settings.minFontSize;
 	Settings.change.fontSize(valueMinSize);
 	
-	var defaultValue = getHtmlStorage("volumeValue") || Settings.defaultVolumeValue;
-	$( document.getElementById("slider") ).slider({
-        range: "min",
-        min: 0,
-        value: defaultValue,
- 
-        start: function(event,ui) {
-          tooltip.fadeIn('fast');
-        },
- 
-        slide: function(event, ui) {
-			InfoBanner.launchMaskingAfterDelay();
-			
-            var value = ui.value,//slider.slider('value'),
-                volume = $('.volume');
-			
-			var $slider = $(this).children("a");
-            tooltip.css('left', $slider.css("left")).text(ui.value);
- 
-            if(value <= 5) { 
-                volume.css('background-position', '0 0');
-				
-            }else if (value <= 25) {
-                volume.css('background-position', '0 -25px');
-				
-            }else if (value <= 75) {
-                volume.css('background-position', '0 -50px');
-				
-            }else{
-                volume.css('background-position', '0 -75px');
-            }
-			
-			$slider.attr("aria-valuenow", value).attr("aria-valuetext", value + " pourcent");
-			
-			try{
-				if(!value){
-					Player.setMute();
-				}else{
-					eraseCookie("muteEnabled");
-					setHtmlStorage("volumeValue", value);
-					Player.setVolume(value);
-				}
-			}catch(e){
-				console.error(e);
-			}			
-        },
- 
-        stop: function(event, ui) {
-          tooltip.fadeOut('fast');
-        }
-	}).children("a").attr("aria-valuenow", defaultValue).attr("aria-valuetext", defaultValue + " pourcent");
-	var tooltip = $('.tooltip').hide();
-	
 	Main.firstLaunch = true;
 	API.getConfig(function() {
 		setTimeout(function(){
 			Section.change(Section.sections[0]);
 			Main.hideSplashScreen();
-		}, 5000);
+		}, Main.simplifiedMode ? 5000 : 500);
 	});
 };
 
