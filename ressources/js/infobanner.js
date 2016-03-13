@@ -97,6 +97,9 @@ InfoBanner.generate = function(){
 		}
 	}
 	
+	// PROGRESS BAR
+	this.progressBar.init();
+	
 	// VOLUME
 	this.initVolumeSlider();
 };
@@ -427,20 +430,60 @@ InfoBanner.progressBar.reset = function(){
 	
 	$(document.getElementById("playerProgressCurrent")).children().empty();
 	$(document.getElementById("playerProgressTotal")).children().empty();
-	$(document.getElementById("playerProgressCursor")).css("width", 0);
+	
+	if($(document.getElementById("playerProgressBar")).slider( "instance" )){
+		$(document.getElementById("playerProgressBar")).slider("value", 0);
+	}
 	
 	InfoBanner.hidePauseBtn();
+};
+
+InfoBanner.progressBar.init = function(){
+
+	$( document.getElementById("playerProgressBar") ).slider({
+        range: "min",
+        min: 0,
+        value: 0,
+		step:0.01,
+		start:function(){
+			Player.pause();
+		},
+        stop: function(event, ui) {
+			
+			var value = ui.value;
+			InfoBanner.launchMaskingAfterDelay();
+
+			// Récupère la temps
+			var time = value * (Player.playerManager.controller.duration / 100);
+			log("déplacement à " + value + "% ("+time+"s)");
+
+			try{
+				
+				// Le currentTime ne se mettra plus à jour si on le get pas avant de le setter !?
+				var doNotDeleteMe = Player.playerManager.controller.currentTime;
+
+				// check if the new position is seekable
+				Player.doSeek(time);
+				Player.play();
+			
+				$(document.getElementById("playerProgressCursor")).attr("aria-valuenow", value).attr("aria-valuetext", Math.round(value) + " pourcent");
+				
+			}catch(e){
+				log(e);
+			}			
+        }
+	});
 };
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Updates the progress bar
- * @param {Integer} time The current position inside the video (in milliseconds)
- * @param {Integer} tT Total time of the video (in milliseconds)
+ * @param {Integer} time The current position inside the video (in seconds)
+ * @param {Integer} tT Total time of the video (in seconds)
  */
 
 InfoBanner.progressBar.update = function(time, tT){
-	
+	//log("progressBar.update() start; time = " + time + "; tT = " + tT);
 	time = time * 1000;
 	tT = tT * 1000;
 	var timePercent         = (100 * time) / tT,
@@ -453,7 +496,7 @@ InfoBanner.progressBar.update = function(time, tT){
 
 	percent = (!isNaN(timePercent)?timePercent:0);
 
-	$(document.getElementById("playerProgressCursor")).css("width", percent + "%");
+	$(document.getElementById("playerProgressBar")).slider("value", percent);
 
 	totalTimeMinute = Math.floor(tT / 60000);
 	timeMinute      = Math.floor(time / 60000);                
@@ -464,4 +507,5 @@ InfoBanner.progressBar.update = function(time, tT){
 
 	$(document.getElementById("playerProgressCurrent")).children("span:first-child").text(timeC).end().children("span:last-child").text('Temps actuel '+getTimeText(timeMinute, timeSecond));
 	$(document.getElementById("playerProgressTotal")).children("span:first-child").text(timeT).end().children("span:last-child").text('Temps total '+getTimeText(totalTimeMinute, totalTimeSecond));
+	$(document.getElementById("playerProgressCursor")).attr("aria-valuenow", percent).attr("aria-valuetext", Math.round(percent) + " pourcent");
 };
