@@ -40,7 +40,7 @@ body > div{font-size:1em}
 .menu-item:hover{list-style-type:circle}
 .menu-item.selected{font-weight:700;text-decoration:underline}
 #simplified-mode-container section > a{display:block}
-.section-with-topbar{box-sizing:border-box;padding-top:83px}
+.section-with-topbar{box-sizing:border-box;padding-top:70px}
 #full-synopsis, #videoPlayerContainer, #in-construction{position:absolute;height:100%;width:100%;top:0;left:0}
 a.switch-btn{position:absolute;top:45px;left:45px;padding:10px;margin-left:0}
 .btn{cursor:pointer}
@@ -60,9 +60,9 @@ body.sm:not(.profils-list) #simplified-mode-container{display:block}
 section .list{display:table-cell;vertical-align:middle;text-align:center}
 
 /* TOPBAR */
-nav, #back-to-player-button-container{height:82px}
+nav, #back-to-player-button-container{height:69px}
 nav{background-color:#fff;border-bottom:1px solid #bebebe;position:absolute;width:100%}
-.topbarButton{color:#545454;float:left;font-weight:500;height:83px;line-height:83px;text-align:center;width:19.5%;list-style:none}
+.topbarButton{color:#545454;float:left;font-weight:500;height:70px;line-height:70px;text-align:center;width:19.5%;list-style:none}
 .topbarButton.sel{background-color:#c8c8c8}
 .topbarImg, .topbarText{display:inline-block;vertical-align:middle}
 .topbarImg{margin-right:5%;width:32px}
@@ -230,7 +230,7 @@ h2{font-size:1.6em;font-weight:600}
 .optionDropDownMenuButton:hover{cursor:pointer;font-weight:600}
 
 /* SETTINGS */
-#back-to-player-button-container{position:absolute;background-color:#000;width:100%;line-height:83px;text-align:right;top:0}
+#back-to-player-button-container{position:absolute;background-color:#000;width:100%;line-height:70px;text-align:right;top:0}
 #back-to-player-button{display:inline-block;vertical-align:middle;margin-right:45px}
 #subrubrics-container, #settings-options-container{float:left;height:100%}
 #subrubrics-container{width:296px;background-color:#e7e8e8;line-height:637px}
