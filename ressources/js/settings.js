@@ -4,7 +4,7 @@ var Settings = {
 	minSubtitlesSize:16,
 	subtitlesDefaultPosition:71,
 	defaultLSPIPCoordonates: {x:75,y:4.5,w:22.51131221719457,h:40.04024144869215},
-	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Lexia"],
+	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Verdana"],
 	defaultFont:"Arial",
 	defaultSubtitlesColor:"transparent",
 	defaultSubtitlesBGColor:"black",
@@ -489,7 +489,7 @@ Settings.change.fontSize = function(newValue){
 
 Settings.change.subtitlesFontFamily = function(ff){
 	setHtmlStorage("subtitleFont", ff);
-	$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Lexia").addClass(ff);
+	$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Verdana").addClass(ff);
 	
 	if(Main.simplifiedMode){
 		$(document.getElementById("font-family")).children(".menu-item."+ff).addClass("selected").siblings().removeClass("selected");		

@@ -1,12 +1,4 @@
 @font-face {
-    font-family: 'ayuthaya';
-    src: url('../font/Ayuthaya.ttf') format('truetype');
-}
-@font-face {
-    font-family: 'Georgia';
-    src: url('../font/Georgia.ttf') format('truetype');
-}
-@font-face {
     font-family: 'OpenDyslexic';
     src: url('../font/OpenDyslexic-Regular.otf') format('truetype');
 }
@@ -265,7 +257,7 @@ h2{font-size:1.6em;font-weight:600}
 .OpenDyslexic, #video-caption.OpenDyslexic span{font-family:OpenDyslexic!important}
 .Andika, #video-caption.Andika span{font-family:Andika!important}
 .Helvetica, #video-caption.Helvetica span{font-family:Helvetica!important}
-.Lexia, #video-caption.Lexia span{font-family:Lexia!important}
+.Verdana, #video-caption.Verdana span{font-family:Verdana!important}
 .font-family.selected{text-decoration:underline;color:#000}
 .col-container{margin-bottom:30px}
 #subtitles-settings .option-color{height:54px;line-height:54px}

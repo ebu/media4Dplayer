@@ -564,7 +564,7 @@ Player.setPIP = function(){
 Player.initSubtitlesParams = function(){
 
 	// subtitles
-	var $container = $(this.ttmlDiv).removeClass("Arial OpenDyslexic Andika Helvetica Lexia");
+	var $container = $(this.ttmlDiv).removeClass("Arial OpenDyslexic Andika Helvetica Verdana");
 	var selectedFont = getHtmlStorage("subtitleFont") || Settings.defaultFont;
 	if(selectedFont){
 		$container.addClass(selectedFont);
