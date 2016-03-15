@@ -164,6 +164,10 @@ $(document.getElementById("font-family")).on("click", ".menu-item", function(){
 	Settings.change.subtitlesFontFamily($(this).children("a").text());
 });
 
+$(document.getElementById("spatialisation-options-sm")).on("click", ".menu-item", function(){
+	Settings.change.audioSpatialisationMode($(this).data("value"));
+});
+
 /* POUR CHROMEVOX */
 $("body").on("keydown", ".selectable-by-chromevox", function(e){
 	log(e.key);

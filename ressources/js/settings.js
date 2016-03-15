@@ -74,33 +74,7 @@ Settings.init.interface = function(){
 Settings.init.audio = function(){
 		
 	/* Le choix du mode de spatialisation */
-	var spatMode = getHtmlStorage("spatializationMode") || Player.spatializationMode,
-		binauralEQ = getHtmlStorage("binauralEQ") || Player.binauralEQ,
-		val = spatMode === Player.spatializationModes[0] && binauralEQ ? "binaural-EQ" : spatMode;
-	
-	$(document.getElementById("spatialisation-options")).val(val).selectmenu({
-		select: function( event, ui ) {
-			
-			var val = ui.item.value;
-			var values = Player.spatializationModes;
-			
-			var _save = function(){
-				setHtmlStorage("spatializationMode", Player.spatializationMode);
-				setHtmlStorage("binauralEQ", Player.binauralEQ);				
-			};
-			
-			if(values.indexOf(val) !== -1){
-				Player.spatializationMode = val;
-				Player.binauralEQ = false;
-				_save();
-				
-			}else if(val === "binaural-EQ"){
-				Player.spatializationMode = values[0];
-				Player.binauralEQ = true;
-				_save();		
-			}
-		}
-	});
+	this.audio.spatialisationMode();
 	
 	/* Le niveau des commentaires */
 	this.audio.elevationLevel($(document.getElementById("comments-elevation-level")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel);
@@ -113,6 +87,31 @@ Settings.init.audio = function(){
 	
 	/* La zone des dialogues */
 	this.audio.azimDistance($(document.getElementById("dialogues-spatialisation-zone")), getHtmlStorage("dialoguesDistanceAzimPosition"));
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.audio.spatialisationMode = function(){
+	var spatMode = getHtmlStorage("spatializationMode") || Player.spatializationMode,
+		binauralEQ = getHtmlStorage("binauralEQ") || Player.binauralEQ,
+		val = spatMode === Player.spatializationModes[0] && binauralEQ ? "binaural-EQ" : spatMode;
+	
+	Settings.change.audioSpatialisationMode(val);
+	
+	if(!Main.simplifiedMode){
+		$(document.getElementById("spatialisation-options")).selectmenu({
+			select: function( event, ui ) {
+				Settings.change.audioSpatialisationMode(ui.item.value);
+			}
+		});
+	}	
 };
 
 /**
@@ -554,6 +553,49 @@ Settings.change.subtitlesOpacity = function(newValue){
 Settings.change.subtitlesFontSize = function(newValue){
 	setHtmlStorage("subtitleFontSize", newValue);
 	$(".ui-subtitles .pip-text").css("font-size", newValue+"px");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.change.audioSpatialisationMode = function(value){
+	
+	var setMode = function(val){
+		var values = Player.spatializationModes;
+
+		var _save = function(){
+			setHtmlStorage("spatializationMode", Player.spatializationMode);
+			setHtmlStorage("binauralEQ", Player.binauralEQ);				
+		};
+
+		if(values.indexOf(val) !== -1){
+			Player.spatializationMode = val;
+			Player.binauralEQ = false;
+			_save();
+
+		}else if(val === "binaural-EQ"){
+			Player.spatializationMode = values[0];
+			Player.binauralEQ = true;
+			_save();		
+		}	
+	};
+	
+	if(Main.simplifiedMode){
+		$(document.getElementById("spatialisation-options-sm")).children(".menu-item").filter(function(){
+			return $(this).data("value") === value;
+		}).addClass("selected").siblings().removeClass("selected");
+		setMode(value);
+		
+	}else{
+		$(document.getElementById("spatialisation-options")).val(value);
+		setMode(value);
+	}
 };
 
 Settings.saveSubtitlesPIPPosition = function($container){

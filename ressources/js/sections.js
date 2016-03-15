@@ -31,7 +31,10 @@ var Section = {
 		"in-construction",					// 24
 		"share-on-social-network",			// 25
 		"settings-audio",					// 26
-		"settings-interface-theme"],		// 27
+		"settings-interface-theme",			// 27
+		"settings-audio-spatialisation-mode",
+		"settings-audio-comments-spatialisation",
+		"settings-audio-dialogues-spatialisation"],
 
 	"rubrics": {
 		"settings":["interface","audio","subtitles","ls"],
@@ -112,6 +115,10 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		}else if(newSection === this.sections[15]){
 			this.change.toFullscreenSynopsis();
 			
+		// SM - Le menu réglages de l'audio : mode de spatialisation, spatialisation des commentaires et dialogues
+		}else if(newSection === this.sections[26]){
+			this.change.toSettingsAudioMenu();
+			
 		// SM - Le menu réglages de l'interface : Taille de texte
 		}else if(newSection === this.sections[16]){
 			this.change.toSettingsInterfaceMenu();
@@ -143,6 +150,18 @@ Section.change = function(newSection, rubric, mixed_var, $item){
 		// SM - Les réglages du positionnement des sous-titres
 		}else if(newSection === this.sections[23]){
 			this.change.toSettingsSubtitlesPIP();
+			
+		// SM - Les réglages du mode de spatialisation
+		}else if(newSection === this.sections[28]){
+			this.change.toSettingsAudioSpatialisationMode();
+			
+		// SM - Les réglages de la spatialisation des commentaires
+		}else if(newSection === this.sections[29]){
+			this.change.toSettingsAudioCommentsSpatialisation();
+			
+		// SM - Les réglages de la spatialisation des dialogues
+		}else if(newSection === this.sections[30]){
+			this.change.toSettingsAudioDialoguesSpatialisation();
 			
 		}else{
 			this.change.toInConstructionScreen();
@@ -377,6 +396,19 @@ Section.change.toSettingsMenu = function(){
  * @param {jQuery Object} $item The current focused element
  */
 
+Section.change.toSettingsAudioMenu = function(){
+	Section.save();
+	Section.addClass("settings-audio-menu");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
 Section.change.toSettingsInterfaceMenu = function(){
 	Section.save();
 	Section.addClass("settings-interface-menu");
@@ -480,6 +512,20 @@ Section.change.toSettingsSubtitlesPIP = function(){
 	
 	Section.save();
 	Section.addClass("settings-subtitles-pip");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsAudioSpatialisationMode = function(){
+	Settings.init.audio.spatialisationMode();
+	Section.save();
+	Section.addClass("settings-audio-spatialisation-mode");
 };
 
 Section.addClass = function(className){
