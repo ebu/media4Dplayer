@@ -171,11 +171,14 @@ $(document.getElementById("spatialisation-options-sm")).on("click", ".menu-item"
 /* POUR CHROMEVOX */
 $("body").on("keydown", ".selectable-by-chromevox", function(e){
 	log(e.key);
-	if($(this).is(":focus") && e.key.toLowerCase() === "enter"){
+	var eventName = e.key.toLowerCase();
+	if($(this).is(":focus") && eventName === "enter"){
 		log("J'ai cliqué sur un item focusé");		
-		this.click();
+		if(this.click){
+			this.click();
+		}
 		
-	}else if($(this).is(":focus") && e.key.toLowerCase() === "tab"){
+	}else if($(this).is(":focus") && eventName === "tab"){
 		var $current = this;
 		var $nextSel = $("body .selectable-by-chromevox:visible").filter(function(){
 			return this.tabIndex > $current.tabIndex;
@@ -195,6 +198,27 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 			return false;
 		}else{
 			log("Un élément suivant à été trouvé");
+		}
+		
+	}else if(["arrowup","arrowdown","arrowleft","arrowright"].indexOf(eventName) !== -1){
+		if($(this).hasClass("pip-video") && !$(this).data("animation-started")){
+			var pip = this;
+			var _move = function(pos){
+				$(pip).data("animation-started", true).clearQueue().finish().animate({top: pos}, 250, function(){
+					$(pip).data("animation-started", false);
+					log("animation done !!!");
+				});
+			};
+			
+			var $parent = $(this).parent(), value, moveValue = 5, padding = parseFloat($parent.css("padding").replace("px",""));
+			if(eventName === "arrowup") {
+				value = (this.offsetTop - moveValue > padding) ? '-='+moveValue : 0;
+				_move(value);
+				
+			}else if(eventName === "arrowdown"){
+				value = (this.offsetTop + this.offsetHeight + moveValue - padding <= $parent.height()) ? '+='+moveValue : $parent.height() - this.offsetHeight;
+				_move(value);
+			}
 		}
 	}
 	
