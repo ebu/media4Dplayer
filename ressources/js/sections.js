@@ -528,6 +528,44 @@ Section.change.toSettingsAudioSpatialisationMode = function(){
 	Section.addClass("settings-audio-spatialisation-mode");
 };
 
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsAudioCommentsSpatialisation = function(){
+	$(document.getElementById("settings-audio-spatialisation-sm-container")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Spatialisation des commentaires</span>');
+	
+	Settings.init.audio.elevationLevel($(document.getElementById("elevation-lvl-sm")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel, "commentary");
+	Settings.init.audio.azim($(document.getElementById("orientation-sm")), getHtmlStorage("commentsAzim") || Player.commentsAzim, "commentary");
+	Settings.init.audio.distance($(document.getElementById("distance-sm")), getHtmlStorage("commentsDistance") || Player.commentsDistance, "commentary");
+	
+	Section.save();
+	Section.addClass("settings-audio-spatialisation");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsAudioDialoguesSpatialisation = function(){
+	$(document.getElementById("settings-audio-spatialisation-sm-container")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Spatialisation des dialogues</span>');
+	
+	Settings.init.audio.elevationLevel($(document.getElementById("elevation-lvl-sm")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel, "dialogues");
+	Settings.init.audio.azim($(document.getElementById("orientation-sm")), getHtmlStorage("dialoguesAzim") || Player.dialoguesAzim, "dialogues");
+	Settings.init.audio.distance($(document.getElementById("distance-sm")), getHtmlStorage("dialoguesDistance") || Player.dialoguesDistance, "dialogues");
+	
+	Section.save();
+	Section.addClass("settings-audio-spatialisation");
+};
+
 Section.addClass = function(className){
 	var cn = Main.simplifiedMode ? "sm " + className : className;
 	$("body").attr("class", cn);

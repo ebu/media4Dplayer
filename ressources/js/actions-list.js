@@ -203,8 +203,8 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 	}else if(["arrowup","arrowdown","arrowleft","arrowright"].indexOf(eventName) !== -1){
 		if($(this).hasClass("pip-video") && !$(this).data("animation-started")){
 			var pip = this;
-			var _move = function(pos){
-				$(pip).data("animation-started", true).clearQueue().finish().animate({top: pos}, 250, function(){
+			var _move = function(position){
+				$(pip).data("animation-started", true).clearQueue().finish().animate(position, 250, function(){
 					$(pip).data("animation-started", false);
 					log("animation done !!!");
 				});
@@ -213,11 +213,20 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 			var $parent = $(this).parent(), value, moveValue = 5, padding = parseFloat($parent.css("padding").replace("px",""));
 			if(eventName === "arrowup") {
 				value = (this.offsetTop - moveValue > padding) ? '-='+moveValue : 0;
-				_move(value);
+				_move({top:value});
 				
 			}else if(eventName === "arrowdown"){
 				value = (this.offsetTop + this.offsetHeight + moveValue - padding <= $parent.height()) ? '+='+moveValue : $parent.height() - this.offsetHeight;
-				_move(value);
+				_move({top:value});
+				
+			}else if(eventName === "arrowleft") {
+				value = (this.offsetLeft - moveValue > padding) ? '-='+moveValue : 0;
+				_move({left:value});	
+				
+			}else if(eventName === "arrowright"){
+				value = (this.offsetLeft + this.offsetWidth + moveValue - padding <= $parent.width()) ? '+='+moveValue : $parent.width() - this.offsetWidth;
+				_move({left:value});
+				
 			}
 		}
 	}

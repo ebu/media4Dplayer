@@ -123,48 +123,27 @@ Settings.init.audio.spatialisationMode = function(){
  * @param {Object} callbackList Contains a success and error callback
  */
 
-Settings.init.audio.elevationLevel = function($slider, lvl){
-	var _onSlide = function(value, el){
+Settings.init.audio.elevationLevel = function($slider, lvl, type){
+	var range = Player.elevationRange;
+	if(Main.simplifiedMode){
+		$slider.attr({min: range[0], max: range[1]}).val(lvl).data("type", type);
+		$slider.parent().siblings(".min-value").text(range[0]+"°").end()
+			.siblings(".max-value").text(range[1]+"°");
+		
+	}else{
+		$slider.slider({
+			range: "min",
+			min: range[0],
+			max: range[1],
+			orientation:"vertical",
+			value: lvl,
 
-		var type = $(el).data("type");
-		if(["commentary", "dialogues"].indexOf(type) !== -1){
-			if(type === "commentary"){
-				Player.commentsElevationLevel = value;
-				setHtmlStorage("commentsElevationLevel", value);
-				log("Niveau d'élévation des commentaires : " + value + "°");
-
-			}else{
-				Player.dialoguesElevationLevel = value;
-				setHtmlStorage("dialoguesElevationLevel", value);
-				log("Niveau d'élévation des dialogues : " + value + "°");			
+			slide: function(event, ui){
+				Settings.change.audioElevationLevel(ui.value, this);
 			}
-
-			var $slider = $(el).children("a");
-
-			if(value >= 45) { 
-				$slider.text("Haut");
-
-			}else if (value <= 0) {
-				$slider.text("Bas");
-
-			}else{
-				$slider.text("Tête");
-			}
-		}
-	};
-
-	$slider.slider({
-		range: "min",
-		min: Player.elevationRange[0],
-		max: Player.elevationRange[1],
-		orientation:"vertical",
-		value: lvl,
-
-		slide: function(event, ui){
-			_onSlide(ui.value, this);
-		}
-	});
-	_onSlide(lvl, $slider);
+		});		
+	}
+	Settings.change.audioElevationLevel(lvl, $slider);
 };
 
 /**
@@ -228,20 +207,10 @@ Settings.init.audio.azimDistance = function($drag, positions){
 					var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
 					return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
 				}
-				function saveDistance(value, type){
-					if(type === "commentary"){
-						Player.commentsDistance = value;
-						setHtmlStorage("commentsDistance", value);
-
-					}else{
-						Player.dialoguesDistance = value;
-						setHtmlStorage("dialoguesDistance", value);				
-					}
-				}
 				var dist = distance([result.x, result.y], canvas.center);
 				var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
 				var distanceMeter = getDistanceInMeter(dist2, [minDistance, canvas.radius], Player.distanceRange);
-				saveDistance(distanceMeter, type);
+				Settings.change.audioDistance(distanceMeter, this);
 				//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
 
 				// Récupère l'angle
@@ -252,22 +221,13 @@ Settings.init.audio.azimDistance = function($drag, positions){
 						return angle;
 					}
 				}
-				function saveAzim(value, type){
-					if(type === "commentary"){
-						Player.commentsAzim = value;
-						setHtmlStorage("commentsAzim", value);
-
-					}else{
-						Player.dialoguesAzim = value;
-						setHtmlStorage("dialoguesAzim", value);				
-					}
-				}
+				
 				var cosinus = -(ui.position.top - canvas.center[1]) / dist;
 				var sinus = (ui.position.left - canvas.center[0]) / dist;
 
 				var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
 				var azim = Math.round(getAzim(sinus, angle1));
-				saveAzim(azim, type);
+				Settings.change.audioAzim(azim, this);
 				//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
 
 				// Mémorise la position
@@ -286,6 +246,43 @@ Settings.init.audio.azimDistance = function($drag, positions){
 			scroll:false,
 			drag: _onDrag
 		});
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.audio.azim = function($slider, value, type){
+	if(Main.simplifiedMode){
+		$slider.val(value).data("type", type);
+		$slider.parent().siblings(".min-value").text("-180°").end()
+			.siblings(".max-value").text("180°");
+		Settings.change.audioAzim(value, $slider);
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.init.audio.distance = function($slider, value, type){
+	if(Main.simplifiedMode){
+		var range = Player.distanceRange;
+		$slider.attr({min: range[0], max: range[1]}).val(value).data("type", type);
+		$slider.parent().siblings(".min-value").text(range[0]+"m").end()
+			.siblings(".max-value").text(range[1]+"m");		
+		Settings.change.audioDistance(value, $slider);
 	}
 };
 
@@ -595,6 +592,93 @@ Settings.change.audioSpatialisationMode = function(value){
 	}else{
 		$(document.getElementById("spatialisation-options")).val(value);
 		setMode(value);
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.change.audioElevationLevel = function(value, el){
+
+	var type = $(el).data("type");
+	if(["commentary", "dialogues"].indexOf(type) !== -1){
+		if(type === "commentary"){
+			Player.commentsElevationLevel = value;
+			setHtmlStorage("commentsElevationLevel", value);
+			log("Niveau d'élévation des commentaires : " + value + "°");
+
+		}else{
+			Player.dialoguesElevationLevel = value;
+			setHtmlStorage("dialoguesElevationLevel", value);
+			log("Niveau d'élévation des dialogues : " + value + "°");			
+		}
+
+		var $slider = $(el).children("a");
+		if($slider.length){
+
+			if(value >= 45) { 
+				$slider.text("Haut");
+
+			}else if (value <= 0) {
+				$slider.text("Bas");
+
+			}else{
+				$slider.text("Tête");
+			}				
+		}
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.change.audioAzim = function(value, el){
+	
+	var type = $(el).data("type");
+	if(["commentary", "dialogues"].indexOf(type) !== -1){
+		
+		if(type === "commentary"){
+			Player.commentsAzim = value;
+			setHtmlStorage("commentsAzim", value);
+
+		}else{
+			Player.dialoguesAzim = value;
+			setHtmlStorage("dialoguesAzim", value);
+		}
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Settings.change.audioDistance = function(value, el){
+	
+	var type = $(el).data("type");
+	if(type === "commentary"){
+		Player.commentsDistance = value;
+		setHtmlStorage("commentsDistance", value);
+
+	}else{
+		Player.dialoguesDistance = value;
+		setHtmlStorage("dialoguesDistance", value);				
 	}
 };
 
