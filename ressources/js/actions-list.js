@@ -112,6 +112,7 @@ $(document.getElementById('playerUI')).on('click', function(e){
 $("body").on("keydown", function(e){
 	if(["enter","tab"].indexOf(e.key.toLowerCase()) !== -1 && $(this).hasClass("player") && !$(document.getElementById("playerBottomBanner")).is(":visible")){
 		InfoBanner.show();
+		InfoBanner.hideOptionDropDownMenu();
 		Navigation.moveSelecteur(document.getElementById("playerClose"));
 	}
 });

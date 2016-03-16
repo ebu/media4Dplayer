@@ -583,19 +583,23 @@
 				</div>
 				<div id="playerBottomBanner">
 				<div id="playerOptions">
-					<div id="playerOptionAudio" class="btn video-option selectable-by-chromevox final-option" onclick="InfoBanner.showOptionPopup('audio', this);" tabindex="2">
+					<div id="playerOptionAudio" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-audio" onclick="InfoBanner.showOptionPopup('audio', this);" tabindex="2">
+						<span id="label-option-audio" aria-hidden="true" class="hidden"></span>
 						<div id="iconeLA" class="compatibility audio" title="Audio"></div>
 						<div id="playerOptionAudioCurrentValue" class="playerOptionValue"></div>							
 					</div>
-					<div id="playerOptionSub" class="btn video-option selectable-by-chromevox final-option" onclick="InfoBanner.showOptionPopup('subtitle', this);" tabindex="13">
+					<div id="playerOptionSub" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-subtitle" onclick="InfoBanner.showOptionPopup('subtitle', this);" tabindex="13">
+						<span id="label-option-subtitle" aria-hidden="true" class="hidden"></span>
 						<div id="iconeST" class="compatibility subtitle" title="Sous-titre"></div>
 						<div id="playerOptionSubCurrentValue" class="playerOptionValue"></div>
 					</div>
-					<div id="playerOptionDescription" class="btn video-option selectable-by-chromevox final-option" onclick="InfoBanner.showOptionPopup('ad', this);" tabindex="24">
+					<div id="playerOptionDescription" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ad" onclick="InfoBanner.showOptionPopup('ad', this);" tabindex="24">
+						<span id="label-option-ad" aria-hidden="true" class="hidden"></span>
 						<div id="iconeAD" class="compatibility ad" title="Audio description"></div>
 						<div id="playerOptionDescriptionCurrentValue" class="playerOptionValue"></div>							
 					</div>
-					<div id="playerOptionSigne" class="btn video-option selectable-by-chromevox final-option" onclick="InfoBanner.showOptionPopup('ls', this);" tabindex="35">
+					<div id="playerOptionSigne" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ls" onclick="InfoBanner.showOptionPopup('ls', this);" tabindex="35">
+						<span id="label-option-ls" aria-hidden="true" class="hidden"></span>
 						<div id="iconeLSF" class="compatibility ls" title="Langue des signes"></div>
 						<div id="playerOptionSigneCurrentValue" class="playerOptionValue"></div>							
 					</div>	
@@ -627,7 +631,7 @@
 				<div id="ui-video-ls-container" class="ui-ls">
 					<div id="pipContainer" class="player pip-limit">
 						<div id="pipVideo" class="pipVideo ui-draggable ui-resizable">
-							<video id="videoPlayerPip" class="player pipPlayer" autoplay></video>
+							<video id="videoPlayerPip" class="player pipPlayer" autoplay="autoplay"></video>
 							<div class="ui-icon ui-icon-gripsmall-center"></div>
 						</div>
 					</div>					

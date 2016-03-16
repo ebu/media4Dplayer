@@ -43,13 +43,19 @@ InfoBanner.load = function(){
 
 InfoBanner.generate = function(){
 	
+	var value, none = "Aucun";
+	
 	// AUDIO
-	var $audio = $(document.getElementById("playerOptionAudioCurrentValue"));
+	var $audio = $(document.getElementById("playerOptionAudioCurrentValue")),
+		$labelAudio = $(document.getElementById("label-option-audio"));
 	if(Media.audioEnabled){
-		$audio.text(Media.audiosList[Media.currentAudioIndex]);
+		value = Media.audiosList[Media.currentAudioIndex];
+		$audio.text(value);
+		$labelAudio.text("Choix de langue audio : " + value + " sélectionné");
 		
 	}else{
-		$audio.text("Aucun");
+		$audio.text(none);
+		$labelAudio.text("Choix de langue audio : " + none + " sélectionné");
 
 		if(typeOf(Media.audiosList) !== "array" || !Media.audiosList.length){
 			$audio.parent().addClass("hidden");
@@ -59,12 +65,16 @@ InfoBanner.generate = function(){
 	}
 	
 	// SOUS-TITRES
-	var $subtitles = $(document.getElementById("playerOptionSubCurrentValue"));
+	var $subtitles = $(document.getElementById("playerOptionSubCurrentValue")),
+		$labelSubtitle = $(document.getElementById("label-option-subtitle"));
 	if(Media.subtitleEnabled){
-		$subtitles.html(Media.subtitlesList[Media.currentSubtitleIndex] + '<img alt="" src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
+		value = Media.subtitlesList[Media.currentSubtitleIndex];
+		$subtitles.html(value + '<img alt="" src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
+		$labelSubtitle.text("Choix du sous-titre : " + value + " sélectionné");
 		
 	}else{
-		$subtitles.text("Aucun");
+		$subtitles.text(none);
+		$labelSubtitle.text("Choix du sous-titre : " + none + " sélectionné");
 		
 		if(typeOf(Media.subtitlesList) !== "array" || !Media.subtitlesList.length){
 			$subtitles.parent().addClass("hidden");
@@ -72,12 +82,16 @@ InfoBanner.generate = function(){
 	}
 	
 	// AD
-	var $ad = $(document.getElementById("playerOptionDescriptionCurrentValue"));
+	var $ad = $(document.getElementById("playerOptionDescriptionCurrentValue")),
+		$labelAD = $(document.getElementById("label-option-ad"));
 	if(Media.audioDescriptionEnabled){
-		$ad.text(Media.audioDescriptions[Media.currentAudioDescriptionIndex].lang);
+		value = Media.audioDescriptions[Media.currentAudioDescriptionIndex].lang;
+		$ad.text(value);
+		$labelAD.text("Choix de langue pour l'audio description : " + value + " sélectionné");
 		
 	}else{
-		$ad.text("Aucun");
+		$ad.text(none);
+		$labelAD.text("Choix de langue pour l'audio description : " + none + " sélectionné");
 
 		if(typeOf(Media.audioDescriptions) !== "array" || !Media.audioDescriptions.length){
 			$ad.parent().addClass("hidden");
@@ -85,12 +99,16 @@ InfoBanner.generate = function(){
 	}
 	
 	// LS
-	var $ls = $(document.getElementById("playerOptionSigneCurrentValue"));
+	var $ls = $(document.getElementById("playerOptionSigneCurrentValue")),
+		$labelLS = $(document.getElementById("label-option-ls"));
 	if(Media.LSFEnabled){
-		$ls.text(Media.ls[Media.currentLSFIndex].lang);
+		value = Media.ls[Media.currentLSFIndex].lang;
+		$ls.text(value);
+		$labelLS.text("Choix de langue pour la langue des signes : " + value + " sélectionné");
 		
 	}else{
-		$ls.text("Aucun");
+		$ls.text(none);
+		$labelLS.text("Choix de langue pour la langue des signes : " + none + " sélectionné");
 
 		if(typeOf(Media.ls) !== "array" || !Media.ls.length){
 			$ls.parent().addClass("hidden");
