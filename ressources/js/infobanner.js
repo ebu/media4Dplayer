@@ -453,7 +453,7 @@ InfoBanner.progressBar.init = function(){
         range: "min",
         min: 0,
         value: 0,
-		step:0.01,
+		step:0.1,
 		start:function(){
 			Player.pause();
 		},
