@@ -230,6 +230,11 @@ InfoBanner.showOptionPopup = function(type, button){
 			}
 			InfoBanner.launchMaskingAfterDelay();
 			InfoBanner.hideOptionDropDownMenu();
+			
+			if(Main.simplifiedMode){
+				var ids = {ls:"playerOptionSigne",subtitle:"playerOptionSub",ad:"playerOptionDescription",audio:"playerOptionAudio"};
+				Navigation.moveSelecteur(document.getElementById(ids[optionID]));
+			}
 		};
 		
 		var getLabel = function(optionName){
@@ -249,9 +254,9 @@ InfoBanner.showOptionPopup = function(type, button){
 		};
 		
 		var tabIndex = button.tabIndex + 1;
-		var i, l = inputsArray.length;
+		var i, l = inputsArray.length, $bt;
 		for (i = 0; i < l; i++) {
-			var $bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton btn selectable-by-chromevox" tabindex="'+tabIndex+'" aria-labelledby="label-option-'+i+'">'+inputsArray[i]+'<span id="label-option-'+i+'" aria-hidden="true" class="hidden">'+getLabel(inputsArray[i])+'</span></div>').appendTo($ctn);
+			$bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton btn selectable-by-chromevox" tabindex="'+tabIndex+'" aria-labelledby="label-option-'+i+'">'+inputsArray[i]+'<span id="label-option-'+i+'" aria-hidden="true" class="hidden">'+getLabel(inputsArray[i])+'</span></div>').appendTo($ctn);
 			$bt.data("index", i);
 			(function(bt, optionID){
 				bt.on("click", function(){
@@ -283,6 +288,10 @@ InfoBanner.showOptionPopup = function(type, button){
 			
 		}else{
 			setSel($ctn.children(":last"));
+		}
+		
+		if(Main.simplifiedMode){
+			Navigation.moveSelecteur($ctn.children(":first-child"));
 		}
 	}	
 };

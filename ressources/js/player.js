@@ -1007,13 +1007,6 @@ Player.activeOptionDescription = function(index) {
 		
 	var $textContent = $(document.getElementById("playerOptionDescriptionCurrentValue"));
 	if(index !== Media.audioDescriptions.length){
-
-		/*this.playerManager.controller.currentTime = this.videoMain.currentTime;
-		this.videoAudio.controller = this.playerManager.controller;
-		this.playerManager.playerAudio.startup();
-		this.playerManager.playerAudio.setAutoPlay(false);
-		this.playerManager.playerAudio.attachView(this.videoAudio);
-		this.playerManager.playerAudio.attachSource(Media.audioDescriptions[index].url);*/
 		extendedCommentsASD.active = true;
 
 		Media.currentAudioDescriptionIndex = index;

@@ -179,10 +179,21 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 		}
 		
 	}else if($(this).is(":focus") && eventName === "tab"){
-		var $current = this;
-		var $nextSel = $("body .selectable-by-chromevox:visible").filter(function(){
-			return this.tabIndex > $current.tabIndex;
-		}).eq(0);
+		var $current = this, $nextSel;
+		
+		if($($current).hasClass("optionDropDownMenuButton") && $($current).is(":last-child")){
+			var $first = $($current).parent().children(":first-child");			
+			if($first.length){
+				Navigation.moveSelecteur($first[0]);
+			}
+			return false;
+			
+		}else{
+		
+			$nextSel = $("body .selectable-by-chromevox:visible").filter(function(){
+				return this.tabIndex > $current.tabIndex;
+			}).eq(0);			
+		}
 		
 		if(!$nextSel.length){
 			log("Il n'y a pas d'élément suivant");
