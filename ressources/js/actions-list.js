@@ -110,7 +110,7 @@ $(document.getElementById('playerUI')).on('click', function(e){
 });
 
 $("body").on("keydown", function(e){
-	if(e.key.toLowerCase() === "enter" && $(this).hasClass("player") && !$(document.getElementById("playerBottomBanner")).is(":visible")){
+	if(["enter","tab"].indexOf(e.key.toLowerCase()) !== -1 && $(this).hasClass("player") && !$(document.getElementById("playerBottomBanner")).is(":visible")){
 		InfoBanner.show();
 		Navigation.moveSelecteur(document.getElementById("playerClose"));
 	}
