@@ -1,6 +1,6 @@
 var Config = {
     "enableLog": true,
-	"appVersion":"0.12",
+	"appVersion":"0.13",
 	"playerTimeout":30,
     "infoBannerDelayToHide":5,
 	"jsonTimeout":30,
