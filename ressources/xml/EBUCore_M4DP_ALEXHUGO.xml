@@ -45,6 +45,7 @@
                             <ebucore:organisationName>FTVID</ebucore:organisationName>
                         </ebucore:organisationDetails>
                         <ebucore:role typeLabel="Broadcaster / diffusion Media4Dplayer"/>
+					</ebucore:affiliation>
                 </ebucore:contactDetails>
                 <ebucore:role typeLabel="Producteur"/>
             </ebucore:contributor>
@@ -58,6 +59,7 @@
                             <ebucore:organisationName>MFP</ebucore:organisationName>
                         </ebucore:organisationDetails>
                         <ebucore:role typeLabel="ST producer"/>
+					</ebucore:affiliation>
                 </ebucore:contactDetails>
                 <ebucore:role typeLabel="ST author"/>
             </ebucore:contributor>
@@ -71,6 +73,7 @@
                             <ebucore:organisationName>MFP</ebucore:organisationName>
                         </ebucore:organisationDetails>
                         <ebucore:role typeLabel="AD producer"/>
+					</ebucore:affiliation>
                 </ebucore:contactDetails>
                 <ebucore:role typeLabel="AD author"/>
             </ebucore:contributor>

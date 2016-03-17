@@ -194,7 +194,7 @@ Model.getProgramDetails = function(xml){
 			
 			var convertTrackLanguage = function(value, isFiveDotOne){
 				value = typeOf(value) === "string" ? value.toLowerCase() : "";
-				var values = {fra:"Français"};
+				var values = {fra:"Français",und:"Indéterminé"};
 				var lang = values[value] ? values[value] : value;
 				if(isFiveDotOne){
 					lang+= " 5.1";
@@ -205,7 +205,7 @@ Model.getProgramDetails = function(xml){
 			// Main
 			var $data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"Main"})),
 				$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-			if($data.length){
+			if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
 				data.dataMain = getData($audioFormat);
 				data.dataMain.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 				data.dataMain.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"));
@@ -213,7 +213,7 @@ Model.getProgramDetails = function(xml){
 			
 			// LS
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"SL"}));
-			if($data.length){
+			if($data.length && $data.attr("videoPresenceFlag") === "true"){
 				data.dataLS = {
 					url:getElementFromXML($data, "locator", "ebucore").text().trim()
 				};
@@ -222,7 +222,7 @@ Model.getProgramDetails = function(xml){
 			// AD
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"AD"}));
 			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-			if($data.length){
+			if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
 				data.dataAD = getData($audioFormat);
 				data.dataAD.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 				data.dataAD.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"));
@@ -240,7 +240,7 @@ Model.getProgramDetails = function(xml){
 			// EA
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"EA3"}));
 			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-			if($data.length){
+			if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
 				data.dataEA = getData($audioFormat);
 				data.dataEA.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 				data.dataEA.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
@@ -248,20 +248,21 @@ Model.getProgramDetails = function(xml){
 			
 			// DI
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"DI"}));
-			if($data.length){
-				data.dataDI = getData(getElementFromXML($data, "audioFormat", "ebucore"));
+			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
+			if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
+				data.dataDI = getData($audioFormat);
 				data.dataDI.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 			}
 			
 			// Pour le 5.1; les dialogues et l'ambiance incluent
 			// MC
-			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"MC"}));
+			/*$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"MC"}));
 			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
 			if($data.length){
 				data.dataMC = getData($audioFormat);
 				data.dataMC.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 				data.dataMC.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
-			}
+			}*/
 		}
 		return data;
 	};

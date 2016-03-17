@@ -78,7 +78,7 @@ Dashboard.generate = function(){
 		$ctn.children(".ls").show();
 	}
 	
-	if(mediaData.video.links.dataSub && mediaData.video.links.dataSub.url){
+	if(typeOf(mediaData.video.subtitlesList) === "array" && mediaData.video.subtitlesList.length){
 		$ctn.children(".subtitle").show();
 	}
 	

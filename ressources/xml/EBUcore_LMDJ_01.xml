@@ -186,7 +186,7 @@
             </ebucore:format>
             
             <!-- NEW ! Type et URL du fichier associé SL (Sign Language) -->
-            <ebucore:format formatName="SL">
+            <ebucore:format formatName="SL" videoPresenceFlag="true">
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
