@@ -83,10 +83,10 @@ Settings.init.audio = function(){
 	this.audio.elevationLevel($(document.getElementById("dialogues-elevation-level")), getHtmlStorage("dialoguesElevationLevel") || Player.dialoguesElevationLevel);
 	
 	/* La zone des commentaires */
-	this.audio.azimDistance($(document.getElementById("comments-spatialisation-zone")), getHtmlStorage("commentsDistanceAzimPosition"));
+	this.audio.azimDistance($(document.getElementById("comments-spatialisation-zone")));
 	
 	/* La zone des dialogues */
-	this.audio.azimDistance($(document.getElementById("dialogues-spatialisation-zone")), getHtmlStorage("dialoguesDistanceAzimPosition"));
+	this.audio.azimDistance($(document.getElementById("dialogues-spatialisation-zone")));
 };
 
 /**
@@ -155,23 +155,27 @@ Settings.init.audio.elevationLevel = function($slider, lvl, type){
  * @param {Object} callbackList Contains a success and error callback
  */
 
-Settings.init.audio.azimDistance = function($drag, positions){
+Settings.init.audio.azimDistance = function($drag){
 	if($($drag).length){
+
+		var minDistance = Settings.minDistance;		
+		function getDistance(d, rangePx, rangeMeter){
+			var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
+			return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
+		}
+		var canvas = {
+			width: $drag.parent().width(),
+			height: $drag.parent().height(),
+			top: 0,
+			left: 0
+		};
+		canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
+		canvas.radius = canvas.width / 2;
+				
 		var _onDrag = function(e, ui){
 			
 			var type = $(this).data("type");
-			if(["commentary", "dialogues"].indexOf(type) !== -1){
-
-				var minDistance = Settings.minDistance,
-					$ctn = $(this).parent(),
-					canvas = {
-					width: $ctn.width(),
-					height: $ctn.height(),
-					top: 0,
-					left: 0
-				};
-				canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
-				canvas.radius = canvas.width / 2;			
+			if(["commentary", "dialogues"].indexOf(type) !== -1){				
 
 				function limit(x, y){
 					var dist = distance([x, y], canvas.center);
@@ -203,13 +207,9 @@ Settings.init.audio.azimDistance = function($drag, positions){
 				ui.position.top = result.y;
 
 				// Récupère la distance
-				function getDistanceInMeter(d, rangePx, rangeMeter){
-					var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
-					return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
-				}
 				var dist = distance([result.x, result.y], canvas.center);
 				var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
-				var distanceMeter = getDistanceInMeter(dist2, [minDistance, canvas.radius], Player.distanceRange);
+				var distanceMeter = getDistance(dist2, [minDistance, canvas.radius], Player.distanceRange);
 				Settings.change.audioDistance(distanceMeter, this);
 				//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
 
@@ -230,19 +230,40 @@ Settings.init.audio.azimDistance = function($drag, positions){
 				Settings.change.audioAzim(azim, this);
 				//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
 
-				// Mémorise la position
-				setHtmlStorage(type === "commentary" ? "commentsDistanceAzimPosition" : "dialoguesDistanceAzimPosition", JSON.stringify(ui.position));
 				log(type + " > distance = "+distanceMeter+"m; azim = " + azim + "°");				
 			}
 		};
 
-		if(positions){
-			positions = JSON.parse(positions);
+		var azim, dist;
+		if(getHtmlStorage("commentsAzim") && getHtmlStorage("commentsDistance")){
+			if($drag.data("type") === "commentary"){
+				azim = getHtmlStorage("commentsAzim");
+				dist = getHtmlStorage("commentsDistance");
+
+			}else{
+				azim = getHtmlStorage("dialoguesAzim");
+				dist = getHtmlStorage("dialoguesDistance");
+			}
+			
 		}else{
-			positions = {top:92,left:127};
+			if($drag.data("type") === "commentary"){
+				azim = Player.commentsAzim;
+				dist = Player.commentsDistance;
+
+			}else{
+				azim = Player.dialoguesAzim;
+				dist = Player.dialoguesDistance;
+			}
 		}
+			
+		dist = getDistance(dist, Player.distanceRange, [minDistance, canvas.radius]);
+		var acos = azim * Math.PI / Player.azimRadius;
+		var cosinus = Math.cos(acos);
+		var sinus = Math.sin(acos);
+		var top = -cosinus * dist + canvas.center[1];
+		var left = sinus * dist + canvas.center[0];
 		
-		$drag.css(positions).draggable({
+		$drag.css({top:top,left:left}).draggable({
 			scroll:false,
 			drag: _onDrag
 		});
