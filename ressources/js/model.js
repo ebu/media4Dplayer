@@ -285,7 +285,7 @@ Model.getProgramDetails = function(xml){
 		"thumbnail":"ressources/img/temp/programs/LMDJ-thumb.png",
 		"picture": "ressources/img/temp/programs/LMDJ.png",
 		"synopsis": getTextFromElement(getElementFromXML(xml, "description", "ebucore", {type:"typeLabel", value:"Synopsis"})),
-		"relatedContent":[{
+		"relatedContent":[/*{
 			   "title": "Le Monde de Jamy : A couper le souffle.",
 			   "subtitle": "Des forêts et des hommes",
 			   "picture": "ressources/img/temp/related/icone_pt_video_soufle.png"
@@ -297,7 +297,7 @@ Model.getProgramDetails = function(xml){
 			   "title": "Attention sangsue !",
 			   "subtitle": "Des forêts et des hommes",
 			   "picture": "ressources/img/temp/related/icone_pt_video_sangsue.png"
-		}]
+		}*/]
 	};
 
 	program.video = {

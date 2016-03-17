@@ -42,7 +42,7 @@ API.getAppsList = function(url, callback_function){
  * @param {Function} callback_function The function which will be triggered after receiving data
  */
 
-API.getAppPlaylistsOfUser = function(url, appIndex, callback_function){
+API.getAppPlaylistsOfUser = function(urls, appIndex, callback_function){
 	/*if(json.cache["programs"] && json.cache["programs"].appIndex === appIndex){
 		callback_function(json.cache["programs"]);
 		
@@ -50,7 +50,6 @@ API.getAppPlaylistsOfUser = function(url, appIndex, callback_function){
 		json.load({url:url, callback:function(data, jqXhr){
 			Model.getAppPlaylistsOfUser(data, jqXhr, callback_function);
 		}, dataType:"xml",contentType:"text/xml; charset=utf-8"});*/
-		var urls = ["ressources/xml/EBUcore_LMDJ_01.xml", "ressources/xml/EBUCore_M4DP_METEO.xml"];
 		var def = this.getMultipleJSON(urls);
 		$.when.apply($, def)
 			.then(function(){
