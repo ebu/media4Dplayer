@@ -6,7 +6,7 @@
 	},{
 		"title":"pluzz",
 		"picture":"ressources/img/temp/home/pluzz.png",
-		"userProgramsListUrl":"ressources/xml/EBUCore_M4DP_ALEXHUGO.xml"
+		"userProgramsListUrl":"ressources/json/programs_pluzz.json"
 	},{
 		"title":"lesite.tv",
 		"picture":"ressources/img/temp/home/lesitetv.png",

@@ -669,10 +669,10 @@ var getWSResponseForMultipleRequests = function(data, l, noError){
 			return data[i][2] || data[2];
 		}
 		
-		if(typeOf(data[i]) === "array" && data[i][1] === "success" && typeOf(data[i][0]) === "object"){
+		if(typeOf(data[i]) === "array" && data[i][1] === "success" && data[i][0]){
 			dataList.push(data[i][0]);
 
-		}else if(l === 1 && typeOf(data[0]) === "object"){
+		}else if(l === 1 && data[0]){
 			dataList.push(data[0]);
 		}
 	}
@@ -865,7 +865,7 @@ var getElementFromXML = function(item, ns, prefix, attr){
 };
 
 var getTextFromElement = function($el){
-	return $el.length ? $el.text().trim() : "";
+	return $($el).length ? $el.text().trim() : "";
 };
 
 function checkMediaControllerSupport() {

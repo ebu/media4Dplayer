@@ -25,13 +25,12 @@ Model.getAppsList = function(data, jqXHR, callback){
  * @param {Function} callback The function which will be triggered after data processing
  */
 
-Model.getAppPlaylistsOfUser = function(xml, jqXHR, callback){
-    if (jqXHR.status === 200) {
+Model.getAppPlaylistsOfUser = function(data, jqXHR, callback){
+    if (typeOf(data) === "array") {
 
-        if ((typeOf(xml) === "document" || typeOf(xml) === "xmldocument") && xml.getElementsByTagName('ebucore:ebuCoreMain')) {
            callback({
 			   favorites:[
-				   this.getProgramDetails(xml),{
+				   this.getProgramDetails(data[0]),{
 			"title": "Le JT de France 2",
 			"subtitle": "JT du 20h du mercredi 10 Février 2016",
 			"detail": "Émission du 10 Février 2016",
@@ -112,12 +111,10 @@ Model.getAppPlaylistsOfUser = function(xml, jqXHR, callback){
 					dataDI:{}
 				}
 			}
-		}]}, jqXHR);
-        } else {
-			callback(null, jqXHR);
-        }
+		}, this.getProgramDetails(data[1])]}, jqXHR);
     } else {
-            log("Subtitles.load.callback; status = " + jqXHR.status + " : " + jqXHR.statusText, "error");
+		callback(null, jqXHR);
+        log("Subtitles.load.callback; status = " + jqXHR.status + " : " + jqXHR.statusText, "error");
     }
 };
 
@@ -130,17 +127,21 @@ Model.getAppPlaylistsOfUser = function(xml, jqXHR, callback){
  */
 
 Model.getProgramDetails = function(xml){
+	if(!((typeOf(xml) === "document" || typeOf(xml) === "xmldocument") && xml.getElementsByTagName('ebucore:ebuCoreMain'))){
+		return {};
+	}
+	
 	var getDetails = function(programType, startDate, duration){
-		
+
 		var type = programType || "Émission";
-		
+
 		if($(startDate).length && $(startDate).attr("startDate")){
 			var stringDate = $(startDate).attr("startDate").split("-");
 			stringDate[2] = stringDate[2].split("+")[0];
 			var date = new Date(stringDate[0], stringDate[1], stringDate[2]);
 			var formatedDate = getStringDate(date.getFullYear(), date.getMonth()-1, date.getDate());			
 		}
-		
+
 		var durationMin = "";
 		if($(duration).length && $(duration).children().length){
 			var stringDuration = $(duration).children().text().split(":"), hasHour, hasMin;
@@ -149,18 +150,18 @@ Model.getProgramDetails = function(xml){
 				hasHour = true;
 				durationMin = durationMin + (parseInt(stringDuration[0],10) > 1 ? parseInt(stringDuration[0],10) + " heures" : parseInt(stringDuration[0],10) + " heure");
 			}
-			
+
 			if(parseInt(stringDuration[1],10)){
 				hasMin = true;
-				
+
 				if(hasHour){
 					durationMin = durationMin + " ";
 				}
 				durationMin = durationMin + (parseInt(stringDuration[1],10) > 1 ? parseInt(stringDuration[1],10) + " minutes" : parseInt(stringDuration[1],10) + " minute");
 			}
-			
+
 			if(parseInt(stringDuration[2],10)){
-				
+
 				if(hasMin){
 					durationMin = durationMin + " ";
 				}
@@ -179,9 +180,9 @@ Model.getProgramDetails = function(xml){
 			dataDI:{},
 			dataMC:{}
 		};
-		
+
 		if($(ctn).length){
-			
+
 			var getData = function($data){
 				var data = {};
 				$data.children().each(function(){
@@ -191,7 +192,7 @@ Model.getProgramDetails = function(xml){
 				});
 				return data;
 			};
-			
+
 			var convertTrackLanguage = function(value, isFiveDotOne){
 				value = typeOf(value) === "string" ? value.toLowerCase() : "";
 				var values = {fra:"Français",und:"Indéterminé"};
@@ -201,7 +202,7 @@ Model.getProgramDetails = function(xml){
 				}
 				return lang;
 			};
-			
+
 			// Main
 			var $data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"Main"})),
 				$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
@@ -210,7 +211,7 @@ Model.getProgramDetails = function(xml){
 				data.dataMain.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 				data.dataMain.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"));
 			}
-			
+
 			// LS
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"SL"}));
 			if($data.length && $data.attr("videoPresenceFlag") === "true"){
@@ -218,7 +219,7 @@ Model.getProgramDetails = function(xml){
 					url:getElementFromXML($data, "locator", "ebucore").text().trim()
 				};
 			}
-			
+
 			// AD
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"AD"}));
 			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
@@ -227,7 +228,7 @@ Model.getProgramDetails = function(xml){
 				data.dataAD.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 				data.dataAD.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"));
 			}
-			
+
 			// SUB
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"TTML"}));
 			if($data.length){
@@ -235,7 +236,7 @@ Model.getProgramDetails = function(xml){
 					url:getElementFromXML($data, "locator", "ebucore").text().trim()
 				};
 			}
-			
+
 			// Pour le 5.1; les dialogues et l'ambiance sont séparés. Il faut donc récupérer les 2 sources
 			// EA
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"EA3"}));
@@ -245,7 +246,7 @@ Model.getProgramDetails = function(xml){
 				data.dataEA.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 				data.dataEA.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
 			}
-			
+
 			// DI
 			$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"DI"}));
 			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
@@ -253,7 +254,7 @@ Model.getProgramDetails = function(xml){
 				data.dataDI = getData($audioFormat);
 				data.dataDI.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 			}
-			
+
 			// Pour le 5.1; les dialogues et l'ambiance incluent
 			// MC
 			/*$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"MC"}));
@@ -266,17 +267,17 @@ Model.getProgramDetails = function(xml){
 		}
 		return data;
 	};
-	
+
 	var getAudiosList = function(data){
 		var newList = [];
 		newList.push(data.dataMain.lang);
-		
+
 		if(data.dataEA.lang || data.dataMC.lang){
 			newList.push(data.dataEA.lang || data.dataMC.lang);
 		}
 		return newList;
 	};
-	
+
 	var program = {
 		"title": getTextFromElement(getElementFromXML(xml, "title", "dc")),
 		"subtitle": getTextFromElement(getElementFromXML(xml, "alternativeTitle", "ebucore", {type:"typeLabel", value:"EpisodeTitle"})),
@@ -298,14 +299,14 @@ Model.getProgramDetails = function(xml){
 			   "picture": "ressources/img/temp/related/icone_pt_video_sangsue.png"
 		}]
 	};
-	
+
 	program.video = {
 		"links":getLinkDetails(getElementFromXML(xml, "part", "ebucore", {type:"partName", value:"Links"})),
 		"subtitlesList":["Français"],
 		"audioDescriptions":[{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-ad.mpd"}],
 		"ls":[{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}]
 	};
-	
+
 	program.video.audiosList = getAudiosList(program.video.links);	
 	return program;
 };

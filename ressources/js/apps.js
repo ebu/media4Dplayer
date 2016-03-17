@@ -4,7 +4,7 @@ var Apps = {
 		appIndex:null,
 		list:{},
 		
-		limitByPage:4,
+		limitByPage:5,
 		limitByPageSM:8,
 		start:0,
 		playlistType:null

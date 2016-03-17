@@ -43,14 +43,22 @@ API.getAppsList = function(url, callback_function){
  */
 
 API.getAppPlaylistsOfUser = function(url, appIndex, callback_function){
-	if(json.cache["programs"] && json.cache["programs"].appIndex === appIndex){
+	/*if(json.cache["programs"] && json.cache["programs"].appIndex === appIndex){
 		callback_function(json.cache["programs"]);
 		
 	}else{
 		json.load({url:url, callback:function(data, jqXhr){
 			Model.getAppPlaylistsOfUser(data, jqXhr, callback_function);
-		}, dataType:"xml",contentType:"text/xml; charset=utf-8"});
-	}
+		}, dataType:"xml",contentType:"text/xml; charset=utf-8"});*/
+		var urls = ["ressources/xml/EBUcore_LMDJ_01.xml", "ressources/xml/EBUCore_M4DP_METEO.xml"];
+		var def = this.getMultipleJSON(urls);
+		$.when.apply($, def)
+			.then(function(){
+			Model.getAppPlaylistsOfUser(getWSResponseForMultipleRequests(arguments, urls.length), null, callback_function);
+		}, function(){
+			callback_function();
+		});		
+	//}
 };
 
 																	/* **********************/

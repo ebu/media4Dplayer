@@ -92,9 +92,10 @@ Player.load = function(videoData, callback, onClose){
 
 		Media.LSFEnabled = !getHtmlStorage("LSFDisabled") && Media.links.dataLS && Media.links.dataLS.url ? true : false;
 		Media.audioEnabled = !getHtmlStorage("audioDisabled") && Media.links.dataMain && Media.links.dataMain.url ? true : false;
-		Media.subtitleEnabled = !getHtmlStorage("subtitlesDisabled") && typeOf(Media.video.subtitlesList) === "array" && Media.video.subtitlesList.length ? true : false;
+		Media.subtitleEnabled = !getHtmlStorage("subtitlesDisabled") && typeOf(Media.subtitlesList) === "array" && Media.subtitlesList.length ? true : false;
 		Media.audioDescriptionEnabled = !getHtmlStorage("audioDescriptionDisabled") && Media.links.dataAD && Media.links.dataAD.url ? true : false;
-
+		
+		this.mode = Media.audiosList[1] ? "5.1" : "stereo";
 		Media.currentAudioIndex = this.mode === "5.1" && Media.audiosList[1] ? 1 : 0;
 		Media.currentAudioDescriptionIndex = 0;
 		Media.currentLSFIndex = 0;
