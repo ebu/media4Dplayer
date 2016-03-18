@@ -62,7 +62,10 @@ var Player = {
 	binauralEQ:false,
 	catalogue:[],
 	selectedProfil:null,
-	config:null
+	config:null,
+	attackTime:10,
+	releaseTime:150,
+	gainOffset:2
 };
 
 /**
@@ -349,6 +352,11 @@ Player.launch = function(){
 			/// (process 10 channels in total)
 			streamSelector.connect( smartFader._input );
 		}
+		
+		smartFader.setAttackTimeFromGui( {value:this.attackTime, min:0,max:100} );
+		smartFader.setReleaseTimeFromGui( {value:this.releaseTime, min:0,max:100} );
+		multichannelSpatialiser.offsetGain = this.gainOffset;
+		objectSpatialiserAndMixer.offsetGain = this.gainOffset;
 	}
 	
 	this.playerManager.controller.addEventListener('playing', function(e) {
@@ -612,23 +620,6 @@ Player.initSubtitlesParams = function(){
 		$container.css("top", top + "%")
 			.css("width", "100%");
 	}
-};	
-
-Player.initSmartFader = function(){
-	var minFader = 0;
-	var maxFader = 100;
-
-	/// default value in dB
-	var value = 0.0;
-
-	//const [minValue, maxValue] = M4DPAudioModules.SmartFader.dBRange();
-	var minValue = -60;
-	var maxValue = 8;
-
-	/// scale from dB to GUI
-	var valueFader = M4DPAudioModules.utilities.scale( value, minValue, maxValue, minFader, maxFader );
-
-	this.setVolume(valueFader);	
 };
 
 Player.updateWAAConnections = function(){
