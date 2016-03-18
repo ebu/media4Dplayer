@@ -77,7 +77,7 @@
             </ebucore:date>
             <ebucore:type>
                 <ebucore:genre typeLabel="UNI" typeDefinition="ProgramType"/>
-                <ebucore:genre typeLink="info" typeLabel="Informations et actualités" typeDefinition="ProgramGenre"/>
+                <ebucore:genre typeLink="info" typeLabel="Informations &amp; actualités" typeDefinition="ProgramGenre"/>
             </ebucore:type>
             <ebucore:identifier typeLabel="FTV_UID">
                 <dc:identifier xsi:type="ebucore:elementType">abcdefghijklmnopqrstuvwxyz0123456789</dc:identifier>
@@ -371,7 +371,7 @@
                     <ebucore:role typeLabel="David"/>
                 </ebucore:contributor>
                 <ebucore:type>
-                    <ebucore:genre typeLink="info" typeLabel="Informations et actualités" typeDefinition="SequenceGenre"/>
+                    <ebucore:genre typeLink="info" typeLabel="Informations &amp; actualités" typeDefinition="SequenceGenre"/>
                 </ebucore:type>
                 <ebucore:coverage>
                     <ebucore:temporal>
@@ -401,7 +401,7 @@
                         <ebucore:containerEncoding formatLabel="PNG"/>
                     </ebucore:containerFormat>
                     <ebucore:fileName>abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.jpg</ebucore:fileName>
-                    <ebucore:locator>http://194.51.35.43:25000/Media4Dplayer/02_JT_20h00/Thumbnails/abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.png</ebucore:locator>
+                    <ebucore:locator>https://194.51.35.43:25001/fbdownload/abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.png?dlink=2f4d656469613444706c617965722f30325f4a545f32306830302f5468756d626e61696c732f6162636465666768696a6b6c6d6e6f707172737475767778797a303132333435363738392d5365715f3030303030302e706e67</ebucore:locator>
                 </ebucore:format>
                 <ebucore:partStartTime>
                     <ebucore:timecode>00:00:00:00000</ebucore:timecode>
@@ -410,6 +410,6 @@
                     <ebucore:timecode>00:05:25:14</ebucore:timecode>
                 </ebucore:partDuration>
             </ebucore:part>
-		</ebucore:part>
+        </ebucore:part>
     </ebucore:coreMetadata>
 </ebucore:ebuCoreMain>
