@@ -1,22 +1,22 @@
-<?xml version="1.4" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.7" encoding="UTF-8" standalone="yes"?>
 <ebucore:ebuCoreMain xmlns:ebucore="urn:ebu:metadata-schema:ebuCore_2015" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ebucore:coreMetadata>
         <ebucore:part partName="EditorialMetadata">
             <ebucore:title typeLabel="ProgramTitle">
-                <dc:title xsi:type="ebucore:elementType" xml:lang="fr">Alex Hugo</dc:title>
+                <dc:title xsi:type="ebucore:elementType" xml:lang="fr">Le Monde de Jamy</dc:title>
             </ebucore:title>
             <ebucore:alternativeTitle typeLabel="EpisodeTitle">
-                <dc:title xml:lang="fr">Comme un oiseau sans ailes</dc:title>
+                <dc:title xml:lang="fr">Des volcans et des hommes</dc:title>
             </ebucore:alternativeTitle>
             <ebucore:alternativeTitle typeLabel="EpisodeNumber">
-                <dc:title xml:lang="fr">S01E02</dc:title>
+                <dc:title xml:lang="fr">S01E01</dc:title>
             </ebucore:alternativeTitle>
             <ebucore:description typeLabel="Synopsis">
-                <dc:description xsi:type="ebucore:elementType" xml:lang="fr">En pleine montagne, Lisa Leblanc saute à l’élastique et s’écrase. Tout indique un suicide, mais très vite, Alex Hugo, qui connait la jeune femme, se rend compte qu’elle a peut-être été poussée à se tuer. De plus, quelqu’un a l’air d’avoir filmé la chute de très, très près. Tandis qu’Angelo accueille quelques jours son neveu qui tourne mal et va lui causer quelques soucis au village, Alex mène l’enquête, et ses doutes se confirment lorsqu’il se rend compte qu’une autre femme s’est décrochée d’un parapente sur les Calanques de Marseille, quelques semaines plus tôt. Là aussi, quelqu’un filmait. Le dossier de ce suicide des Calanques est géré par la Criminelle de Marseille. Alex se remet donc en contact avec Caroline Wacquier, et les deux vont bosser de concert pour résoudre cette étrange affaire ; les deux victimes étaient-elles sous influence ?</dc:description>
+                <dc:description xsi:type="ebucore:elementType" xml:lang="fr">Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite. Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux.Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps.Toujours attentif pour rendre simple et intelligible les phénomènes les plus complexes, c’est un Jamy impliqué que nous découvrons au cours de ce voyage plein de surprises et de rebondissements, un Jamy aventurier aussi qui ne craint pas de s'approcher au plus près de la lave, d’un spectaculaire volcan d’Éthiopie ou de se poser sur un cratère instable de l’île de Montserrat.L’Éthiopie, les Antilles, l’Italie du Sud et Hawaï, autant d’étapes sur un parcours exceptionnel qui conjugue passion, émotion et envie d’apprendre et de transmettre. Un véritable tour du monde filmé comme un grand spectacle de la nature.</dc:description>
             </ebucore:description>
             <ebucore:publisher>
                 <ebucore:organisationDetails>
-                    <ebucore:organisationName>F2</ebucore:organisationName>
+                    <ebucore:organisationName>F3</ebucore:organisationName>
                 </ebucore:organisationDetails>
                 <ebucore:role typeLabel="Broadcaster / diffusion linéaire"/>
             </ebucore:publisher>
@@ -28,8 +28,8 @@
             </ebucore:contributor>
             <ebucore:contributor>
                 <ebucore:contactDetails>
-                    <ebucore:givenName>Olivier</ebucore:givenName>
-                    <ebucore:familyName>LANGLOIS</ebucore:familyName>
+                    <ebucore:givenName>Charles-Antoine</ebucore:givenName>
+                    <ebucore:familyName>DE ROUVRE</ebucore:familyName>
                     <ebucore:salutation>M</ebucore:salutation>
                 </ebucore:contactDetails>
                 <ebucore:role typeLabel="Réalisateur"/>
@@ -48,6 +48,20 @@
                     </ebucore:affiliation>
                 </ebucore:contactDetails>
                 <ebucore:role typeLabel="Producteur"/>
+            </ebucore:contributor>
+            <ebucore:contributor>
+                <ebucore:contactDetails>
+                    <ebucore:givenName>Aliza</ebucore:givenName>
+                    <ebucore:familyName>M'SIKA</ebucore:familyName>
+                    <ebucore:salutation>Mme</ebucore:salutation>
+                    <ebucore:affiliation>
+                        <ebucore:organisationDetails>
+                            <ebucore:organisationName>LangueTurquoise</ebucore:organisationName>
+                        </ebucore:organisationDetails>
+                        <ebucore:role typeLabel="SL producer"/>
+                    </ebucore:affiliation>
+                </ebucore:contactDetails>
+                <ebucore:role typeLabel="SL interpreter"/>
             </ebucore:contributor>
             <ebucore:contributor>
                 <ebucore:contactDetails>
@@ -81,31 +95,31 @@
                 <ebucore:copyrighted startYear="2015"/>
             </ebucore:date>
             <ebucore:date>
-                <ebucore:alternative startDate="2015-09-02+01:00" typeLabel="DateDiffusion"/>
+                <ebucore:alternative startDate="2015-02-16+01:00" typeLabel="DateDiffusion"/>
             </ebucore:date>
             <ebucore:type>
                 <ebucore:genre typeLabel="UNI" typeDefinition="ProgramType"/>
-                <ebucore:genre typeLink="seriefiction" typeLabel="Série ou fiction" typeDefinition="ProgramGenre"/>
+                <ebucore:genre typeLink="documentaire" typeLabel="Documentaire" typeDefinition="ProgramGenre"/>
             </ebucore:type>
             <ebucore:identifier typeLabel="FTV_UID">
                 <dc:identifier xsi:type="ebucore:elementType">abcdefghijklmnopqrstuvwxyz0123456789</dc:identifier>
             </ebucore:identifier>
             <ebucore:identifier typeLabel="Plurimedia_ID">
-                <dc:identifier xsi:type="ebucore:elementType">118809763</dc:identifier>
+                <dc:identifier xsi:type="ebucore:elementType">118809759</dc:identifier>
             </ebucore:identifier>
             <ebucore:rating>
-                <ebucore:ratingValue>-10</ebucore:ratingValue>
-                <ebucore:ratingProvider>
-                    <ebucore:organisationDetails>
-                        <ebucore:organisationName>CSA</ebucore:organisationName>
-                    </ebucore:organisationDetails>
-                </ebucore:ratingProvider>
+               <ebucore:ratingValue>TP</ebucore:ratingValue>
+               <ebucore:ratingProvider>
+                   <ebucore:organisationDetails>
+                    <ebucore:organisationName>CSA</ebucore:organisationName>
+                   </ebucore:organisationDetails>
+               </ebucore:ratingProvider>
             </ebucore:rating>
-        </ebucore:part>
+        </ebucore:part>    
         <ebucore:part partName="Links">
             <ebucore:format formatName="Main">
                 <ebucore:audioFormat audioFormatId="1" audioFormatName="PVF" audioPresenceFlag="true">
-                    <ebucore:audioTrack trackId="5" trackLanguage="FRA"/>
+                    <ebucore:audioTrack trackId="1" trackLanguage="FRA"/>
                     <ebucore:channels>2</ebucore:channels>
                     <ebucore:technicalAttributeString typeLabel="type">Stereo</ebucore:technicalAttributeString>
                     <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R</ebucore:technicalAttributeString>
@@ -113,8 +127,8 @@
                     <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
-                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.1</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-22.1</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-5.1</ebucore:technicalAttributeFloat>
                 </ebucore:audioFormat>
                 <ebucore:subtitlingFormat subtitlingFormatName="TTML" trackId="6" language="FRA" subtitlingPresenceFlag="true">
                 </ebucore:subtitlingFormat>
@@ -122,17 +136,17 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest.mpd</ebucore:locator>
             </ebucore:format>
-            <ebucore:format formatName="SL" videoPresenceFlag="false">
+            <ebucore:format formatName="SL" videoPresenceFlag="true">
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-lsf.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-lsf.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-lsf.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA1">
-                <ebucore:audioFormat audioFormatId="2" audioFormatName="PVF" audioPresenceFlag="true">
+                <ebucore:audioFormat audioFormatId="2" audioFormatName="PVF" audioPresenceFlag="false">
                     <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
                     <ebucore:channels>6</ebucore:channels>
                     <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
@@ -141,14 +155,14 @@
                     <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                    <ebucore:technicalAttributeFloat typeLabel="loudness">-19.2</ebucore:technicalAttributeFloat>
-                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.6</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
                 </ebucore:audioFormat>
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea1.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-ea1.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-ea1.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="AD">
                 <ebucore:audioFormat audioFormatId="3" audioFormatName="PAD" audioPresenceFlag="true">
@@ -160,14 +174,14 @@
                     <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="ambiance">false</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="commentary">true</ebucore:technicalAttributeBoolean>
-                    <ebucore:technicalAttributeFloat typeLabel="loudness">-21.7</ebucore:technicalAttributeFloat>
-                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.8</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.2</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-6.0</ebucore:technicalAttributeFloat>
                 </ebucore:audioFormat>
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ad.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-ad.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-ad.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA2">
                 <ebucore:audioFormat audioFormatId="4" audioFormatName="PVM" audioPresenceFlag="false">
@@ -186,7 +200,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea2.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-ea2.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-ea2.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="DI">
                 <ebucore:audioFormat audioFormatId="5" audioFormatName="PDI" audioPresenceFlag="true">
@@ -198,18 +212,18 @@
                     <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="ambiance">false</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                    <ebucore:technicalAttributeFloat typeLabel="loudness">-21.4</ebucore:technicalAttributeFloat>
-                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-4.3</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-22.7</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-6.1</ebucore:technicalAttributeFloat>
                 </ebucore:audioFormat>
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-di.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-di.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-di.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA3">
                 <ebucore:audioFormat audioFormatId="6" audioFormatName="PVI" audioPresenceFlag="true">
-                    <ebucore:audioTrack trackId="0" trackLanguage="UND"/>
+                    <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
                     <ebucore:channels>6</ebucore:channels>
                     <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
                     <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
@@ -217,17 +231,17 @@
                     <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                    <ebucore:technicalAttributeFloat typeLabel="loudness">-22.2</ebucore:technicalAttributeFloat>
-                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.2</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-19.6</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-5.9</ebucore:technicalAttributeFloat>
                 </ebucore:audioFormat>
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea3.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-ea3.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-ea3.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA4">
-                <ebucore:audioFormat audioFormatId="7" audioFormatName="PMS" audioPresenceFlag="true">
+                <ebucore:audioFormat audioFormatId="7" audioFormatName="PMS" audioPresenceFlag="false">
                     <ebucore:audioTrack trackId="0" trackLanguage="UND"/>
                     <ebucore:channels>6</ebucore:channels>
                     <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
@@ -236,14 +250,14 @@
                     <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
                     <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.5</ebucore:technicalAttributeFloat>
-                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-7.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
                 </ebucore:audioFormat>
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea4.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-ea4.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-LMDJ-ondemand-3lsf/manifest-ea4.mpd</ebucore:locator>
             </ebucore:format>
         </ebucore:part>
         <ebucore:part partName="TechnicalMetadata">
@@ -287,7 +301,7 @@
                     <ebucore:timecode>00:00:00:00000</ebucore:timecode>
                 </ebucore:partStartTime>
                 <ebucore:partDuration>
-                    <ebucore:timecode>01:28:24:20</ebucore:timecode>
+                    <ebucore:timecode>00:09:49:24</ebucore:timecode>
                 </ebucore:partDuration>
             </ebucore:part>
             <ebucore:part partName="Pgm">
@@ -302,9 +316,9 @@
                         <ebucore:audioProgramme audioProgrammeID="APR_1001" audioProgrammeName="PVF" audioProgrammeLanguage="fra">
                             <ebucore:audioContentIDRef>ACO_1001</ebucore:audioContentIDRef>
                             <ebucore:loudnessMetadata>
-                                <ebucore:integratedLoudness>-23.0</ebucore:integratedLoudness>
-                                <ebucore:loudnessRange>15.8</ebucore:loudnessRange>
-                                <ebucore:maxTruePeak>-3.1</ebucore:maxTruePeak>
+                                <ebucore:integratedLoudness>-22.1</ebucore:integratedLoudness>
+                                <ebucore:loudnessRange>15.0</ebucore:loudnessRange>
+                                <ebucore:maxTruePeak>-5.1</ebucore:maxTruePeak>
                             </ebucore:loudnessMetadata>
                         </ebucore:audioProgramme>
                         <ebucore:audioContent audioContentID="ACO_1001" audioContentName="PVF" audioContentLanguage="fra">
@@ -357,7 +371,7 @@
                     <ebucore:timecode>00:00:00:00000</ebucore:timecode>
                 </ebucore:partStartTime>
                 <ebucore:partDuration>
-                    <ebucore:timecode>01:28:24:20</ebucore:timecode>
+                    <ebucore:timecode>00:09:49:24</ebucore:timecode>
                 </ebucore:partDuration>
             </ebucore:part>
         </ebucore:part>
@@ -367,46 +381,36 @@
                     <dc:title xsi:type="ebucore:elementType" xml:lang="fr">Programme complet</dc:title>
                 </ebucore:title>
                 <ebucore:description typeLabel="SequenceSynopsis">
-                    <dc:description xsi:type="ebucore:elementType" xml:lang="fr">En pleine montagne, Lisa Leblanc saute à l’élastique et s’écrase. Tout indique un suicide, mais très vite, Alex Hugo, qui connait la jeune femme, se rend compte qu’elle a peut-être été poussée à se tuer. De plus, quelqu’un a l’air d’avoir filmé la chute de très, très près. Tandis qu’Angelo accueille quelques jours son neveu qui tourne mal et va lui causer quelques soucis au village, Alex mène l’enquête, et ses doutes se confirment lorsqu’il se rend compte qu’une autre femme s’est décrochée d’un parapente sur les Calanques de Marseille, quelques semaines plus tôt. Là aussi, quelqu’un filmait. Le dossier de ce suicide des Calanques est géré par la Criminelle de Marseille. Alex se remet donc en contact avec Caroline Wacquier, et les deux vont bosser de concert pour résoudre cette étrange affaire ; les deux victimes étaient-elles sous influence ?</dc:description>
+                    <dc:description xsi:type="ebucore:elementType" xml:lang="fr">Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite. Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux.Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps.Toujours attentif pour rendre simple et intelligible les phénomènes les plus complexes, c’est un Jamy impliqué que nous découvrons au cours de ce voyage plein de surprises et de rebondissements, un Jamy aventurier aussi qui ne craint pas de s'approcher au plus près de la lave, d’un spectaculaire volcan d’Éthiopie ou de se poser sur un cratère instable de l’île de Montserrat.L’Éthiopie, les Antilles, l’Italie du Sud et Hawaï, autant d’étapes sur un parcours exceptionnel qui conjugue passion, émotion et envie d’apprendre et de transmettre. Un véritable tour du monde filmé comme un grand spectacle de la nature.</dc:description>
                 </ebucore:description>
                 <ebucore:contributor>
                     <ebucore:contactDetails>
-                        <ebucore:givenName>Samuel</ebucore:givenName>
-                        <ebucore:familyName>Le Bihan</ebucore:familyName>
+                        <ebucore:givenName>Jamy</ebucore:givenName>
+                        <ebucore:familyName>Gourmaud</ebucore:familyName>
                         <ebucore:salutation>M</ebucore:salutation>
-                        <ebucore:birthDate>1965-11-02+01:00</ebucore:birthDate>
                     </ebucore:contactDetails>
-                    <ebucore:role typeLabel="Alex Hugo"/>
-                </ebucore:contributor>
-                <ebucore:contributor>
-                    <ebucore:contactDetails>
-                        <ebucore:givenName>Lionnel</ebucore:givenName>
-                        <ebucore:familyName>Astier</ebucore:familyName>
-                        <ebucore:salutation>M</ebucore:salutation>
-                        <ebucore:birthDate>1953-10-31+01:00</ebucore:birthDate>
-                    </ebucore:contactDetails>
-                    <ebucore:role typeLabel="Angelo Batalla"/>
+                    <ebucore:role typeLabel="Jamy"/>
                 </ebucore:contributor>
                 <ebucore:type>
-                    <ebucore:genre typeLink="seriefiction" typeLabel="Série ou fiction" typeDefinition="SequenceGenre"/>
+                    <ebucore:genre typeLink="documentaire" typeLabel="Documentaire" typeDefinition="SequenceGenre"/>
                 </ebucore:type>
                 <ebucore:coverage>
                     <ebucore:temporal>
-                        <ebucore:PeriodOfTime periodId="1" startDate="2015-07-05"/>
+                        <ebucore:PeriodOfTime periodId="7" startDate="2015-07-05"/>
                     </ebucore:temporal>
                     <ebucore:spatial>
                         <ebucore:location typeLabel="real" typeLanguage="FRA">
-                            <ebucore:name>Marseille</ebucore:name>
-                            <ebucore:description>Le tournage a été effectué dans le parc national des Écrins, à Orcières, Le Monêtier-les-Bains, Villar-Saint-Pancrace, Briançon, Marseille (notamment au port maritime), et dans le parc national des Calanques</ebucore:description>
+                            <ebucore:name>Hawaii</ebucore:name>
+                            <ebucore:description>…à proximité des volcans</ebucore:description>
                             <ebucore:coordinates>
-                                <ebucore:posy>43.296950</ebucore:posy>
-                                <ebucore:posx>5.381070</ebucore:posx>
+                                <ebucore:posy>xx.xxxxxx</ebucore:posy>
+                                <ebucore:posx>x.xxxxxx</ebucore:posx>
                             </ebucore:coordinates>
-                        </ebucore:location>
+                        </ebucore:location>                       
                     </ebucore:spatial>
                 </ebucore:coverage>
                 <ebucore:rating>
-                    <ebucore:ratingValue>-10</ebucore:ratingValue>
+                    <ebucore:ratingValue>TP</ebucore:ratingValue>
                     <ebucore:ratingProvider>
                         <ebucore:organisationDetails>
                             <ebucore:organisationName>CSA</ebucore:organisationName>
@@ -418,15 +422,15 @@
                         <ebucore:containerEncoding formatLabel="PNG"/>
                     </ebucore:containerFormat>
                     <ebucore:fileName>abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.jpg</ebucore:fileName>
-                    <ebucore:locator>http://194.51.35.43:25000/Media4Dplayer/04_ALEX_HUGO/Thumbnails/abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.png</ebucore:locator>
+                    <ebucore:locator>http://194.51.35.43:25000/Media4Dplayer/00_MONDE_DE_JAMY/Thumbnails/abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.png</ebucore:locator>
                 </ebucore:format>
                 <ebucore:partStartTime>
                     <ebucore:timecode>00:00:00:00000</ebucore:timecode>
                 </ebucore:partStartTime>
                 <ebucore:partDuration>
-                    <ebucore:timecode>01:28:24:20</ebucore:timecode>
+                    <ebucore:timecode>00:09:49:24</ebucore:timecode>
                 </ebucore:partDuration>
-            </ebucore:part>
+            </ebucore:part>    
         </ebucore:part>
     </ebucore:coreMetadata>
 </ebucore:ebuCoreMain>
