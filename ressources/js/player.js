@@ -92,6 +92,10 @@ Player.load = function(videoData, callback, onClose){
 	if(!this.alreadyInit || (videoData.links.dataMain.url !== Media.links.dataMain.url)){
 
 		Media = videoData;
+		
+		if(isEmpty(Media.links.dataMain) || isEmpty(Media.links.dataEA) || isEmpty(Media.links.dataAD) || isEmpty(Media.links.dataDI)){
+			return;
+		}
 
 		Media.LSFEnabled = !getHtmlStorage("LSFDisabled") && Media.links.dataLS && Media.links.dataLS.url ? true : false;
 		Media.audioEnabled = !getHtmlStorage("audioDisabled") && Media.links.dataMain && Media.links.dataMain.url ? true : false;
@@ -225,7 +229,6 @@ Player.launch = function(){
 	}
 
 	if(!this.waaAlreadyInit){
-		this.waaAlreadyInit = true;
 
 		this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 		//log("######### audioContext: " + this.playerManager.audioContext);
@@ -357,6 +360,7 @@ Player.launch = function(){
 		smartFader.setReleaseTimeFromGui( {value:this.releaseTime, min:0,max:100} );
 		multichannelSpatialiser.offsetGain = this.gainOffset;
 		objectSpatialiserAndMixer.offsetGain = this.gainOffset;
+		this.waaAlreadyInit = true;
 	}
 	
 	this.playerManager.controller.addEventListener('playing', function(e) {
