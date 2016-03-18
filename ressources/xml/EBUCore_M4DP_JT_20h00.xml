@@ -77,7 +77,7 @@
             </ebucore:date>
             <ebucore:type>
                 <ebucore:genre typeLabel="UNI" typeDefinition="ProgramType"/>
-                <ebucore:genre typeLink="info" typeLabel="Informations & actualités" typeDefinition="ProgramGenre"/>
+                <ebucore:genre typeLink="info" typeLabel="Informations et actualités" typeDefinition="ProgramGenre"/>
             </ebucore:type>
             <ebucore:identifier typeLabel="FTV_UID">
                 <dc:identifier xsi:type="ebucore:elementType">abcdefghijklmnopqrstuvwxyz0123456789</dc:identifier>
@@ -371,7 +371,7 @@
                     <ebucore:role typeLabel="David"/>
                 </ebucore:contributor>
                 <ebucore:type>
-                    <ebucore:genre typeLink="info" typeLabel="Informations & actualités" typeDefinition="SequenceGenre"/>
+                    <ebucore:genre typeLink="info" typeLabel="Informations et actualités" typeDefinition="SequenceGenre"/>
                 </ebucore:type>
                 <ebucore:coverage>
                     <ebucore:temporal>
@@ -410,5 +410,6 @@
                     <ebucore:timecode>00:05:25:14</ebucore:timecode>
                 </ebucore:partDuration>
             </ebucore:part>
+		</ebucore:part>
     </ebucore:coreMetadata>
 </ebucore:ebuCoreMain>
