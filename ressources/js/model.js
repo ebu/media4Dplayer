@@ -196,13 +196,22 @@ Model.getProgramDetails = function(xml){
 		}
 		return newList;
 	};
+	
+	var getThumbnail = function(ctn){
+		if($(ctn).length){
+			var thumbElement = getElementFromXML(ctn, "locator", "ebucore");
+			if($(thumbElement).length){
+				return $(thumbElement).text();
+			}
+		}
+	};
 
 	var program = {
 		"title": getTextFromElement(getElementFromXML(xml, "title", "dc")),
 		"subtitle": getTextFromElement(getElementFromXML(xml, "alternativeTitle", "ebucore", {type:"typeLabel", value:"EpisodeTitle"})),
 		"detail": getDetails(getTextFromElement(getElementFromXML(xml, "genre", "ebucore", {type:"typeDefinition", value:"ProgramType"})), getElementFromXML(xml, "alternative", "ebucore", {type:"typeLabel", value:"DateDiffusion"}), getElementFromXML(xml, "partDuration", "ebucore")),
-		"thumbnail":"ressources/img/temp/programs/LMDJ-thumb.png",
-		"picture": "ressources/img/temp/programs/LMDJ.png",
+		"thumbnail":getThumbnail(getElementFromXML(xml, "format", "ebucore", {type:"formatName", value:"SequenceThumbnail"})),
+		"picture": getThumbnail(getElementFromXML(xml, "format", "ebucore", {type:"formatName", value:"SequenceThumbnail"})),
 		"synopsis": getTextFromElement(getElementFromXML(xml, "description", "ebucore", {type:"typeLabel", value:"Synopsis"})),
 		"relatedContent":[/*{
 			   "title": "Le Monde de Jamy : A couper le souffle.",

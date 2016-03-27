@@ -94,6 +94,7 @@ h2{font-size:1.6em;font-weight:600}
 .item-playlist{border-color:rgba(0,0,0,0.2);border-style:solid;border-width:0 1px 1px;height:85px;line-height:85px}
 .item-playlist:first-child{border-top-width:1px}
 .item-playlist > div, .item-playlist .thumb{float:left;height:100%}
+.item-playlist .thumb{width: 151px;}
 .item-playlist .delete{width:77px;text-align:center}
 .item-playlist .delete-icon{display:inline-block;vertical-align:middle}
 .item-playlist .item-infos{margin-left:2.5%;width:65%}
@@ -145,7 +146,7 @@ h2{font-size:1.6em;font-weight:600}
 #social-icons .icon img{height:100%}
 #social-icons .icon:first-child{text-align:left;width:45px}
 #social-icons .icon:last-child{border-right:0 none}
-#synopsis-and-social-icons-container h2{font-size:1.8em;text-align:left;margin-top:25px}
+#synopsis-and-social-icons-container h2{font-size:1.8em;text-align:left;margin-top:25px;    padding: 1% 0;}
 .program-date{margin-top:10px;text-transform:uppercase}
 #video-compatibilities-list{height:24px;margin:10px 0}
 .compatibility{float:left;height:100%;margin-right:16px;background-repeat:no-repeat;background-size:contain;width:33px}

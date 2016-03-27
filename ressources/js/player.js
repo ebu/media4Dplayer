@@ -94,6 +94,7 @@ Player.load = function(videoData, callback, onClose){
 		Media = videoData;
 		
 		if(isEmpty(Media.links.dataMain) || isEmpty(Media.links.dataEA) || isEmpty(Media.links.dataAD) || isEmpty(Media.links.dataDI)){
+			log("Lecture annulée car il n'y a pas tout flux audio (isEmpty(Media.links.dataMain)="+isEmpty(Media.links.dataMain)+"; isEmpty(Media.links.dataEA)="+isEmpty(Media.links.dataEA)+";isEmpty(Media.links.dataAD)="+isEmpty(Media.links.dataAD)+";)");
 			return;
 		}
 
