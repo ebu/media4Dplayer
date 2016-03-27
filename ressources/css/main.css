@@ -37,6 +37,7 @@ body > div{font-size:1em}
 a.switch-btn{position:absolute;top:45px;left:45px;padding:10px;margin-left:0}
 .btn{cursor:pointer}
 .hidden{display:none}
+.opaque{opacity: 0.5}
 #appVersion, #noMCSupport{position:absolute;text-align:center;width:100%}
 #appVersion{top:20px}
 #noMCSupport{top:40px;color:#cd0a0a}

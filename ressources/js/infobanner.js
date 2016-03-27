@@ -16,6 +16,7 @@ InfoBanner.reset = function(){
 	$(document.getElementById("playerOptionSubCurrentValue")).empty();
 	$(document.getElementById("playerOptionDescriptionCurrentValue")).empty();
 	$(document.getElementById("playerOptionSigneCurrentValue")).empty();
+	$(document.getElementById("playerOptions")).children(".opaque").removeClass("opaque");
 	
 	this.progressBar.reset();
 	
@@ -58,9 +59,9 @@ InfoBanner.generate = function(){
 		$labelAudio.text("Choix de langue audio : " + none + " sélectionné");
 
 		if(typeOf(Media.audiosList) !== "array" || !Media.audiosList.length){
-			$audio.parent().addClass("hidden");
+			$audio.parent().addClass("opaque");
 		}else{
-			$audio.parent().removeClass("hidden");
+			$audio.parent().removeClass("opaque");
 		}
 	}
 	
@@ -77,7 +78,7 @@ InfoBanner.generate = function(){
 		$labelSubtitle.text("Choix du sous-titre : " + none + " sélectionné");
 		
 		if(typeOf(Media.subtitlesList) !== "array" || !Media.subtitlesList.length){
-			$subtitles.parent().addClass("hidden");
+			$subtitles.parent().addClass("opaque");
 		}
 	}
 	
@@ -94,7 +95,7 @@ InfoBanner.generate = function(){
 		$labelAD.text("Choix de langue pour l'audio description : " + none + " sélectionné");
 
 		if(typeOf(Media.audioDescriptions) !== "array" || !Media.audioDescriptions.length){
-			$ad.parent().addClass("hidden");
+			$ad.parent().addClass("opaque");
 		}
 	}
 	
@@ -111,7 +112,7 @@ InfoBanner.generate = function(){
 		$labelLS.text("Choix de langue pour la langue des signes : " + none + " sélectionné");
 
 		if(typeOf(Media.ls) !== "array" || !Media.ls.length){
-			$ls.parent().addClass("hidden");
+			$ls.parent().addClass("opaque");
 		}
 	}
 	
@@ -212,7 +213,7 @@ InfoBanner.executeMaskingAfterDelay = function(){
  */
 
 InfoBanner.showOptionPopup = function(type, button){
-	if(type && $(button).length && !$(button).hasClass("hidden")){
+	if(type && $(button).length && !$(button).hasClass("opaque")){
 		
 		if(this.isOptionDropDownMenuDisplayed && (type === this.currentOptionDropDownMenu)) {
 			this.hideOptionDropDownMenu();
