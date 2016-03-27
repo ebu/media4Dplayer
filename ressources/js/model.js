@@ -231,7 +231,8 @@ Model.getProgramDetails = function(xml){
 	program.video = {
 		links:getLinkDetails(getElementFromXML(xml, "part", "ebucore", {type:"partName", value:"Links"}))
 	};
-	program.video.subtitlesList = !isEmpty(program.video.links.dataSub) ? ["Français"] : null;
+	//program.video.subtitlesList = !isEmpty(program.video.links.dataSub) ? ["Français"] : null;
+	program.video.subtitlesList = ["Français"];
 	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-ad.mpd"}] : null;
 	program.video.ls = !isEmpty(program.video.links.dataLS) ? [{"lang":"LSF", "url":"http://videos-pmd.francetv.fr/innovation/media4D/m4d--LMDJ4-ondemand/manifest-lsf.mpd"}] : null;
 	program.video.audiosList = getAudiosList(program.video.links);
