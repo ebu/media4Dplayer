@@ -1060,6 +1060,7 @@ Player.activeOptionAudio = function(index) {
 		$textContent.html(Media.audiosList[index]);
 
 	}else{
+		Media.audioEnabled = false;
 		setHtmlStorage("audioDisabled", 1);
 		$(document.getElementById("playerOptionAudioCurrentValue")).html("Aucun");
 		if(Player.mode === "5.1"){

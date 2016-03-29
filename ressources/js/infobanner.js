@@ -3,7 +3,8 @@ var InfoBanner = {
 	timeoutHideBanner:null,
 	isVisible:false,
 	isOptionDropDownMenuDisplayed:false,
-	currentOptionDropDownMenu:""
+	currentOptionDropDownMenu:"",
+	none:"Aucun"
 };
 
 /**
@@ -44,19 +45,16 @@ InfoBanner.load = function(){
 
 InfoBanner.generate = function(){
 	
-	var value, none = "Aucun";
+	var value, none = this.none;
 	
 	// AUDIO
-	var $audio = $(document.getElementById("playerOptionAudioCurrentValue")),
-		$labelAudio = $(document.getElementById("label-option-audio"));
+	var $audio = $(document.getElementById("playerOptionAudioCurrentValue"));
 	if(Media.audioEnabled){
 		value = Media.audiosList[Media.currentAudioIndex];
 		$audio.text(value);
-		$labelAudio.text("Choix de langue audio : " + value + " sélectionné");
 		
 	}else{
 		$audio.text(none);
-		$labelAudio.text("Choix de langue audio : " + none + " sélectionné");
 
 		if(typeOf(Media.audiosList) !== "array" || !Media.audiosList.length){
 			$audio.parent().addClass("opaque");
@@ -66,16 +64,13 @@ InfoBanner.generate = function(){
 	}
 	
 	// SOUS-TITRES
-	var $subtitles = $(document.getElementById("playerOptionSubCurrentValue")),
-		$labelSubtitle = $(document.getElementById("label-option-subtitle"));
+	var $subtitles = $(document.getElementById("playerOptionSubCurrentValue"));
 	if(Media.subtitleEnabled){
 		value = Media.subtitlesList[Media.currentSubtitleIndex];
 		$subtitles.html(value + '<img alt="" src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
-		$labelSubtitle.text("Choix du sous-titre : " + value + " sélectionné");
 		
 	}else{
 		$subtitles.text(none);
-		$labelSubtitle.text("Choix du sous-titre : " + none + " sélectionné");
 		
 		if(typeOf(Media.subtitlesList) !== "array" || !Media.subtitlesList.length){
 			$subtitles.parent().addClass("opaque");
@@ -83,16 +78,13 @@ InfoBanner.generate = function(){
 	}
 	
 	// AD
-	var $ad = $(document.getElementById("playerOptionDescriptionCurrentValue")),
-		$labelAD = $(document.getElementById("label-option-ad"));
+	var $ad = $(document.getElementById("playerOptionDescriptionCurrentValue"));
 	if(Media.audioDescriptionEnabled){
 		value = Media.audioDescriptions[Media.currentAudioDescriptionIndex].lang;
 		$ad.text(value);
-		$labelAD.text("Choix de langue pour l'audio description : " + value + " sélectionné");
 		
 	}else{
 		$ad.text(none);
-		$labelAD.text("Choix de langue pour l'audio description : " + none + " sélectionné");
 
 		if(typeOf(Media.audioDescriptions) !== "array" || !Media.audioDescriptions.length){
 			$ad.parent().addClass("opaque");
@@ -100,27 +92,76 @@ InfoBanner.generate = function(){
 	}
 	
 	// LS
-	var $ls = $(document.getElementById("playerOptionSigneCurrentValue")),
-		$labelLS = $(document.getElementById("label-option-ls"));
+	var $ls = $(document.getElementById("playerOptionSigneCurrentValue"));
 	if(Media.LSFEnabled){
 		value = Media.ls[Media.currentLSFIndex].lang;
 		$ls.text(value);
-		$labelLS.text("Choix de langue pour la langue des signes : " + value + " sélectionné");
 		
 	}else{
 		$ls.text(none);
-		$labelLS.text("Choix de langue pour la langue des signes : " + none + " sélectionné");
 
 		if(typeOf(Media.ls) !== "array" || !Media.ls.length){
 			$ls.parent().addClass("opaque");
 		}
 	}
 	
+	this.initLabels();
+	
 	// PROGRESS BAR
 	this.progressBar.init();
 	
 	// VOLUME
 	this.initVolumeSlider();
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Inserts the media info in info banner and handles the displaying of buttons
+ * @param {Object} data Containing data about the media
+ */
+
+InfoBanner.initLabels = function(){
+	var none = this.none;
+	
+	// AUDIO
+	var $labelAudio = $(document.getElementById("label-option-audio"));
+	if(Media.audioEnabled){
+		var value = Media.audiosList[Media.currentAudioIndex];
+		$labelAudio.text("Choix de langue audio : " + value + " sélectionné");
+		
+	}else{
+		$labelAudio.text("Choix de langue audio : " + none + " sélectionné");
+	}	
+	
+	// SOUS-TITRES
+	var $labelSubtitle = $(document.getElementById("label-option-subtitle"));
+	if(Media.subtitleEnabled){
+		value = Media.subtitlesList[Media.currentSubtitleIndex];
+		$labelSubtitle.text("Choix du sous-titre : " + value + " sélectionné");
+		
+	}else{
+		$labelSubtitle.text("Choix du sous-titre : " + none + " sélectionné");
+	}	
+	
+	// AD
+	var $labelAD = $(document.getElementById("label-option-ad"));
+	if(Media.audioDescriptionEnabled){
+		value = Media.audioDescriptions[Media.currentAudioDescriptionIndex].lang;
+		$labelAD.text("Choix de langue pour l'audio description : " + value + " sélectionné");
+		
+	}else{
+		$labelAD.text("Choix de langue pour l'audio description : " + none + " sélectionné");
+	}
+	
+	// LS
+	var $labelLS = $(document.getElementById("label-option-ls"));
+	if(Media.LSFEnabled){
+		value = Media.ls[Media.currentLSFIndex].lang;
+		$labelLS.text("Choix de langue pour la langue des signes : " + value + " sélectionné");
+		
+	}else{
+		$labelLS.text("Choix de langue pour la langue des signes : " + none + " sélectionné");
+	}
 };
 
 /**
@@ -233,6 +274,22 @@ InfoBanner.showOptionPopup = function(type, button){
 		$ctn.css("left", this.getOptionsDropDownMenuLeft(type))
 			.css("height", this.getOptionsDropDownMenuHeight(inputsArray));
 		
+		var getLabel = function(type, optionName){
+			if(type === "audio"){
+				return optionName === "Aucun" ? "Désactiver l'audio" : "Audio " + optionName;
+
+			}else if(type === "subtitle"){
+				return optionName === "Aucun" ? "Désactiver les sous-titres" : "Sous-titre " + optionName;
+
+			}else if(type === "ad"){
+				return optionName === "Aucun" ? "Désactiver l'audio description" : "Audio description " + optionName;
+
+			}else if(type === "ls"){
+				return optionName === "Aucun" ? "Désactiver la langue des signes" : "Langue des signes " + optionName.replace("LSF", "Français");
+			}
+			return "";
+		};
+		
 		var actionEvent = function(bt, optionID) {
 			var index = $(bt).data("index");
 			if(optionID === "ls"){
@@ -254,28 +311,14 @@ InfoBanner.showOptionPopup = function(type, button){
 				var ids = {ls:"playerOptionSigne",subtitle:"playerOptionSub",ad:"playerOptionDescription",audio:"playerOptionAudio"};
 				Navigation.moveSelecteur(document.getElementById(ids[optionID]));
 			}
-		};
-		
-		var getLabel = function(optionName){
-			if(type === "audio"){
-				return optionName === "Aucun" ? "Désactiver l'audio" : "Audio " + optionName;
-
-			}else if(type === "subtitle"){
-				return optionName === "Aucun" ? "Désactiver les sous-titres" : "Sous-titre " + optionName;
-
-			}else if(type === "ad"){
-				return optionName === "Aucun" ? "Désactiver l'audio description" : "Audio description " + optionName;
-
-			}else if(type === "ls"){
-				return optionName === "Aucun" ? "Désactiver la langue des signes" : "Langue des signes " + optionName.replace("LSF", "Français");
-			}
-			return "";
+			
+			InfoBanner.initLabels();
 		};
 		
 		var tabIndex = button.tabIndex + 1;
 		var i, l = inputsArray.length, $bt;
 		for (i = 0; i < l; i++) {
-			$bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton btn selectable-by-chromevox" tabindex="'+tabIndex+'" aria-labelledby="label-option-'+i+'">'+inputsArray[i]+'<span id="label-option-'+i+'" aria-hidden="true" class="hidden">'+getLabel(inputsArray[i])+'</span></div>').appendTo($ctn);
+			$bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton btn selectable-by-chromevox" tabindex="'+tabIndex+'" aria-labelledby="label-option-'+i+'">'+inputsArray[i]+'<span id="label-option-'+i+'" aria-hidden="true" class="hidden">'+getLabel(type, inputsArray[i])+'</span></div>').appendTo($ctn);
 			$bt.data("index", i);
 			(function(bt, optionID){
 				bt.on("click", function(){
