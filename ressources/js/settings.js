@@ -124,26 +124,43 @@ Settings.init.audio.spatialisationMode = function(){
  */
 
 Settings.init.audio.elevationLevel = function($slider, lvl, type){
-	var range = Player.elevationRange;
+	var range = Player.elevationRange, value;
 	if(Main.simplifiedMode){
-		$slider.attr({min: range[0], max: range[1]}).val(lvl).data("type", type);
+		
+		lvl = parseInt(lvl, 10);
+		value = lvl >= 45 ? 3 : lvl <= 0 ? 1 : 2;
+		
+		$slider.data("type", type);
 		$slider.parent().siblings(".min-value").text(range[0]+"°").end()
-			.siblings(".max-value").text(range[1]+"°");
+			.siblings(".max-value").text(range[1]+"°");		
+		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
+		
+		$slider.slider({
+			range: "min",
+			min: 1,
+			max: 3,
+			value: value,
+
+			slide: function(event, ui){
+				Settings.change.audioElevationLevel(ui.value, this);
+			}
+		});
 		
 	}else{
+		value = lvl;
 		$slider.slider({
 			range: "min",
 			min: range[0],
 			max: range[1],
 			orientation:"vertical",
-			value: lvl,
+			value: value,
 
 			slide: function(event, ui){
 				Settings.change.audioElevationLevel(ui.value, this);
 			}
-		});		
+		});
 	}
-	Settings.change.audioElevationLevel(lvl, $slider);
+	Settings.change.audioElevationLevel(value, $slider);
 };
 
 /**
@@ -281,10 +298,29 @@ Settings.init.audio.azimDistance = function($drag){
 
 Settings.init.audio.azim = function($slider, value, type){
 	if(Main.simplifiedMode){
-		$slider.val(value).data("type", type);
-		$slider.parent().siblings(".min-value").text("-180°").end()
-			.siblings(".max-value").text("180°");
-		Settings.change.audioAzim(value, $slider);
+
+		value = parseInt(value, 10);
+		var valueStep = value > 90 ? 5 : value > 0 ? 4 : value > -90 ? 3 : value > -180 ? 2 : 1;
+		log("Orientation : "+value+"°. Crant "+valueStep);
+		
+		var range = [-180, 180];
+		$slider.data("type", type);
+		$slider.parent().siblings(".min-value").text(range[0]+"°").end()
+			.siblings(".max-value").text(range[1]+"°");		
+		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
+		
+		$slider.slider({
+			range: "min",
+			min: 1,
+			max: 5,
+			value: valueStep,
+
+			slide: function(event, ui){
+				Settings.change.audioAzim(ui.value, this);
+			}
+		});
+		
+		Settings.change.audioAzim(valueStep, $slider);
 	}
 };
 
@@ -300,9 +336,21 @@ Settings.init.audio.azim = function($slider, value, type){
 Settings.init.audio.distance = function($slider, value, type){
 	if(Main.simplifiedMode){
 		var range = Player.distanceRange;
-		$slider.attr({min: range[0], max: range[1]}).val(value).data("type", type);
-		$slider.parent().siblings(".min-value").text(range[0]+"m").end()
+		$slider.data("type", type).parent().siblings(".min-value").text(range[0]+"m").end()
 			.siblings(".max-value").text(range[1]+"m");		
+		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
+		
+		$slider.slider({
+			range: "min",
+			min: range[0],
+			max: range[1],
+			value: value,
+			step:0.5,
+
+			slide: function(event, ui){
+				Settings.change.audioDistance(ui.value, this);
+			}
+		});
 		Settings.change.audioDistance(value, $slider);
 	}
 };
@@ -629,6 +677,13 @@ Settings.change.audioElevationLevel = function(value, el){
 
 	var type = $(el).data("type");
 	if(["commentary", "dialogues"].indexOf(type) !== -1){
+		
+		// Converti les steps en leur valeur correspondante
+		if(Main.simplifiedMode){
+			var range = Player.elevationRange;
+			value = value === 2 ? parseInt((range[1] - Math.abs(range[0])) / 2, 10) : value === 1 ? range[0] : range[1];	
+		}
+		
 		if(type === "commentary"){
 			Player.commentsElevationLevel = value;
 			setHtmlStorage("commentsElevationLevel", value);
@@ -639,19 +694,28 @@ Settings.change.audioElevationLevel = function(value, el){
 			setHtmlStorage("dialoguesElevationLevel", value);
 			log("Niveau d'élévation des dialogues : " + value + "°");			
 		}
-
+		
 		var $slider = $(el).children("a");
 		if($slider.length){
+			
+			var valueText = function(){
+				if(value >= 45) {
+					return "Haut";
 
-			if(value >= 45) { 
-				$slider.text("Haut");
+				}else if (value <= 0) {
+					return "Bas";
 
-			}else if (value <= 0) {
-				$slider.text("Bas");
+				}else{
+					return "Tête";
+				}
+			}();
+
+			if(Main.simplifiedMode){
+				$slider.attr("aria-valuenow", value).attr("aria-valuetext", valueText/*value + "°"*/);
 
 			}else{
-				$slider.text("Tête");
-			}				
+				$slider.text(valueText);
+			}
 		}
 	}
 };
@@ -670,14 +734,25 @@ Settings.change.audioAzim = function(value, el){
 	var type = $(el).data("type");
 	if(["commentary", "dialogues"].indexOf(type) !== -1){
 		
+		// Converti les steps en leur valeur correspondante
+		if(Main.simplifiedMode){
+			value = value === 5 ? 180 : value === 4 ? 90 : value === 3 ? 0 : value === 2 ? -90 : -180;
+		}
+		
 		if(type === "commentary"){
 			Player.commentsAzim = value;
 			setHtmlStorage("commentsAzim", value);
+			log("Orientation des commentaires : " + value + "°");
 
 		}else{
 			Player.dialoguesAzim = value;
 			setHtmlStorage("dialoguesAzim", value);
+			log("Orientation des dialogues : " + value + "°");
 		}
+		
+		if(Main.simplifiedMode){
+			$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + "°");
+		}		
 	}
 };
 
