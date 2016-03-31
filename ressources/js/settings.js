@@ -251,30 +251,18 @@ Settings.init.audio.azimDistance = function($drag){
 			}
 		};
 
-		var azim, dist;
-		if(getHtmlStorage("commentsAzim") && getHtmlStorage("commentsDistance")){
-			if($drag.data("type") === "commentary"){
-				azim = getHtmlStorage("commentsAzim");
-				dist = getHtmlStorage("commentsDistance");
+		var azim, dist, type = $drag.data("type");
+		if(type === "commentary"){
+			azim = getHtmlStorage("commentsAzim") || Player.commentsAzim;
+			dist = getHtmlStorage("commentsDistance") || Player.commentsDistance;
 
-			}else{
-				azim = getHtmlStorage("dialoguesAzim");
-				dist = getHtmlStorage("dialoguesDistance");
-			}
-			
 		}else{
-			if($drag.data("type") === "commentary"){
-				azim = Player.commentsAzim;
-				dist = Player.commentsDistance;
-
-			}else{
-				azim = Player.dialoguesAzim;
-				dist = Player.dialoguesDistance;
-			}
+			azim = getHtmlStorage("dialoguesAzim") || Player.dialoguesAzim;
+			dist = getHtmlStorage("dialoguesDistance") || Player.dialoguesDistance;
 		}
-			
+		
 		dist = getDistance(dist, Player.distanceRange, [minDistance, canvas.radius]);
-		var acos = azim * Math.PI / Player.azimRadius;
+		var acos = parseInt(azim, 10) * Math.PI / Player.azimRadius;
 		var cosinus = Math.cos(acos);
 		var sinus = Math.sin(acos);
 		var top = -cosinus * dist + canvas.center[1];
