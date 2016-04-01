@@ -1,5 +1,5 @@
 var Settings = {
-	minFontSize:16,
+	fontSizeRange:[16,24],
 	minOpacity:0,
 	minSubtitlesSize:16,
 	subtitlesDefaultPosition:71,
@@ -353,9 +353,31 @@ Settings.init.audio.distance = function($slider, value, type){
  */
 
 Settings.init.interface.fontSize = function(){
-	var valueMinSize = getHtmlStorage("settings_min_size") || Settings.minFontSize;
-	$(document.getElementById(Main.simplifiedMode ? "fontSlide-sm" : "fontSlide")).val(valueMinSize);
-	Settings.change.fontSize(valueMinSize);
+	var range = Settings.fontSizeRange;
+	var valueMinSize = getHtmlStorage("settings_min_size") || range[0];
+	var $slider;
+	if(Main.simplifiedMode){
+	
+		$slider = $(document.getElementById("fontSlide-sm"));
+		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
+
+		$slider.slider({
+			range: "min",
+			min: range[0],
+			max: range[1],
+			value: valueMinSize,
+			step:0.1,
+
+			slide: function(event, ui){
+				Settings.change.fontSize(ui.value, this);
+			}
+		});
+
+	}else{
+		$(document.getElementById("fontSlide")).val(valueMinSize);		
+	}
+	
+	Settings.change.fontSize(valueMinSize, $slider);
 };
 
 /**
@@ -526,9 +548,13 @@ Settings.init.ls = function(){
  * @param {Object} callbackList Contains a success and error callback
  */
 
-Settings.change.fontSize = function(newValue){	
+Settings.change.fontSize = function(newValue, el){	
 	setHtmlStorage("settings_min_size", newValue);
 	$("body > div").css("font-size", (newValue / 16) + "em");
+	
+	if(Main.simplifiedMode){
+		$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue + " pixel");
+	}
 };
 
 /**

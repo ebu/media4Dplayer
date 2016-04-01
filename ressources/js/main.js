@@ -36,7 +36,7 @@ Main.onLoad = function () {
 	
 	Main.simplifiedMode = getHtmlStorage("simplifiedMode") === "true" ? true : false;
 	
-	var valueMinSize = getHtmlStorage("settings_min_size") || Settings.minFontSize;
+	var valueMinSize = getHtmlStorage("settings_min_size") || Settings.fontSizeRange[0];
 	Settings.change.fontSize(valueMinSize);
 	
 	Main.firstLaunch = true;
