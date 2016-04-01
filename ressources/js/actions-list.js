@@ -144,7 +144,9 @@ $(document.getElementById("my-videos-options")).on("click", ".menu-item", functi
 });
 
 $(document.getElementById("playlist")).on("click", ".item", function(){
-	Section.change(Section.sections[11], null, {type:Apps.programs.playlistType, data:$(this).data("data")});
+	//Section.change(Section.sections[11], null, {type:Apps.programs.playlistType, data:$(this).data("data")});
+	Dashboard.data = $(this).data("data");
+	$(document.getElementById("options-favorites")).children(":nth-child(2)").click();
 });
 
 $(document.getElementById("options-favorites")).on("click", ".menu-item", function(){
