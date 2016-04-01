@@ -31,6 +31,7 @@ body > div{font-size:1em}
 .menu-item:last-child{margin-bottom:13%}
 .menu-item:hover{list-style-type:circle}
 .menu-item.selected{font-weight:600;text-decoration:underline}
+.sm .menu-item.disabled a{background-color: #000;color: #fff}
 #simplified-mode-container section > a{display:block}
 .section-with-topbar{box-sizing:border-box;padding-top:70px}
 #full-synopsis, #videoPlayerContainer, #in-construction{position:absolute;height:100%;width:100%;top:0;left:0}

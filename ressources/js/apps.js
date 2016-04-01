@@ -43,11 +43,14 @@ Apps.load.callback = function(list, jqXHR, onSuccess){
 Apps.generates = function(){
 	
 	var html = "";
-	var list = this.list, i, l = list.length, app;
+	var list = this.list, i, l = list.length, app, isDisabled, hiddenClass, classList;
 	for(i=0;i<l;i++){
 		app = list[i];
 		if(Main.simplifiedMode){
-			html += '<li class="app menu-item"><a tabindex="'+(i+2)+'" title="'+app.title+'" class="selectable-by-chromevox">'+app.title+'</a></li>';
+			isDisabled = app.disabled;
+			hiddenClass = isDisabled ? " disabled" : "";
+			classList = !isDisabled ? "selectable-by-chromevox" : "";
+			html += '<li class="app menu-item'+hiddenClass+'"><a tabindex="'+(i+2)+'" title="'+app.title+'" class="'+classList+'">'+app.title+'</a></li>';
 		}else{
 			html += '<li tabindex="'+(i+2)+'" class="app icon btn selectable-by-chromevox"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
 		}

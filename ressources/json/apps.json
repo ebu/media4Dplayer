@@ -1,19 +1,22 @@
 {
 	"list":[{
-		"title":"baddp",
-		"picture":"ressources/img/temp/home/baddp.png",
-		"userProgramsListUrl":""
-	},{
 		"title":"pluzz",
 		"picture":"ressources/img/temp/home/pluzz.png",
 		"userProgramsListUrl":["ressources/xml/EBUcore_M4DP_LMDJ.xml", "ressources/xml/EBUCore_M4DP_JT_20h00.xml", "ressources/xml/EBUCore_M4DP_TCHOUPI.xml", "ressources/xml/EBUCore_M4DP_METEO.xml", "ressources/xml/EBUCore_M4DP_ALEXHUGO.xml"]
 	},{
+		"title":"baddp",
+		"picture":"ressources/img/temp/home/baddp.png",
+		"userProgramsListUrl":"",
+		"disabled":true
+	},{
 		"title":"lesite.tv",
 		"picture":"ressources/img/temp/home/lesitetv.png",
-		"userProgramsListUrl":""
+		"userProgramsListUrl":"",
+		"disabled":true
 	},{
 		"title":"Médiathèque",
 		"picture":"ressources/img/temp/home/media.png",
-		"userProgramsListUrl":""
+		"userProgramsListUrl":"",
+		"disabled":true
 	}]
 }

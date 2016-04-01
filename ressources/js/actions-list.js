@@ -121,7 +121,7 @@ $("body").on("keydown", function(e){
 																	/*	 MODE SM	*/
 																	/* **************/
 	
-$(document.getElementById("apps-list-sm")).on("click", ".app", function(){
+$(document.getElementById("apps-list-sm")).on("click", ".app:not(.disabled)", function(){
 	Section.save();
 	Section.change(Section.sections[5], null, $(this).index());
 });
