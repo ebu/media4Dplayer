@@ -107,7 +107,7 @@ Apps.programs.load.callback = function(data, jqXHR, callbackList, appIndex, rubr
 			var list = data[rubric === rubrics[0] ? "favorites" : rubric === rubrics[1] ? "signets" : "history"];
 			if(typeOf(list) === "array" && list.length){	
 			
-				$(document.getElementById("playlist-title")).html('<span tabindex="1" class="selectable-by-chromevox">'+(rubric === rubrics[0] ? "Mes vidéos favorites" : rubric === rubrics[1] ? "Mes signets" : "Mon historique")+'</span>');
+				$(document.getElementById("playlist-title")).html('<span tabindex="1" class="selectable-by-chromevox">'+(rubric === rubrics[0] ? "Mes vidéos " + Apps.list[appIndex].title : rubric === rubrics[1] ? "Mes signets" : "Mon historique")+'</span>');
 
 				Apps.programs.generatesForSM(rubric);					
 			}else{

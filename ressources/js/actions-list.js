@@ -128,7 +128,12 @@ $(document.getElementById("apps-list-sm")).on("click", ".app:not(.disabled)", fu
 
 $(document.getElementById("app-options")).on("click", ".menu-item", function(){
 	var indexes = {"my-videos-btn":6,"search-btn":7,"settings-btn":8,"profil-btn":9};
-	Section.change(Section.sections[indexes[this.id]]);
+	if(this.id === "my-videos-btn"){
+		$(document.getElementById("playlist-title")).children().html("Mes vidéos " + Apps.list[Apps.indexAppInSM].title);
+		$(document.getElementById("my-videos-options")).children(":first-child").click();
+	}else{
+		Section.change(Section.sections[indexes[this.id]]);
+	}	
 });
 
 $(document.getElementById("my-videos-options")).on("click", ".menu-item", function(){
