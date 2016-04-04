@@ -14,17 +14,19 @@ var Settings = {
 	backToPlayerFromSettings:false,
 	minDistance:30
 };
-
+	
+																	/* **************************************************/
+																	/*	 FONCTIONS POUR L'INITIALISATION DES PARAMETRES	*/
+																	/* **************************************************/
+	
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters screen
+ * @param {String} section The section name
+ * @param {String} rubric The rubric name
  */
 
-Settings.init = function(section, rubric){	
+Settings.init = function(section, rubric){
 	$(document.getElementById("settings")).attr("class", "section-with-topbar " + (rubric || Section.rubrics[section][0]));
 	
 	var $backToPlayerCtn = $(document.getElementById("back-to-player-button-container"));
@@ -51,11 +53,7 @@ Settings.init = function(section, rubric){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the screen of interface parameters
  */
 
 Settings.init.interface = function(){
@@ -64,11 +62,7 @@ Settings.init.interface = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the screen of audio parameters
  */
 
 Settings.init.audio = function(){
@@ -91,11 +85,7 @@ Settings.init.audio = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of spatialisation mode for the audio screen
  */
 
 Settings.init.audio.spatialisationMode = function(){
@@ -116,11 +106,10 @@ Settings.init.audio.spatialisationMode = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of elevation level for the audio screen
+ * @param {jQuery Object} $slider The slider element
+ * @param {Integer} lvl The elevation level
+ * @param {String} type The source (commentary || dialogues)
  */
 
 Settings.init.audio.elevationLevel = function($slider, lvl, type){
@@ -165,11 +154,8 @@ Settings.init.audio.elevationLevel = function($slider, lvl, type){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of the azim and distance for the audio screen
+ * @param {jQuery Object} $drag The drag element
  */
 
 Settings.init.audio.azimDistance = function($drag){
@@ -277,11 +263,10 @@ Settings.init.audio.azimDistance = function($drag){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of the azim (for SM mode)
+ * @param {jQuery Object} $slider The slider element
+ * @param {Integer} value The value
+ * @param {String} type The source (commentary || dialogues)
  */
 
 Settings.init.audio.azim = function($slider, value, type){
@@ -314,11 +299,10 @@ Settings.init.audio.azim = function($slider, value, type){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of the distance (for SM mode)
+ * @param {jQuery Object} $slider The slider element
+ * @param {Integer} value The value
+ * @param {String} type The source (commentary || dialogues)
  */
 
 Settings.init.audio.distance = function($slider, value, type){
@@ -345,11 +329,7 @@ Settings.init.audio.distance = function($slider, value, type){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of the font size for the interface screen
  */
 
 Settings.init.interface.fontSize = function(){
@@ -382,11 +362,7 @@ Settings.init.interface.fontSize = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the screen of subtitles parameters
  */
 
 Settings.init.subtitles = function(){
@@ -416,11 +392,7 @@ Settings.init.subtitles = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of the font family for the subtitles screen
  */
 
 Settings.init.subtitles.fontFamily = function(){
@@ -436,11 +408,7 @@ Settings.init.subtitles.fontFamily = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of the color for the subtitles screen
  */
 
 Settings.init.subtitles.color = function(){
@@ -452,11 +420,7 @@ Settings.init.subtitles.color = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of the background color for the subtitles screen
  */
 
 Settings.init.subtitles.BGColor = function(){
@@ -468,16 +432,11 @@ Settings.init.subtitles.BGColor = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the parameters of the drag for the subtitles screen
  */
 
 Settings.init.subtitles.pip = function(){
 	
-	/* PIP SUBTITLES */
 	var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
 	var $container = $(document.getElementById(Main.simplifiedMode ? "uiSubtitles-sm-container" : "uiSubtitles-container")); 
 	var $pipVideo = $container.find(".pip-video").css("top", pipTopPercent+"%");
@@ -495,11 +454,7 @@ Settings.init.subtitles.pip = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Initializes the screen of the LS parameters
  */
 
 Settings.init.ls = function(){
@@ -539,13 +494,15 @@ Settings.init.ls = function(){
 		.find('.ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
 };
 
+																	/* ******************************************/
+																	/*	 FONCTIONS POUR LA MAJ DES PARAMETRES	*/
+																	/* ******************************************/
+	
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the app font size
+ * @param {Integer} newValue The new font size
+ * @param {jQuery Object} el The slider element (for SM mode)
  */
 
 Settings.change.fontSize = function(newValue, el){	
@@ -559,11 +516,8 @@ Settings.change.fontSize = function(newValue, el){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the subtitle font family
+ * @param {String} ff The new font family
  */
 
 Settings.change.subtitlesFontFamily = function(ff){
@@ -579,11 +533,8 @@ Settings.change.subtitlesFontFamily = function(ff){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the subtitle background color
+ * @param {String} color The new color
  */
 
 Settings.change.subtitlesBackgroundColor = function(color){
@@ -594,11 +545,8 @@ Settings.change.subtitlesBackgroundColor = function(color){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the subtitle color
+ * @param {String} color The new color
  */
 
 Settings.change.subtitlesColor = function(color){
@@ -609,11 +557,8 @@ Settings.change.subtitlesColor = function(color){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the subtitle opacity
+ * @param {Integer} newValue The new opacity
  */
 
 Settings.change.subtitlesOpacity = function(newValue){
@@ -623,11 +568,8 @@ Settings.change.subtitlesOpacity = function(newValue){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the subtitle font size
+ * @param {Integer} newValue The new font size
  */
 
 Settings.change.subtitlesFontSize = function(newValue){
@@ -637,11 +579,8 @@ Settings.change.subtitlesFontSize = function(newValue){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the audio spatialisation mode
+ * @param {String} value The new mode
  */
 
 Settings.change.audioSpatialisationMode = function(value){
@@ -680,11 +619,9 @@ Settings.change.audioSpatialisationMode = function(value){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the audio elevation level
+ * @param {Integer} value The new mode
+ * @param {jQuery Object} el The slider element
  */
 
 Settings.change.audioElevationLevel = function(value, el){
@@ -736,11 +673,9 @@ Settings.change.audioElevationLevel = function(value, el){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the audio azim
+ * @param {Integer} value The new azim
+ * @param {jQuery Object} el The slider element
  */
 
 Settings.change.audioAzim = function(value, el){
@@ -772,11 +707,9 @@ Settings.change.audioAzim = function(value, el){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Generates the parental rating rubric of the settings section
- * @param {String} name The user's name
- * @param {Object} userDetails The user's data
- * @param {Array} thresholds Thresholds list
- * @param {Object} callbackList Contains a success and error callback
+ * @description Changes the audio distance
+ * @param {Integer} value The new distance
+ * @param {jQuery Object} el The slider element
  */
 
 Settings.change.audioDistance = function(value, el){
@@ -792,6 +725,12 @@ Settings.change.audioDistance = function(value, el){
 	}
 };
 
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Changes the subtitles position
+ * @param {jQuery Object} $container The drag element
+ */
+
 Settings.saveSubtitlesPIPPosition = function($container){
 	if($($container).length){
 		var newTopPercent = ($container.children(".pip-video").position().top / $container.height()) * 100;
@@ -801,6 +740,13 @@ Settings.saveSubtitlesPIPPosition = function($container){
 		setHtmlStorage("subtitlePositionY", newTopPercent<0?0:newTopPercent);
 	}
 };
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Changes the LS position
+ * @param {jQuery Object} $container The drag element container
+ * @param {jQuery Object} $pip The drag element
+ */
 
 Settings.saveLSPIPPosition = function($container, $pip){
 	if($($container).length && $($pip).length){
@@ -814,6 +760,13 @@ Settings.saveLSPIPPosition = function($container, $pip){
 		setHtmlStorage("LSFPip_position_y", newTopPercent<0?0:newTopPercent);
 	}
 };
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Changes the LS size
+ * @param {jQuery Object} $container The resizable element container
+ * @param {jQuery Object} $pip The resizable element
+ */
 
 Settings.saveLSPIPSize = function($container, $pip){
 	if($($container).length && $($pip).length){
