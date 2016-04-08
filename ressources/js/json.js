@@ -45,38 +45,3 @@ json.load = function(params){
 	}
 	return xhr;
 };
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Erases all the caches except cache of statics contents (menu and settings/watchlist submenu)
- */
-
-json.eraseCacheDynamicsContents = function(){
-
-	// Vide tous les caches
-	var cacheMenu = JSON.parse(JSON.stringify(this.cache.menu)), cacheSettingsSubmenu, cacheWatchlistSubmenu;
-	if(this.cache.submenu){
-		
-		if(this.cache.submenu.settings){
-			cacheSettingsSubmenu = JSON.parse(JSON.stringify(this.cache.submenu.settings));
-		}
-		
-		if(this.cache.submenu.watchlist){
-			cacheWatchlistSubmenu = JSON.parse(JSON.stringify(this.cache.submenu.watchlist));
-		}		
-	}
-	
-	this.cache = {menu:cacheMenu};
-	
-	if(cacheSettingsSubmenu || cacheWatchlistSubmenu){
-		this.cache.submenu = {};
-		
-		if(cacheSettingsSubmenu){
-			this.cache.submenu.settings = cacheSettingsSubmenu;
-		}
-		
-		if(cacheWatchlistSubmenu){
-			this.cache.submenu.watchlist = cacheWatchlistSubmenu;
-		}
-	}
-};

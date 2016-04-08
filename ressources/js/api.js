@@ -17,9 +17,8 @@ API.getConfig = function(callback_function){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Launches a request to get the submenu's data
+ * @description Launches a request to get the apps list
  * @param {String} url The WS url
- * @param {String} section The section's name
  * @param {Function} callback_function The function which will be triggered after receiving data
  */
 
@@ -37,8 +36,8 @@ API.getAppsList = function(url, callback_function){
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Launches a request to get the submenu's data
- * @param {String} url The WS url
- * @param {String} section The section's name
+ * @param {Array} urls A list of program's url
+ * @param {Integer} appIndex The app position in apps list
  * @param {Function} callback_function The function which will be triggered after receiving data
  */
 
