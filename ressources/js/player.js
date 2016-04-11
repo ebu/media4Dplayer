@@ -330,10 +330,11 @@ Player.launch = function(){
 
 		streamSelector = new M4DPAudioModules.StreamSelector( this.playerManager.audioContext, asdc );
 		smartFader = new M4DPAudioModules.SmartFader( this.playerManager.audioContext, asdc );
+		dialogEnhancement = new M4DPAudioModules.DialogEnhancement( this.playerManager.audioContext, asdc );
+		receiverMix = new M4DPAudioModules.ReceiverMix( this.playerManager.audioContext, asdc );
 		//var noiseAdaptation = new M4DPAudioModules.NoiseAdaptation(this.playerManager.audioContext);
 		multichannelSpatialiser = new M4DPAudioModules.MultichannelSpatialiser( this.playerManager.audioContext, asdc, this.spatializationMode );
 		objectSpatialiserAndMixer = new M4DPAudioModules.ObjectSpatialiserAndMixer( this.playerManager.audioContext, asdc, this.spatializationMode );
-		//var dialogEnhancement = new M4DPAudioModules.DialogEnhancement(this.playerManager.audioContext);
 
 		{
 			///@bug : the channelSplitterMain MUST be connected to the AudioContext,
@@ -630,6 +631,8 @@ Player.initSubtitlesParams = function(){
 Player.updateWAAConnections = function(){
     
     smartFader.disconnect();
+	dialogEnhancement.disconnect();
+	receiverMix.disconnect();
     multichannelSpatialiser.disconnect();
     objectSpatialiserAndMixer.disconnect();
 
@@ -645,7 +648,11 @@ Player.updateWAAConnections = function(){
         throw new Error( "Invalid configuration" );
     }
     
-    smartFader.connect( processor._input );
+    smartFader.connect( dialogEnhancement._input );
+
+    dialogEnhancement.connect( receiverMix._input );
+	
+	receiverMix.connect( processor._input );
 
     /// apply the multichannel spatialiser
     processor.connect( this.playerManager.audioContext.destination );
@@ -738,11 +745,14 @@ Player.onChangeProfil = function(){
 
 Player.onChangeEqualization = function(){
 	multichannelSpatialiser.eqPreset = "eq1";
+	objectSpatialiserAndMixer.eqPreset = "eq1";
 
 	if (this.binauralEQ) {
 		multichannelSpatialiser.bypassHeadphoneEqualization( false );
+        objectSpatialiserAndMixer.bypassHeadphoneEqualization( false );
 	} else {
 		multichannelSpatialiser.bypassHeadphoneEqualization( true );
+		objectSpatialiserAndMixer.bypassHeadphoneEqualization( true );
 	}	
 };
 
@@ -1078,6 +1088,8 @@ Player.updateActiveStreams = function(){
 	/// notify the modification of active streams
 	streamSelector.activeStreamsChanged();
 	smartFader.activeStreamsChanged();
+    dialogEnhancement.activeStreamsChanged();
+	receiverMix.activeStreamsChanged();
 	multichannelSpatialiser.activeStreamsChanged();
 	objectSpatialiserAndMixer.activeStreamsChanged();	
 };
