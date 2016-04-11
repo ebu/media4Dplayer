@@ -5,7 +5,6 @@ var Dashboard = {
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Resets the dashboard
- * @param {String} type The dashboard type
  */
 
 Dashboard.reset = function(){
@@ -21,10 +20,9 @@ Dashboard.reset = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Launches the initializing and the loading of the dashbord
- * @param {Object} params Contains parameters used to load the dashboard
- * @param {String} section The section's name
- * @param {Object} callbackList Contains a success and error callback
+ * @description Launches the initializing and the generating of the dashboard
+ * @param {Object} data The dashboard data
+ * @param {Function} callback The function that will be triggered after the dashboard initializing
  */
 
 Dashboard.load = function(data, callback){
