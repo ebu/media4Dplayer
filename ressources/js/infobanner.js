@@ -19,6 +19,13 @@ InfoBanner.reset = function(){
 	$(document.getElementById("playerOptionSigneCurrentValue")).empty();
 	$(document.getElementById("playerOptions")).children(".opaque").removeClass("opaque");
 	
+	var $sliderADVol = $(document.getElementById("playerControlADVolume"));
+	if(Media.audioDescriptionEnabled){
+		$sliderADVol.show();
+	}else{
+		$sliderADVol.hide();
+	}
+	
 	this.progressBar.reset();
 	
 	this.isOptionDropDownMenuDisplayed = false;
@@ -111,7 +118,8 @@ InfoBanner.generate = function(){
 	this.progressBar.init();
 	
 	// VOLUME
-	this.initVolumeSlider();
+	this.initVolumeSlider();	
+	this.initADVolumeSlider();
 };
 
 /**
@@ -484,6 +492,64 @@ InfoBanner.initVolumeSlider = function(){
         }
 	});
 	_onSlide($slider, defaultValue);
+};
+
+InfoBanner.initADVolumeSlider = function(){
+
+	var defaultValue = getHtmlStorage("ADvolumeValue") || Settings.defaultADVolumeValue;
+	var $tooltip = $(document.getElementById("ad-volume-tooltip")).hide();
+	var _onSlide = function(el, value) {
+		
+		InfoBanner.launchMaskingAfterDelay();
+
+		var $volume = $(document.getElementById("ad-up-volume"));
+		var $sliderControl = $(el).children("a");
+		$tooltip.css('left', $sliderControl.css("left")).text(value);
+
+		if(value <= 5) { 
+			$volume.css('background-position', '0 -25px');
+
+		}else if (value <= 15) {
+			$volume.css('background-position', '0 -25px');
+
+		}else if (value <= 30) {
+			$volume.css('background-position', '0 -50px');
+
+		}else{
+			$volume.css('background-position', '0 -75px');
+		}
+
+		$sliderControl.attr("aria-valuenow", value).attr("aria-valuetext", value + " décibel");
+		
+		try{
+			Player.onChangeADVolume(value);			
+		}catch(e){
+			log(e);
+		}
+	};
+	var range = Settings.adGainRange;
+	var $slider = $( document.getElementById("ad-volume-slider") ).slider({
+        range: "min",
+        min: range[0],
+		max: range[0],
+        value: defaultValue,
+ 
+        start: function(event,ui) {
+          $tooltip.fadeIn('fast');
+        },
+ 
+        slide: function(event, ui){
+			_onSlide(this, ui.value);
+		},
+ 
+        stop: function(event, ui) {
+          $tooltip.fadeOut('fast');
+        }
+	});
+	
+	if(Media.audioDescriptionEnabled){
+		_onSlide($slider, defaultValue);
+	}
 };
 
 																								/************************************************

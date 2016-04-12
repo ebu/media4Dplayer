@@ -612,7 +612,7 @@
 					<div id="playerProgressTotal"><span class="selectable-by-chromevox final-option" tabindex="48" aria-labelledby="total-time-label"></span><span id="total-time-label" class="hidden"></span></div>
 				</div>
 				<div id="playerControls">
-					<div id="playerControlVolume">
+					<div id="playerControlVolume" class="volume-control-ctn">
 						<span id="volume-tooltip" class="tooltip" role="tooltip"></span> 
 						<span class="icon volume-mute"></span>
 						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false" title="Volume"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" style="left: 58%;" tabindex="49" title="Contrôle du volume" role="slider" aria-valuenow="0" aria-valuetext="0 pourcent" aria-valuemin="0" aria-valuemax="100"></a></div>
@@ -623,7 +623,13 @@
 						<div id="playerControlPlayPause" class="btn selectable-by-chromevox final-option" onclick="Player.playPause();" tabindex="51" title="Bouton lecture | pause"></div>
 						<div id="playerControlFF" class="btn selectable-by-chromevox final-option" onclick="Player.ff();" tabindex="52" title="Bouton avance rapide"></div>
 					</div>
-					<div id="playerControlConfig" class="btn selectable-by-chromevox" onclick="Section.launchSettingsFromPlayer();" tabindex="53">
+					<div id="playerControlADVolume" class="volume-control-ctn">
+						<span id="ad-volume-tooltip" class="tooltip" role="tooltip"></span> 
+						<span class="icon volume-min"></span>
+						<div id="ad-volume-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="53" title="Contrôle pour améliorer l'audio description" role="slider" aria-valuenow="0" aria-valuetext="" aria-valuemin="-60" aria-valuemax="30"></a></div>
+						<span class="icon volume" id="ad-up-volume"></span>
+					</div>
+					<div id="playerControlConfig" class="btn selectable-by-chromevox" onclick="Section.launchSettingsFromPlayer();" tabindex="54">
 						<img alt="Bouton paramètres" src="ressources/img/player/reglages_player.png"/>
 					</div>
 				</div>
