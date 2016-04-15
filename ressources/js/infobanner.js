@@ -531,7 +531,7 @@ InfoBanner.initADVolumeSlider = function(){
 	var $slider = $( document.getElementById("ad-volume-slider") ).slider({
         range: "min",
         min: range[0],
-		max: range[0],
+		max: range[1],
         value: defaultValue,
  
         start: function(event,ui) {
@@ -643,8 +643,10 @@ InfoBanner.progressBar.update = function(time, tT){
 	timeSecond      = Math.floor((time % 60000) / 1000);
 	timeC = (!isNaN(timeMinute) && !isNaN(timeSecond)) ? pad(timeMinute) + " : " + pad(timeSecond) : timeC;
 	timeT = (!isNaN(totalTimeMinute) && !isNaN(totalTimeSecond)) ? pad(totalTimeMinute) + " : " + pad(totalTimeSecond) : timeT;
-
-	$(document.getElementById("playerProgressCurrent")).children("span:first-child").text(timeC).end().children("span:last-child").text('Temps actuel '+getTimeText(timeMinute, timeSecond));
-	$(document.getElementById("playerProgressTotal")).children("span:first-child").text(timeT).end().children("span:last-child").text('Temps total '+getTimeText(totalTimeMinute, totalTimeSecond));
+	
+	var scT = 'Temps actuel '+getTimeText(timeMinute, timeSecond),
+		stT = 'Temps total '+getTimeText(totalTimeMinute, totalTimeSecond);
+	$(document.getElementById("playerProgressCurrent")).attr("title", scT).children("span:first-child").text(timeC).end().children("span:last-child").text(scT);
+	$(document.getElementById("playerProgressTotal")).attr("title", stT).children("span:first-child").text(timeT).end().children("span:last-child").text(stT);
 	$(document.getElementById("playerProgressCursor")).attr("aria-valuenow", percent).attr("aria-valuetext", Math.round(percent) + " pourcent");
 };

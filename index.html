@@ -13,805 +13,807 @@
 		<link type="text/css" rel="stylesheet" href="ressources/css/main.css"/>
 	</head>
 	<body class="splashscreen">
-		<div id="sections-container">
-			<nav>
-				<menu id="menu">
-					<li class="topbarButton profils-list btn" tabindex="1">
-						<img class="topbarImg" alt="Changer utilisateur - profil de Invité" src="ressources/img/topbar/menu_profil.png"/><span class="topbarText">Invité</span>
-					</li>
-					<li class="topbarButton settings btn" tabindex="2">
-						<img class="topbarImg" alt="Préférences" src="ressources/img/topbar/menu_reglages.png"/><span class="topbarText">Préférences</span>
-					</li>
-					<li class="topbarButton app-playlists btn" tabindex="3">
-						<img class="topbarImg" alt="Favoris" src="ressources/img/topbar/menu_favoris.png"/><span class="topbarText">Favoris</span>
-					</li>
-					<li class="topbarButton search btn" tabindex="4">
-						<img class="topbarImg" alt="Recherche" src="ressources/img/topbar/menu_recherche.png"/><span class="topbarText">Recherche</span>
-					</li>
-					<li class="topbarButton apps-list btn" tabindex="5">
-						<img class="topbarImg" alt="Accueil" src="ressources/img/topbar/menu_accueil.png"/><span class="topbarText">Accueil</span>
-					</li>
-				</menu>
-			</nav>
-			<section id="profils-list-container">
-				<span id="appVersion"></span>
-				<span id="noMCSupport">Votre navigateur ne prends pas en charge la lecture de plusieurs vidéo en même temps de manière synchronsisée</span>
-				<h1><span tabindex="1" class="selectable-by-chromevox">Choisissez votre profil</span></h1>
-				<div id="profils-list-container-2">
-					
-					<ul id="profils-list" class="list">
-						<li class="user btn"><a title="Profil de invité" tabindex="2" class="selectable-by-chromevox" aria-labelledby="profil0">Invité</a><span id="profil0" aria-hidden="true" class="hidden">Profil de invité</span></li>
-					</ul>
-				</div>
-			</section>
-			<section id="apps-list-container">
-				<a id="switch-to-simplified-mode-btn" class="switch-btn btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode rapide et accessible" onclick="Main.switchToMode();" tabindex="1">Basculer en mode rapide et accessible</a>
-				<ul id="apps-list" class="list"></ul>
-			</section>
-			<section id="app-playlists" class="section-with-topbar">
-				<div id="favorites-container" class="playlist">
-					<div class="playlist-title">
-						<div class="playlist-icon">
-							<svg xml:space="preserve" style="enable-background:new 0 0 50 43;" viewBox="0 0 50 43" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Calque_1" version="1.1"><g><polygon points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1" class="st0" style="fill:#555555;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;"/></g></svg>
-						</div>
-						<div class="playlist-text">Mes vidéos favorites</div>
+		<main>
+			<div id="sections-container">
+				<nav>
+					<menu id="menu">
+						<li class="topbarButton profils-list btn" tabindex="1">
+							<img class="topbarImg" alt="Changer utilisateur - profil de Invité" src="ressources/img/topbar/menu_profil.png"/><span class="topbarText">Invité</span>
+						</li>
+						<li class="topbarButton settings btn" tabindex="2">
+							<img class="topbarImg" alt="Préférences" src="ressources/img/topbar/menu_reglages.png"/><span class="topbarText">Préférences</span>
+						</li>
+						<li class="topbarButton app-playlists btn" tabindex="3">
+							<img class="topbarImg" alt="Favoris" src="ressources/img/topbar/menu_favoris.png"/><span class="topbarText">Favoris</span>
+						</li>
+						<li class="topbarButton search btn" tabindex="4">
+							<img class="topbarImg" alt="Recherche" src="ressources/img/topbar/menu_recherche.png"/><span class="topbarText">Recherche</span>
+						</li>
+						<li class="topbarButton apps-list btn" tabindex="5">
+							<img class="topbarImg" alt="Accueil" src="ressources/img/topbar/menu_accueil.png"/><span class="topbarText">Accueil</span>
+						</li>
+					</menu>
+				</nav>
+				<section id="profils-list-container">
+					<span id="appVersion"></span>
+					<span id="noMCSupport">Votre navigateur ne prends pas en charge la lecture de plusieurs vidéo en même temps de manière synchronsisée</span>
+					<h1><span tabindex="1" class="selectable-by-chromevox">Choisissez votre profil</span></h1>
+					<div id="profils-list-container-2">
+
+						<ul id="profils-list" class="list">
+							<li class="user btn"><a title="Profil de invité" tabindex="2" class="selectable-by-chromevox" aria-labelledby="profil0">Invité</a><span id="profil0" aria-hidden="true" class="hidden">Profil de invité</span></li>
+						</ul>
 					</div>
-					<div id="favorites-list" class="playlist-list"></div>
-				</div>
-			</section>
-			<section id="epg-fiche-container" class="section-with-topbar">
-				<a title="Retour" class="back-button btn">Retour</a>
-				<h1></h1>
-				<div id="thumb-and-related-content-container">
-					<div id="thumb-container" class="btn" onclick="Section.launchPlayerLoading(Dashboard.data);">
-						<img id="media-thumb" alt="" src=""/>
-						<img id="play-icon" alt="" src="ressources/img/dashboard/icone_gr_play_video.png"/>
-					</div>
-					<div id="related-content-container">
-						<div class="title">Vidéos sur le même thème</div>
-						<div id="related-content"></div>
-					</div>
-				</div>
-				<div id="synopsis-and-social-icons-container">
-					<div id="social-icons">
-						<div class="icon"><img alt="Ajouter aux favoris" src="ressources/img/dashboard/icone_favoris_actif.png"/></div>
-						<div class="icon"><img alt="Partager sur Facebook" src="ressources/img/dashboard/icone_facebook_actif.png"/></div>
-						<div class="icon"><img alt="Partager sur Twitter" src="ressources/img/dashboard/icone_twitter_actif.png"/></div>
-					</div>
-					<h2 class="oneline"></h2>
-					<div class="program-date"></div>
-					<div id="video-compatibilities-list">
-						<div class="compatibility audio" title="Contient des pistes audios"></div>
-						<div class="compatibility subtitle" title="Contient des sous-titres"></div>
-						<div class="compatibility ad" title="Contient des pistes pour l'audio description"></div>
-						<div class="compatibility ls" title="Contient des videos pour le language des signes"></div>
-					</div>
-					<div id="synopsis-container" class="synopsis-container btn">
-						<div class="label">Résumé</div>
-						<div id="synopsis" class="synopsis"></div>
-					</div>
-				</div>
-			</section>
-			<section id="settings" class="section-with-topbar interface">
-				<div id="back-to-player-button-container">
-					<div id="back-to-player-button" class="btn closeBtn" onclick="Section.launchPlayerFromSettings();">
-						<img alt="Revenir à la vidéo" src="ressources/img/player/gobacktoplayer.png"/>
-					</div>
-				</div>
-				<div id="subrubrics-container">
-					<ul id="settings-menu">
-						<li class="subrubric btn interface"><a title="Interface">Interface</a></li>
-						<li class="subrubric btn audio"><a title="Audio">Audio</a></li>
-						<li class="subrubric btn subtitles"><a title="Sous-titres">Sous-titres</a></li>
-						<li class="subrubric btn ls"><a title="Langues des signes">Langues des signes</a></li>
-					</ul>					
-				</div>
-				<div id="settings-options-container">
-					<div id="interface-settings">
-						<div class="title-subrubric">Ajustez votre interface</div>
-						<div class="left-col col">
-							<div id="option-font-size" class="option-container">
-								<div class="label">Taille de la police</div>
-								<div class="option-font-size option-slider">
-									<div class="min-font-size min-value">A</div>
-									<div class="slider-horizontal font-size">
-										<input id="fontSlide" min="16" max="24" value="16" step="0.1" onchange="Settings.change.fontSize(this.value)" type="range"/>
-									</div>
-									<div class="max-font-size max-value">A</div>									
-								</div>
+				</section>
+				<section id="apps-list-container">
+					<a id="switch-to-simplified-mode-btn" class="switch-btn btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode rapide et accessible" onclick="Main.switchToMode();" tabindex="1">Basculer en mode rapide et accessible</a>
+					<ul id="apps-list" class="list"></ul>
+				</section>
+				<section id="app-playlists" class="section-with-topbar">
+					<div id="favorites-container" class="playlist">
+						<div class="playlist-title">
+							<div class="playlist-icon">
+								<svg xml:space="preserve" style="enable-background:new 0 0 50 43;" viewBox="0 0 50 43" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Calque_1" version="1.1"><g><polygon points="25.3,0 32.3,14.1 47.9,16.4 36.6,27.4 39.3,43 25.3,35.6 11.4,43 14,27.4 2.8,16.4 18.4,14.1" class="st0" style="fill:#555555;stroke:#FFFFFF;stroke-width:0.25;stroke-miterlimit:10;"/></g></svg>
 							</div>
+							<div class="playlist-text">Mes vidéos favorites</div>
 						</div>
-						<div class="right-col col"></div>
+						<div id="favorites-list" class="playlist-list"></div>
 					</div>
-					<div id="audio-settings">
-						<div class="title-subrubric">Modifiez votre environnement audio</div>
-						<div class="left-col col">
-							<div id="ambiance-adaptation-btn" class="button"><span>Adaptation aux bruits ambiants</span></div>
-							<div id="spatialisation-options-ctn">
-								<select name="spatialisation-options" id="spatialisation-options">
-									<option value="binaural">Spatialisation au casque</option>
-									<option value="binaural-EQ">Spatialisation au casque EQ</option>
-									<option value="transaural">Spatialisation aux haut-parleurs</option>
-								</select>
-							</div>
+				</section>
+				<section id="epg-fiche-container" class="section-with-topbar">
+					<a title="Retour" class="back-button btn">Retour</a>
+					<h1></h1>
+					<div id="thumb-and-related-content-container">
+						<div id="thumb-container" class="btn" onclick="Section.launchPlayerLoading(Dashboard.data);">
+							<img id="media-thumb" alt="" src=""/>
+							<img id="play-icon" alt="" src="ressources/img/dashboard/icone_gr_play_video.png"/>
 						</div>
-						<div class="right-col col">
-							<div id="dialogues-extended-btn" class="button"><span>Renforcement des dialogues</span></div>
-						</div>
-						<hr/>
-						<div id="spatialisations-ctn">
-							<div id="comments-spatialisation" class="spatialisation-control">
-								<div class="title">Spatialisation des commentaires</div>
-								<div class="control-container vertical-slider-container">
-									<div id="comments-elevation-level" data-type="commentary" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des commentaires">
-										<a class="ui-slider-handle ui-state-default ui-corner-all oneline" href="#" title="Contrôle du niveau d'élévation des commentaires"></a>
-									</div>
-								</div>
-								<div id="comments-spatialisation-zone-ctn" class="control-container spatialisation-zone-ctn">
-									<div id="comments-spatialisation-zone" class="spatialisation-zone ad" data-type="commentary"></div>
-								</div>
-							</div>
-							<div id="dialogues-spatialisation" class="spatialisation-control">
-								<div class="title">Spatialisation des dialogues</div>
-								<div class="control-container vertical-slider-container">
-									<div id="dialogues-elevation-level" data-type="dialogues" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des dialogues">
-										<a class="ui-slider-handle ui-state-default ui-corner-all oneline" href="#" title="Contrôle du niveau d'élévation des dialogues"></a>
-									</div>
-								</div>
-								<div id="dialogues-spatialisation-zone-ctn" class="control-container spatialisation-zone-ctn">
-									<div id="dialogues-spatialisation-zone" class="spatialisation-zone di" data-type="dialogues"></div>
-								</div>
-							</div>							
+						<div id="related-content-container">
+							<div class="title">Vidéos sur le même thème</div>
+							<div id="related-content"></div>
 						</div>
 					</div>
-					
-					<div id="subtitles-settings">
-						<div class="title-subrubric">Réglez vos sous-titres</div>
-						<div id="option-font-family" class="option-container">
-							<div class="label">Choisir sa police</div>
-							<div class="option-font-family">
-								<div tabindex="22" class="font-family Arial" id="fontArial">Arial</div>
-								<div tabindex="23" class="font-family OpenDyslexic" id="fontOpenDyslexic">OpenDyslexic</div>
-								<div tabindex="24" class="font-family Andika" id="fontAndika">Andika</div>
-								<div tabindex="25" class="font-family Helvetica" id="fontHelvetica">Helvetica</div>
-								<div tabindex="26" class="font-family Verdana" id="fontVerdana">Verdana</div>
-							</div>
+					<div id="synopsis-and-social-icons-container">
+						<div id="social-icons">
+							<div class="icon"><img alt="Ajouter aux favoris" src="ressources/img/dashboard/icone_favoris_actif.png"/></div>
+							<div class="icon"><img alt="Partager sur Facebook" src="ressources/img/dashboard/icone_facebook_actif.png"/></div>
+							<div class="icon"><img alt="Partager sur Twitter" src="ressources/img/dashboard/icone_twitter_actif.png"/></div>
 						</div>
-						<div class="col-container">
+						<h2 class="oneline"></h2>
+						<div class="program-date"></div>
+						<div id="video-compatibilities-list">
+							<div class="compatibility audio" title="Contient des pistes audios"></div>
+							<div class="compatibility subtitle" title="Contient des sous-titres"></div>
+							<div class="compatibility ad" title="Contient des pistes pour l'audio description"></div>
+							<div class="compatibility ls" title="Contient des videos pour le language des signes"></div>
+						</div>
+						<div id="synopsis-container" class="synopsis-container btn">
+							<div class="label">Résumé</div>
+							<div id="synopsis" class="synopsis"></div>
+						</div>
+					</div>
+				</section>
+				<section id="settings" class="section-with-topbar interface">
+					<div id="back-to-player-button-container">
+						<div id="back-to-player-button" class="btn closeBtn" onclick="Section.launchPlayerFromSettings();">
+							<img alt="Revenir à la vidéo" src="ressources/img/player/gobacktoplayer.png"/>
+						</div>
+					</div>
+					<div id="subrubrics-container">
+						<ul id="settings-menu">
+							<li class="subrubric btn interface"><a title="Interface">Interface</a></li>
+							<li class="subrubric btn audio"><a title="Audio">Audio</a></li>
+							<li class="subrubric btn subtitles"><a title="Sous-titres">Sous-titres</a></li>
+							<li class="subrubric btn ls"><a title="Langues des signes">Langues des signes</a></li>
+						</ul>					
+					</div>
+					<div id="settings-options-container">
+						<div id="interface-settings">
+							<div class="title-subrubric">Ajustez votre interface</div>
 							<div class="left-col col">
-								<div id="option-background-color" class="option-container">
-									<div class="label">Couleur d'arrière plan</div>
-									<div class="option-background-color option-color">
-										<div title="Couleur blanche" tabindex="31" class="color white" data-color="white"></div>
-										<div title="Couleur noire" tabindex="32" class="color black" data-color="black"></div>
-									</div>									
-								</div>
-								<div id="option-background-opacity" class="option-container">
-									<div class="label">Régler l'opacité de son arrière plan</div>
-									<div class="option-background-opacity option-slider">
-										<div class="transparent-opacity" title="Arrière plan transparent"></div><div class="slider-horizontal opacity">
-											<input id="opacitySlide" min="0" max="1" value="0" step="0.25" onchange="Settings.change.subtitlesOpacity(this.value)" type="range"/>
-										</div><div class="darkest-opacity" title="Arrière plan plus sombre"></div>							
-									</div>
-								</div>
-							</div>
-							<div id="separator"></div>
-							<div class="right-col col">
-								<div id="option-text-color" class="option-container">
-									<div class="label">Couleur de texte</div>
-									<div class="option-text-color option-color">
-										<div title="Couleur transparent" class="color transparent" data-color="transparent"></div>
-										<div title="Couleur blanche" class="color white" data-color="white"></div>
-										<div title="Couleur jaune" class="color yellow" data-color="yellow"></div>
-										<div title="Couleur bleu" class="color blue" data-color="blue"></div>
-									</div>					
-								</div>	
-								<div id="option-subtitles-font-size" class="option-container">
-									<div class="label">Régler la taille de ses sous-titres</div>
+								<div id="option-font-size" class="option-container">
+									<div class="label">Taille de la police</div>
 									<div class="option-font-size option-slider">
 										<div class="min-font-size min-value">A</div>
 										<div class="slider-horizontal font-size">
-											<input id="subtitlesFontSlide" min="16" max="24" value="16" step="1" onchange="Settings.change.subtitlesFontSize(this.value)" type="range"/>
+											<input id="fontSlide" min="16" max="24" value="16" step="0.1" onchange="Settings.change.fontSize(this.value)" type="range"/>
 										</div>
-										<div class="max-font-size max-value">A</div>
+										<div class="max-font-size max-value">A</div>									
 									</div>
-								</div>											
+								</div>
+							</div>
+							<div class="right-col col"></div>
+						</div>
+						<div id="audio-settings">
+							<div class="title-subrubric">Modifiez votre environnement audio</div>
+							<div class="left-col col">
+								<div id="ambiance-adaptation-btn" class="button"><span>Adaptation aux bruits ambiants</span></div>
+								<div id="spatialisation-options-ctn">
+									<select name="spatialisation-options" id="spatialisation-options">
+										<option value="binaural">Spatialisation au casque</option>
+										<option value="binaural-EQ">Spatialisation au casque EQ</option>
+										<option value="transaural">Spatialisation aux haut-parleurs</option>
+									</select>
+								</div>
+							</div>
+							<div class="right-col col">
+								<div id="dialogues-extended-btn" class="button"><span>Renforcement des dialogues</span></div>
 							</div>
 							<hr/>
-						</div>
-						<div id="uiSubtitles-container" class="ui-subtitles">
-							<div class="pip-video">
-								<div class="pip-text">Texte de sous-titre</div>
-								<div class="ui-icon-gripsmall-center"></div>
-								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
-								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-sw ui-icon ui-icon-gripsmall-diagonal-sw"></div>
-								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-ne ui-icon ui-icon-gripsmall-diagonal-ne"></div>
-								<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-nw ui-icon ui-icon-gripsmall-diagonal-nw"></div>						
-							</div>	
-						</div>
-					</div>
-					<div id="ls-settings">
-						<div class="title-subrubric">Placez et redimensionnez la fenêtre vidéo</div>
-						<div id="uiLS-container" class="ui-ls">
-							<div class="pip-limit" id="uiLimitLS">
-								<div id="label-pip-main-video" class="label-pip-video main">Vidéo</div>
-								<div class="pip-video">
-									<div id="label-pip-second-video" class="label-pip-video">LS</div>
-									<div class="ui-icon-gripsmall-center"></div>								
+							<div id="spatialisations-ctn">
+								<div id="comments-spatialisation" class="spatialisation-control">
+									<div class="title">Spatialisation des commentaires</div>
+									<div class="control-container vertical-slider-container">
+										<div id="comments-elevation-level" data-type="commentary" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des commentaires">
+											<a class="ui-slider-handle ui-state-default ui-corner-all oneline" href="#" title="Contrôle du niveau d'élévation des commentaires"></a>
+										</div>
+									</div>
+									<div id="comments-spatialisation-zone-ctn" class="control-container spatialisation-zone-ctn">
+										<div id="comments-spatialisation-zone" class="spatialisation-zone ad" data-type="commentary"></div>
+									</div>
 								</div>
-							</div>							
+								<div id="dialogues-spatialisation" class="spatialisation-control">
+									<div class="title">Spatialisation des dialogues</div>
+									<div class="control-container vertical-slider-container">
+										<div id="dialogues-elevation-level" data-type="dialogues" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des dialogues">
+											<a class="ui-slider-handle ui-state-default ui-corner-all oneline" href="#" title="Contrôle du niveau d'élévation des dialogues"></a>
+										</div>
+									</div>
+									<div id="dialogues-spatialisation-zone-ctn" class="control-container spatialisation-zone-ctn">
+										<div id="dialogues-spatialisation-zone" class="spatialisation-zone di" data-type="dialogues"></div>
+									</div>
+								</div>							
+							</div>
 						</div>
-					</div>
-				</div>
-			</section>
-			<section id="profile"></section>
-		</div>
-		<div id="simplified-mode-container">
-			<section id="apps-list-container-sm" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Accueil</span></h1>
-				<a id="switch-to-standard-mode-btn" class="switch-btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="2">Basculer en mode normal</a>
-				<ul id="apps-list-sm"></ul>
-				<a id="logout-btn-sm" title="Se déconnecter" onclick="Section.change(Section.sections[0]);"><span tabindex="100" class="selectable-by-chromevox">Se déconnecter</span></a>
-			</section>
-			<section id="app-options-container" class="manual-centering">
-				<h1 id="app-title"></h1>
-				<ul id="app-options">
-					<li id="my-videos-btn" class="menu-item">
-						<a title="Mes vidéos Pluzz" tabindex="2" class="selectable-by-chromevox"></a>
-					</li>
-					<li id="search-btn" class="menu-item">
-						<a title="Recherche" tabindex="3" class="selectable-by-chromevox">Recherche</a>
-					</li>
-					<li id="settings-btn" class="menu-item">
-						<a title="Réglages" tabindex="4" class="selectable-by-chromevox">Réglages</a>
-					</li>
-					<!--<li id="profil-btn" class="menu-item">
-						<a title="Mon profil" tabindex="5" class="selectable-by-chromevox">Mon profil</a>
-					</li>-->
-				</ul>
-				<a title="Accueil" class="back-to-home-button"><span tabindex="100" class="selectable-by-chromevox">Accueil</span></a>
-			</section>
-			<section id="my-videos-options-container" class="manual-centering">
-				<h1></h1>
-				<ul id="my-videos-options">
-					<li class="menu-item">
-						<a title="Mes vidéos favorites" tabindex="2" class="selectable-by-chromevox">Mes vidéos favorites</a>
-					</li>
-					<li class="menu-item">
-						<a title="Mes signets" tabindex="3" class="selectable-by-chromevox">Mes signets</a>
-					</li>
-					<li class="menu-item">
-						<a title="Mon historique" tabindex="4" class="selectable-by-chromevox">Mon historique</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="app-playlists-sm" class="playlist-sm">
-				<h1 id="playlist-title"></h1>
-				<div class="buttons-container">
-					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
-					<a id="previous-page-playlist" title="Page précedente" class="prev"><span tabindex="3" class="selectable-by-chromevox">Page précedente</span></a>
-					<a id="next-page-playlist" title="Page suivante" class="next"><span tabindex="4" class="selectable-by-chromevox">Page suivante</span></a>
-				</div>
-				<ul id="playlist"></ul>
-			</section>
-			<section id="options-favorites-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Options Favoris</span></h1>
-				<ul id="options-favorites">
-					<li id="play-video-btn" class="menu-item btn">
-						<a title="Lire la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);" tabindex="2" class="selectable-by-chromevox">Lire la vidéo</a>
-					</li>
-					<li id="see-fiche-btn" class="menu-item btn">
-						<a title="Accéder à la fiche" tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
-					</li>
-					<li id="remove-favorite-btn" class="menu-item btn">
-						<a title="Supprimer des favoris" tabindex="4" class="selectable-by-chromevox">Supprimer des favoris</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="options-signets-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Options Signets</span></h1>
-				<ul>
-					<li class="menu-item">
-						<a title="Lire à partir de ce signet" tabindex="2" class="selectable-by-chromevox">Lire à partir de ce signet</a>
-					</li>
-					<li class="menu-item">
-						<a title="Supprimer ce signet" tabindex="3" class="selectable-by-chromevox">Supprimer ce signet</a>
-					</li>
-					<li class="menu-item">
-						<a title="Éditer ce signet" tabindex="4" class="selectable-by-chromevox">Éditer ce signet</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="options-history-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Options Historique</span></h1>
-				<ul>
-					<li class="menu-item">
-						<a title="Lire la vidéo" tabindex="2" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder à la fiche" tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="epg-fiche-container-sm" class="manual-centering">
-				<h1></h1>
-				<h2></h2>
-				<ul id="program-options">
-					<li id="play-video-btn-2" class="menu-item">
-						<a title="Accéder à la vidéo" tabindex="3" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Accéder à la vidéo</a>
-					</li>
-					<li id="add-remove-to-favorites" class="menu-item">
-						<a title="Mettre ou supprimer un favoris" tabindex="4" class="selectable-by-chromevox"></a>
-					</li>
-					<li id="see-full-synopsis-btn" class="menu-item">
-						<a title="Lire le résumé" tabindex="5" class="selectable-by-chromevox">Lire le résumé</a>
-					</li>
-					<li id="see-related-content-btn" class="menu-item">
-						<a title="Les vidéos sur le même thème" tabindex="6" class="selectable-by-chromevox">Les vidéos sur le même thème</a>
-					</li>
-					<li id="share-btn" class="menu-item">
-						<a title="Partager sur le réseaux" tabindex="7" class="selectable-by-chromevox">Partager sur le réseaux</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-				<a title="Accueil" class="home" onclick="Main.goToHome();"><span tabindex="101" class="selectable-by-chromevox">Accueil</span></a>
-			</section>
-			<section id="settings-sm-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Réglages</span></h1>
-				<ul>
-					<li class="menu-item">
-						<a title="Accéder aux réglages audio" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[26]);">Audio</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages de l'interface" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[16]);">Interface</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages des sous-titres" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[17]);">Sous-titres</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages pour la langue des signes" tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[18]);">Langue des signes</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="settings-audio-sm-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Réglages audio</span></h1>
-				<ul>
-					<li class="menu-item">
-						<a title="Accéder aux réglages du mode de spatialisation" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[28]);">Choisir le mode de spatialisation</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages de la spatialisation des commentaires" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[29]);">Changer la spatialisation des commentaires</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages de la spatialisation des dialogues" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[30]);">Changer la spatialisation des dialogues</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="settings-interface-sm-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Réglages de l'interface</span></h1>
-				<ul>
-					<li class="menu-item">
-						<a title="Accéder aux réglages de la taille du texte" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages du choix du thème" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[27]);">Choix du thème</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="settings-subtitles-sm-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Réglages des sous-titres</span></h1>
-				<ul>
-					<li class="menu-item">
-						<a title="Accéder aux réglages de la police de caractère" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[20]);">Choisir la police de caractère</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages de la couleur du texte" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[21]);">Choisir la couleur du texte</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages de la couleur de fond du texte" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[22]);">Choisir la couleur du fond du texte</a>
-					</li>
-					<li class="menu-item">
-						<a title="Accéder aux réglages du positionnement des sous-titres" tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[23]);">Positionner les sous-titres</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="settings-ls-sm-container">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Placez et redimensionnez la fenêtre vidéo</span></h1>
-				<div class="buttons-container">
-					<a tabindex="2" title="Retour" class="back-button selectable-by-chromevox">Retour</a>
-				</div>
-				<div id="uiLS-container-sm" class="ui-ls">
-					<div class="pip-limit" id="uiLimitLS-sm">
-						<div id="label-pip-main-video-sm" class="label-pip-video main">Vidéo</div>
-						<div class="pip-video selectable-by-chromevox" tabindex="3">
-							<div id="label-pip-second-video-sm" class="label-pip-video" aria-labelledby="lslabel">LS<span id="lslabel" aria-hidden="true" class="hidden">Fenêtre de la langue des signes</span></div>
-							<div class="ui-icon-gripsmall-center"></div>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section id="settings-audio-spatialisation-mode-sm-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Choisir le mode de spatialisation</span></h1>
-				<ul id="spatialisation-options-sm">
-					<li class="menu-item" data-value="binaural">
-						<a title="Choisir la spatialisation au casque" tabindex="2" class="selectable-by-chromevox final-option">Spatialisation au casque</a>
-					</li>
-					<li class="menu-item" data-value="binaural-EQ">
-						<a title="Choisir la spatialisation au casque EQ" tabindex="3" class="selectable-by-chromevox final-option">Spatialisation au casque EQ</a>
-					</li>
-					<li class="menu-item" data-value="transaural">
-						<a title="Choisir la spatialisation aux haut-parleurs" tabindex="4" class="selectable-by-chromevox final-option">Spatialisation aux haut-parleurs</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="settings-audio-spatialisation-sm-container">
-				<h1></h1>
-				<div class="buttons-container">
-					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
-				</div>
-				<div class="option-slider">
-					<label>Élévation</label>
-					<div class="min-value"></div>
-					<div class="slider-horizontal">
-						<div id="elevation-lvl-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="3" title="Contrôle du niveau d'élévation" role="slider" aria-valuenow="0" aria-valuetext="" aria-valuemin="" aria-valuemax=""></a></div>
-					</div>
-					<div class="max-value"></div>
-				</div>
-				<div class="option-slider">
-					<label>Orientation</label>
-					<div class="min-value"></div>
-					<div class="slider-horizontal">
-						<div id="orientation-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="4" title="Contrôle de l'orientation" role="slider" aria-valuenow="0" aria-valuetext="" aria-valuemin="" aria-valuemax=""></a></div>
-					</div>
-					<div class="max-value"></div>
-				</div>
-				<div class="option-slider">
-					<label>Distance</label>
-					<div class="min-value"></div>
-					<div class="slider-horizontal">
-						<div id="distance-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="5" title="Contrôle de la distance" role="slider" aria-valuenow="0" aria-valuetext="" aria-valuemin="" aria-valuemax=""></a></div>
-					</div>
-					<div class="max-value"></div>
-				</div>
-			</section>
-			<section id="settings-font-size-sm-container">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Taille du texte</span></h1>
-				<div class="buttons-container">
-					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
-				</div>
-				<div class="option-font-size option-slider">
-					<div class="min-font-size min-value">A</div>
-					<div class="slider-horizontal">
-						<div id="fontSlide-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="3" title="Contrôle de la taille du texte" role="slider" aria-valuenow="0" aria-valuetext="" aria-valuemin="" aria-valuemax=""></a></div>
-					</div>
-					<div class="max-font-size max-value">A</div>
-				</div>
-			</section>
-			<section id="settings-subtitles-font-family-sm-container" class="manual-centering">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la police de caractère</span></h1>
-				<ul id="font-family">
-					<li class="menu-item Arial">
-						<a title="Choisir la police Arial" tabindex="2" class="selectable-by-chromevox final-option">Arial</a>
-					</li>
-					<li class="menu-item OpenDyslexic">
-						<a title="Choisir la police OpenDyslexic" tabindex="3" class="selectable-by-chromevox final-option">OpenDyslexic</a>
-					</li>
-					<li class="menu-item Andika">
-						<a title="Choisir la police Andika" tabindex="4" class="selectable-by-chromevox final-option">Andika</a>
-					</li>
-					<li class="menu-item Helvetica">
-						<a title="Choisir la police Helvetica" tabindex="5" class="selectable-by-chromevox final-option">Helvetica</a>
-					</li>
-					<li class="menu-item Verdana">
-						<a title="Choisir la police Verdana" tabindex="6" class="selectable-by-chromevox final-option">Verdana</a>
-					</li>
-				</ul>
-				<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-			</section>
-			<section id="settings-subtitles-color-sm-container">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la couleur de texte</span></h1>
-				<div class="buttons-container">
-					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
-				</div>
-				<div class="option-text-color option-color">
-					<div title="Couleur transparent" class="color final-option transparent selectable-by-chromevox" tabindex="3" data-color="transparent"></div>
-					<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="4" data-color="white"></div>
-					<div title="Couleur jaune" class="color final-option yellow selectable-by-chromevox" tabindex="5" data-color="yellow"></div>
-					<div title="Couleur bleu" class="color final-option blue selectable-by-chromevox" tabindex="6" data-color="blue"></div>
-				</div>
-			</section>
-			<section id="settings-subtitles-bgcolor-sm-container">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la couleur de fond du texte</span></h1>
-				<div class="buttons-container">
-					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
-				</div>
-				<div class="option-background-color option-color">
-					<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="3" data-color="white"></div>
-					<div title="Couleur noire" class="color final-option black selectable-by-chromevox" tabindex="4" data-color="black"></div>
-				</div>
-			</section>
-			<section id="settings-subtitles-pip-sm-container">
-				<h1><span tabindex="1" class="selectable-by-chromevox">Positionner les sous-titres</span></h1>
-				<div class="buttons-container">
-					<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
-				</div>
-				<div id="uiSubtitles-sm-container" class="ui-subtitles">
-					<div class="pip-video selectable-by-chromevox" tabindex="3">
-						<div class="pip-text">Texte de sous-titre</div>
-						<div class="ui-icon-gripsmall-center"></div>
-						<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
-						<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-sw ui-icon ui-icon-gripsmall-diagonal-sw"></div>
-						<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-ne ui-icon ui-icon-gripsmall-diagonal-ne"></div>
-						<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-nw ui-icon ui-icon-gripsmall-diagonal-nw"></div>						
-					</div>	
-				</div>
-			</section>
-		</div>
-		<section id="full-synopsis">
-			<a title="Retour" class="back-button"><span tabindex="1" class="selectable-by-chromevox">Retour</span></a>
-			<h2 class="oneline"></h2>
-			<div class="program-date"></div>
-			<div class="synopsis-container">
-				<div class="label"><span tabindex="4" class="selectable-by-chromevox">Résumé</span></div>
-				<div tabindex="5" id="synopsis2" class="synopsis selectable-by-chromevox"></div>
-			</div>
-		</section>
-		<div id="in-construction">
-			<div class="content">
-				<p class="grey selectable-by-chromevox" tabindex="1">La page à laquelle vous tenter d'accéder n'existe pas encore.<br/><span class="bold">Pas de panique, nos agents très spéciaux sont sur le coup.</span></p>
-				<a id="back-button-in-construction-section" class="bold selectable-by-chromevox" onclick="Navigation.goBack();" tabindex="2">Retour à la page précédente</a>
-			</div>
-		</div>
-		<div id="videoPlayerContainer">
-			<video id="videoPlayerMain" class="player mainPlayer" autoplay="autoplay"></video>
-			<video id="playerAudioFiveDotOne" class="audioPlayer" autoplay="autoplay"></video>
-			<video id="playerAudioFiveDotOne-2" class="audioPlayer" autoplay="autoplay"></video>
-			<video id="videoPlayerAudio" class="player audioPlayer" autoplay="autoplay"></video>
-			<div id="video-caption"></div>
-			<div id="playerUI">
-				<div id="playerTopBanner">
-					<div id="playerClose" class="btn closeBtn selectable-by-chromevox" onclick="Player.validClose();" tabindex="1"><img alt="Retour" src="ressources/img/player/inte_close.png"/></div>
-				</div>
-				<div id="playerBottomBanner">
-				<div id="playerOptions">
-					<div id="playerOptionAudio" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-audio" onclick="InfoBanner.showOptionPopup('audio', this);" tabindex="2">
-						<span id="label-option-audio" aria-hidden="true" class="hidden"></span>
-						<div id="iconeLA" class="compatibility audio" title="Audio"></div>
-						<div id="playerOptionAudioCurrentValue" class="playerOptionValue"></div>							
-					</div>
-					<div id="playerOptionSub" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-subtitle" onclick="InfoBanner.showOptionPopup('subtitle', this);" tabindex="13">
-						<span id="label-option-subtitle" aria-hidden="true" class="hidden"></span>
-						<div id="iconeST" class="compatibility subtitle" title="Sous-titre"></div>
-						<div id="playerOptionSubCurrentValue" class="playerOptionValue"></div>
-					</div>
-					<div id="playerOptionDescription" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ad" onclick="InfoBanner.showOptionPopup('ad', this);" tabindex="24">
-						<span id="label-option-ad" aria-hidden="true" class="hidden"></span>
-						<div id="iconeAD" class="compatibility ad" title="Audio description"></div>
-						<div id="playerOptionDescriptionCurrentValue" class="playerOptionValue"></div>							
-					</div>
-					<div id="playerOptionSigne" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ls" onclick="InfoBanner.showOptionPopup('ls', this);" tabindex="35">
-						<span id="label-option-ls" aria-hidden="true" class="hidden"></span>
-						<div id="iconeLSF" class="compatibility ls" title="Langue des signes"></div>
-						<div id="playerOptionSigneCurrentValue" class="playerOptionValue"></div>							
-					</div>	
-				</div>
-				<div id="playerProgressInfos">
-					<div id="playerProgressCurrent"><span class="selectable-by-chromevox final-option" tabindex="46" aria-labelledby="current-time-label"></span><span id="current-time-label" class="hidden"></span></div>
-					<div id="playerProgressBar" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false" title="Barre de progression">
-						<a id="playerProgressCursor" class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="47" title="Contrôle de la position de la vidéo" role="slider" aria-valuenow="0" aria-valuetext="0 pourcent" aria-valuemin="0" aria-valuemax="100"></a>
-					</div>
-					<div id="playerProgressTotal"><span class="selectable-by-chromevox final-option" tabindex="48" aria-labelledby="total-time-label"></span><span id="total-time-label" class="hidden"></span></div>
-				</div>
-				<div id="playerControls">
-					<div id="playerControlVolume" class="volume-control-ctn">
-						<span id="volume-tooltip" class="tooltip" role="tooltip"></span> 
-						<span class="icon volume-mute"></span>
-						<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false" title="Volume"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" style="left: 58%;" tabindex="49" title="Contrôle du volume" role="slider" aria-valuenow="0" aria-valuetext="0 pourcent" aria-valuemin="0" aria-valuemax="100"></a></div>
-						<span class="icon volume" id="up-volume"></span>
-					</div>
-					<div id="playerControlTrickMode">
-						<div id="playerControlRW" class="btn selectable-by-chromevox final-option" onclick="Player.rw();" tabindex="50" title="Bouton retour rapide"></div>
-						<div id="playerControlPlayPause" class="btn selectable-by-chromevox final-option" onclick="Player.playPause();" tabindex="51" title="Bouton lecture | pause"></div>
-						<div id="playerControlFF" class="btn selectable-by-chromevox final-option" onclick="Player.ff();" tabindex="52" title="Bouton avance rapide"></div>
-					</div>
-					<div id="playerControlADVolume" class="volume-control-ctn">
-						<span id="ad-volume-tooltip" class="tooltip" role="tooltip"></span> 
-						<span class="icon volume-min"></span>
-						<div id="ad-volume-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="53" title="Contrôle pour améliorer l'audio description" role="slider" aria-valuenow="0" aria-valuetext="" aria-valuemin="-60" aria-valuemax="30"></a></div>
-						<span class="icon volume" id="ad-up-volume"></span>
-					</div>
-					<div id="playerControlConfig" class="btn selectable-by-chromevox" onclick="Section.launchSettingsFromPlayer();" tabindex="54">
-						<img alt="Bouton paramètres" src="ressources/img/player/reglages_player.png"/>
-					</div>
-				</div>
-				<div id="optionDropDownMenu" class="optionDropDownMenu hidden"></div></div>
-				<div id="ui-video-ls-container" class="ui-ls">
-					<div id="pipContainer" class="player pip-limit">
-						<div id="pipVideo" class="pipVideo ui-draggable ui-resizable">
-							<video id="videoPlayerPip" class="player pipPlayer" autoplay="autoplay"></video>
-							<div class="ui-icon ui-icon-gripsmall-center"></div>
-						</div>
-					</div>					
-				</div>
-				<hr/>
-			</div>			
-		</div>
-		<div id="splashscreen"></div>		
 
-		<script language="javascript" type="text/javascript" src="ressources/js/lib/jquery-2.2.1.min.js"></script>
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-		<script language="javascript" type="text/javascript" src="ressources/js/lib/jquery.ui.touch-punch.min.js"></script>
+						<div id="subtitles-settings">
+							<div class="title-subrubric">Réglez vos sous-titres</div>
+							<div id="option-font-family" class="option-container">
+								<div class="label">Choisir sa police</div>
+								<div class="option-font-family">
+									<div tabindex="22" class="font-family Arial" id="fontArial">Arial</div>
+									<div tabindex="23" class="font-family OpenDyslexic" id="fontOpenDyslexic">OpenDyslexic</div>
+									<div tabindex="24" class="font-family Andika" id="fontAndika">Andika</div>
+									<div tabindex="25" class="font-family Helvetica" id="fontHelvetica">Helvetica</div>
+									<div tabindex="26" class="font-family Verdana" id="fontVerdana">Verdana</div>
+								</div>
+							</div>
+							<div class="col-container">
+								<div class="left-col col">
+									<div id="option-background-color" class="option-container">
+										<div class="label">Couleur d'arrière plan</div>
+										<div class="option-background-color option-color">
+											<div title="Couleur blanche" tabindex="31" class="color white" data-color="white"></div>
+											<div title="Couleur noire" tabindex="32" class="color black" data-color="black"></div>
+										</div>									
+									</div>
+									<div id="option-background-opacity" class="option-container">
+										<div class="label">Régler l'opacité de son arrière plan</div>
+										<div class="option-background-opacity option-slider">
+											<div class="transparent-opacity" title="Arrière plan transparent"></div><div class="slider-horizontal opacity">
+												<input id="opacitySlide" min="0" max="1" value="0" step="0.25" onchange="Settings.change.subtitlesOpacity(this.value)" type="range"/>
+											</div><div class="darkest-opacity" title="Arrière plan plus sombre"></div>							
+										</div>
+									</div>
+								</div>
+								<div id="separator"></div>
+								<div class="right-col col">
+									<div id="option-text-color" class="option-container">
+										<div class="label">Couleur de texte</div>
+										<div class="option-text-color option-color">
+											<div title="Couleur transparent" class="color transparent" data-color="transparent"></div>
+											<div title="Couleur blanche" class="color white" data-color="white"></div>
+											<div title="Couleur jaune" class="color yellow" data-color="yellow"></div>
+											<div title="Couleur bleu" class="color blue" data-color="blue"></div>
+										</div>					
+									</div>	
+									<div id="option-subtitles-font-size" class="option-container">
+										<div class="label">Régler la taille de ses sous-titres</div>
+										<div class="option-font-size option-slider">
+											<div class="min-font-size min-value">A</div>
+											<div class="slider-horizontal font-size">
+												<input id="subtitlesFontSlide" min="16" max="24" value="16" step="1" onchange="Settings.change.subtitlesFontSize(this.value)" type="range"/>
+											</div>
+											<div class="max-font-size max-value">A</div>
+										</div>
+									</div>											
+								</div>
+								<hr/>
+							</div>
+							<div id="uiSubtitles-container" class="ui-subtitles">
+								<div class="pip-video">
+									<div class="pip-text">Texte de sous-titre</div>
+									<div class="ui-icon-gripsmall-center"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-sw ui-icon ui-icon-gripsmall-diagonal-sw"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-ne ui-icon ui-icon-gripsmall-diagonal-ne"></div>
+									<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-nw ui-icon ui-icon-gripsmall-diagonal-nw"></div>						
+								</div>	
+							</div>
+						</div>
+						<div id="ls-settings">
+							<div class="title-subrubric">Placez et redimensionnez la fenêtre vidéo</div>
+							<div id="uiLS-container" class="ui-ls">
+								<div class="pip-limit" id="uiLimitLS">
+									<div id="label-pip-main-video" class="label-pip-video main">Vidéo</div>
+									<div class="pip-video">
+										<div id="label-pip-second-video" class="label-pip-video">LS</div>
+										<div class="ui-icon-gripsmall-center"></div>								
+									</div>
+								</div>							
+							</div>
+						</div>
+					</div>
+				</section>
+				<section id="profile"></section>
+			</div>
+			<div id="simplified-mode-container">
+				<section id="apps-list-container-sm" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Accueil</span></h1>
+					<a id="switch-to-standard-mode-btn" class="switch-btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="2">Basculer en mode normal</a>
+					<ul id="apps-list-sm"></ul>
+					<a id="logout-btn-sm" title="Se déconnecter" onclick="Section.change(Section.sections[0]);"><span tabindex="100" class="selectable-by-chromevox">Se déconnecter</span></a>
+				</section>
+				<section id="app-options-container" class="manual-centering">
+					<h1 id="app-title"></h1>
+					<ul id="app-options">
+						<li id="my-videos-btn" class="menu-item">
+							<a title="Mes vidéos Pluzz" tabindex="2" class="selectable-by-chromevox"></a>
+						</li>
+						<li id="search-btn" class="menu-item">
+							<a title="Recherche" tabindex="3" class="selectable-by-chromevox">Recherche</a>
+						</li>
+						<li id="settings-btn" class="menu-item">
+							<a title="Réglages" tabindex="4" class="selectable-by-chromevox">Réglages</a>
+						</li>
+						<!--<li id="profil-btn" class="menu-item">
+							<a title="Mon profil" tabindex="5" class="selectable-by-chromevox">Mon profil</a>
+						</li>-->
+					</ul>
+					<a title="Accueil" class="back-to-home-button"><span tabindex="100" class="selectable-by-chromevox">Accueil</span></a>
+				</section>
+				<section id="my-videos-options-container" class="manual-centering">
+					<h1></h1>
+					<ul id="my-videos-options">
+						<li class="menu-item">
+							<a title="Mes vidéos favorites" tabindex="2" class="selectable-by-chromevox">Mes vidéos favorites</a>
+						</li>
+						<li class="menu-item">
+							<a title="Mes signets" tabindex="3" class="selectable-by-chromevox">Mes signets</a>
+						</li>
+						<li class="menu-item">
+							<a title="Mon historique" tabindex="4" class="selectable-by-chromevox">Mon historique</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="app-playlists-sm" class="playlist-sm">
+					<h1 id="playlist-title"></h1>
+					<div class="buttons-container">
+						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+						<a id="previous-page-playlist" title="Page précedente" class="prev"><span tabindex="3" class="selectable-by-chromevox">Page précedente</span></a>
+						<a id="next-page-playlist" title="Page suivante" class="next"><span tabindex="4" class="selectable-by-chromevox">Page suivante</span></a>
+					</div>
+					<ul id="playlist"></ul>
+				</section>
+				<section id="options-favorites-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Options Favoris</span></h1>
+					<ul id="options-favorites">
+						<li id="play-video-btn" class="menu-item btn">
+							<a title="Lire la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);" tabindex="2" class="selectable-by-chromevox">Lire la vidéo</a>
+						</li>
+						<li id="see-fiche-btn" class="menu-item btn">
+							<a title="Accéder à la fiche" tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
+						</li>
+						<li id="remove-favorite-btn" class="menu-item btn">
+							<a title="Supprimer des favoris" tabindex="4" class="selectable-by-chromevox">Supprimer des favoris</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="options-signets-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Options Signets</span></h1>
+					<ul>
+						<li class="menu-item">
+							<a title="Lire à partir de ce signet" tabindex="2" class="selectable-by-chromevox">Lire à partir de ce signet</a>
+						</li>
+						<li class="menu-item">
+							<a title="Supprimer ce signet" tabindex="3" class="selectable-by-chromevox">Supprimer ce signet</a>
+						</li>
+						<li class="menu-item">
+							<a title="Éditer ce signet" tabindex="4" class="selectable-by-chromevox">Éditer ce signet</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="options-history-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Options Historique</span></h1>
+					<ul>
+						<li class="menu-item">
+							<a title="Lire la vidéo" tabindex="2" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder à la fiche" tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="epg-fiche-container-sm" class="manual-centering">
+					<h1></h1>
+					<h2></h2>
+					<ul id="program-options">
+						<li id="play-video-btn-2" class="menu-item">
+							<a title="Accéder à la vidéo" tabindex="3" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Accéder à la vidéo</a>
+						</li>
+						<li id="add-remove-to-favorites" class="menu-item">
+							<a title="Mettre ou supprimer un favoris" tabindex="4" class="selectable-by-chromevox"></a>
+						</li>
+						<li id="see-full-synopsis-btn" class="menu-item">
+							<a title="Lire le résumé" tabindex="5" class="selectable-by-chromevox">Lire le résumé</a>
+						</li>
+						<li id="see-related-content-btn" class="menu-item">
+							<a title="Les vidéos sur le même thème" tabindex="6" class="selectable-by-chromevox">Les vidéos sur le même thème</a>
+						</li>
+						<li id="share-btn" class="menu-item">
+							<a title="Partager sur le réseaux" tabindex="7" class="selectable-by-chromevox">Partager sur le réseaux</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a title="Accueil" class="home back-to-home-button"><span tabindex="101" class="selectable-by-chromevox">Accueil</span></a>
+				</section>
+				<section id="settings-sm-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages</span></h1>
+					<ul>
+						<li class="menu-item">
+							<a title="Accéder aux réglages audio" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[26]);">Audio</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages de l'interface" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[16]);">Interface</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages des sous-titres" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[17]);">Sous-titres</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages pour la langue des signes" tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[18]);">Langue des signes</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="settings-audio-sm-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages audio</span></h1>
+					<ul>
+						<li class="menu-item">
+							<a title="Accéder aux réglages du mode de spatialisation" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[28]);">Choisir le mode de spatialisation</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages de la spatialisation des commentaires" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[29]);">Changer la spatialisation des commentaires</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages de la spatialisation des dialogues" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[30]);">Changer la spatialisation des dialogues</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="settings-interface-sm-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages de l'interface</span></h1>
+					<ul>
+						<li class="menu-item">
+							<a title="Accéder aux réglages de la taille du texte" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages du choix du thème" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[27]);">Choix du thème</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="settings-subtitles-sm-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages des sous-titres</span></h1>
+					<ul>
+						<li class="menu-item">
+							<a title="Accéder aux réglages de la police de caractère" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[20]);">Choisir la police de caractère</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages de la couleur du texte" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[21]);">Choisir la couleur du texte</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages de la couleur de fond du texte" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[22]);">Choisir la couleur du fond du texte</a>
+						</li>
+						<li class="menu-item">
+							<a title="Accéder aux réglages du positionnement des sous-titres" tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[23]);">Positionner les sous-titres</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="settings-ls-sm-container">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Placez et redimensionnez la fenêtre vidéo</span></h1>
+					<div class="buttons-container">
+						<a tabindex="2" title="Retour" class="back-button selectable-by-chromevox">Retour</a>
+					</div>
+					<div id="uiLS-container-sm" class="ui-ls">
+						<div class="pip-limit" id="uiLimitLS-sm">
+							<div id="label-pip-main-video-sm" class="label-pip-video main">Vidéo</div>
+							<div class="pip-video selectable-by-chromevox" tabindex="3">
+								<div id="label-pip-second-video-sm" class="label-pip-video" aria-labelledby="lslabel">LS<span id="lslabel" aria-hidden="true" class="hidden">Fenêtre de la langue des signes</span></div>
+								<div class="ui-icon-gripsmall-center"></div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section id="settings-audio-spatialisation-mode-sm-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir le mode de spatialisation</span></h1>
+					<ul id="spatialisation-options-sm">
+						<li class="menu-item" data-value="binaural">
+							<a title="Choisir la spatialisation au casque" tabindex="2" class="selectable-by-chromevox final-option">Spatialisation au casque</a>
+						</li>
+						<li class="menu-item" data-value="binaural-EQ">
+							<a title="Choisir la spatialisation au casque EQ" tabindex="3" class="selectable-by-chromevox final-option">Spatialisation au casque EQ</a>
+						</li>
+						<li class="menu-item" data-value="transaural">
+							<a title="Choisir la spatialisation aux haut-parleurs" tabindex="4" class="selectable-by-chromevox final-option">Spatialisation aux haut-parleurs</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="settings-audio-spatialisation-sm-container">
+					<h1></h1>
+					<div class="buttons-container">
+						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+					</div>
+					<div class="option-slider">
+						<label>Élévation</label>
+						<div class="min-value"></div>
+						<div class="slider-horizontal">
+							<div id="elevation-lvl-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="3" title="Contrôle du niveau d'élévation" role="slider"></a></div>
+						</div>
+						<div class="max-value"></div>
+					</div>
+					<div class="option-slider">
+						<label>Orientation</label>
+						<div class="min-value"></div>
+						<div class="slider-horizontal">
+							<div id="orientation-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="4" title="Contrôle de l'orientation" role="slider"></a></div>
+						</div>
+						<div class="max-value"></div>
+					</div>
+					<div class="option-slider">
+						<label>Distance</label>
+						<div class="min-value"></div>
+						<div class="slider-horizontal">
+							<div id="distance-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="5" title="Contrôle de la distance" role="slider"></a></div>
+						</div>
+						<div class="max-value"></div>
+					</div>
+				</section>
+				<section id="settings-font-size-sm-container">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Taille du texte</span></h1>
+					<div class="buttons-container">
+						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+					</div>
+					<div class="option-font-size option-slider">
+						<div class="min-font-size min-value">A</div>
+						<div class="slider-horizontal">
+							<div id="fontSlide-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="3" title="Contrôle de la taille du texte" role="slider"></a></div>
+						</div>
+						<div class="max-font-size max-value">A</div>
+					</div>
+				</section>
+				<section id="settings-subtitles-font-family-sm-container" class="manual-centering">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la police de caractère</span></h1>
+					<ul id="font-family">
+						<li class="menu-item Arial">
+							<a title="Choisir la police Arial" tabindex="2" class="selectable-by-chromevox final-option">Arial</a>
+						</li>
+						<li class="menu-item OpenDyslexic">
+							<a title="Choisir la police OpenDyslexic" tabindex="3" class="selectable-by-chromevox final-option">OpenDyslexic</a>
+						</li>
+						<li class="menu-item Andika">
+							<a title="Choisir la police Andika" tabindex="4" class="selectable-by-chromevox final-option">Andika</a>
+						</li>
+						<li class="menu-item Helvetica">
+							<a title="Choisir la police Helvetica" tabindex="5" class="selectable-by-chromevox final-option">Helvetica</a>
+						</li>
+						<li class="menu-item Verdana">
+							<a title="Choisir la police Verdana" tabindex="6" class="selectable-by-chromevox final-option">Verdana</a>
+						</li>
+					</ul>
+					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+				</section>
+				<section id="settings-subtitles-color-sm-container">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la couleur de texte</span></h1>
+					<div class="buttons-container">
+						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+					</div>
+					<div class="option-text-color option-color">
+						<div title="Couleur transparent" class="color final-option transparent selectable-by-chromevox" tabindex="3" data-color="transparent"></div>
+						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="4" data-color="white"></div>
+						<div title="Couleur jaune" class="color final-option yellow selectable-by-chromevox" tabindex="5" data-color="yellow"></div>
+						<div title="Couleur bleu" class="color final-option blue selectable-by-chromevox" tabindex="6" data-color="blue"></div>
+					</div>
+				</section>
+				<section id="settings-subtitles-bgcolor-sm-container">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la couleur de fond du texte</span></h1>
+					<div class="buttons-container">
+						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+					</div>
+					<div class="option-background-color option-color">
+						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="3" data-color="white"></div>
+						<div title="Couleur noire" class="color final-option black selectable-by-chromevox" tabindex="4" data-color="black"></div>
+					</div>
+				</section>
+				<section id="settings-subtitles-pip-sm-container">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Positionner les sous-titres</span></h1>
+					<div class="buttons-container">
+						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+					</div>
+					<div id="uiSubtitles-sm-container" class="ui-subtitles">
+						<div class="pip-video selectable-by-chromevox" tabindex="3">
+							<div class="pip-text">Texte de sous-titre</div>
+							<div class="ui-icon-gripsmall-center"></div>
+							<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+							<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-sw ui-icon ui-icon-gripsmall-diagonal-sw"></div>
+							<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-ne ui-icon ui-icon-gripsmall-diagonal-ne"></div>
+							<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-nw ui-icon ui-icon-gripsmall-diagonal-nw"></div>						
+						</div>	
+					</div>
+				</section>
+			</div>
+			<section id="full-synopsis">
+				<a title="Retour" class="back-button"><span tabindex="1" class="selectable-by-chromevox">Retour</span></a>
+				<h2></h2>
+				<div class="program-date"></div>
+				<div class="synopsis-container">
+					<div class="label"><span tabindex="4" class="selectable-by-chromevox">Résumé</span></div>
+					<div tabindex="5" id="synopsis2" class="synopsis selectable-by-chromevox"></div>
+				</div>
+			</section>
+			<div id="in-construction">
+				<div class="content">
+					<p class="grey selectable-by-chromevox" tabindex="1">La page à laquelle vous tenter d'accéder n'existe pas encore.<br/><span class="bold">Pas de panique, nos agents très spéciaux sont sur le coup.</span></p>
+					<a id="back-button-in-construction-section" class="bold selectable-by-chromevox" onclick="Navigation.goBack();" tabindex="2">Retour à la page précédente</a>
+				</div>
+			</div>
+			<div id="videoPlayerContainer">
+				<video id="videoPlayerMain" class="player mainPlayer" autoplay="autoplay"></video>
+				<video id="playerAudioFiveDotOne" class="audioPlayer" autoplay="autoplay"></video>
+				<video id="playerAudioFiveDotOne-2" class="audioPlayer" autoplay="autoplay"></video>
+				<video id="videoPlayerAudio" class="player audioPlayer" autoplay="autoplay"></video>
+				<div id="video-caption"></div>
+				<div id="playerUI">
+					<div id="playerTopBanner">
+						<div id="playerClose" class="btn closeBtn selectable-by-chromevox" onclick="Player.validClose();" tabindex="1"><img alt="Retour" src="ressources/img/player/inte_close.png"/></div>
+					</div>
+					<div id="playerBottomBanner">
+					<div id="playerOptions">
+						<div id="playerOptionAudio" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-audio" onclick="InfoBanner.showOptionPopup('audio', this);" tabindex="2">
+							<span id="label-option-audio" aria-hidden="true" class="hidden"></span>
+							<div id="iconeLA" class="compatibility audio" title="Audio"></div>
+							<div id="playerOptionAudioCurrentValue" class="playerOptionValue"></div>							
+						</div>
+						<div id="playerOptionSub" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-subtitle" onclick="InfoBanner.showOptionPopup('subtitle', this);" tabindex="13">
+							<span id="label-option-subtitle" aria-hidden="true" class="hidden"></span>
+							<div id="iconeST" class="compatibility subtitle" title="Sous-titre"></div>
+							<div id="playerOptionSubCurrentValue" class="playerOptionValue"></div>
+						</div>
+						<div id="playerOptionDescription" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ad" onclick="InfoBanner.showOptionPopup('ad', this);" tabindex="24">
+							<span id="label-option-ad" aria-hidden="true" class="hidden"></span>
+							<div id="iconeAD" class="compatibility ad" title="Audio description"></div>
+							<div id="playerOptionDescriptionCurrentValue" class="playerOptionValue"></div>							
+						</div>
+						<div id="playerOptionSigne" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ls" onclick="InfoBanner.showOptionPopup('ls', this);" tabindex="35">
+							<span id="label-option-ls" aria-hidden="true" class="hidden"></span>
+							<div id="iconeLSF" class="compatibility ls" title="Langue des signes"></div>
+							<div id="playerOptionSigneCurrentValue" class="playerOptionValue"></div>							
+						</div>	
+					</div>
+					<div id="playerProgressInfos">
+						<div id="playerProgressCurrent"><span class="selectable-by-chromevox final-option" tabindex="46" aria-labelledby="current-time-label"></span><span id="current-time-label" class="hidden"></span></div>
+						<div id="playerProgressBar" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false" title="Barre de progression">
+							<a id="playerProgressCursor" class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="48" title="Contrôle de la position de la vidéo" role="slider"></a>
+						</div>
+						<div id="playerProgressTotal"><span class="selectable-by-chromevox final-option" tabindex="47" aria-labelledby="total-time-label"></span><span id="total-time-label" class="hidden"></span></div>
+					</div>
+					<div id="playerControls">
+						<div id="playerControlVolume" class="volume-control-ctn">
+							<span id="volume-tooltip" class="tooltip" role="tooltip"></span> 
+							<span class="icon volume-mute"></span>
+							<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false" title="Volume"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="49" title="Contrôle du volume" role="slider"></a></div>
+							<span class="icon volume" id="up-volume"></span>
+						</div>
+						<div id="playerControlTrickMode">
+							<div id="playerControlRW" class="btn selectable-by-chromevox final-option" onclick="Player.rw();" tabindex="50" title="Bouton retour rapide"></div>
+							<div id="playerControlPlayPause" class="btn selectable-by-chromevox final-option" onclick="Player.playPause();" tabindex="51" title="Bouton lecture | pause"></div>
+							<div id="playerControlFF" class="btn selectable-by-chromevox final-option" onclick="Player.ff();" tabindex="52" title="Bouton avance rapide"></div>
+						</div>
+						<div id="playerControlADVolume" class="volume-control-ctn">
+							<span id="ad-volume-tooltip" class="tooltip" role="tooltip"></span> 
+							<span class="icon volume-min"></span>
+							<div id="ad-volume-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="53" title="Contrôle pour améliorer l'audio description" role="slider"></a></div>
+							<span class="icon volume" id="ad-up-volume"></span>
+						</div>
+						<div id="playerControlConfig" class="btn selectable-by-chromevox" onclick="Section.launchSettingsFromPlayer();" tabindex="54">
+							<img alt="Bouton paramètres" src="ressources/img/player/reglages_player.png"/>
+						</div>
+					</div>
+					<div id="optionDropDownMenu" class="optionDropDownMenu hidden"></div></div>
+					<div id="ui-video-ls-container" class="ui-ls">
+						<div id="pipContainer" class="player pip-limit">
+							<div id="pipVideo" class="pipVideo ui-draggable ui-resizable">
+								<video id="videoPlayerPip" class="player pipPlayer" autoplay="autoplay"></video>
+								<div class="ui-icon ui-icon-gripsmall-center"></div>
+							</div>
+						</div>					
+					</div>
+					<hr/>
+				</div>			
+			</div>
+			<div id="splashscreen"></div>
+		</main>	
+
+		<script type="text/javascript" src="ressources/js/lib/jquery-2.2.1.min.js"></script>
+		<script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/jquery.ui.touch-punch.min.js"></script>
 
 		
-		<script src="ressources/js/lib/dash.js-1.5.1/lib/dijon.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/lib/iso_boxer.min.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/lib/base64.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/lib/dijon.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/lib/iso_boxer.min.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/lib/base64.js"></script>
 
 		<!-- Misc Libs -->
-		<script src="ressources/js/lib/dash.js-1.5.1/lib/xml2json.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/lib/objectiron.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/lib/long.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/lib/Math.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/lib/xml2json.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/lib/objectiron.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/lib/long.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/lib/Math.js"></script>
 
 		<!-- Player -->
-		<script src="ressources/js/lib/bundle.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/MediaPlayer.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/Context.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/ErrorHandler.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/utils/Capabilities.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/utils/DOMStorage.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/utils/EventBus.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/utils/Debug.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/utils/CustomTimeRanges.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/utils/VirtualBuffer.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/utils/BoxParser.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/utils/IsoFile.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/RequestModifierExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/VideoModel.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/FragmentRequest.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/TrackInfo.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/TextTrackInfo.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/MediaInfo.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/StreamInfo.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/TextTrackInfo.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/ManifestInfo.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/Event.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/Error.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/BitrateInfo.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/DataChunk.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/IsoBox.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/ManifestLoader.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/ManifestUpdater.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/ManifestModel.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/MediaSourceExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/SourceBufferExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/VideoModelExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/PlaybackController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/FragmentController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/AbrController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/FragmentLoader.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/FragmentModel.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/StreamController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/MediaController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/StreamProcessor.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/ScheduleController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/TimeSyncController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/Stream.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/BufferController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/LiveEdgeFinder.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/Notifier.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/EventController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/URIQueryAndFragmentModel.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/URIFragmentData.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/XlinkController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/XlinkLoader.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/bundle.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/MediaPlayer.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/Context.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/ErrorHandler.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/utils/Capabilities.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/utils/DOMStorage.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/utils/EventBus.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/utils/Debug.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/utils/CustomTimeRanges.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/utils/VirtualBuffer.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/utils/BoxParser.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/utils/IsoFile.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/RequestModifierExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/VideoModel.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/FragmentRequest.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/TrackInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/TextTrackInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/MediaInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/StreamInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/TextTrackInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/ManifestInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/Event.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/Error.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/BitrateInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/DataChunk.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/IsoBox.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/ManifestLoader.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/ManifestUpdater.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/ManifestModel.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/MediaSourceExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/SourceBufferExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/VideoModelExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/PlaybackController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/FragmentController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/AbrController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/FragmentLoader.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/FragmentModel.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/StreamController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/MediaController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/StreamProcessor.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/ScheduleController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/TimeSyncController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/Stream.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/BufferController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/LiveEdgeFinder.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/Notifier.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/EventController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/URIQueryAndFragmentModel.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/URIFragmentData.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/XlinkController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/XlinkLoader.js"></script>
 
 		<!--Protection-->
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/ProtectionModel.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/ProtectionModel_01b.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/ProtectionModel_3Feb2014.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/ProtectionModel_21Jan2015.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/ClearKeyKeySet.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeyPair.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/SessionToken.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/ProtectionModel.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/ProtectionModel_01b.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/ProtectionModel_3Feb2014.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/ProtectionModel_21Jan2015.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/ClearKeyKeySet.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeyPair.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/SessionToken.js"></script>
 
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/ProtectionController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/ProtectionExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/CommonEncryption.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/ProtectionController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/ProtectionExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/CommonEncryption.js"></script>
 
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem_Access.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem_ClearKey.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem_PlayReady.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem_Widevine.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem_Access.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem_ClearKey.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem_PlayReady.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem_Widevine.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/drm/KeySystem.js"></script>
 
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/servers/ClearKey.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/servers/PlayReady.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/servers/Widevine.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/protection/servers/DRMToday.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/servers/ClearKey.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/servers/PlayReady.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/servers/Widevine.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/protection/servers/DRMToday.js"></script>
 
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeyError.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeyMessage.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/LicenseRequestComplete.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/NeedKey.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/ProtectionData.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeySystemAccess.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeySystemConfiguration.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/MediaCapability.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeyError.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeyMessage.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/LicenseRequestComplete.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/NeedKey.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/ProtectionData.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeySystemAccess.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/KeySystemConfiguration.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/protection/MediaCapability.js"></script>
 
 		<!--Rules-->
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SwitchRequest.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/RulesContext.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/RulesController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SwitchRequest.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/RulesContext.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/RulesController.js"></script>
 
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/InsufficientBufferRule.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/ABRRulesCollection.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/BufferOccupancyRule.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/ThroughputRule.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/AbandonRequestsRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/InsufficientBufferRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/ABRRulesCollection.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/BufferOccupancyRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/ThroughputRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/ABRRules/AbandonRequestsRule.js"></script>
 
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/ScheduleRulesCollection.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/BufferLevelRule.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/PendingRequestsRule.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/SameTimeRequestRule.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/PlaybackTimeRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/ScheduleRulesCollection.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/BufferLevelRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/PendingRequestsRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/SameTimeRequestRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SchedulingRules/PlaybackTimeRule.js"></script>
 
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SynchronizationRules/LiveEdgeBinarySearchRule.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SynchronizationRules/LiveEdgeWithTimeSynchronizationRule.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SynchronizationRules/SynchronizationRulesCollection.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SynchronizationRules/LiveEdgeBinarySearchRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SynchronizationRules/LiveEdgeWithTimeSynchronizationRule.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/rules/SynchronizationRules/SynchronizationRulesCollection.js"></script>
 
 		<!--Captioning-->
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/VTTParser.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/TTMLParser.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/TextSourceBuffer.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/TextTrackExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/TextController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/VTTParser.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/TTMLParser.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/TextSourceBuffer.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/extensions/TextTrackExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/controllers/TextController.js"></script>
 
 		<!-- Metrics -->
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/models/MetricsModel.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/MetricsList.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/BufferLevel.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/BufferState.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/HTTPRequest.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/PlayList.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/RepresentationSwitch.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/TCPConnection.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/DroppedFrames.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/SchedulingInfo.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/RequestsQueue.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/ManifestUpdate.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/DVRInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/models/MetricsModel.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/MetricsList.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/BufferLevel.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/BufferState.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/HTTPRequest.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/PlayList.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/RepresentationSwitch.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/TCPConnection.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/DroppedFrames.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/SchedulingInfo.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/RequestsQueue.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/ManifestUpdate.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/streaming/vo/metrics/DVRInfo.js"></script>
 
 		<!-- Dash -->
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/Dash.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/DashContext.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/vo/Mpd.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/vo/Period.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/vo/AdaptationSet.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/vo/Representation.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/vo/Segment.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/vo/Event.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/vo/EventStream.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/vo/UTCTiming.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/DashParser.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/DashHandler.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/controllers/RepresentationController.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/extensions/BaseURLExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/extensions/FragmentExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/extensions/DashManifestExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/extensions/DashMetricsExtensions.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/TimelineConverter.js"></script>
-		<script src="ressources/js/lib/dash.js-1.5.1/dash/DashAdapter.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/Dash.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/DashContext.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/vo/Mpd.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/vo/Period.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/vo/AdaptationSet.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/vo/Representation.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/vo/Segment.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/vo/Event.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/vo/EventStream.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/vo/UTCTiming.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/DashParser.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/DashHandler.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/controllers/RepresentationController.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/extensions/BaseURLExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/extensions/FragmentExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/extensions/DashManifestExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/extensions/DashMetricsExtensions.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/TimelineConverter.js"></script>
+		<script type="text/javascript" src="ressources/js/lib/dash.js-1.5.1/dash/DashAdapter.js"></script>
 		
 		
 		<script type="text/javascript" src="ressources/js/tools.js"></script>

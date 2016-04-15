@@ -649,3 +649,9 @@ Section.launchPlayerFromSettings = function(){
 	}
 	this.oldSelectionInMenu = null;
 };
+
+Section.goToHome = function(){
+	$("body").attr("class", Section.oldClass[0]);
+	Section.oldClass = [];
+	Navigation.setFocusToFirstItem();
+};

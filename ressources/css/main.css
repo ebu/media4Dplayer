@@ -13,7 +13,8 @@ hr{clear:both;margin:0;visibility:hidden}
 .oneline{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
 html{font-size:62.5%;width:1280px;height:720px}
 body{font-family:'Raleway',sans-serif;font-size:1.6rem;background-color:#fbfcfc;position:relative;height:100%}
-body > div{font-size:1em}
+main{height: 100%;}
+main > div{font-size:1em}
 .bold{font-weight:800}
 .grey{color:#959595}
 .center{text-align:center}
@@ -134,7 +135,7 @@ h2{font-size:1.6em;font-weight:600}
 #thumb-and-related-content-container{width:515px}
 #thumb-container{position:relative;text-align:center;height:290px}
 #media-thumb{width:100%;height:100%}
-#play-icon{position:relative;top:-200px;width:20%}
+#play-icon{position:absolute;top:93.5px;left:206px;width:20%}
 #related-content-container{margin-top:18px}
 #related-content-container > .title, #epg-fiche-container .label, #full-synopsis .label{text-transform:uppercase;height:48px;line-height:48px;font-weight:500}
 #related-content .item{float:left;margin-right:2%;width:32%}
@@ -362,3 +363,8 @@ h2{font-size:1.6em;font-weight:600}
 .slider-horizontal .ui-slider-horizontal{height: 2px;cursor: pointer;box-shadow: 0px 0px 0px #000000;background: #C4C4C4;border-radius: 0;border: 0px solid #000000;display: inline-block;vertical-align: middle;width: 100%;}
 .slider-horizontal .ui-slider-handle{box-shadow: 1px 1px 2px #808080;border: 1px solid #bababa;height: 32px;width: 10px;border-radius: 0;background: #FFF;cursor: pointer;margin-top: -11.5px;margin-left: 0;}
 .slider-horizontal .ui-slider-range{background: none transparent;}
+
+/* FOCUS */
+body :focus{border: 1px solid #000 !important;}
+body #playerUI :focus{border-color: #fff !important;}
+body #playerUI .optionDropDownMenuButton:focus{border-color: orange !important}

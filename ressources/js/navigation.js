@@ -7,15 +7,6 @@ var Navigation = {};
  */
 
 Navigation.goBack = function(){
-	this.goBack.resetData();
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Resets the data of the previous template
- */
-
-Navigation.goBack.resetData = function(){
 	
 	if(Settings.backToPlayerFromSettings && $("body").hasClass("sm settings")){
 		Section.launchPlayerFromSettings();
@@ -35,14 +26,14 @@ Navigation.moveSelecteur = function(Obj){
 			Obj = document.getElementById(Obj);
 		}
 
-		var Obj_ref = Obj;
+		/*var Obj_ref = Obj;
 		var absoluteLeft = 0;
 		var absoluteTop = 0;
 		while (Obj_ref && Obj_ref.tagName !== 'body') {
 			absoluteLeft += Obj_ref.offsetLeft;
 			absoluteTop += Obj_ref.offsetTop;
 			Obj_ref = Obj_ref.offsetParent;
-		}
+		}*/
 		
 		Obj.focus();
 	} catch (err) {

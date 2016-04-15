@@ -51,8 +51,11 @@ $(document.getElementById("app-playlists")).on("click", ".item-playlist .play", 
 	Section.launchPlayerLoading($(this).parents(".btn").data("data"));
 });
 
-$("body").on("click", ".back-button, .back-to-home-button, .back", function(){
+$("body").on("click", ".back-button, .back", function(){
 	Navigation.goBack();
+	
+}).on("click", ".back-to-home-button", function(){
+	Section.goToHome();
 });
 
 $(document.getElementById("settings-menu")).on("click", ".btn", function(){
@@ -146,7 +149,11 @@ $(document.getElementById("my-videos-options")).on("click", ".menu-item", functi
 $(document.getElementById("playlist")).on("click", ".item", function(){
 	//Section.change(Section.sections[11], null, {type:Apps.programs.playlistType, data:$(this).data("data")});
 	Dashboard.data = $(this).data("data");
-	$(document.getElementById("options-favorites")).children(":nth-child(2)").click();
+	//$(document.getElementById("options-favorites")).children(":nth-child(2)").click();
+	if(Dashboard.data){
+		var indexes = {"play-video-btn":12,"see-fiche-btn":13,"remove-favorite-btn":14};
+		Section.change(Section.sections[indexes[$(document.getElementById("options-favorites")).children(":nth-child(2)")[0].id]]);		
+	}	
 });
 
 $(document.getElementById("options-favorites")).on("click", ".menu-item", function(){
@@ -250,7 +257,7 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 		}
 	}
 	
-}).on("click", ".selectable-by-chromevox:not(.final-option)", function(e){
+}).on("click", ".selectable-by-chromevox:not(.final-option)", function(){
 	$("body > .cvox_indicator_container").find(".cvox_indicator_top, .cvox_indicator_middle_nw, .cvox_indicator_middle_ne, .cvox_indicator_middle_sw, .cvox_indicator_middle_se, .cvox_indicator_bottom").removeAttr("style");
 	this.blur();
 	$(this).mouseout();

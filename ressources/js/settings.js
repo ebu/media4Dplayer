@@ -509,7 +509,7 @@ Settings.init.ls = function(){
 
 Settings.change.fontSize = function(newValue, el){	
 	setHtmlStorage("settings_min_size", newValue);
-	$("body > div").css("font-size", (newValue / 16) + "em");
+	$("main > div").css("font-size", (newValue / 16) + "em");
 	
 	if(Main.simplifiedMode){
 		$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue + " pixel");
@@ -725,6 +725,10 @@ Settings.change.audioDistance = function(value, el){
 		Player.dialoguesDistance = value;
 		setHtmlStorage("dialoguesDistance", value);				
 	}
+		
+	if(Main.simplifiedMode){
+		$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + " mètre");
+	}		
 };
 
 /**
