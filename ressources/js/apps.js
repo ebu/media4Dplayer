@@ -43,16 +43,16 @@ Apps.load.callback = function(list, jqXHR, onSuccess){
 Apps.generates = function(){
 	
 	var html = "";
-	var list = this.list, i, l = list.length, app, isDisabled, hiddenClass, classList;
+	var list = this.list, i, l = list.length, app, isDisabled, hiddenClass, classList, start = Main.simplifiedMode ? 3 : 2;
 	for(i=0;i<l;i++){
 		app = list[i];
 		if(Main.simplifiedMode){
 			isDisabled = app.disabled;
 			hiddenClass = isDisabled ? " disabled" : "";
 			classList = !isDisabled ? "selectable-by-chromevox" : "";
-			html += '<li class="app menu-item'+hiddenClass+'"><a tabindex="'+(i+2)+'" title="'+app.title+'" class="'+classList+'">'+app.title+'</a></li>';
+			html += '<li class="app menu-item'+hiddenClass+'"><a tabindex="'+(i+start)+'" title="'+app.title+'" class="'+classList+'">'+app.title+'</a></li>';
 		}else{
-			html += '<li tabindex="'+(i+2)+'" class="app icon btn selectable-by-chromevox"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
+			html += '<li tabindex="'+(i+start)+'" class="app icon btn selectable-by-chromevox"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
 		}
 	}
 	

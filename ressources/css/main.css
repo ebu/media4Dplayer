@@ -365,6 +365,6 @@ h2{font-size:1.6em;font-weight:600}
 .slider-horizontal .ui-slider-range{background: none transparent;}
 
 /* FOCUS */
-body :focus{border: 1px solid #000 !important;}
-body #playerUI :focus{border-color: #fff !important;}
-body #playerUI .optionDropDownMenuButton:focus{border-color: orange !important}
+body.sm :focus{border: 1px solid #000 !important;}
+body.sm #playerUI :focus{border-color: #fff !important;}
+body.sm #playerUI .optionDropDownMenuButton:focus{border-color: orange !important}

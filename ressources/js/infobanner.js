@@ -336,8 +336,8 @@ InfoBanner.showOptionPopup = function(type, button){
 			
 			if(type === "subtitle" && inputsArray[i] !== "Aucun"){
 				$bt.append('<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
-				tabIndex++;
 			}
+			tabIndex++;
 		}
 		
 		var setSel = function($el){

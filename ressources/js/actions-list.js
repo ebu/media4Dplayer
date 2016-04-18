@@ -185,7 +185,7 @@ $(document.getElementById("spatialisation-options-sm")).on("click", ".menu-item"
 
 /* POUR CHROMEVOX */
 $("body").on("keydown", ".selectable-by-chromevox", function(e){
-	log(e.key);
+	log("keydown event for screen player; eventName = " + e.key);
 	var eventName = e.key.toLowerCase();
 	if($(this).is(":focus") && eventName === "enter"){
 		log("J'ai cliqué sur un item focusé");		
@@ -204,8 +204,13 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 			return false;
 			
 		}else{
-		
-			$nextSel = $("body .selectable-by-chromevox:visible").filter(function(){
+			
+			if($($current).hasClass("optionDropDownMenuButton")){
+				Navigation.moveSelecteur($(this).next());
+				return false;
+			}
+			
+			$nextSel = $("body .selectable-by-chromevox:visible:not(.opaque)").filter(function(){
 				return this.tabIndex > $current.tabIndex;
 			}).eq(0);			
 		}
@@ -213,7 +218,7 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 		if(!$nextSel.length){
 			log("Il n'y a pas d'élément suivant");
 			
-			var $firstSel = $("body .selectable-by-chromevox:visible").filter(function(){
+			var $firstSel = $("body .selectable-by-chromevox:visible:not(.opaque)").filter(function(){
 				return this.tabIndex < $current.tabIndex;
 			}).eq(0);
 			
@@ -222,8 +227,11 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 			}
 			
 			return false;
+			
 		}else{
-			log("Un élément suivant à été trouvé");
+			log("Un élément suivant à été trouvé : " + $nextSel.html());
+			Navigation.moveSelecteur($nextSel[0]);
+			return false;
 		}
 		
 	}else if(["arrowup","arrowdown","arrowleft","arrowright"].indexOf(eventName) !== -1){
@@ -258,11 +266,12 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 	}
 	
 }).on("click", ".selectable-by-chromevox:not(.final-option)", function(){
+	log("click event for screen player not final option");
 	$("body > .cvox_indicator_container").find(".cvox_indicator_top, .cvox_indicator_middle_nw, .cvox_indicator_middle_ne, .cvox_indicator_middle_sw, .cvox_indicator_middle_se, .cvox_indicator_bottom").removeAttr("style");
 	this.blur();
 	$(this).mouseout();
 	
 }).on("focus", "#videoPlayerContainer .selectable-by-chromevox", function(){
-	//log("focus déclenché");
+	log("focus event on player section");
 	InfoBanner.launchMaskingAfterDelay();
 });
