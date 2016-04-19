@@ -297,9 +297,9 @@ Section.change.toInConstructionScreen = function(){
 
 Section.change.toAppOptions = function(newSection, index){
 	Apps.indexAppInSM = index;
-	var title = Apps.list[index].title;
-	$(document.getElementById("app-title")).html('<span tabindex="1" class="selectable-by-chromevox">'+title+'</span>');
-	$(document.getElementById("my-videos-btn")).children().html("Mes vidéos " + title);
+	var appName = Apps.list[index].title;
+	$(document.getElementById("app-title")).html('<span tabindex="1" class="selectable-by-chromevox">'+appName+'</span>');
+	$(document.getElementById("my-videos-btn")).children().html("Mes vidéos " + appName);
 	Section.addClass("app-options");
 };
 
