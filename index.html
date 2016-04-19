@@ -240,7 +240,7 @@
 							<div id="uiLS-container" class="ui-ls">
 								<div class="pip-limit" id="uiLimitLS">
 									<div id="label-pip-main-video" class="label-pip-video main">Vidéo</div>
-									<div class="pip-video">
+									<div class="pip-video" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="" aria-label="Positionnez la vidéo de la langue des signes avec les flèches directionnelles">
 										<div id="label-pip-second-video" class="label-pip-video">LS</div>
 										<div class="ui-icon-gripsmall-center"></div>								
 									</div>
@@ -436,7 +436,7 @@
 					<div id="uiLS-container-sm" class="ui-ls">
 						<div class="pip-limit" id="uiLimitLS-sm">
 							<div id="label-pip-main-video-sm" class="label-pip-video main">Vidéo</div>
-							<div class="pip-video selectable-by-chromevox" tabindex="3">
+							<div class="pip-video selectable-by-chromevox" tabindex="3" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="" aria-label="Positionnez la vidéo de la langue des signes avec les flèches directionnelles">
 								<div id="label-pip-second-video-sm" class="label-pip-video" aria-labelledby="lslabel">LS<span id="lslabel" aria-hidden="true" class="hidden">Fenêtre de la langue des signes</span></div>
 								<div class="ui-icon-gripsmall-center"></div>
 							</div>
@@ -536,10 +536,10 @@
 						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 					</div>
 					<div class="option-text-color option-color">
-						<div title="Couleur transparent" class="color final-option transparent selectable-by-chromevox" tabindex="3" data-color="transparent"></div>
-						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="4" data-color="white"></div>
-						<div title="Couleur jaune" class="color final-option yellow selectable-by-chromevox" tabindex="5" data-color="yellow"></div>
-						<div title="Couleur bleu" class="color final-option blue selectable-by-chromevox" tabindex="6" data-color="blue"></div>
+						<div title="Couleur transparent" class="color final-option transparent selectable-by-chromevox" tabindex="3" data-color="transparent" role="button"></div>
+						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="4" data-color="white" role="button"></div>
+						<div title="Couleur jaune" class="color final-option yellow selectable-by-chromevox" tabindex="5" data-color="yellow" role="button"></div>
+						<div title="Couleur bleu" class="color final-option blue selectable-by-chromevox" tabindex="6" data-color="blue" role="button"></div>
 					</div>
 				</section>
 				<section id="settings-subtitles-bgcolor-sm-container">
@@ -548,8 +548,8 @@
 						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 					</div>
 					<div class="option-background-color option-color">
-						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="3" data-color="white"></div>
-						<div title="Couleur noire" class="color final-option black selectable-by-chromevox" tabindex="4" data-color="black"></div>
+						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="3" data-color="white" role="button"></div>
+						<div title="Couleur noire" class="color final-option black selectable-by-chromevox" tabindex="4" data-color="black" role="button"></div>
 					</div>
 				</section>
 				<section id="settings-subtitles-pip-sm-container">
@@ -558,7 +558,7 @@
 						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 					</div>
 					<div id="uiSubtitles-sm-container" class="ui-subtitles">
-						<div class="pip-video selectable-by-chromevox" tabindex="3">
+						<div class="pip-video selectable-by-chromevox" tabindex="3" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="" aria-label="Positionnez la hauteur des sous-titres avec les flèches haut et bas">
 							<div class="pip-text">Texte de sous-titre</div>
 							<div class="ui-icon-gripsmall-center"></div>
 							<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
