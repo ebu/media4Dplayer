@@ -1,5 +1,6 @@
 var InfoBanner = {
 	progressBar:{},
+	optionsPopup:{},
 	timeoutHideBanner:null,
 	isVisible:false,
 	isOptionDropDownMenuDisplayed:false,
@@ -298,31 +299,6 @@ InfoBanner.showOptionPopup = function(type, button){
 			return "";
 		};
 		
-		var actionEvent = function(bt, optionID) {
-			var index = $(bt).data("index");
-			if(optionID === "ls"){
-				Player.activeOptionSigne(index);
-			}
-			else if(optionID === "subtitle") {
-				Player.activeOptionSub(index);
-			}
-			else if(optionID === "ad") {
-				Player.activeOptionDescription(index);	
-			}
-			else if(optionID === "audio") {
-				Player.activeOptionAudio(index);
-			}
-			InfoBanner.launchMaskingAfterDelay();
-			InfoBanner.hideOptionDropDownMenu();
-			
-			if(Main.simplifiedMode){
-				var ids = {ls:"playerOptionSigne",subtitle:"playerOptionSub",ad:"playerOptionDescription",audio:"playerOptionAudio"};
-				Navigation.moveSelecteur(document.getElementById(ids[optionID]));
-			}
-			
-			InfoBanner.initLabels();
-		};
-		
 		var tabIndex = button.tabIndex + 1;
 		var i, l = inputsArray.length, $bt;
 		for (i = 0; i < l; i++) {
@@ -330,7 +306,7 @@ InfoBanner.showOptionPopup = function(type, button){
 			$bt.data("index", i);
 			(function(bt, optionID){
 				bt.on("click", function(){
-					actionEvent(bt, optionID);
+					InfoBanner.optionsPopup.onClick(bt, optionID);
 				});
 			})($bt, type);
 			
@@ -364,6 +340,39 @@ InfoBanner.showOptionPopup = function(type, button){
 			Navigation.moveSelecteur($ctn.children(":first-child"));
 		}
 	}	
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Executes the hiding the info banner
+ */
+
+InfoBanner.optionsPopup.onClick = function(bt, optionID){
+	if($(bt).length && optionID){
+		
+		var index = $(bt).data("index");
+		if(optionID === "ls"){
+			Player.activeOptionSigne(index);
+
+		}else if(optionID === "subtitle") {
+			Player.activeOptionSub(index);
+
+		}else if(optionID === "ad") {
+			Player.activeOptionDescription(index);
+
+		}else if(optionID === "audio") {
+			Player.activeOptionAudio(index);
+		}
+		
+		InfoBanner.launchMaskingAfterDelay();
+		InfoBanner.hideOptionDropDownMenu();
+
+		if(Main.simplifiedMode){
+			var ids = {ls:"playerOptionSigne",subtitle:"playerOptionSub",ad:"playerOptionDescription",audio:"playerOptionAudio"};
+			Navigation.moveSelecteur(document.getElementById(ids[optionID]));
+		}
+		InfoBanner.initLabels();	
+	}
 };
 
 InfoBanner.hideOptionDropDownMenu = function() {
