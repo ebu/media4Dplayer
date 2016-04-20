@@ -280,7 +280,6 @@ h2{font-size:1.6em;font-weight:600}
 .option-color .color:first-child{margin-left:0}
 .option-color .color.selected{width:52px;height:52px;border-color:#aaa;box-shadow:0 0 20px #aaa}
 #subtitles-settings .option-color .color.selected{box-shadow:0 0 9px #aaa}
-.option-background-opacity > div{display:inline-block;vertical-align:middle;float:none}
 .transparent-opacity, .darkest-opacity{width:10%}
 .option-slider .transparent-opacity, .option-slider .darkest-opacity{height:70%}
 .transparent-opacity{border:1px solid #000;margin-right:5%;background-color:#e7e8e8}
@@ -329,7 +328,7 @@ h2{font-size:1.6em;font-weight:600}
 #uiLS-container-sm{width:884px}
 #uiLS-container-sm, #uiSubtitles-sm-container{margin:20px auto 0}
 .pip-limit{position:relative;height:100%;box-sizing:border-box}
-.label-pip-video{position:absolute;left:10px;color:#FFF;font-weight:500;font-size:3.5rem;color:#aaa}
+.label-pip-video{position:absolute;left:10px;font-weight:500;font-size:3.5rem;color:#aaa}
 .label-pip-video.main{top:10px}
 
 /* Settings - Audio */
