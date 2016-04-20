@@ -581,15 +581,15 @@ Section.handleMenuSel = function(newSection){
 	
 	if(!Main.simplifiedMode){
 		var $nav = $(document.getElementById("menu"));
-		$nav.children(".sel").removeClass("sel");
+		$nav.find(".sel").removeClass("sel");
 
 		switch(newSection){
 			case this.sections[2]:
-				$nav.children(".app-playlists").addClass("sel");
+				$nav.find(".app-playlists").addClass("sel");
 				break;
 
 			case this.sections[4]:
-				$nav.children(".settings").addClass("sel");
+				$nav.find(".settings").addClass("sel");
 				break;
 		}		
 	}
