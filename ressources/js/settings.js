@@ -506,8 +506,9 @@ Settings.init.ls = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Gets the current value of a PIP position
+ * @description Gets the coordonates of a PIP
  * @param {String} PIPType The PIP type (ls/sub)
+ * @return {Object} The PIP coordonates
  */
 
 Settings.getCurrentCoordonates = function(PIPType){
@@ -523,6 +524,9 @@ Settings.getCurrentCoordonates = function(PIPType){
 	}else if(PIPType === "sub"){
 		var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
 		return {y: pipTopPercent};
+		
+	}else{
+		return {};
 	}
 };
 
