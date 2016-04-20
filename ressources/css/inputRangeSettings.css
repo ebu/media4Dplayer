@@ -1,5 +1,6 @@
 .slider-horizontal input[type=range] {
 	-webkit-appearance: none;
+	appearance: none;
 	width: 100%;
 	background-color: transparent;
 }
@@ -24,6 +25,7 @@
 	background: #FFFFFF;
 	cursor: pointer;
 	-webkit-appearance: none;
+	appearance: none;
 	margin-top: -15.5px;
 }
 .slider-horizontal input[type=range]:focus::-webkit-slider-runnable-track {
