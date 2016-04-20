@@ -529,7 +529,7 @@ Player.setPIP = function(){
 			handle:".ui-icon-gripsmall-center",
 			stop: function() {
 				appearPipControls();
-				Settings.saveLSPIPPosition($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
+				Settings.saveLSPIPPosition($( this ).draggable( "option", "containment" ), $(this));
 			},
 			start: function() {
 				clearInterval(Player.pipControlTimeout);
@@ -542,8 +542,9 @@ Player.setPIP = function(){
 			minWidth: 100,
 			aspectRatio: true,
 			stop: function() {
-				Settings.saveLSPIPSize($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
-				Settings.saveLSPIPPosition($( this ).parents($( this ).draggable( "option", "containment" )), $(this));
+				var $containment = $( this ).draggable( "option", "containment" );
+				Settings.saveLSPIPSize($containment, $(this));
+				Settings.saveLSPIPPosition($containment, $(this));
 			}			
 		}).click( function() {
 			if(InfoBanner.isDisplayed()){

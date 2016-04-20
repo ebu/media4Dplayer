@@ -448,8 +448,7 @@ Settings.init.subtitles.pip = function(){
 		axis: "y",
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
-			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
-			Settings.saveSubtitlesPIPPosition($parent);
+			Settings.saveSubtitlesPIPPosition($( this ).draggable( "option", "containment" ));
 			
 			Settings.updateARIAPropertiesForPIP($(this), "sub");
 		}
@@ -473,8 +472,7 @@ Settings.init.ls = function(){
 		scroll:false,
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
-			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
-			Settings.saveLSPIPPosition($parent, $(this));
+			Settings.saveLSPIPPosition($( this ).draggable( "option", "containment" ), $(this));
 			
 			Settings.updateARIAPropertiesForPIP($(this), "ls");
 		}
@@ -485,7 +483,7 @@ Settings.init.ls = function(){
       	aspectRatio: true,
 		stop: function() {
 			log("Resize terminé !!!");
-			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
+			var $parent = $( this ).draggable( "option", "containment" );
 			Settings.saveLSPIPSize($parent, $(this));
 			Settings.saveLSPIPPosition($parent, $(this));
 			

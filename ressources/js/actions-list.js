@@ -265,7 +265,7 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 				
 			}
 			
-			var $parentDraggable = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
+			var $parentDraggable = $( this ).draggable( "option", "containment" );
 			if(pipType === "ls"){
 				Settings.saveLSPIPSize($parentDraggable, $(this));
 				Settings.saveLSPIPPosition($parentDraggable, $(this));
