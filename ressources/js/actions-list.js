@@ -244,7 +244,9 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 				});
 			};
 			
-			var $parent = $(this).parent(), value, moveValue = 5, padding = parseFloat($parent.css("padding").replace("px",""));
+			var $parent = $(this).parent();
+			var pipType = $parent.hasClass("ui-subtitles") ? "sub" : "ls";
+			var value, moveValue = 5, padding = parseFloat($parent.css("padding").replace("px",""));
 			if(eventName === "arrowup") {
 				value = (this.offsetTop - moveValue > padding) ? '-='+moveValue : 0;
 				_move({top:value});
@@ -262,6 +264,17 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 				_move({left:value});
 				
 			}
+			
+			var $parentDraggable = $( this ).draggable( "option", "containment" );
+			if(pipType === "ls"){
+				Settings.saveLSPIPSize($parentDraggable, $(this));
+				Settings.saveLSPIPPosition($parentDraggable, $(this));
+				
+			}else if(pipType === "sub"){
+				Settings.saveSubtitlesPIPPosition($parentDraggable);
+			}
+			
+			Settings.updateARIAPropertiesForPIP($(this), pipType);
 		}
 	}
 	

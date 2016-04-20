@@ -5,6 +5,7 @@
 		<meta charset="UTF-8"/>
 		<meta name="apple-mobile-web-app-capable" content="yes"/>
 		<meta name="viewport" content="user-scalable=no"/>
+        <link rel="icon" href="ressources/img/favicon.png" sizes="57x57" type="image/png"/>
 		
 		<link href='https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,800' rel='stylesheet' type='text/css'/>
 		<link type="text/css" rel="stylesheet" href="ressources/css/reset.css"/>
@@ -13,25 +14,27 @@
 		<link type="text/css" rel="stylesheet" href="ressources/css/main.css"/>
 	</head>
 	<body class="splashscreen">
-		<main>
+		<main role="main">
 			<div id="sections-container">
-				<nav>
+				<nav role="navigation">
 					<menu id="menu">
-						<li class="topbarButton profils-list btn" tabindex="1">
-							<img class="topbarImg" alt="Changer utilisateur - profil de Invité" src="ressources/img/topbar/menu_profil.png"/><span class="topbarText">Invité</span>
-						</li>
-						<li class="topbarButton settings btn" tabindex="2">
-							<img class="topbarImg" alt="Préférences" src="ressources/img/topbar/menu_reglages.png"/><span class="topbarText">Préférences</span>
-						</li>
-						<li class="topbarButton app-playlists btn" tabindex="3">
-							<img class="topbarImg" alt="Favoris" src="ressources/img/topbar/menu_favoris.png"/><span class="topbarText">Favoris</span>
-						</li>
-						<li class="topbarButton search btn" tabindex="4">
-							<img class="topbarImg" alt="Recherche" src="ressources/img/topbar/menu_recherche.png"/><span class="topbarText">Recherche</span>
-						</li>
-						<li class="topbarButton apps-list btn" tabindex="5">
-							<img class="topbarImg" alt="Accueil" src="ressources/img/topbar/menu_accueil.png"/><span class="topbarText">Accueil</span>
-						</li>
+						<ul>
+							<li class="topbarButton profils-list btn" tabindex="1">
+								<img class="topbarImg" alt="Changer utilisateur - profil de Invité" src="ressources/img/topbar/menu_profil.png"/><span class="topbarText">Invité</span>
+							</li>
+							<li class="topbarButton settings btn" tabindex="2">
+								<img class="topbarImg" alt="Préférences" src="ressources/img/topbar/menu_reglages.png"/><span class="topbarText">Préférences</span>
+							</li>
+							<li class="topbarButton app-playlists btn" tabindex="3">
+								<img class="topbarImg" alt="Favoris" src="ressources/img/topbar/menu_favoris.png"/><span class="topbarText">Favoris</span>
+							</li>
+							<li class="topbarButton search btn" tabindex="4">
+								<img class="topbarImg" alt="Recherche" src="ressources/img/topbar/menu_recherche.png"/><span class="topbarText">Recherche</span>
+							</li>
+							<li class="topbarButton apps-list btn" tabindex="5">
+								<img class="topbarImg" alt="Accueil" src="ressources/img/topbar/menu_accueil.png"/><span class="topbarText">Accueil</span>
+							</li>
+						</ul>
 					</menu>
 				</nav>
 				<section id="profils-list-container">
@@ -61,7 +64,7 @@
 					</div>
 				</section>
 				<section id="epg-fiche-container" class="section-with-topbar">
-					<a title="Retour" class="back-button btn">Retour</a>
+					<a class="back-button btn">Retour</a>
 					<h1></h1>
 					<div id="thumb-and-related-content-container">
 						<div id="thumb-container" class="btn" onclick="Section.launchPlayerLoading(Dashboard.data);">
@@ -101,10 +104,10 @@
 					</div>
 					<div id="subrubrics-container">
 						<ul id="settings-menu">
-							<li class="subrubric btn interface"><a title="Interface">Interface</a></li>
-							<li class="subrubric btn audio"><a title="Audio">Audio</a></li>
-							<li class="subrubric btn subtitles"><a title="Sous-titres">Sous-titres</a></li>
-							<li class="subrubric btn ls"><a title="Langues des signes">Langues des signes</a></li>
+							<li class="subrubric btn interface"><a>Interface</a></li>
+							<li class="subrubric btn audio"><a>Audio</a></li>
+							<li class="subrubric btn subtitles"><a>Sous-titres</a></li>
+							<li class="subrubric btn ls"><a>Langues des signes</a></li>
 						</ul>					
 					</div>
 					<div id="settings-options-container">
@@ -129,7 +132,7 @@
 							<div class="left-col col">
 								<div id="ambiance-adaptation-btn" class="button"><span>Adaptation aux bruits ambiants</span></div>
 								<div id="spatialisation-options-ctn">
-									<select name="spatialisation-options" id="spatialisation-options">
+									<select name="spatialisation-options" id="spatialisation-options" title="Choix du mode de spatialisation">
 										<option value="binaural">Spatialisation au casque</option>
 										<option value="binaural-EQ">Spatialisation au casque EQ</option>
 										<option value="transaural">Spatialisation aux haut-parleurs</option>
@@ -145,7 +148,7 @@
 									<div class="title">Spatialisation des commentaires</div>
 									<div class="control-container vertical-slider-container">
 										<div id="comments-elevation-level" data-type="commentary" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des commentaires">
-											<a class="ui-slider-handle ui-state-default ui-corner-all oneline" href="#" title="Contrôle du niveau d'élévation des commentaires"></a>
+											<a class="ui-slider-handle ui-state-default ui-corner-all oneline" title="Contrôle du niveau d'élévation des commentaires"></a>
 										</div>
 									</div>
 									<div id="comments-spatialisation-zone-ctn" class="control-container spatialisation-zone-ctn">
@@ -156,7 +159,7 @@
 									<div class="title">Spatialisation des dialogues</div>
 									<div class="control-container vertical-slider-container">
 										<div id="dialogues-elevation-level" data-type="dialogues" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des dialogues">
-											<a class="ui-slider-handle ui-state-default ui-corner-all oneline" href="#" title="Contrôle du niveau d'élévation des dialogues"></a>
+											<a class="ui-slider-handle ui-state-default ui-corner-all oneline" title="Contrôle du niveau d'élévation des dialogues"></a>
 										</div>
 									</div>
 									<div id="dialogues-spatialisation-zone-ctn" class="control-container spatialisation-zone-ctn">
@@ -192,7 +195,8 @@
 										<div class="option-background-opacity option-slider">
 											<div class="transparent-opacity" title="Arrière plan transparent"></div><div class="slider-horizontal opacity">
 												<input id="opacitySlide" min="0" max="1" value="0" step="0.25" onchange="Settings.change.subtitlesOpacity(this.value)" type="range"/>
-											</div><div class="darkest-opacity" title="Arrière plan plus sombre"></div>							
+											</div>
+											<div class="darkest-opacity" title="Arrière plan plus sombre"></div>							
 										</div>
 									</div>
 								</div>
@@ -236,7 +240,7 @@
 							<div id="uiLS-container" class="ui-ls">
 								<div class="pip-limit" id="uiLimitLS">
 									<div id="label-pip-main-video" class="label-pip-video main">Vidéo</div>
-									<div class="pip-video">
+									<div class="pip-video" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="" aria-label="Positionnez la vidéo de la langue des signes avec les flèches directionnelles">
 										<div id="label-pip-second-video" class="label-pip-video">LS</div>
 										<div class="ui-icon-gripsmall-center"></div>								
 									</div>
@@ -252,47 +256,47 @@
 					<h1><span tabindex="1" class="selectable-by-chromevox">Accueil</span></h1>
 					<a id="switch-to-standard-mode-btn" class="switch-btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="2">Basculer en mode normal</a>
 					<ul id="apps-list-sm"></ul>
-					<a id="logout-btn-sm" title="Se déconnecter" onclick="Section.change(Section.sections[0]);"><span tabindex="100" class="selectable-by-chromevox">Se déconnecter</span></a>
+					<a id="logout-btn-sm" onclick="Section.change(Section.sections[0]);"><span tabindex="100" class="selectable-by-chromevox">Se déconnecter</span></a>
 				</section>
 				<section id="app-options-container" class="manual-centering">
 					<h1 id="app-title"></h1>
 					<ul id="app-options">
 						<li id="my-videos-btn" class="menu-item">
-							<a title="Mes vidéos Pluzz" tabindex="2" class="selectable-by-chromevox"></a>
+							<a tabindex="2" class="selectable-by-chromevox"></a>
 						</li>
 						<li id="search-btn" class="menu-item">
-							<a title="Recherche" tabindex="3" class="selectable-by-chromevox">Recherche</a>
+							<a tabindex="3" class="selectable-by-chromevox">Recherche</a>
 						</li>
 						<li id="settings-btn" class="menu-item">
-							<a title="Réglages" tabindex="4" class="selectable-by-chromevox">Réglages</a>
+							<a tabindex="4" class="selectable-by-chromevox">Réglages</a>
 						</li>
 						<!--<li id="profil-btn" class="menu-item">
-							<a title="Mon profil" tabindex="5" class="selectable-by-chromevox">Mon profil</a>
+							<a tabindex="5" class="selectable-by-chromevox">Mon profil</a>
 						</li>-->
 					</ul>
-					<a title="Accueil" class="back-to-home-button"><span tabindex="100" class="selectable-by-chromevox">Accueil</span></a>
+					<a class="back-to-home-button"><span tabindex="100" class="selectable-by-chromevox">Accueil</span></a>
 				</section>
 				<section id="my-videos-options-container" class="manual-centering">
 					<h1></h1>
 					<ul id="my-videos-options">
 						<li class="menu-item">
-							<a title="Mes vidéos favorites" tabindex="2" class="selectable-by-chromevox">Mes vidéos favorites</a>
+							<a tabindex="2" class="selectable-by-chromevox">Mes vidéos favorites</a>
 						</li>
 						<li class="menu-item">
-							<a title="Mes signets" tabindex="3" class="selectable-by-chromevox">Mes signets</a>
+							<a tabindex="3" class="selectable-by-chromevox">Mes signets</a>
 						</li>
 						<li class="menu-item">
-							<a title="Mon historique" tabindex="4" class="selectable-by-chromevox">Mon historique</a>
+							<a tabindex="4" class="selectable-by-chromevox">Mon historique</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="app-playlists-sm" class="playlist-sm">
 					<h1 id="playlist-title"></h1>
 					<div class="buttons-container">
-						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
-						<a id="previous-page-playlist" title="Page précedente" class="prev"><span tabindex="3" class="selectable-by-chromevox">Page précedente</span></a>
-						<a id="next-page-playlist" title="Page suivante" class="next"><span tabindex="4" class="selectable-by-chromevox">Page suivante</span></a>
+						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+						<a id="previous-page-playlist" class="prev"><span tabindex="3" class="selectable-by-chromevox">Page précedente</span></a>
+						<a id="next-page-playlist" class="next"><span tabindex="4" class="selectable-by-chromevox">Page suivante</span></a>
 					</div>
 					<ul id="playlist"></ul>
 				</section>
@@ -300,139 +304,139 @@
 					<h1><span tabindex="1" class="selectable-by-chromevox">Options Favoris</span></h1>
 					<ul id="options-favorites">
 						<li id="play-video-btn" class="menu-item btn">
-							<a title="Lire la vidéo" onclick="Section.launchPlayerLoading(Dashboard.data);" tabindex="2" class="selectable-by-chromevox">Lire la vidéo</a>
+							<a onclick="Section.launchPlayerLoading(Dashboard.data);" tabindex="2" class="selectable-by-chromevox">Lire la vidéo</a>
 						</li>
 						<li id="see-fiche-btn" class="menu-item btn">
-							<a title="Accéder à la fiche" tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
+							<a tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
 						</li>
 						<li id="remove-favorite-btn" class="menu-item btn">
-							<a title="Supprimer des favoris" tabindex="4" class="selectable-by-chromevox">Supprimer des favoris</a>
+							<a tabindex="4" class="selectable-by-chromevox">Supprimer des favoris</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="options-signets-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Options Signets</span></h1>
 					<ul>
 						<li class="menu-item">
-							<a title="Lire à partir de ce signet" tabindex="2" class="selectable-by-chromevox">Lire à partir de ce signet</a>
+							<a tabindex="2" class="selectable-by-chromevox">Lire à partir de ce signet</a>
 						</li>
 						<li class="menu-item">
-							<a title="Supprimer ce signet" tabindex="3" class="selectable-by-chromevox">Supprimer ce signet</a>
+							<a tabindex="3" class="selectable-by-chromevox">Supprimer ce signet</a>
 						</li>
 						<li class="menu-item">
-							<a title="Éditer ce signet" tabindex="4" class="selectable-by-chromevox">Éditer ce signet</a>
+							<a tabindex="4" class="selectable-by-chromevox">Éditer ce signet</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="options-history-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Options Historique</span></h1>
 					<ul>
 						<li class="menu-item">
-							<a title="Lire la vidéo" tabindex="2" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
+							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder à la fiche" tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
+							<a tabindex="3" class="selectable-by-chromevox">Accéder à la fiche</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="epg-fiche-container-sm" class="manual-centering">
 					<h1></h1>
 					<h2></h2>
 					<ul id="program-options">
 						<li id="play-video-btn-2" class="menu-item">
-							<a title="Accéder à la vidéo" tabindex="3" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Accéder à la vidéo</a>
+							<a tabindex="3" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Accéder à la vidéo</a>
 						</li>
 						<li id="add-remove-to-favorites" class="menu-item">
-							<a title="Mettre ou supprimer un favoris" tabindex="4" class="selectable-by-chromevox"></a>
+							<a tabindex="4" class="selectable-by-chromevox"></a>
 						</li>
 						<li id="see-full-synopsis-btn" class="menu-item">
-							<a title="Lire le résumé" tabindex="5" class="selectable-by-chromevox">Lire le résumé</a>
+							<a tabindex="5" class="selectable-by-chromevox">Lire le résumé</a>
 						</li>
 						<li id="see-related-content-btn" class="menu-item">
-							<a title="Les vidéos sur le même thème" tabindex="6" class="selectable-by-chromevox">Les vidéos sur le même thème</a>
+							<a tabindex="6" class="selectable-by-chromevox">Les vidéos sur le même thème</a>
 						</li>
 						<li id="share-btn" class="menu-item">
-							<a title="Partager sur le réseaux" tabindex="7" class="selectable-by-chromevox">Partager sur le réseaux</a>
+							<a tabindex="7" class="selectable-by-chromevox">Partager sur le réseaux</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
-					<a title="Accueil" class="home back-to-home-button"><span tabindex="101" class="selectable-by-chromevox">Accueil</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="home back-to-home-button"><span tabindex="101" class="selectable-by-chromevox">Accueil</span></a>
 				</section>
 				<section id="settings-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages</span></h1>
 					<ul>
 						<li class="menu-item">
-							<a title="Accéder aux réglages audio" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[26]);">Audio</a>
+							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[26]);">Audio</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages de l'interface" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[16]);">Interface</a>
+							<a tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[16]);">Interface</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages des sous-titres" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[17]);">Sous-titres</a>
+							<a tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[17]);">Sous-titres</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages pour la langue des signes" tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[18]);">Langue des signes</a>
+							<a tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[18]);">Langue des signes</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="settings-audio-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages audio</span></h1>
 					<ul>
 						<li class="menu-item">
-							<a title="Accéder aux réglages du mode de spatialisation" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[28]);">Choisir le mode de spatialisation</a>
+							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[28]);">Choisir le mode de spatialisation</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages de la spatialisation des commentaires" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[29]);">Changer la spatialisation des commentaires</a>
+							<a tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[29]);">Changer la spatialisation des commentaires</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages de la spatialisation des dialogues" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[30]);">Changer la spatialisation des dialogues</a>
+							<a tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[30]);">Changer la spatialisation des dialogues</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="settings-interface-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages de l'interface</span></h1>
 					<ul>
 						<li class="menu-item">
-							<a title="Accéder aux réglages de la taille du texte" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
+							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages du choix du thème" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[27]);">Choix du thème</a>
+							<a tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[27]);">Choix du thème</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="settings-subtitles-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages des sous-titres</span></h1>
 					<ul>
 						<li class="menu-item">
-							<a title="Accéder aux réglages de la police de caractère" tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[20]);">Choisir la police de caractère</a>
+							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[20]);">Choisir la police de caractère</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages de la couleur du texte" tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[21]);">Choisir la couleur du texte</a>
+							<a tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[21]);">Choisir la couleur du texte</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages de la couleur de fond du texte" tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[22]);">Choisir la couleur du fond du texte</a>
+							<a tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[22]);">Choisir la couleur du fond du texte</a>
 						</li>
 						<li class="menu-item">
-							<a title="Accéder aux réglages du positionnement des sous-titres" tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[23]);">Positionner les sous-titres</a>
+							<a tabindex="5" class="selectable-by-chromevox" onclick="Section.change(Section.sections[23]);">Positionner les sous-titres</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="settings-ls-sm-container">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Placez et redimensionnez la fenêtre vidéo</span></h1>
 					<div class="buttons-container">
-						<a tabindex="2" title="Retour" class="back-button selectable-by-chromevox">Retour</a>
+						<a tabindex="2" class="back-button selectable-by-chromevox">Retour</a>
 					</div>
 					<div id="uiLS-container-sm" class="ui-ls">
 						<div class="pip-limit" id="uiLimitLS-sm">
 							<div id="label-pip-main-video-sm" class="label-pip-video main">Vidéo</div>
-							<div class="pip-video selectable-by-chromevox" tabindex="3">
+							<div class="pip-video selectable-by-chromevox" tabindex="3" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="" aria-label="Positionnez la vidéo de la langue des signes avec les flèches directionnelles">
 								<div id="label-pip-second-video-sm" class="label-pip-video" aria-labelledby="lslabel">LS<span id="lslabel" aria-hidden="true" class="hidden">Fenêtre de la langue des signes</span></div>
 								<div class="ui-icon-gripsmall-center"></div>
 							</div>
@@ -443,43 +447,49 @@
 					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir le mode de spatialisation</span></h1>
 					<ul id="spatialisation-options-sm">
 						<li class="menu-item" data-value="binaural">
-							<a title="Choisir la spatialisation au casque" tabindex="2" class="selectable-by-chromevox final-option">Spatialisation au casque</a>
+							<a tabindex="2" class="selectable-by-chromevox final-option">Spatialisation au casque</a>
 						</li>
 						<li class="menu-item" data-value="binaural-EQ">
-							<a title="Choisir la spatialisation au casque EQ" tabindex="3" class="selectable-by-chromevox final-option">Spatialisation au casque EQ</a>
+							<a tabindex="3" class="selectable-by-chromevox final-option">Spatialisation au casque EQ</a>
 						</li>
 						<li class="menu-item" data-value="transaural">
-							<a title="Choisir la spatialisation aux haut-parleurs" tabindex="4" class="selectable-by-chromevox final-option">Spatialisation aux haut-parleurs</a>
+							<a tabindex="4" class="selectable-by-chromevox final-option">Spatialisation aux haut-parleurs</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="settings-audio-spatialisation-sm-container">
 					<h1></h1>
 					<div class="buttons-container">
-						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 					</div>
 					<div class="option-slider">
-						<label>Élévation</label>
+						<div class="label">Élévation</div>
 						<div class="min-value"></div>
 						<div class="slider-horizontal">
-							<div id="elevation-lvl-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="3" title="Contrôle du niveau d'élévation" role="slider"></a></div>
+							<div id="elevation-lvl-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" tabindex="3" title="Contrôle du niveau d'élévation" role="slider"></a>
+							</div>
 						</div>
 						<div class="max-value"></div>
 					</div>
 					<div class="option-slider">
-						<label>Orientation</label>
+						<div class="label">Orientation</div>
 						<div class="min-value"></div>
 						<div class="slider-horizontal">
-							<div id="orientation-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="4" title="Contrôle de l'orientation" role="slider"></a></div>
+							<div id="orientation-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" tabindex="4" title="Contrôle de l'orientation" role="slider"></a>
+							</div>
 						</div>
 						<div class="max-value"></div>
 					</div>
 					<div class="option-slider">
-						<label>Distance</label>
+						<div class="label">Distance</div>
 						<div class="min-value"></div>
 						<div class="slider-horizontal">
-							<div id="distance-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="5" title="Contrôle de la distance" role="slider"></a></div>
+							<div id="distance-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" tabindex="5" title="Contrôle de la distance" role="slider"></a>
+							</div>
 						</div>
 						<div class="max-value"></div>
 					</div>
@@ -487,12 +497,14 @@
 				<section id="settings-font-size-sm-container">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Taille du texte</span></h1>
 					<div class="buttons-container">
-						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 					</div>
 					<div class="option-font-size option-slider">
 						<div class="min-font-size min-value">A</div>
 						<div class="slider-horizontal">
-							<div id="fontSlide-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" href="#" tabindex="3" title="Contrôle de la taille du texte" role="slider"></a></div>
+							<div id="fontSlide-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" tabindex="3" title="Contrôle de la taille du texte" role="slider"></a>
+							</div>
 						</div>
 						<div class="max-font-size max-value">A</div>
 					</div>
@@ -501,52 +513,52 @@
 					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la police de caractère</span></h1>
 					<ul id="font-family">
 						<li class="menu-item Arial">
-							<a title="Choisir la police Arial" tabindex="2" class="selectable-by-chromevox final-option">Arial</a>
+							<a tabindex="2" class="selectable-by-chromevox final-option">Arial</a>
 						</li>
 						<li class="menu-item OpenDyslexic">
-							<a title="Choisir la police OpenDyslexic" tabindex="3" class="selectable-by-chromevox final-option">OpenDyslexic</a>
+							<a tabindex="3" class="selectable-by-chromevox final-option">OpenDyslexic</a>
 						</li>
 						<li class="menu-item Andika">
-							<a title="Choisir la police Andika" tabindex="4" class="selectable-by-chromevox final-option">Andika</a>
+							<a tabindex="4" class="selectable-by-chromevox final-option">Andika</a>
 						</li>
 						<li class="menu-item Helvetica">
-							<a title="Choisir la police Helvetica" tabindex="5" class="selectable-by-chromevox final-option">Helvetica</a>
+							<a tabindex="5" class="selectable-by-chromevox final-option">Helvetica</a>
 						</li>
 						<li class="menu-item Verdana">
-							<a title="Choisir la police Verdana" tabindex="6" class="selectable-by-chromevox final-option">Verdana</a>
+							<a tabindex="6" class="selectable-by-chromevox final-option">Verdana</a>
 						</li>
 					</ul>
-					<a title="Retour" class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
+					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="settings-subtitles-color-sm-container">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la couleur de texte</span></h1>
 					<div class="buttons-container">
-						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 					</div>
 					<div class="option-text-color option-color">
-						<div title="Couleur transparent" class="color final-option transparent selectable-by-chromevox" tabindex="3" data-color="transparent"></div>
-						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="4" data-color="white"></div>
-						<div title="Couleur jaune" class="color final-option yellow selectable-by-chromevox" tabindex="5" data-color="yellow"></div>
-						<div title="Couleur bleu" class="color final-option blue selectable-by-chromevox" tabindex="6" data-color="blue"></div>
+						<div title="Couleur transparent" class="color final-option transparent selectable-by-chromevox" tabindex="3" data-color="transparent" role="button"></div>
+						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="4" data-color="white" role="button"></div>
+						<div title="Couleur jaune" class="color final-option yellow selectable-by-chromevox" tabindex="5" data-color="yellow" role="button"></div>
+						<div title="Couleur bleu" class="color final-option blue selectable-by-chromevox" tabindex="6" data-color="blue" role="button"></div>
 					</div>
 				</section>
 				<section id="settings-subtitles-bgcolor-sm-container">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la couleur de fond du texte</span></h1>
 					<div class="buttons-container">
-						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 					</div>
 					<div class="option-background-color option-color">
-						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="3" data-color="white"></div>
-						<div title="Couleur noire" class="color final-option black selectable-by-chromevox" tabindex="4" data-color="black"></div>
+						<div title="Couleur blanche" class="color final-option white selectable-by-chromevox" tabindex="3" data-color="white" role="button"></div>
+						<div title="Couleur noire" class="color final-option black selectable-by-chromevox" tabindex="4" data-color="black" role="button"></div>
 					</div>
 				</section>
 				<section id="settings-subtitles-pip-sm-container">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Positionner les sous-titres</span></h1>
 					<div class="buttons-container">
-						<a title="Retour" class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
 					</div>
 					<div id="uiSubtitles-sm-container" class="ui-subtitles">
-						<div class="pip-video selectable-by-chromevox" tabindex="3">
+						<div class="pip-video selectable-by-chromevox" tabindex="3" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="" aria-label="Positionnez la hauteur des sous-titres avec les flèches haut et bas">
 							<div class="pip-text">Texte de sous-titre</div>
 							<div class="ui-icon-gripsmall-center"></div>
 							<div style="z-index: 90;" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
@@ -558,7 +570,7 @@
 				</section>
 			</div>
 			<section id="full-synopsis">
-				<a title="Retour" class="back-button"><span tabindex="1" class="selectable-by-chromevox">Retour</span></a>
+				<a class="back-button"><span tabindex="1" class="selectable-by-chromevox">Retour</span></a>
 				<h2></h2>
 				<div class="program-date"></div>
 				<div class="synopsis-container">
@@ -608,15 +620,17 @@
 					<div id="playerProgressInfos">
 						<div id="playerProgressCurrent"><span class="selectable-by-chromevox final-option" tabindex="46" aria-labelledby="current-time-label"></span><span id="current-time-label" class="hidden"></span></div>
 						<div id="playerProgressTotal"><span class="selectable-by-chromevox final-option" tabindex="47" aria-labelledby="total-time-label"></span><span id="total-time-label" class="hidden"></span></div>
-						<div id="playerProgressBar" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false" title="Barre de progression">
-							<a id="playerProgressCursor" class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="48" title="Contrôle de la position de la vidéo" role="slider"></a>
+						<div id="playerProgressBar" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+							<a id="playerProgressCursor" class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" tabindex="48" title="Contrôle de la position de la vidéo" role="slider"></a>
 						</div>
 					</div>
 					<div id="playerControls">
 						<div id="playerControlVolume" class="volume-control-ctn">
 							<span id="volume-tooltip" class="tooltip" role="tooltip"></span> 
 							<span class="icon volume-mute"></span>
-							<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false" title="Volume"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="49" title="Contrôle du volume" role="slider"></a></div>
+							<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" tabindex="49" title="Contrôle du volume" role="slider"></a>
+							</div>
 							<span class="icon volume" id="up-volume"></span>
 						</div>
 						<div id="playerControlTrickMode">
@@ -627,7 +641,9 @@
 						<div id="playerControlADVolume" class="volume-control-ctn">
 							<span id="ad-volume-tooltip" class="tooltip" role="tooltip"></span> 
 							<span class="icon volume-min"></span>
-							<div id="ad-volume-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" href="#" tabindex="53" title="Contrôle pour améliorer l'audio description" role="slider"></a></div>
+							<div id="ad-volume-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" tabindex="53" title="Contrôle pour améliorer l'audio description" role="slider"></a>
+							</div>
 							<span class="icon volume" id="ad-up-volume"></span>
 						</div>
 						<div id="playerControlConfig" class="btn selectable-by-chromevox" onclick="Section.launchSettingsFromPlayer();" tabindex="54">

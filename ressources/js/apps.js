@@ -50,9 +50,9 @@ Apps.generates = function(){
 			isDisabled = app.disabled;
 			hiddenClass = isDisabled ? " disabled" : "";
 			classList = !isDisabled ? "selectable-by-chromevox" : "";
-			html += '<li class="app menu-item'+hiddenClass+'"><a tabindex="'+(i+start)+'" title="'+app.title+'" class="'+classList+'">'+app.title+'</a></li>';
+			html += '<li class="app menu-item'+hiddenClass+'"><a tabindex="'+(i+start)+'" class="'+classList+'">'+app.title+'</a></li>';
 		}else{
-			html += '<li tabindex="'+(i+start)+'" class="app icon btn selectable-by-chromevox"><a title="'+app.title+'"><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
+			html += '<li tabindex="'+(i+start)+'" class="app icon btn selectable-by-chromevox"><a><img src="'+app.picture+'" alt="Icône de l\'application '+app.title+'"></a></li>';
 		}
 	}
 	

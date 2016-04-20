@@ -249,7 +249,7 @@ h2{font-size:1.6em;font-weight:600}
 .option-slider{font-weight:500;height:30px;line-height:30px}
 
 /* Settings - Interface */
-.option-slider > div{float:left;height:100%;box-sizing:border-box}
+.option-slider > div:not(.label){float:left;height:100%;box-sizing:border-box}
 .min-value, .max-value{line-height:30px;width:8%}
 .min-font-size{font-size:1.6rem}
 .max-font-size{font-size:2.4rem;}
@@ -258,7 +258,6 @@ h2{font-size:1.6em;font-weight:600}
 .slider-horizontal.font-size{width:84%}
 .slider-horizontal input{height:100%;margin:0}
 .sm .slider-horizontal{width: 70%;}
-.sm .option-slider label{display: block;}
 .sm .min-value, .sm .max-value{width: 15%;}
 
 /* Settings - Sous-titres */

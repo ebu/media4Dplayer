@@ -439,19 +439,22 @@ Settings.init.subtitles.BGColor = function(){
 
 Settings.init.subtitles.pip = function(){
 	
-	var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
+	var coordonates = Settings.getCurrentCoordonates("sub");
 	var $container = $(document.getElementById(Main.simplifiedMode ? "uiSubtitles-sm-container" : "uiSubtitles-container")); 
-	var $pipVideo = $container.find(".pip-video").css("top", pipTopPercent+"%");
+	var $pipVideo = $container.find(".pip-video").css("top", coordonates.y+"%");
 	$pipVideo.draggable({ 	
 		containment: $container,
 		scroll:false,
 		axis: "y",
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
-			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
-			Settings.saveSubtitlesPIPPosition($parent);
+			Settings.saveSubtitlesPIPPosition($( this ).draggable( "option", "containment" ));
+			
+			Settings.updateARIAPropertiesForPIP($(this), "sub");
 		}
-	});		
+	});
+	
+	Settings.updateARIAPropertiesForPIP($pipVideo, "sub");
 };
 
 /**
@@ -459,23 +462,19 @@ Settings.init.subtitles.pip = function(){
  * @description Initializes the screen of the LS parameters
  */
 
-Settings.init.ls = function(){
-	var defaultCoordonates = Settings.defaultLSPIPCoordonates;
-	var pipLeftPercent = (getHtmlStorage("LSFPip_position_x") && !isNaN(getHtmlStorage("LSFPip_position_x"))) ? getHtmlStorage("LSFPip_position_x") : defaultCoordonates.x;
-	var pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
-
-	var pipWidthReal = getHtmlStorage("LSFPip_size_width") || defaultCoordonates.w;
-	var pipHeightReal = getHtmlStorage("LSFPip_size_height") || defaultCoordonates.h;	
+Settings.init.ls = function(){	
+	var coordonates = Settings.getCurrentCoordonates("ls");
 	
 	var $container = $(document.getElementById(Main.simplifiedMode ? "uiLS-container-sm" : "uiLS-container")); 
-	var $pipVideo = $container.find(".pip-video").attr("style",'left: '+pipLeftPercent+'%; top: '+pipTopPercent+'%; width:'+pipWidthReal+'%; height:'+ pipHeightReal +'%');
+	var $pipVideo = $container.find(".pip-video").attr("style",'left: '+coordonates.x+'%; top: '+coordonates.y+'%; width:'+coordonates.w+'%; height:'+ coordonates.h +'%');
 	$pipVideo.draggable({
 		containment: $container,
 		scroll:false,
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
-			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
-			Settings.saveLSPIPPosition($parent, $(this));
+			Settings.saveLSPIPPosition($( this ).draggable( "option", "containment" ), $(this));
+			
+			Settings.updateARIAPropertiesForPIP($(this), "ls");
 		}
 	}).resizable( {
 		containment: "parent",
@@ -484,16 +483,47 @@ Settings.init.ls = function(){
       	aspectRatio: true,
 		stop: function() {
 			log("Resize terminé !!!");
-			var $parent = $( this ).parents($( this ).draggable( "option", "containment" )).filter(":first");
+			var $parent = $( this ).draggable( "option", "containment" );
 			Settings.saveLSPIPSize($parent, $(this));
 			Settings.saveLSPIPPosition($parent, $(this));
+			
+			Settings.updateARIAPropertiesForPIP($(this), "ls");
 		}
 	});
 	
-	$container.find('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw').end()
-		.find('.ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne').end()
-		.find('.ui-resizable-sw').addClass('ui-icon ui-icon-gripsmall-diagonal-sw').end()
-		.find('.ui-resizable-se').addClass('ui-icon ui-icon-gripsmall-diagonal-se');
+	$container.find('.ui-resizable-nw').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le haut et la gauche","aria-valuenow":0}).addClass('ui-icon ui-icon-gripsmall-diagonal-nw').end()
+		.find('.ui-resizable-ne').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le haut et la droite","aria-valuenow":0}).addClass('ui-icon ui-icon-gripsmall-diagonal-ne').end()
+		.find('.ui-resizable-sw').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le bas et la gauche","aria-valuenow":0}).addClass('ui-icon ui-icon-gripsmall-diagonal-sw').end()
+		.find('.ui-resizable-se').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le bas et la droite","aria-valuenow":0}).addClass('ui-icon ui-icon-gripsmall-diagonal-se').end()
+	
+		.find('.ui-resizable-n').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le haut"}).end()
+		.find('.ui-resizable-e').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers la droite"}).end()
+		.find('.ui-resizable-s').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le bas"}).end()
+		.find('.ui-resizable-w').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers la gauche"});
+	
+	Settings.updateARIAPropertiesForPIP($pipVideo, "ls");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Gets the current value of a PIP position
+ * @param {String} PIPType The PIP type (ls/sub)
+ */
+
+Settings.getCurrentCoordonates = function(PIPType){
+	if(PIPType === "ls"){
+		var defaultCoordonates = this.defaultLSPIPCoordonates;
+		var pipLeftPercent = (getHtmlStorage("LSFPip_position_x") && !isNaN(getHtmlStorage("LSFPip_position_x"))) ? getHtmlStorage("LSFPip_position_x") : defaultCoordonates.x;
+		var pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
+		var pipWidthReal = getHtmlStorage("LSFPip_size_width") || defaultCoordonates.w;
+		var pipHeightReal = getHtmlStorage("LSFPip_size_height") || defaultCoordonates.h;	
+		
+		return {x: pipLeftPercent, y: pipTopPercent, w: pipWidthReal, h: pipHeightReal};
+		
+	}else if(PIPType === "sub"){
+		var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
+		return {y: pipTopPercent};
+	}
 };
 
 																	/* ******************************************/
@@ -788,5 +818,46 @@ Settings.saveLSPIPSize = function($container, $pip){
 		//log("saveLSFSize :"+newWidthPercent+"x"+newHeightPercent+" dans un container de "+containerWidth+"x"+containerHeight);
 		setHtmlStorage("LSFPip_size_width", newWidthPercent);
 		setHtmlStorage("LSFPip_size_height", newHeightPercent);
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Updates a PIP object aria properties
+ * @param {jQuery Object} $pip The resizable element
+ * @param {String} PIPType The PIP type (ls/sub)
+ */
+
+Settings.updateARIAPropertiesForPIP = function($pip, PIPType){
+	var bottomPercent;
+	if(PIPType === "ls"){
+		var coordonates = Settings.getCurrentCoordonates("ls");
+		var leftPercent = Math.round(coordonates.x),
+			rightPercent = 100 - Math.round(($pip[0].offsetLeft + $pip.width()) / $pip.parent().width() * 100),
+			topPercent = Math.round(coordonates.y);
+		bottomPercent = 100 - Math.round(($pip[0].offsetTop + $pip.height()) / $pip.parent().height() * 100);
+
+		$pip.attr({"aria-valuetext":topPercent + "% depuis le haut et " + leftPercent + "% depuis la gauche"});
+
+		$pip.find('.ui-resizable-nw').attr({"aria-valuetext":topPercent + "% depuis le haut et " + leftPercent + "% depuis la gauche"}).end()
+			.find('.ui-resizable-ne').attr({"aria-valuetext":topPercent + "% depuis le haut et " + rightPercent + "% depuis la droite"}).end()
+			.find('.ui-resizable-sw').attr({"aria-valuetext":bottomPercent + "% depuis le bas et " + leftPercent + "% depuis la gauche"}).end()
+			.find('.ui-resizable-se').attr({"aria-valuetext":bottomPercent + "% depuis le bas et " + rightPercent + "% depuis la droite"}).end()
+
+			.find('.ui-resizable-n').attr({"aria-valuenow":topPercent,"aria-valuetext":topPercent + "% depuis le haut"}).end()
+			.find('.ui-resizable-e').attr({"aria-valuenow":rightPercent,"aria-valuetext":rightPercent + "% depuis la droite"}).end()
+			.find('.ui-resizable-s').attr({"aria-valuenow":bottomPercent,"aria-valuetext":bottomPercent + "% depuis le bas"}).end()
+			.find('.ui-resizable-w').attr({"aria-valuenow":leftPercent,"aria-valuetext":leftPercent + "% depuis la gauche"});
+		
+	}else if(PIPType === "sub"){
+		var $parent = $pip.parent();
+		var padding = parseFloat($parent.css("padding").replace("px",""));
+		var parentHeight = $parent.height();
+		var hPercent = ($pip.height() / parentHeight) * 100;
+		var distanceToTop = (($pip[0].offsetTop - padding) / parentHeight * 100);
+		bottomPercent = Math.round(100 - distanceToTop - hPercent);
+		
+		//log("Je suis à " + distanceToTop + " du haut et à " + bottomPercent + " du bas");
+		$pip.attr({"aria-valuetext":(bottomPercent<0?0:bottomPercent) + "% depuis le bas"});
 	}
 };

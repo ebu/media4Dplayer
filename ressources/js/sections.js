@@ -297,9 +297,9 @@ Section.change.toInConstructionScreen = function(){
 
 Section.change.toAppOptions = function(newSection, index){
 	Apps.indexAppInSM = index;
-	var title = Apps.list[index].title;
-	$(document.getElementById("app-title")).html('<span tabindex="1" class="selectable-by-chromevox">'+title+'</span>');
-	$(document.getElementById("my-videos-btn")).children().html("Mes vidéos " + title);
+	var appName = Apps.list[index].title;
+	$(document.getElementById("app-title")).html('<span tabindex="1" class="selectable-by-chromevox">'+appName+'</span>');
+	$(document.getElementById("my-videos-btn")).children().html("Mes vidéos " + appName);
 	Section.addClass("app-options");
 };
 
@@ -581,15 +581,15 @@ Section.handleMenuSel = function(newSection){
 	
 	if(!Main.simplifiedMode){
 		var $nav = $(document.getElementById("menu"));
-		$nav.children(".sel").removeClass("sel");
+		$nav.find(".sel").removeClass("sel");
 
 		switch(newSection){
 			case this.sections[2]:
-				$nav.children(".app-playlists").addClass("sel");
+				$nav.find(".app-playlists").addClass("sel");
 				break;
 
 			case this.sections[4]:
-				$nav.children(".settings").addClass("sel");
+				$nav.find(".settings").addClass("sel");
 				break;
 		}		
 	}
