@@ -182,6 +182,14 @@ Settings.init.audio.azimDistance = function($drag){
 			var type = $(this).data("type");
 			if(["commentary", "dialogues"].indexOf(type) !== -1){				
 
+				var distance = function(dot1, dot2){
+					var x1 = dot1[0],
+						y1 = dot1[1],
+						x2 = dot2[0],
+						y2 = dot2[1];
+					return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+				};
+				
 				var limit = function(x, y){
 					var dist = distance([x, y], canvas.center);
 					if (dist <= canvas.radius && dist >= minDistance) {
@@ -197,14 +205,6 @@ Settings.init.audio.azimDistance = function($drag){
 							y: Math.sin(radians) * radius + canvas.center[1]
 						};		
 					}
-				};
-
-				var distance = function(dot1, dot2){
-					var x1 = dot1[0],
-						y1 = dot1[1],
-						x2 = dot2[0],
-						y2 = dot2[1];
-					return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 				};
 
 				var result = limit(ui.position.left, ui.position.top);			

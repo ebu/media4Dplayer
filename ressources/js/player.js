@@ -518,6 +518,23 @@ Player.resetPlayers = function(){
 };
 
 Player.setPIP = function(){
+		
+	var appearPipControls = function(){
+		if(Player.pipControlTimeout){
+			clearInterval(Player.pipControlTimeout);
+		}
+		Player.pipControlTimeout = setTimeout(function(){
+
+			$ctn.css("border-style","hidden");
+			$pipVideo.css("border-style","hidden");
+			$pipVideo.children(".ui-icon").hide();
+
+		}, Config.timeoutHidePIP *1000);
+
+		$ctn.css("border-style","solid");
+		$pipVideo.css("border-style","solid").children(".ui-icon").show();		
+	};
+	
 	var $ctn = $(document.getElementById("pipContainer"));
 	var $pipVideo = $(document.getElementById("pipVideo")).css("left", (getHtmlStorage("LSFPip_position_x") || Settings.defaultLSPIPCoordonates.x) + "%" )
 		.css("top", (getHtmlStorage("LSFPip_position_y") || Settings.defaultLSPIPCoordonates.y) + "%" )
@@ -553,22 +570,6 @@ Player.setPIP = function(){
 				appearPipControls();
 			}
 		});
-		
-	var appearPipControls = function(){
-		if(Player.pipControlTimeout){
-			clearInterval(Player.pipControlTimeout);
-		}
-		Player.pipControlTimeout = setTimeout(function(){
-
-			$ctn.css("border-style","hidden");
-			$pipVideo.css("border-style","hidden");
-			$pipVideo.children(".ui-icon").hide();
-
-		}, Config.timeoutHidePIP *1000);
-
-		$ctn.css("border-style","solid");
-		$pipVideo.css("border-style","solid").children(".ui-icon").show();		
-	};
 
 	$('.ui-resizable-nw').addClass('ui-icon ui-icon-gripsmall-diagonal-nw');
 	$('.ui-resizable-ne').addClass('ui-icon ui-icon-gripsmall-diagonal-ne');
