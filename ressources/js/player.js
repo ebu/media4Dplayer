@@ -365,20 +365,20 @@ Player.launch = function(){
 		this.waaAlreadyInit = true;
 	}
 	
-	this.playerManager.controller.addEventListener('playing', function(e) {
+	this.playerManager.controller.addEventListener('playing', function() {
 		Player.onPlay();
 	});
 	
-	this.playerManager.controller.addEventListener('pause', function(e) {
+	this.playerManager.controller.addEventListener('pause', function() {
 		Player.onPause();
 	});
 	
-	this.playerManager.controller.addEventListener('ended', function(e) {
+	this.playerManager.controller.addEventListener('ended', function() {
 		Player.alreadyInit = false;
 		Player.validClose();
 	});
 
-	var textTrackEvent = function(e){
+	var textTrackEvent = function(){
 		if(getHtmlStorage("subtitlesDisabled")){
 			Player.playerManager.playerMain.setTextTrack(-1);					
 		}else{

@@ -405,9 +405,6 @@ InfoBanner.getOptionsArrayForOption = function(optionID) {
 InfoBanner.getOptionsDropDownMenuHeight = function(inputsArray) {
 	return inputsArray.length * (50 + 1); // +1 for border 
 };
-InfoBanner.getOptionsDropDownMenuTop = function(inputsArray) {
-	return 120; 
-};
 InfoBanner.getOptionsDropDownMenuLeft = function(optionID) {
 
 	var leftOption = 0;
@@ -479,7 +476,7 @@ InfoBanner.initVolumeSlider = function(){
         min: 0,
         value: defaultValue,
  
-        start: function(event,ui) {
+        start: function() {
           $tooltip.fadeIn('fast');
         },
  
@@ -487,7 +484,7 @@ InfoBanner.initVolumeSlider = function(){
 			_onSlide(this, ui.value);
 		},
  
-        stop: function(event, ui) {
+        stop: function(event) {
           $tooltip.fadeOut('fast');
         }
 	});

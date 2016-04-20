@@ -34,7 +34,7 @@ json.load = function(params){
 				params.callback(data, xhr);
 			},
 			error : function(xhr, erreur, e){
-				//log("json.load() : "+erreur+" > "+e);
+				log("json.load() : "+erreur+" > "+e);
 				if(typeOf(params.onError) === "function"){
 					params.onError(xhr);
 				}else{

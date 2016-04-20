@@ -53,10 +53,9 @@ var Section = {
  * @param {String} newSection The name of the new section
  * @param {String} rubric The rubric's name of the section
  * @param {Various} mixed_var Parameters that will be used for the loading of section
- * @param {jQuery Object} $item The current focused element
  */
 
-Section.change = function(newSection, rubric, mixed_var, $item){
+Section.change = function(newSection, rubric, mixed_var){
 	if(this.sections.indexOf(newSection) !== -1){
 		
 		// La liste des profils
@@ -311,7 +310,7 @@ Section.change.toAppOptions = function(newSection, index){
  * @param {jQuery Object} $item The current focused element
  */
 
-Section.change.toMyVideosOptions = function(newSection, $item){
+Section.change.toMyVideosOptions = function(){
 	Section.save();
 	
 	var title = Apps.list[Apps.indexAppInSM].title;
