@@ -406,6 +406,9 @@ InfoBanner.getOptionsArrayForOption = function(optionID) {
 		case "audio":
 			optionsArray = JSON.parse(JSON.stringify(Media.audiosList));
 			break;
+			
+		default:
+			break;
 	}
 	optionsArray.push("Aucun");
 	return optionsArray;

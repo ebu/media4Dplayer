@@ -590,6 +590,9 @@ Section.handleMenuSel = function(newSection){
 			case this.sections[4]:
 				$nav.find(".settings").addClass("sel");
 				break;
+			
+			default:
+				break;
 		}		
 	}
 };
