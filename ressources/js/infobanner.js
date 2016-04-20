@@ -493,7 +493,7 @@ InfoBanner.initVolumeSlider = function(){
 			_onSlide(this, ui.value);
 		},
  
-        stop: function(event) {
+        stop: function() {
           $tooltip.fadeOut('fast');
         }
 	});
@@ -540,15 +540,15 @@ InfoBanner.initADVolumeSlider = function(){
 		max: range[1],
         value: defaultValue,
  
-        start: function(event,ui) {
+        start: function() {
           $tooltip.fadeIn('fast');
         },
- 
+		
         slide: function(event, ui){
 			_onSlide(this, ui.value);
-		},
- 
-        stop: function(event, ui) {
+		}, 
+		
+        stop: function() {
           $tooltip.fadeOut('fast');
         }
 	});
