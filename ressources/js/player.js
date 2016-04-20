@@ -275,43 +275,43 @@ Player.launch = function(){
 		
 		// Son principal
 		mainAudioASD = new M4DPAudioModules.AudioStreamDescription(
-				type = mainData.type,
-				active = this.mode === "stereo" && Media.audioEnabled,
-				loudness = parseInt(mainData.loudness,10),
-				maxTruePeak = parseInt(mainData.maxTruePeak,10),
-				dialog = mainData.dialog === "true",
-				ambiance = mainData.ambiance === "true",
-				commentary = mainData.commentary === "true");
+				mainData.type,
+				this.mode === "stereo" && Media.audioEnabled,
+				parseInt(mainData.loudness,10),
+				parseInt(mainData.maxTruePeak,10),
+				mainData.dialog === "true",
+				mainData.ambiance === "true",
+				mainData.commentary === "true");
 		
 		// Ambiance (pour le 5.1)
 		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
-				type = eaData.type,
-				active = this.mode === "5.1" && Media.audioEnabled,
-				loudness = parseInt(eaData.loudness,10),
-				maxTruePeak = parseInt(eaData.maxTruePeak,10),
-				dialog = eaData.dialog === "true",
-				ambiance = eaData.ambiance === "true",
-				commentary = eaData.commentary === "true");
+				eaData.type,
+				this.mode === "5.1" && Media.audioEnabled,
+				parseInt(eaData.loudness,10),
+				parseInt(eaData.maxTruePeak,10),
+				eaData.dialog === "true",
+				eaData.ambiance === "true",
+				eaData.commentary === "true");
 		
 		// Audio description
 		extendedCommentsASD = new M4DPAudioModules.AudioStreamDescription(
-				type = adData.type,
-				active = Media.audioDescriptionEnabled,
-				loudness = parseInt(adData.loudness,10),
-				maxTruePeak = parseInt(adData.maxTruePeak,10),
-				dialog = adData.dialog === "true",
-				ambiance = adData.ambiance === "true",
-				commentary = adData.commentary === "true");
+				adData.type,
+				Media.audioDescriptionEnabled,
+				parseInt(adData.loudness,10),
+				parseInt(adData.maxTruePeak,10),
+				adData.dialog === "true",
+				adData.ambiance === "true",
+				adData.commentary === "true");
 		
 		// Dialogue (pour le 5.1)
 		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
-				type = diData.type,
-				active = this.mode === "5.1" && Media.audioEnabled,
-				loudness = parseInt(diData.loudness,10),
-				maxTruePeak = parseInt(diData.maxTruePeak,10),
-				dialog = diData.dialog === "true",
-				ambiance = diData.ambiance === "true",
-				commentary = diData.commentary === "true");
+				diData.type,
+				this.mode === "5.1" && Media.audioEnabled,
+				parseInt(diData.loudness,10),
+				parseInt(diData.maxTruePeak,10),
+				diData.dialog === "true",
+				diData.ambiance === "true",
+				diData.commentary === "true");
 
 		var asdc = new M4DPAudioModules.AudioStreamDescriptionCollection(
 				[mainAudioASD, extendedAmbienceASD, extendedCommentsASD, extendedDialogsASD]
