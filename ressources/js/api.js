@@ -8,7 +8,7 @@ var API = {};
 API.getConfig = function(callback_function){
     json.load({
         url: "ressources/json/config.json",
-        callback: function(data, xhr) {
+        callback: function(data) {
 			Config = data;
 			callback_function();
         }

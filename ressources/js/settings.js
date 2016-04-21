@@ -164,10 +164,10 @@ Settings.init.audio.azimDistance = function($drag){
 	if($($drag).length){
 
 		var minDistance = Settings.minDistance;		
-		function getDistance(d, rangePx, rangeMeter){
+		var getDistance = function(d, rangePx, rangeMeter){
 			var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
 			return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
-		}
+		};
 		var canvas = {
 			width: $drag.parent().width(),
 			height: $drag.parent().height(),
@@ -182,7 +182,15 @@ Settings.init.audio.azimDistance = function($drag){
 			var type = $(this).data("type");
 			if(["commentary", "dialogues"].indexOf(type) !== -1){				
 
-				function limit(x, y){
+				var distance = function(dot1, dot2){
+					var x1 = dot1[0],
+						y1 = dot1[1],
+						x2 = dot2[0],
+						y2 = dot2[1];
+					return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+				};
+				
+				var limit = function(x, y){
 					var dist = distance([x, y], canvas.center);
 					if (dist <= canvas.radius && dist >= minDistance) {
 						return {x: x, y: y};
@@ -197,15 +205,7 @@ Settings.init.audio.azimDistance = function($drag){
 							y: Math.sin(radians) * radius + canvas.center[1]
 						};		
 					}
-				}
-
-				function distance(dot1, dot2){
-					var x1 = dot1[0],
-						y1 = dot1[1],
-						x2 = dot2[0],
-						y2 = dot2[1];
-					return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-				}
+				};
 
 				var result = limit(ui.position.left, ui.position.top);			
 				ui.position.left = result.x;
@@ -219,13 +219,13 @@ Settings.init.audio.azimDistance = function($drag){
 				//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
 
 				// Récupère l'angle
-				function getAzim(sinus, angle){
+				var getAzim = function(sinus, angle){
 					if(sinus <= 0){
 						return  0 - angle;
 					}else{
 						return angle;
 					}
-				}
+				};
 				
 				var cosinus = -(ui.position.top - canvas.center[1]) / dist;
 				var sinus = (ui.position.left - canvas.center[0]) / dist;
@@ -506,8 +506,9 @@ Settings.init.ls = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Gets the current value of a PIP position
+ * @description Gets the coordonates of a PIP
  * @param {String} PIPType The PIP type (ls/sub)
+ * @return {Object} The PIP coordonates
  */
 
 Settings.getCurrentCoordonates = function(PIPType){
@@ -523,6 +524,9 @@ Settings.getCurrentCoordonates = function(PIPType){
 	}else if(PIPType === "sub"){
 		var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
 		return {y: pipTopPercent};
+		
+	}else{
+		return {};
 	}
 };
 
