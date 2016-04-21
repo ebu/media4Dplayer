@@ -103,7 +103,7 @@ $(document.getElementById('playerUI')).on('click', function(e){
 			InfoBanner.hide();
 		}
 	}else if($(e.target.id).hasClass(".video-option")){
-		InfoBanner.showOptionPopup($(e.target.id), this);
+		InfoBanner.playerParams.options.show($(e.target.id), this);
 	}else{
 		//log("id="+e.target.id);
 	}
@@ -115,7 +115,7 @@ $(document.getElementById('playerUI')).on('click', function(e){
 $("body").on("keydown", function(e){
 	if(["enter","tab"].indexOf(e.key.toLowerCase()) !== -1 && $(this).hasClass("player") && !$(document.getElementById("playerBottomBanner")).is(":visible")){
 		InfoBanner.show();
-		InfoBanner.hideOptionDropDownMenu();
+		InfoBanner.playerParams.options.hide();
 		Navigation.moveSelecteur(document.getElementById("playerClose"));
 	}
 });
