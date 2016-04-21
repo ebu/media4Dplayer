@@ -1,4 +1,4 @@
-<?xml version="1.8" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ebucore:ebuCoreMain xmlns:ebucore="urn:ebu:metadata-schema:ebuCore_2015" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ebucore:coreMetadata>
         <ebucore:part partName="EditorialMetadata">
