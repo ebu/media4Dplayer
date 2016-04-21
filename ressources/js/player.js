@@ -218,8 +218,6 @@ Player.launch = function(){
 	this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);
 
 	this.playerManager.controller = new MediaController();
-
-	//log("controller = " + this.playerManager.controller);
 	
 	this.videoMain.controller			= this.playerManager.controller;
 	this.audioFiveDotOne.controller		= this.playerManager.controller;
@@ -229,10 +227,59 @@ Player.launch = function(){
 		this.videoPip.controller		= this.playerManager.controller;			
 	}
 
-	if(!this.waaAlreadyInit){
+	this.initWAA();
+	
+	this.playerManager.controller.addEventListener('playing', function() {
+		Player.onPlay();
+	});
+	
+	this.playerManager.controller.addEventListener('pause', function() {
+		Player.onPause();
+	});
+	
+	this.playerManager.controller.addEventListener('ended', function() {
+		Player.alreadyInit = false;
+		Player.validClose();
+	});
+	
+	this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
+		//log("MediaPlayer.events.TEXT_TRACKS_ADDED");
+		if(getHtmlStorage("subtitlesDisabled")){
+			Player.playerManager.playerMain.setTextTrack(-1);					
+		}else{
+			Player.playerManager.playerMain.setTextTrack(Media.currentSubtitleIndex);
+		}
 
+		var yPos = getHtmlStorage("subtitlePositionY");
+		if(yPos !== "undefined"){
+			var top = Math.round(yPos);
+			if(top <= 0){
+				top = 0;
+			}else if(top >= 65){
+				top = 65 / 2;
+			}else{
+				top = top / 2;
+			}
+			$(Player.ttmlDiv).css({top:top + "%"});
+		}
+	});
+
+	this.alreadyInit = true;
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Player.initWAA = function(){
+	
+	if(!this.waaAlreadyInit){
 		this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
-		//log("######### audioContext: " + this.playerManager.audioContext);
 
 		//==============================================================================
 		var audioSourceMain 	 	= this.playerManager.audioContext.createMediaElementSource( this.videoMain );
@@ -262,17 +309,17 @@ Player.launch = function(){
 		channelSplitterFiveDotOne.connect( channelMerger, 3, 5 );
 		channelSplitterFiveDotOne.connect( channelMerger, 4, 6 );
 		channelSplitterFiveDotOne.connect( channelMerger, 5, 7 );
-		
+
 		channelSplitterDescription.connect( channelMerger, 0, 8 );
-		
+
 		channelSplitterFiveDotOne2.connect( channelMerger, 0, 9 );
-	
+
 		//==============================================================================
 		var mainData = Media.links.dataMain;
 		var eaData = Media.links.dataEA;
 		var adData = Media.links.dataAD;
 		var diData = Media.links.dataDI;
-		
+
 		// Son principal
 		mainAudioASD = new M4DPAudioModules.AudioStreamDescription(
 				mainData.type,
@@ -282,7 +329,7 @@ Player.launch = function(){
 				mainData.dialog === "true",
 				mainData.ambiance === "true",
 				mainData.commentary === "true");
-		
+
 		// Ambiance (pour le 5.1)
 		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
 				eaData.type,
@@ -292,7 +339,7 @@ Player.launch = function(){
 				eaData.dialog === "true",
 				eaData.ambiance === "true",
 				eaData.commentary === "true");
-		
+
 		// Audio description
 		extendedCommentsASD = new M4DPAudioModules.AudioStreamDescription(
 				adData.type,
@@ -302,7 +349,7 @@ Player.launch = function(){
 				adData.dialog === "true",
 				adData.ambiance === "true",
 				adData.commentary === "true");
-		
+
 		// Dialogue (pour le 5.1)
 		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
 				diData.type,
@@ -316,7 +363,7 @@ Player.launch = function(){
 		var asdc = new M4DPAudioModules.AudioStreamDescriptionCollection(
 				[mainAudioASD, extendedAmbienceASD, extendedCommentsASD, extendedDialogsASD]
 		);
-	
+
 		//==============================================================================
 		// M4DPAudioModules
 
@@ -344,7 +391,7 @@ Player.launch = function(){
 			var uselessGain = this.playerManager.audioContext.createGain();
 			channelSplitterMain.connect( uselessGain, 0, 0 );
 			uselessGain.gain.value = 0;
-			
+
 			uselessGain.connect( this.playerManager.audioContext.destination, 0, 0 );
 		}
 
@@ -357,53 +404,13 @@ Player.launch = function(){
 			/// (process 10 channels in total)
 			streamSelector.connect( smartFader._input );
 		}
-		
+
 		smartFader.setAttackTimeFromGui( {value:this.attackTime, min:0,max:100} );
 		smartFader.setReleaseTimeFromGui( {value:this.releaseTime, min:0,max:100} );
 		multichannelSpatialiser.offsetGain = this.gainOffset;
 		objectSpatialiserAndMixer.offsetGain = this.gainOffset;
-		this.waaAlreadyInit = true;
+		this.waaAlreadyInit = true;	
 	}
-	
-	this.playerManager.controller.addEventListener('playing', function() {
-		Player.onPlay();
-	});
-	
-	this.playerManager.controller.addEventListener('pause', function() {
-		Player.onPause();
-	});
-	
-	this.playerManager.controller.addEventListener('ended', function() {
-		Player.alreadyInit = false;
-		Player.validClose();
-	});
-
-	var textTrackEvent = function(){
-		if(getHtmlStorage("subtitlesDisabled")){
-			Player.playerManager.playerMain.setTextTrack(-1);					
-		}else{
-			Player.playerManager.playerMain.setTextTrack(Media.currentSubtitleIndex);
-		}
-
-		//log("MediaPlayer.events.TEXT_TRACKS_ADDED");
-
-		var yPos = getHtmlStorage("subtitlePositionY");
-		if(yPos !== "undefined"){
-			var top = Math.round(yPos);
-			if(top <= 0){
-				top = 0;
-			}else if(top>= 65){
-				top = 65 / 2;
-			}else{
-				top = top / 2;
-			}
-			$(Player.ttmlDiv).css({top:top + "%"});
-		}
-	};
-	
-	this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, textTrackEvent);
-
-	this.alreadyInit = true;
 };
 
 /**
@@ -420,7 +427,6 @@ Player.setVolume = function(volume){
 	var minFader = 0;
 	var maxFader = 100;
 
-	//const [minValue, maxValue] = M4DPAudioModules.SmartFader.dBRange();
 	var minValue = -60;
 	var maxValue = 8;
 
@@ -519,7 +525,10 @@ Player.resetPlayers = function(){
 
 Player.setPIP = function(){
 		
-	var appearPipControls = function(){
+	var $ctn = $(document.getElementById("pipContainer")),
+		$pipVideo = $(document.getElementById("pipVideo")),
+		appearPipControls = function(){
+		
 		if(Player.pipControlTimeout){
 			clearInterval(Player.pipControlTimeout);
 		}
@@ -535,8 +544,7 @@ Player.setPIP = function(){
 		$pipVideo.css("border-style","solid").children(".ui-icon").show();		
 	};
 	
-	var $ctn = $(document.getElementById("pipContainer"));
-	var $pipVideo = $(document.getElementById("pipVideo")).css("left", (getHtmlStorage("LSFPip_position_x") || Settings.defaultLSPIPCoordonates.x) + "%" )
+	$pipVideo.css("left", (getHtmlStorage("LSFPip_position_x") || Settings.defaultLSPIPCoordonates.x) + "%" )
 		.css("top", (getHtmlStorage("LSFPip_position_y") || Settings.defaultLSPIPCoordonates.y) + "%" )
 		.css("width", (getHtmlStorage("LSFPip_size_width") || Settings.defaultLSPIPCoordonates.w) + "%" )
 		.css("height", (getHtmlStorage("LSFPip_size_height") || Settings.defaultLSPIPCoordonates.h) + "%" )
@@ -831,7 +839,6 @@ Player.onChangeADVolume = function(value){
  */
 
 Player.launchCheckPositionVideo = function(){
-	//log("launchCheckPositionVideo() : start; je vais lancer le stop");
 	this.stopCheckVideoPosition();
 	this.checkPositionVideo = setInterval(function(){
 		InfoBanner.progressBar.update(Player.playerManager.controller.currentTime, Player.playerManager.controller.duration);
@@ -854,7 +861,6 @@ Player.launchCheckPositionVideo = function(){
  */
 
 Player.stopCheckVideoPosition = function(){
-	//log("stopCheckVideoPosition() : start;");
 	clearInterval(this.checkPositionVideo);
 };
 
@@ -896,9 +902,6 @@ Player.ff = function(){
 	var saut = Math.round(totalTimeSecond*(5/100));
 	var currentPosition = this.playerManager.controller.currentTime;
 	var newCurrentPosition = currentPosition + saut;
-	/*if (newCurrentPosition > totalTimeSecond) {
-		newCurrentPosition = totalTimeSecond;
-	}*/
 
 	// check if the new position is seekable
 	this.doSeek(newCurrentPosition);
@@ -917,9 +920,6 @@ Player.doSeek = function(position){
 	var i, l = this.playerManager.controller.seekable.length;
 	for (i=0; i<l; i++) {
 		
-		//log("check range seekable #" + i + " -> "+this.playerManager.controller.seekable.start(i)+", "+this.playerManager.controller.seekable.end(i));
-		//log("check range buffered #" + i + " -> "+this.playerManager.controller.buffered.start(i)+", "+this.playerManager.controller.buffered.end(i));
-		
 		if (this.playerManager.controller.seekable.start(i) <= position && position <= this.playerManager.controller.seekable.end(i)) {
 			this.playerManager.controller.currentTime = position;
 			InfoBanner.launchMaskingAfterDelay();
@@ -936,7 +936,6 @@ Player.doSeek = function(position){
  */
 
 Player.playPause = function() {
-	//log("playPause : ", this.isPlaying);
 
 	if(this.isPlaying) {
 		this.pause();
@@ -1062,8 +1061,6 @@ Player.activeOptionDescription = function(index) {
 
 	}else{
 
-		/*this.videoAudio.controller = null;
-		this.playerManager.playerAudio.reset();*/
 		extendedCommentsASD.active = false;
 
 		Media.audioDescriptionEnabled = false;
