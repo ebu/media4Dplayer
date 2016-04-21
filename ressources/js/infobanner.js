@@ -720,7 +720,6 @@ InfoBanner.progressBar.init = function(){
  */
 
 InfoBanner.progressBar.update = function(time, tT){
-	//log("progressBar.update() start; time = " + time + "; tT = " + tT);
 	time = time * 1000;
 	tT = tT * 1000;
 	var timePercent         = (100 * time) / tT,
