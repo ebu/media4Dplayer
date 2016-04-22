@@ -511,17 +511,18 @@ Settings.init.ls = function(){
  */
 
 Settings.getCurrentCoordonates = function(PIPType){
+	var pipTopPercent;
 	if(PIPType === "ls"){
 		var defaultCoordonates = this.defaultLSPIPCoordonates;
 		var pipLeftPercent = (getHtmlStorage("LSFPip_position_x") && !isNaN(getHtmlStorage("LSFPip_position_x"))) ? getHtmlStorage("LSFPip_position_x") : defaultCoordonates.x;
-		var pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
+		pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
 		var pipWidthReal = getHtmlStorage("LSFPip_size_width") || defaultCoordonates.w;
 		var pipHeightReal = getHtmlStorage("LSFPip_size_height") || defaultCoordonates.h;	
 		
 		return {x: pipLeftPercent, y: pipTopPercent, w: pipWidthReal, h: pipHeightReal};
 		
 	}else if(PIPType === "sub"){
-		var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
+		pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
 		return {y: pipTopPercent};
 		
 	}else{
