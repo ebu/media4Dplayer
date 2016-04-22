@@ -2,6 +2,7 @@ var Settings = {
 	fontSizeRange:[16,24],
 	minOpacity:0,
 	minSubtitlesSize:16,
+	subtitlesSizeRange:[16,24],
 	subtitlesDefaultPosition:71,
 	defaultLSPIPCoordonates: {x:75,y:4.5,w:22.51131221719457,h:40.04024144869215},
 	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Verdana"],
@@ -202,7 +203,9 @@ Settings.init.audio.azimDistance = function($drag){
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Triggered when the user change the position of the azim and distance
- * @param {jQuery Object} $drag The drag element
+ * @param {Object} ui Object containing the position data
+ * @param {HTML Element} item The slider
+ * @param {Object} canvas Object containing the size and position of the slider parent
  */
 
 Settings.onDragAzimDistance = function(ui, item, canvas){
@@ -336,27 +339,20 @@ Settings.init.audio.distance = function($slider, value, type){
 Settings.init.interface.fontSize = function(){
 	var range = Settings.fontSizeRange;
 	var valueMinSize = getHtmlStorage("settings_min_size") || range[0];
-	var $slider;
-	if(Main.simplifiedMode){
+	var $slider = $(document.getElementById(Main.simplifiedMode ? "fontSlide-sm" : "fontSlide"));
 	
-		$slider = $(document.getElementById("fontSlide-sm"));
-		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
+	$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
+	$slider.slider({
+		range: "min",
+		min: range[0],
+		max: range[1],
+		value: valueMinSize,
+		step:0.1,
 
-		$slider.slider({
-			range: "min",
-			min: range[0],
-			max: range[1],
-			value: valueMinSize,
-			step:0.1,
-
-			slide: function(event, ui){
-				Settings.change.fontSize(ui.value, this);
-			}
-		});
-
-	}else{
-		$(document.getElementById("fontSlide")).val(valueMinSize);		
-	}
+		slide: function(event, ui){
+			Settings.change.fontSize(ui.value, this);
+		}
+	});
 	
 	Settings.change.fontSize(valueMinSize, $slider);
 };
@@ -379,13 +375,36 @@ Settings.init.subtitles = function(){
 	
 	/* OPACITE DE L'ARRIERE PLAN DES SOUS-TITRES */
 	var valueMinOpacity = getHtmlStorage("subtitleBackgroundOpacity") || Settings.minOpacity;
-	$(document.getElementById("opacitySlide")).val(valueMinOpacity);
-	Settings.change.subtitlesOpacity(valueMinOpacity);
+	var $opacitySlider = $(document.getElementById("opacitySlide")).slider({
+		range: "min",
+		min: 0,
+		max: 1,
+		value: valueMinOpacity,
+		step:0.25,
+
+		slide: function(event, ui){
+			Settings.change.subtitlesOpacity(ui.value, this);
+		}
+		
+	}).children("a").attr("aria-valuemin", 0).attr("aria-valuemax", 1);
+	Settings.change.subtitlesOpacity(valueMinOpacity, $opacitySlider);
 	
 	/* TAILLE DES SOUS-TITRES */
 	var valueMinSize = getHtmlStorage("subtitleFontSize") || Settings.minSubtitlesSize;
-	$(document.getElementById("subtitlesFontSlide")).val(valueMinSize);
-	Settings.change.subtitlesFontSize(valueMinSize);
+	var subRange = Settings.subtitlesSizeRange;
+	var $subtitlesSizeSlider = $(document.getElementById("subtitlesFontSlide")).slider({
+		range: "min",
+		min: subRange[0],
+		max: subRange[1],
+		value: valueMinSize,
+		step:0.1,
+
+		slide: function(event, ui){
+			Settings.change.subtitlesFontSize(ui.value, this);
+		}
+		
+	}).children("a").attr("aria-valuemin", subRange[0]).attr("aria-valuemax", subRange[1]);	
+	Settings.change.subtitlesFontSize(valueMinSize, $subtitlesSizeSlider);
 	
 	/* POSITION DES SOUS-TITRES */
 	this.subtitles.pip();
@@ -595,22 +614,26 @@ Settings.change.subtitlesColor = function(color){
  * @author Johny EUGENE (DOTSCREEN)
  * @description Changes the subtitle opacity
  * @param {Integer} newValue The new opacity
+ * @param {jQuery Object} el The slider element
  */
 
-Settings.change.subtitlesOpacity = function(newValue){
+Settings.change.subtitlesOpacity = function(newValue, el){
 	setHtmlStorage("subtitleBackgroundOpacity", newValue);
 	$(".ui-subtitles .pip-text").removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1").addClass("opacity_"+newValue.toString().replace(".",""));
+	$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue);
 };
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Changes the subtitle font size
  * @param {Integer} newValue The new font size
+ * @param {jQuery Object} el The slider element
  */
 
-Settings.change.subtitlesFontSize = function(newValue){
+Settings.change.subtitlesFontSize = function(newValue, el){
 	setHtmlStorage("subtitleFontSize", newValue);
 	$(".ui-subtitles .pip-text").css("font-size", newValue+"px");
+	$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue + " pixel");
 };
 
 /**

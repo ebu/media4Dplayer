@@ -256,7 +256,7 @@ h2{font-size:1.6em;font-weight:600}
 .max-value{text-align:right}
 .slider-horizontal{height:100%}
 .slider-horizontal.font-size{width:84%}
-.slider-horizontal input{height:100%;margin:0}
+.slider-horizontal .ui-slider a{margin-left: -6px;}
 .sm .slider-horizontal{width: 70%;}
 .sm .min-value, .sm .max-value{width: 15%;}
 
