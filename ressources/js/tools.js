@@ -595,4 +595,17 @@ function checkMediaControllerSupport() {
     } else {
         return "partially supported";
     }
-}
+}	
+
+var getDistance = function(d, rangePx, rangeMeter){
+	var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
+	return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
+};			
+
+var distance = function(dot1, dot2){
+	var x1 = dot1[0],
+		y1 = dot1[1],
+		x2 = dot2[0],
+		y2 = dot2[1];
+	return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+};
