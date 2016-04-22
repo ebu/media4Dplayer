@@ -335,17 +335,17 @@ InfoBanner.playerParams.options.show = function(type, button){
 			}
 			return "";
 		};
+		var _onclick = function(){
+			InfoBanner.playerParams.options.onClick(this, type);
+		};
 		
 		var tabIndex = button.tabIndex + 1;
 		var i, l = inputsArray.length, $bt;
 		for (i = 0; i < l; i++) {
-			$bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton btn selectable-by-chromevox" tabindex="'+tabIndex+'" aria-labelledby="label-option-'+i+'">'+inputsArray[i]+'<span id="label-option-'+i+'" aria-hidden="true" class="hidden">'+getLabel(type, inputsArray[i])+'</span></div>').appendTo($ctn);
-			$bt.data("index", i);
-			(function(bt, optionID){
-				bt.on("click", function(){
-					InfoBanner.playerParams.options.onClick(bt, optionID);
-				});
-			})($bt, type);
+			$bt = $('<div id="option_'+i+'" class="optionDropDownMenuButton btn selectable-by-chromevox" tabindex="'+tabIndex+'" aria-labelledby="label-option-'+i+'">'+inputsArray[i]+'<span id="label-option-'+i+'" aria-hidden="true" class="hidden">'+getLabel(type, inputsArray[i])+'</span></div>')
+				.appendTo($ctn)
+				.data("index", i)
+				.on("click", _onclick);
 			
 			if(type === "subtitle" && inputsArray[i] !== "Aucun"){
 				$bt.append('<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
@@ -353,25 +353,7 @@ InfoBanner.playerParams.options.show = function(type, button){
 			tabIndex++;
 		}
 		
-		var setSel = function($el){
-			$el.css("color", "orange");
-		};
-		
-		if(type === "audio" && Media.audioEnabled){
-			setSel($ctn.children(":eq("+Media.currentAudioIndex+")"));
-		
-		}else if(type === "subtitle" && Media.subtitleEnabled){
-			setSel($ctn.children(":eq("+Media.currentSubtitleIndex+")"));
-			
-		}else if(type === "ad" && Media.audioDescriptionEnabled){
-			setSel($ctn.children(":eq("+Media.currentAudioDescriptionIndex+")"));
-			
-		}else if(type === "ls" && Media.LSFEnabled){
-			setSel($ctn.children(":eq("+Media.currentLSFIndex+")"));
-			
-		}else{
-			setSel($ctn.children(":last"));
-		}
+		this.select(type, $ctn);
 		
 		if(Main.simplifiedMode){
 			Navigation.moveSelecteur($ctn.children(":first-child"));
@@ -410,6 +392,34 @@ InfoBanner.playerParams.options.onClick = function(bt, optionID){
 		}
 		
 		InfoBanner.playerParams.initLabels();	
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Executes the hiding the info banner
+ */
+
+InfoBanner.playerParams.options.select = function(type, $ctn){
+		
+	var setSel = function($el){
+		$el.css("color", "orange");
+	};
+	
+	if(type === "audio" && Media.audioEnabled){
+		setSel($ctn.children(":eq("+Media.currentAudioIndex+")"));
+
+	}else if(type === "subtitle" && Media.subtitleEnabled){
+		setSel($ctn.children(":eq("+Media.currentSubtitleIndex+")"));
+
+	}else if(type === "ad" && Media.audioDescriptionEnabled){
+		setSel($ctn.children(":eq("+Media.currentAudioDescriptionIndex+")"));
+
+	}else if(type === "ls" && Media.LSFEnabled){
+		setSel($ctn.children(":eq("+Media.currentLSFIndex+")"));
+
+	}else{
+		setSel($ctn.children(":last"));
 	}
 };
 
@@ -468,7 +478,8 @@ InfoBanner.playerParams.options.getOptionsArrayForOption = function(optionID) {
  */
 
 InfoBanner.playerParams.options.getOptionsDropDownMenuHeight = function(inputsArray) {
-	return inputsArray.length * (50 + 1); // +1 for border 
+	// +1 for border 
+	return inputsArray.length * (50 + 1);
 };
 
 /**
@@ -709,7 +720,6 @@ InfoBanner.progressBar.init = function(){
  */
 
 InfoBanner.progressBar.update = function(time, tT){
-	//log("progressBar.update() start; time = " + time + "; tT = " + tT);
 	time = time * 1000;
 	tT = tT * 1000;
 	var timePercent         = (100 * time) / tT,

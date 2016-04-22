@@ -97,7 +97,7 @@ h2{font-size:1.6em;font-weight:600}
 .item-playlist{border-color:rgba(0,0,0,0.2);border-style:solid;border-width:0 1px 1px;height:85px;line-height:85px}
 .item-playlist:first-child{border-top-width:1px}
 .item-playlist > div, .item-playlist .thumb{float:left;height:100%}
-.item-playlist .thumb{width: 151px;}
+.item-playlist .thumb{width: 151px;line-height: 20px;}
 .item-playlist .delete{width:77px;text-align:center}
 .item-playlist .delete-icon{display:inline-block;vertical-align:middle}
 .item-playlist .item-infos{margin-left:2.5%;width:65%}

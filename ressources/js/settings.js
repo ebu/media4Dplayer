@@ -163,11 +163,7 @@ Settings.init.audio.elevationLevel = function($slider, lvl, type){
 Settings.init.audio.azimDistance = function($drag){
 	if($($drag).length){
 
-		var minDistance = Settings.minDistance;		
-		var getDistance = function(d, rangePx, rangeMeter){
-			var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
-			return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
-		};
+		var minDistance = Settings.minDistance;
 		var canvas = {
 			width: $drag.parent().width(),
 			height: $drag.parent().height(),
@@ -176,68 +172,6 @@ Settings.init.audio.azimDistance = function($drag){
 		};
 		canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
 		canvas.radius = canvas.width / 2;
-				
-		var _onDrag = function(e, ui){
-			
-			var type = $(this).data("type");
-			if(["commentary", "dialogues"].indexOf(type) !== -1){				
-
-				var distance = function(dot1, dot2){
-					var x1 = dot1[0],
-						y1 = dot1[1],
-						x2 = dot2[0],
-						y2 = dot2[1];
-					return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-				};
-				
-				var limit = function(x, y){
-					var dist = distance([x, y], canvas.center);
-					if (dist <= canvas.radius && dist >= minDistance) {
-						return {x: x, y: y};
-
-					}else{
-						var radius = dist <= minDistance ? minDistance : canvas.radius;
-						x = x - canvas.center[0];
-						y = y - canvas.center[1];
-						var radians = Math.atan2(y, x);
-						return {
-							x: Math.cos(radians) * radius + canvas.center[0],
-							y: Math.sin(radians) * radius + canvas.center[1]
-						};		
-					}
-				};
-
-				var result = limit(ui.position.left, ui.position.top);			
-				ui.position.left = result.x;
-				ui.position.top = result.y;
-
-				// Récupère la distance
-				var dist = distance([result.x, result.y], canvas.center);
-				var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
-				var distanceMeter = getDistance(dist2, [minDistance, canvas.radius], Player.distanceRange);
-				Settings.change.audioDistance(distanceMeter, this);
-				//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
-
-				// Récupère l'angle
-				var getAzim = function(sinus, angle){
-					if(sinus <= 0){
-						return  0 - angle;
-					}else{
-						return angle;
-					}
-				};
-				
-				var cosinus = -(ui.position.top - canvas.center[1]) / dist;
-				var sinus = (ui.position.left - canvas.center[0]) / dist;
-
-				var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
-				var azim = Math.round(getAzim(sinus, angle1));
-				Settings.change.audioAzim(azim, this);
-				//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
-
-				log(type + " > distance = "+distanceMeter+"m; azim = " + azim + "°");				
-			}
-		};
 
 		var azim, dist, type = $drag.data("type");
 		if(type === "commentary"){
@@ -258,8 +192,73 @@ Settings.init.audio.azimDistance = function($drag){
 		
 		$drag.css({top:top,left:left}).draggable({
 			scroll:false,
-			drag: _onDrag
+			drag: function(e, ui){
+				Settings.onDragAzimDistance(ui, this, canvas);
+			}
 		});
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Triggered when the user change the position of the azim and distance
+ * @param {jQuery Object} $drag The drag element
+ */
+
+Settings.onDragAzimDistance = function(ui, item, canvas){
+	if(typeOf(ui) === "object" && typeOf(canvas) === "object"){
+		
+		var minDistance = Settings.minDistance,
+			type = $(item).data("type");
+		if(["commentary", "dialogues"].indexOf(type) !== -1){	
+
+			var limit = function(x, y){
+				var dist = distance([x, y], canvas.center);
+				if (dist <= canvas.radius && dist >= minDistance) {
+					return {x: x, y: y};
+
+				}else{
+					var radius = dist <= minDistance ? minDistance : canvas.radius;
+					x = x - canvas.center[0];
+					y = y - canvas.center[1];
+					var radians = Math.atan2(y, x);
+					return {
+						x: Math.cos(radians) * radius + canvas.center[0],
+						y: Math.sin(radians) * radius + canvas.center[1]
+					};		
+				}
+			};
+
+			var result = limit(ui.position.left, ui.position.top);			
+			ui.position.left = result.x;
+			ui.position.top = result.y;
+
+			// Récupère la distance
+			var dist = distance([result.x, result.y], canvas.center);
+			var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
+			var distanceMeter = getDistance(dist2, [minDistance, canvas.radius], Player.distanceRange);
+			Settings.change.audioDistance(distanceMeter, item);
+			//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
+
+			// Récupère l'angle
+			var getAzim = function(sinus, angle){
+				if(sinus <= 0){
+					return  0 - angle;
+				}else{
+					return angle;
+				}
+			};
+
+			var cosinus = -(ui.position.top - canvas.center[1]) / dist;
+			var sinus = (ui.position.left - canvas.center[0]) / dist;
+
+			var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
+			var azim = Math.round(getAzim(sinus, angle1));
+			Settings.change.audioAzim(azim, item);
+			//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
+
+			log(type + " > distance = "+distanceMeter+"m; azim = " + azim + "°");				
+		}
 	}
 };
 
@@ -512,17 +511,18 @@ Settings.init.ls = function(){
  */
 
 Settings.getCurrentCoordonates = function(PIPType){
+	var pipTopPercent;
 	if(PIPType === "ls"){
 		var defaultCoordonates = this.defaultLSPIPCoordonates;
 		var pipLeftPercent = (getHtmlStorage("LSFPip_position_x") && !isNaN(getHtmlStorage("LSFPip_position_x"))) ? getHtmlStorage("LSFPip_position_x") : defaultCoordonates.x;
-		var pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
+		pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
 		var pipWidthReal = getHtmlStorage("LSFPip_size_width") || defaultCoordonates.w;
 		var pipHeightReal = getHtmlStorage("LSFPip_size_height") || defaultCoordonates.h;	
 		
 		return {x: pipLeftPercent, y: pipTopPercent, w: pipWidthReal, h: pipHeightReal};
 		
 	}else if(PIPType === "sub"){
-		var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
+		pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
 		return {y: pipTopPercent};
 		
 	}else{
