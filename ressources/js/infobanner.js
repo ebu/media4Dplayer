@@ -124,7 +124,7 @@ InfoBanner.launchMaskingAfterDelay = function(){
 	this.suspendMaskingAfterDelay();
 	this.timeoutHideBanner = setTimeout(function(){
 		InfoBanner.executeMaskingAfterDelay();
-	}, Config.infoBannerDelayToHide * 1000);
+	}, (Main.simplifiedMode ? Config.infoBannerDelayToHideInSimplifiedMode : Config.infoBannerDelayToHide) * 1000);
 };
 
 /**
