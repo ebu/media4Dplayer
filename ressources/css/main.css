@@ -22,8 +22,8 @@ main > div{font-size:1em}
 #sections-container section, #simplified-mode-container section{height:100%;width:100%;display:none}
 #simplified-mode-container, #profils-list-container{display:none;box-sizing:border-box;padding-top:80px;font-size:1em}
 #simplified-mode-container a:hover, .back-button:hover, .switch-btn:hover{cursor:pointer;font-weight:600}
-.manual-centering ul, .manual-centering > a{margin-left:592px}
-.manual-centering ul{margin-top:120px}
+.manual-centering .list-container, .manual-centering > a{margin-left:592px}
+.manual-centering .list-container{margin-top:120px}
 .menu-item,.sm .buttons-container a, .back-button,.user:hover a{font-weight:400}
 .sm.epg-fiche .manual-centering > a.back{position:absolute;bottom:75px}
 .sm .back,.sm .home,.sm .back-to-home-button, #logout-btn-sm,.sm .back-button{color:rgba(0,0,0,0.5)}
