@@ -2,6 +2,7 @@ var Settings = {
 	fontSizeRange:[16,24],
 	minOpacity:0,
 	minSubtitlesSize:16,
+	subtitlesSizeRange:[16,24],
 	subtitlesDefaultPosition:71,
 	defaultLSPIPCoordonates: {x:75,y:4.5,w:22.51131221719457,h:40.04024144869215},
 	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Verdana"],
@@ -163,11 +164,7 @@ Settings.init.audio.elevationLevel = function($slider, lvl, type){
 Settings.init.audio.azimDistance = function($drag){
 	if($($drag).length){
 
-		var minDistance = Settings.minDistance;		
-		function getDistance(d, rangePx, rangeMeter){
-			var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
-			return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
-		}
+		var minDistance = Settings.minDistance;
 		var canvas = {
 			width: $drag.parent().width(),
 			height: $drag.parent().height(),
@@ -176,68 +173,6 @@ Settings.init.audio.azimDistance = function($drag){
 		};
 		canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
 		canvas.radius = canvas.width / 2;
-				
-		var _onDrag = function(e, ui){
-			
-			var type = $(this).data("type");
-			if(["commentary", "dialogues"].indexOf(type) !== -1){				
-
-				function limit(x, y){
-					var dist = distance([x, y], canvas.center);
-					if (dist <= canvas.radius && dist >= minDistance) {
-						return {x: x, y: y};
-
-					}else{
-						var radius = dist <= minDistance ? minDistance : canvas.radius;
-						x = x - canvas.center[0];
-						y = y - canvas.center[1];
-						var radians = Math.atan2(y, x);
-						return {
-							x: Math.cos(radians) * radius + canvas.center[0],
-							y: Math.sin(radians) * radius + canvas.center[1]
-						};		
-					}
-				}
-
-				function distance(dot1, dot2){
-					var x1 = dot1[0],
-						y1 = dot1[1],
-						x2 = dot2[0],
-						y2 = dot2[1];
-					return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-				}
-
-				var result = limit(ui.position.left, ui.position.top);			
-				ui.position.left = result.x;
-				ui.position.top = result.y;
-
-				// Récupère la distance
-				var dist = distance([result.x, result.y], canvas.center);
-				var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
-				var distanceMeter = getDistance(dist2, [minDistance, canvas.radius], Player.distanceRange);
-				Settings.change.audioDistance(distanceMeter, this);
-				//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
-
-				// Récupère l'angle
-				function getAzim(sinus, angle){
-					if(sinus <= 0){
-						return  0 - angle;
-					}else{
-						return angle;
-					}
-				}
-				
-				var cosinus = -(ui.position.top - canvas.center[1]) / dist;
-				var sinus = (ui.position.left - canvas.center[0]) / dist;
-
-				var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
-				var azim = Math.round(getAzim(sinus, angle1));
-				Settings.change.audioAzim(azim, this);
-				//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
-
-				log(type + " > distance = "+distanceMeter+"m; azim = " + azim + "°");				
-			}
-		};
 
 		var azim, dist, type = $drag.data("type");
 		if(type === "commentary"){
@@ -258,8 +193,75 @@ Settings.init.audio.azimDistance = function($drag){
 		
 		$drag.css({top:top,left:left}).draggable({
 			scroll:false,
-			drag: _onDrag
+			drag: function(e, ui){
+				Settings.onDragAzimDistance(ui, this, canvas);
+			}
 		});
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Triggered when the user change the position of the azim and distance
+ * @param {Object} ui Object containing the position data
+ * @param {HTML Element} item The slider
+ * @param {Object} canvas Object containing the size and position of the slider parent
+ */
+
+Settings.onDragAzimDistance = function(ui, item, canvas){
+	if(typeOf(ui) === "object" && typeOf(canvas) === "object"){
+		
+		var minDistance = Settings.minDistance,
+			type = $(item).data("type");
+		if(["commentary", "dialogues"].indexOf(type) !== -1){	
+
+			var limit = function(x, y){
+				var dist = distance([x, y], canvas.center);
+				if (dist <= canvas.radius && dist >= minDistance) {
+					return {x: x, y: y};
+
+				}else{
+					var radius = dist <= minDistance ? minDistance : canvas.radius;
+					x = x - canvas.center[0];
+					y = y - canvas.center[1];
+					var radians = Math.atan2(y, x);
+					return {
+						x: Math.cos(radians) * radius + canvas.center[0],
+						y: Math.sin(radians) * radius + canvas.center[1]
+					};		
+				}
+			};
+
+			var result = limit(ui.position.left, ui.position.top);			
+			ui.position.left = result.x;
+			ui.position.top = result.y;
+
+			// Récupère la distance
+			var dist = distance([result.x, result.y], canvas.center);
+			var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
+			var distanceMeter = getDistance(dist2, [minDistance, canvas.radius], Player.distanceRange);
+			Settings.change.audioDistance(distanceMeter, item);
+			//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
+
+			// Récupère l'angle
+			var getAzim = function(sinus, angle){
+				if(sinus <= 0){
+					return  0 - angle;
+				}else{
+					return angle;
+				}
+			};
+
+			var cosinus = -(ui.position.top - canvas.center[1]) / dist;
+			var sinus = (ui.position.left - canvas.center[0]) / dist;
+
+			var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
+			var azim = Math.round(getAzim(sinus, angle1));
+			Settings.change.audioAzim(azim, item);
+			//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
+
+			log(type + " > distance = "+distanceMeter+"m; azim = " + azim + "°");				
+		}
 	}
 };
 
@@ -337,27 +339,20 @@ Settings.init.audio.distance = function($slider, value, type){
 Settings.init.interface.fontSize = function(){
 	var range = Settings.fontSizeRange;
 	var valueMinSize = getHtmlStorage("settings_min_size") || range[0];
-	var $slider;
-	if(Main.simplifiedMode){
+	var $slider = $(document.getElementById(Main.simplifiedMode ? "fontSlide-sm" : "fontSlide"));
 	
-		$slider = $(document.getElementById("fontSlide-sm"));
-		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
+	$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
+	$slider.slider({
+		range: "min",
+		min: range[0],
+		max: range[1],
+		value: valueMinSize,
+		step:0.1,
 
-		$slider.slider({
-			range: "min",
-			min: range[0],
-			max: range[1],
-			value: valueMinSize,
-			step:0.1,
-
-			slide: function(event, ui){
-				Settings.change.fontSize(ui.value, this);
-			}
-		});
-
-	}else{
-		$(document.getElementById("fontSlide")).val(valueMinSize);		
-	}
+		slide: function(event, ui){
+			Settings.change.fontSize(ui.value, this);
+		}
+	});
 	
 	Settings.change.fontSize(valueMinSize, $slider);
 };
@@ -380,13 +375,36 @@ Settings.init.subtitles = function(){
 	
 	/* OPACITE DE L'ARRIERE PLAN DES SOUS-TITRES */
 	var valueMinOpacity = getHtmlStorage("subtitleBackgroundOpacity") || Settings.minOpacity;
-	$(document.getElementById("opacitySlide")).val(valueMinOpacity);
-	Settings.change.subtitlesOpacity(valueMinOpacity);
+	var $opacitySlider = $(document.getElementById("opacitySlide")).slider({
+		range: "min",
+		min: 0,
+		max: 1,
+		value: valueMinOpacity,
+		step:0.25,
+
+		slide: function(event, ui){
+			Settings.change.subtitlesOpacity(ui.value, this);
+		}
+		
+	}).children("a").attr("aria-valuemin", 0).attr("aria-valuemax", 1);
+	Settings.change.subtitlesOpacity(valueMinOpacity, $opacitySlider);
 	
 	/* TAILLE DES SOUS-TITRES */
 	var valueMinSize = getHtmlStorage("subtitleFontSize") || Settings.minSubtitlesSize;
-	$(document.getElementById("subtitlesFontSlide")).val(valueMinSize);
-	Settings.change.subtitlesFontSize(valueMinSize);
+	var subRange = Settings.subtitlesSizeRange;
+	var $subtitlesSizeSlider = $(document.getElementById("subtitlesFontSlide")).slider({
+		range: "min",
+		min: subRange[0],
+		max: subRange[1],
+		value: valueMinSize,
+		step:0.1,
+
+		slide: function(event, ui){
+			Settings.change.subtitlesFontSize(ui.value, this);
+		}
+		
+	}).children("a").attr("aria-valuemin", subRange[0]).attr("aria-valuemax", subRange[1]);	
+	Settings.change.subtitlesFontSize(valueMinSize, $subtitlesSizeSlider);
 	
 	/* POSITION DES SOUS-TITRES */
 	this.subtitles.pip();
@@ -506,23 +524,28 @@ Settings.init.ls = function(){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
- * @description Gets the current value of a PIP position
+ * @description Gets the coordonates of a PIP
  * @param {String} PIPType The PIP type (ls/sub)
+ * @return {Object} The PIP coordonates
  */
 
 Settings.getCurrentCoordonates = function(PIPType){
+	var pipTopPercent;
 	if(PIPType === "ls"){
 		var defaultCoordonates = this.defaultLSPIPCoordonates;
 		var pipLeftPercent = (getHtmlStorage("LSFPip_position_x") && !isNaN(getHtmlStorage("LSFPip_position_x"))) ? getHtmlStorage("LSFPip_position_x") : defaultCoordonates.x;
-		var pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
+		pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
 		var pipWidthReal = getHtmlStorage("LSFPip_size_width") || defaultCoordonates.w;
 		var pipHeightReal = getHtmlStorage("LSFPip_size_height") || defaultCoordonates.h;	
 		
 		return {x: pipLeftPercent, y: pipTopPercent, w: pipWidthReal, h: pipHeightReal};
 		
 	}else if(PIPType === "sub"){
-		var pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
+		pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
 		return {y: pipTopPercent};
+		
+	}else{
+		return {};
 	}
 };
 
@@ -591,22 +614,26 @@ Settings.change.subtitlesColor = function(color){
  * @author Johny EUGENE (DOTSCREEN)
  * @description Changes the subtitle opacity
  * @param {Integer} newValue The new opacity
+ * @param {jQuery Object} el The slider element
  */
 
-Settings.change.subtitlesOpacity = function(newValue){
+Settings.change.subtitlesOpacity = function(newValue, el){
 	setHtmlStorage("subtitleBackgroundOpacity", newValue);
 	$(".ui-subtitles .pip-text").removeClass("opacity_0 opacity_025 opacity_05 opacity_075 opacity_1").addClass("opacity_"+newValue.toString().replace(".",""));
+	$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue);
 };
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Changes the subtitle font size
  * @param {Integer} newValue The new font size
+ * @param {jQuery Object} el The slider element
  */
 
-Settings.change.subtitlesFontSize = function(newValue){
+Settings.change.subtitlesFontSize = function(newValue, el){
 	setHtmlStorage("subtitleFontSize", newValue);
 	$(".ui-subtitles .pip-text").css("font-size", newValue+"px");
+	$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue + " pixel");
 };
 
 /**

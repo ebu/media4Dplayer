@@ -1,7 +1,8 @@
 var isHTML5 = isHTML5 || false;
 var Main = {
 	splashscreenIsVisible:true,
-	simplifiedMode:false
+	simplifiedMode:false,
+	MCSupport:false
 };
 
 Main.onLoad = function () {
@@ -14,6 +15,7 @@ Main.onLoad = function () {
 		$errorMCSupport.show();
 	}else{
 		$errorMCSupport.hide();
+		Main.MCSupport = true;
 	}
 	
 	Main.simplifiedMode = getHtmlStorage("simplifiedMode") === "true" ? true : false;

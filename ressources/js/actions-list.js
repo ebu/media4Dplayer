@@ -103,7 +103,7 @@ $(document.getElementById('playerUI')).on('click', function(e){
 			InfoBanner.hide();
 		}
 	}else if($(e.target.id).hasClass(".video-option")){
-		InfoBanner.showOptionPopup($(e.target.id), this);
+		InfoBanner.playerParams.options.show($(e.target.id), this);
 	}else{
 		//log("id="+e.target.id);
 	}
@@ -115,7 +115,7 @@ $(document.getElementById('playerUI')).on('click', function(e){
 $("body").on("keydown", function(e){
 	if(["enter","tab"].indexOf(e.key.toLowerCase()) !== -1 && $(this).hasClass("player") && !$(document.getElementById("playerBottomBanner")).is(":visible")){
 		InfoBanner.show();
-		InfoBanner.hideOptionDropDownMenu();
+		InfoBanner.playerParams.options.hide();
 		Navigation.moveSelecteur(document.getElementById("playerClose"));
 	}
 });
@@ -234,48 +234,46 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 			return false;
 		}
 		
-	}else if(["arrowup","arrowdown","arrowleft","arrowright"].indexOf(eventName) !== -1){
-		if($(this).hasClass("pip-video") && !$(this).data("animation-started")){
-			var pip = this;
-			var _move = function(position){
-				$(pip).data("animation-started", true).clearQueue().finish().animate(position, 250, function(){
-					$(pip).data("animation-started", false);
-					log("animation done !!!");
-				});
-			};
-			
-			var $parent = $(this).parent();
-			var pipType = $parent.hasClass("ui-subtitles") ? "sub" : "ls";
-			var value, moveValue = 5, padding = parseFloat($parent.css("padding").replace("px",""));
-			if(eventName === "arrowup") {
-				value = (this.offsetTop - moveValue > padding) ? '-='+moveValue : 0;
-				_move({top:value});
-				
-			}else if(eventName === "arrowdown"){
-				value = (this.offsetTop + this.offsetHeight + moveValue - padding <= $parent.height()) ? '+='+moveValue : $parent.height() - this.offsetHeight;
-				_move({top:value});
-				
-			}else if(eventName === "arrowleft") {
-				value = (this.offsetLeft - moveValue > padding) ? '-='+moveValue : 0;
-				_move({left:value});	
-				
-			}else if(eventName === "arrowright"){
-				value = (this.offsetLeft + this.offsetWidth + moveValue - padding <= $parent.width()) ? '+='+moveValue : $parent.width() - this.offsetWidth;
-				_move({left:value});
-				
-			}
-			
-			var $parentDraggable = $( this ).draggable( "option", "containment" );
-			if(pipType === "ls"){
-				Settings.saveLSPIPSize($parentDraggable, $(this));
-				Settings.saveLSPIPPosition($parentDraggable, $(this));
-				
-			}else if(pipType === "sub"){
-				Settings.saveSubtitlesPIPPosition($parentDraggable);
-			}
-			
-			Settings.updateARIAPropertiesForPIP($(this), pipType);
+	}else if(["arrowup","arrowdown","arrowleft","arrowright"].indexOf(eventName) !== -1 && $(this).hasClass("pip-video") && !$(this).data("animation-started")){
+		var pip = this;
+		var _move = function(position){
+			$(pip).data("animation-started", true).clearQueue().finish().animate(position, 250, function(){
+				$(pip).data("animation-started", false);
+				log("animation done !!!");
+			});
+		};
+
+		var $parent = $(this).parent();
+		var pipType = $parent.hasClass("ui-subtitles") ? "sub" : "ls";
+		var value, moveValue = 5, padding = parseFloat($parent.css("padding").replace("px",""));
+		if(eventName === "arrowup") {
+			value = (this.offsetTop - moveValue > padding) ? '-='+moveValue : 0;
+			_move({top:value});
+
+		}else if(eventName === "arrowdown"){
+			value = (this.offsetTop + this.offsetHeight + moveValue - padding <= $parent.height()) ? '+='+moveValue : $parent.height() - this.offsetHeight;
+			_move({top:value});
+
+		}else if(eventName === "arrowleft") {
+			value = (this.offsetLeft - moveValue > padding) ? '-='+moveValue : 0;
+			_move({left:value});	
+
+		}else if(eventName === "arrowright"){
+			value = (this.offsetLeft + this.offsetWidth + moveValue - padding <= $parent.width()) ? '+='+moveValue : $parent.width() - this.offsetWidth;
+			_move({left:value});
+
 		}
+
+		var $parentDraggable = $( this ).draggable( "option", "containment" );
+		if(pipType === "ls"){
+			Settings.saveLSPIPSize($parentDraggable, $(this));
+			Settings.saveLSPIPPosition($parentDraggable, $(this));
+
+		}else if(pipType === "sub"){
+			Settings.saveSubtitlesPIPPosition($parentDraggable);
+		}
+
+		Settings.updateARIAPropertiesForPIP($(this), pipType);
 	}
 	
 }).on("click", ".selectable-by-chromevox:not(.final-option)", function(){

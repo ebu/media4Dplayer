@@ -10,7 +10,6 @@
 		<link href='https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,800' rel='stylesheet' type='text/css'/>
 		<link type="text/css" rel="stylesheet" href="ressources/css/reset.css"/>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
-		<link type="text/css" rel="stylesheet" href="ressources/css/inputRangeSettings.css"/>
 		<link type="text/css" rel="stylesheet" href="ressources/css/main.css"/>
 	</head>
 	<body class="splashscreen">
@@ -119,7 +118,9 @@
 									<div class="option-font-size option-slider">
 										<div class="min-font-size min-value">A</div>
 										<div class="slider-horizontal font-size">
-											<input id="fontSlide" min="16" max="24" value="16" step="0.1" onchange="Settings.change.fontSize(this.value)" type="range"/>
+											<div id="fontSlide" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+												<a class="ui-slider-handle ui-state-default ui-corner-all" title="Contrôle de la taille de la police" role="slider"></a>
+											</div>
 										</div>
 										<div class="max-font-size max-value">A</div>									
 									</div>
@@ -194,7 +195,9 @@
 										<div class="label">Régler l'opacité de son arrière plan</div>
 										<div class="option-background-opacity option-slider">
 											<div class="transparent-opacity" title="Arrière plan transparent"></div><div class="slider-horizontal opacity">
-												<input id="opacitySlide" min="0" max="1" value="0" step="0.25" onchange="Settings.change.subtitlesOpacity(this.value)" type="range"/>
+												<div id="opacitySlide" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+													<a class="ui-slider-handle ui-state-default ui-corner-all" title="Contrôle de l'opacité de l'arrière plan" role="slider"></a>
+												</div>
 											</div>
 											<div class="darkest-opacity" title="Arrière plan plus sombre"></div>							
 										</div>
@@ -212,11 +215,13 @@
 										</div>					
 									</div>	
 									<div id="option-subtitles-font-size" class="option-container">
-										<div class="label">Régler la taille de ses sous-titres</div>
+										<div class="label">Régler la taille des sous-titres</div>
 										<div class="option-font-size option-slider">
 											<div class="min-font-size min-value">A</div>
 											<div class="slider-horizontal font-size">
-												<input id="subtitlesFontSlide" min="16" max="24" value="16" step="1" onchange="Settings.change.subtitlesFontSize(this.value)" type="range"/>
+												<div id="subtitlesFontSlide" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+													<a class="ui-slider-handle ui-state-default ui-corner-all" title="Contrôle de la taille des sous-titres" role="slider"></a>
+												</div>
 											</div>
 											<div class="max-font-size max-value">A</div>
 										</div>
@@ -596,22 +601,22 @@
 					</div>
 					<div id="playerBottomBanner">
 					<div id="playerOptions">
-						<div id="playerOptionAudio" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-audio" onclick="InfoBanner.showOptionPopup('audio', this);" tabindex="2">
+						<div id="playerOptionAudio" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-audio" onclick="InfoBanner.playerParams.options.show('audio', this);" tabindex="2">
 							<span id="label-option-audio" aria-hidden="true" class="hidden"></span>
 							<div id="iconeLA" class="compatibility audio" title="Audio"></div>
 							<div id="playerOptionAudioCurrentValue" class="playerOptionValue"></div>							
 						</div>
-						<div id="playerOptionSub" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-subtitle" onclick="InfoBanner.showOptionPopup('subtitle', this);" tabindex="13">
+						<div id="playerOptionSub" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-subtitle" onclick="InfoBanner.playerParams.options.show('subtitle', this);" tabindex="13">
 							<span id="label-option-subtitle" aria-hidden="true" class="hidden"></span>
 							<div id="iconeST" class="compatibility subtitle" title="Sous-titre"></div>
 							<div id="playerOptionSubCurrentValue" class="playerOptionValue"></div>
 						</div>
-						<div id="playerOptionDescription" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ad" onclick="InfoBanner.showOptionPopup('ad', this);" tabindex="24">
+						<div id="playerOptionDescription" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ad" onclick="InfoBanner.playerParams.options.show('ad', this);" tabindex="24">
 							<span id="label-option-ad" aria-hidden="true" class="hidden"></span>
 							<div id="iconeAD" class="compatibility ad" title="Audio description"></div>
 							<div id="playerOptionDescriptionCurrentValue" class="playerOptionValue"></div>							
 						</div>
-						<div id="playerOptionSigne" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ls" onclick="InfoBanner.showOptionPopup('ls', this);" tabindex="35">
+						<div id="playerOptionSigne" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ls" onclick="InfoBanner.playerParams.options.show('ls', this);" tabindex="35">
 							<span id="label-option-ls" aria-hidden="true" class="hidden"></span>
 							<div id="iconeLSF" class="compatibility ls" title="Langue des signes"></div>
 							<div id="playerOptionSigneCurrentValue" class="playerOptionValue"></div>							
@@ -635,7 +640,7 @@
 						</div>
 						<div id="playerControlTrickMode">
 							<div id="playerControlRW" class="btn selectable-by-chromevox final-option" onclick="Player.rw();" tabindex="50" title="Bouton retour rapide"></div>
-							<div id="playerControlPlayPause" class="btn selectable-by-chromevox final-option" onclick="Player.playPause();" tabindex="51" title="Bouton lecture | pause"></div>
+							<div id="playerControlPlayPause" class="btn selectable-by-chromevox final-option" onclick="Player.playPause();" tabindex="51"></div>
 							<div id="playerControlFF" class="btn selectable-by-chromevox final-option" onclick="Player.ff();" tabindex="52" title="Bouton avance rapide"></div>
 						</div>
 						<div id="playerControlADVolume" class="volume-control-ctn">
