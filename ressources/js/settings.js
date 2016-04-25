@@ -94,7 +94,7 @@ Settings.init.audio = function(){
 Settings.init.audio.spatialisationMode = function(){
 	var spatMode = getHtmlStorage("spatializationMode") || Player.spatializationMode,
 		binauralEQ = getHtmlStorage("binauralEQ") || Player.binauralEQ,
-		val = spatMode === Player.spatializationModes[0] && binauralEQ ? "binaural-EQ" : spatMode;
+		val = spatMode === Player.spatializationModes[0] && binauralEQ === "true" ? "binaural-EQ" : spatMode;
 	
 	Settings.change.audioSpatialisationMode(val);
 	
