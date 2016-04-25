@@ -381,6 +381,120 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
          */
 
     }, {
+        key: "isChannelForExtendedDialog",
+
+
+        //==============================================================================
+        /**
+         * Returns true if this channel index corresponds to the extended dialog
+         *      
+         */
+        value: function isChannelForExtendedDialog(channelIndex) {
+
+            if (channelIndex < 0 || channelIndex >= this.totalNumberOfChannels) {
+                throw new Error("Invalid channel index : " + channelIndex);
+            }
+
+            var index = 0;
+
+            /// go through all the streams
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = this._streams[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var stream = _step.value;
+
+
+                    var numChannelsForThisStream = stream.numChannels;
+
+                    var isExtendedDialog = stream.isExtendedDialog;
+
+                    for (var k = 0; k < numChannelsForThisStream; k++) {
+
+                        if (channelIndex === index && isExtendedDialog === true) {
+                            return true;
+                        }
+
+                        index++;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        //==============================================================================
+        /**
+         * Returns true if this channel index corresponds to the extended ambiance
+         *      
+         */
+
+    }, {
+        key: "isChannelForExtendedAmbiance",
+        value: function isChannelForExtendedAmbiance(channelIndex) {
+
+            if (channelIndex < 0 || channelIndex >= this.totalNumberOfChannels) {
+                throw new Error("Invalid channel index : " + channelIndex);
+            }
+
+            var index = 0;
+
+            /// go through all the streams
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = this._streams[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var stream = _step2.value;
+
+
+                    var numChannelsForThisStream = stream.numChannels;
+
+                    var isExtendedAmbiance = stream.isExtendedAmbiance;
+
+                    for (var k = 0; k < numChannelsForThisStream; k++) {
+
+                        if (channelIndex === index && isExtendedAmbiance === true) {
+                            return true;
+                        }
+
+                        index++;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            return false;
+        }
+    }, {
         key: "streams",
         set: function set(streams) {
             this._streams = streams;
@@ -413,27 +527,27 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         key: "totalNumberOfChannels",
         get: function get() {
             var totalNumberOfChannels_ = 0;
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
 
             try {
-                for (var _iterator = this._streams[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var stream = _step.value;
+                for (var _iterator3 = this._streams[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var stream = _step3.value;
 
                     totalNumberOfChannels_ += stream.numChannels;
                 }
             } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
                     }
                 } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
                     }
                 }
             }
@@ -451,76 +565,6 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         key: "actives",
         get: function get() {
             var actives = [];
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
-
-            try {
-                for (var _iterator2 = this._streams[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var stream = _step2.value;
-
-                    if (stream.active) {
-                        actives.push(stream);
-                    }
-                }
-            } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                        _iterator2.return();
-                    }
-                } finally {
-                    if (_didIteratorError2) {
-                        throw _iteratorError2;
-                    }
-                }
-            }
-
-            return actives;
-        }
-
-        /**
-         * Returns true if at least one stream is currently active
-         * @type {boolean}
-         */
-
-    }, {
-        key: "hasActiveStream",
-        get: function get() {
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
-
-            try {
-                for (var _iterator3 = this._streams[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var stream = _step3.value;
-
-                    if (stream.active === true) {
-                        return true;
-                    }
-                }
-            } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
-                    }
-                } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
-                    }
-                }
-            }
-
-            return false;
-        }
-    }, {
-        key: "extendedDialog",
-        get: function get() {
             var _iteratorNormalCompletion4 = true;
             var _didIteratorError4 = false;
             var _iteratorError4 = undefined;
@@ -529,8 +573,8 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator4 = this._streams[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
                     var stream = _step4.value;
 
-                    if (stream.isExtendedDialog === true) {
-                        return stream;
+                    if (stream.active) {
+                        actives.push(stream);
                     }
                 }
             } catch (err) {
@@ -548,15 +592,16 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 }
             }
 
-            return undefined;
+            return actives;
         }
 
         /**
-         * Returns true if there is at least one dialog among all the streams     
+         * Returns true if at least one stream is currently active
+         * @type {boolean}
          */
 
     }, {
-        key: "hasExtendedDialog",
+        key: "hasActiveStream",
         get: function get() {
             var _iteratorNormalCompletion5 = true;
             var _didIteratorError5 = false;
@@ -566,7 +611,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator5 = this._streams[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
                     var stream = _step5.value;
 
-                    if (stream.isExtendedDialog === true) {
+                    if (stream.active === true) {
                         return true;
                     }
                 }
@@ -587,13 +632,8 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
 
             return false;
         }
-
-        /**
-         * Returns true if there is at least one dialog among all the streams     
-         */
-
     }, {
-        key: "hasActiveExtendedDialog",
+        key: "extendedDialog",
         get: function get() {
             var _iteratorNormalCompletion6 = true;
             var _didIteratorError6 = false;
@@ -603,8 +643,8 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator6 = this._streams[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
                     var stream = _step6.value;
 
-                    if (stream.isExtendedDialog === true && stream.active === true) {
-                        return true;
+                    if (stream.isExtendedDialog === true) {
+                        return stream;
                     }
                 }
             } catch (err) {
@@ -622,16 +662,15 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 }
             }
 
-            return false;
+            return undefined;
         }
 
-        //==============================================================================
         /**
-         * Returns true if there is at least one ambiance among all the streams     
+         * Returns true if there is at least one dialog among all the streams     
          */
 
     }, {
-        key: "hasExtendedAmbiance",
+        key: "hasExtendedDialog",
         get: function get() {
             var _iteratorNormalCompletion7 = true;
             var _didIteratorError7 = false;
@@ -641,7 +680,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator7 = this._streams[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
                     var stream = _step7.value;
 
-                    if (stream.isExtendedAmbiance === true) {
+                    if (stream.isExtendedDialog === true) {
                         return true;
                     }
                 }
@@ -664,11 +703,11 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         }
 
         /**
-         * Returns true if there is at least one ambiance among all the streams     
+         * Returns true if there is at least one dialog among all the streams     
          */
 
     }, {
-        key: "hasActiveExtendedAmbiance",
+        key: "hasActiveExtendedDialog",
         get: function get() {
             var _iteratorNormalCompletion8 = true;
             var _didIteratorError8 = false;
@@ -678,7 +717,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator8 = this._streams[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
                     var stream = _step8.value;
 
-                    if (stream.isExtendedAmbiance === true && stream.active === true) {
+                    if (stream.isExtendedDialog === true && stream.active === true) {
                         return true;
                     }
                 }
@@ -702,11 +741,11 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
 
         //==============================================================================
         /**
-         * Returns true if there is at least one commentary among all the streams     
+         * Returns true if there is at least one ambiance among all the streams     
          */
 
     }, {
-        key: "hasExtendedCommentary",
+        key: "hasExtendedAmbiance",
         get: function get() {
             var _iteratorNormalCompletion9 = true;
             var _didIteratorError9 = false;
@@ -716,7 +755,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator9 = this._streams[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
                     var stream = _step9.value;
 
-                    if (stream.isExtendedCommentary === true) {
+                    if (stream.isExtendedAmbiance === true) {
                         return true;
                     }
                 }
@@ -739,12 +778,11 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         }
 
         /**
-         * Returns true if there is at least one commentary among all the streams,
-         * and if it is currently active     
+         * Returns true if there is at least one ambiance among all the streams     
          */
 
     }, {
-        key: "hasActiveExtendedCommentary",
+        key: "hasActiveExtendedAmbiance",
         get: function get() {
             var _iteratorNormalCompletion10 = true;
             var _didIteratorError10 = false;
@@ -754,7 +792,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator10 = this._streams[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
                     var stream = _step10.value;
 
-                    if (stream.isExtendedCommentary === true && stream.active === true) {
+                    if (stream.isExtendedAmbiance === true && stream.active === true) {
                         return true;
                     }
                 }
@@ -778,6 +816,82 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
 
         //==============================================================================
         /**
+         * Returns true if there is at least one commentary among all the streams     
+         */
+
+    }, {
+        key: "hasExtendedCommentary",
+        get: function get() {
+            var _iteratorNormalCompletion11 = true;
+            var _didIteratorError11 = false;
+            var _iteratorError11 = undefined;
+
+            try {
+                for (var _iterator11 = this._streams[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+                    var stream = _step11.value;
+
+                    if (stream.isExtendedCommentary === true) {
+                        return true;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError11 = true;
+                _iteratorError11 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion11 && _iterator11.return) {
+                        _iterator11.return();
+                    }
+                } finally {
+                    if (_didIteratorError11) {
+                        throw _iteratorError11;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Returns true if there is at least one commentary among all the streams,
+         * and if it is currently active     
+         */
+
+    }, {
+        key: "hasActiveExtendedCommentary",
+        get: function get() {
+            var _iteratorNormalCompletion12 = true;
+            var _didIteratorError12 = false;
+            var _iteratorError12 = undefined;
+
+            try {
+                for (var _iterator12 = this._streams[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+                    var stream = _step12.value;
+
+                    if (stream.isExtendedCommentary === true && stream.active === true) {
+                        return true;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError12 = true;
+                _iteratorError12 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion12 && _iterator12.return) {
+                        _iterator12.return();
+                    }
+                } finally {
+                    if (_didIteratorError12) {
+                        throw _iteratorError12;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        //==============================================================================
+        /**
          * This function returns the index of the source which corresponds to the mono commentary
          * 
          * Returns -1 if there is no commentary
@@ -790,13 +904,13 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
             var channelIndex = 0;
 
             /// go through all the streams
-            var _iteratorNormalCompletion11 = true;
-            var _didIteratorError11 = false;
-            var _iteratorError11 = undefined;
+            var _iteratorNormalCompletion13 = true;
+            var _didIteratorError13 = false;
+            var _iteratorError13 = undefined;
 
             try {
-                for (var _iterator11 = this._streams[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-                    var stream = _step11.value;
+                for (var _iterator13 = this._streams[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+                    var stream = _step13.value;
 
 
                     if (stream.isExtendedCommentary === true) {
@@ -813,16 +927,16 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                     }
                 }
             } catch (err) {
-                _didIteratorError11 = true;
-                _iteratorError11 = err;
+                _didIteratorError13 = true;
+                _iteratorError13 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion11 && _iterator11.return) {
-                        _iterator11.return();
+                    if (!_iteratorNormalCompletion13 && _iterator13.return) {
+                        _iterator13.return();
                     }
                 } finally {
-                    if (_didIteratorError11) {
-                        throw _iteratorError11;
+                    if (_didIteratorError13) {
+                        throw _iteratorError13;
                     }
                 }
             }
@@ -844,13 +958,13 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
             var channelIndex = 0;
 
             /// go through all the streams
-            var _iteratorNormalCompletion12 = true;
-            var _didIteratorError12 = false;
-            var _iteratorError12 = undefined;
+            var _iteratorNormalCompletion14 = true;
+            var _didIteratorError14 = false;
+            var _iteratorError14 = undefined;
 
             try {
-                for (var _iterator12 = this._streams[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-                    var stream = _step12.value;
+                for (var _iterator14 = this._streams[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+                    var stream = _step14.value;
 
 
                     if (stream.isExtendedDialog === true) {
@@ -867,16 +981,16 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                     }
                 }
             } catch (err) {
-                _didIteratorError12 = true;
-                _iteratorError12 = err;
+                _didIteratorError14 = true;
+                _iteratorError14 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion12 && _iterator12.return) {
-                        _iterator12.return();
+                    if (!_iteratorNormalCompletion14 && _iterator14.return) {
+                        _iterator14.return();
                     }
                 } finally {
-                    if (_didIteratorError12) {
-                        throw _iteratorError12;
+                    if (_didIteratorError14) {
+                        throw _iteratorError14;
                     }
                 }
             }
@@ -927,10 +1041,9 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
     }
 
     //==============================================================================
-    /**
-     * Get channel position based on audio stream type
-     * @type {number[]}
-     */
+    /// if one of the value is NaN, this most likely means the stream was
+    /// actually not in the EBU core.
+    /// it should thus be considered as inactive   
 
 
     _createClass(AudioStreamDescription, [{
@@ -1094,6 +1207,19 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
+        key: "hasNaN",
+        get: function get() {
+
+            return isNaN(this._maxTruePeak) || isNaN(this._loudness);
+        }
+
+        //==============================================================================
+        /**
+         * Get channel position based on audio stream type
+         * @type {number[]}
+         */
+
+    }, {
         key: "channelPositions",
         get: function get() {
             switch (this._type) {
@@ -1160,7 +1286,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
         ,
         get: function get() {
-            return this._active;
+            return this._active && this.hasNaN === false;
         }
 
         //==============================================================================
@@ -1557,6 +1683,8 @@ var _multichannelgain = require('../dsp/multichannelgain.js');
 
 var _multichannelgain2 = _interopRequireDefault(_multichannelgain);
 
+var _utils = require('../core/utils.js');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1573,6 +1701,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  */
 /************************************************************************************/
 
+//import utilities from '../core/utils.js';
+
+
 var DialogEnhancement = function (_AbstractNode) {
     _inherits(DialogEnhancement, _AbstractNode);
 
@@ -1588,21 +1719,30 @@ var DialogEnhancement = function (_AbstractNode) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DialogEnhancement).call(this, audioContext, audioStreamDescriptionCollection));
 
         _this._mode = 1;
-        _this._dialogGain = 0.0;
-        _this._isBypass = true;
+        _this._balance = 100.0;
+        _this._isBypass = false;
+        _this._processor1 = new DialogEnhancementProcessorMode1(audioContext, audioStreamDescriptionCollection);
 
         _this._updateAudioGraph();
         return _this;
     }
 
     //==============================================================================
-    /**
-     * Enable or bypass the processor
-     * @type {boolean}
-     */
 
 
     _createClass(DialogEnhancement, [{
+        key: 'getTotalNumberOfChannels',
+        value: function getTotalNumberOfChannels() {
+            return this._audioStreamDescriptionCollection.totalNumberOfChannels;
+        }
+
+        //==============================================================================
+        /**
+         * Enable or bypass the processor
+         * @type {boolean}
+         */
+
+    }, {
         key: 'activeStreamsChanged',
 
 
@@ -1637,11 +1777,54 @@ var DialogEnhancement = function (_AbstractNode) {
          */
 
     }, {
-        key: '_update',
+        key: 'setBalanceFromGui',
+        value: function setBalanceFromGui(theSlider) {
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
 
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 0;
+            var maxValue = 100;
+
+            /// scale from GUI to DSP
+            var value = (0, _utils.scale)(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this.balance = value;
+
+            return value;
+        }
+    }, {
+        key: 'getBalanceFromGui',
+        value: function getBalanceFromGui(theSlider) {
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 0;
+            var maxValue = 100;
+
+            var actualValue = this.balance;
+
+            /// scale from DSP to GUI
+            var value = M4DPAudioModules.utilities.scale(actualValue, minValue, maxValue, minFader, maxFader);
+
+            return value;
+        }
 
         //==============================================================================
-        value: function _update() {}
+
+    }, {
+        key: '_update',
+        value: function _update() {
+
+            this._processor1.balance = this.balance;
+        }
 
         //==============================================================================
         /**
@@ -1685,11 +1868,21 @@ var DialogEnhancement = function (_AbstractNode) {
 
             /// first of all, disconnect everything
             this._input.disconnect();
+            this._processor1.disconnect();
 
             if (this.bypass === true || this._canProcessCurrentMode() === false) {
 
                 this._input.connect(this._output);
-            } else {}
+            } else {
+
+                var mode = this.mode;
+
+                if (mode === 1) {
+
+                    this._input.connect(this._processor1._input);
+                    this._processor1.connect(this._output);
+                }
+            }
 
             this._update();
         }
@@ -1754,29 +1947,28 @@ var DialogEnhancement = function (_AbstractNode) {
             return this._mode;
         }
 
-        //==============================================================================
+        //==============================================================================       
         /**
-         * Set dialogGain
-         * @type {number}
-         * @todo give range of accepted values
+         * Sets the balance (in 0 - 100 %) between dialogs and ambiance
+         *      
          */
 
     }, {
-        key: 'dialogGain',
+        key: 'balance',
         set: function set(value) {
 
-            this._dialogGain = value;
+            this._balance = value;
 
             this._update();
         }
+
         /**
-         * Get dialogGain
-         * @type {number}
-         * @todo give range of accepted values
+         * Returns the balance (in 0 - 100 %) between dialogs and ambiance
+         * @type {number}     
          */
         ,
         get: function get() {
-            return this._dialogGain;
+            return this._balance;
         }
     }]);
 
@@ -1784,7 +1976,149 @@ var DialogEnhancement = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = DialogEnhancement;
-},{"../core/index.js":2,"../dsp/multichannelgain.js":11}],5:[function(require,module,exports){
+
+var DialogEnhancementProcessorMode1 = function (_AbstractNode2) {
+    _inherits(DialogEnhancementProcessorMode1, _AbstractNode2);
+
+    //==============================================================================
+    /**
+     * @param {AudioContext} audioContext - audioContext instance.
+     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.     
+     */
+
+    function DialogEnhancementProcessorMode1(audioContext, audioStreamDescriptionCollection) {
+        _classCallCheck(this, DialogEnhancementProcessorMode1);
+
+        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(DialogEnhancementProcessorMode1).call(this, audioContext, audioStreamDescriptionCollection));
+
+        _this2._balance = 100;
+
+        /// the total number of incoming channels, including all the streams
+        /// (mainAudio, extendedAmbience, extendedComments and extendedDialogs)
+        var totalNumberOfChannels_ = _this2.getTotalNumberOfChannels();
+
+        _this2._gainsNode = new _multichannelgain2.default(audioContext, totalNumberOfChannels_);
+
+        _this2._updateAudioGraph();
+        return _this2;
+    }
+
+    //==============================================================================
+
+
+    _createClass(DialogEnhancementProcessorMode1, [{
+        key: 'getTotalNumberOfChannels',
+        value: function getTotalNumberOfChannels() {
+            return this._audioStreamDescriptionCollection.totalNumberOfChannels;
+        }
+
+        //==============================================================================
+        /**
+         * Returns the current number of channels
+         */
+
+    }, {
+        key: 'getNumChannels',
+        value: function getNumChannels() {
+            return this._gainsNode.getNumChannels();
+        }
+
+        //==============================================================================       
+        /**
+         * Sets the balance (in 0 - 100 %) between dialogs and ambiance
+         *      
+         */
+
+    }, {
+        key: 'isChannelForExtendedDialog',
+
+
+        //==============================================================================
+        /**
+         * Returns true if this channel index corresponds to the extended dialog
+         *      
+         */
+        value: function isChannelForExtendedDialog(channelIndex) {
+
+            return this._audioStreamDescriptionCollection.isChannelForExtendedDialog(channelIndex);
+        }
+
+        //==============================================================================
+        /**
+         * Returns true if this channel index corresponds to the extended ambiance
+         *      
+         */
+
+    }, {
+        key: 'isChannelForExtendedAmbiance',
+        value: function isChannelForExtendedAmbiance(channelIndex) {
+            return this._audioStreamDescriptionCollection.isChannelForExtendedAmbiance(channelIndex);
+        }
+
+        //==============================================================================
+        /**
+         * Updates the gains for each channel
+         *      
+         */
+
+    }, {
+        key: '_update',
+        value: function _update() {
+
+            var gainForDialogs = (0, _utils.scale)(this.balance, 0., 100., 0., 1.);
+            var gainForAmbiance = 1.0 - gainForDialogs;
+
+            for (var k = 0; k < this.getNumChannels(); k++) {
+
+                if (this.isChannelForExtendedDialog(k) === true) {
+                    this._gainsNode.setGain(k, gainForDialogs);
+                } else if (this.isChannelForExtendedAmbiance(k) === true) {
+                    this._gainsNode.setGain(k, gainForAmbiance);
+                } else {
+                    this._gainsNode.setGain(k, 1.0);
+                }
+            }
+        }
+
+        //==============================================================================
+        /**
+         * Updates the connections of the audio graph
+         */
+
+    }, {
+        key: '_updateAudioGraph',
+        value: function _updateAudioGraph() {
+
+            /// first of all, disconnect everything
+            this._input.disconnect();
+            this._gainsNode.disconnect();
+
+            this._input.connect(this._gainsNode._input);
+            this._gainsNode.connect(this._output);
+
+            this._update();
+        }
+    }, {
+        key: 'balance',
+        set: function set(value) {
+
+            /// 100% --> only the dialogs
+            /// 0% --> only the ambiance
+
+            var percent = (0, _utils.clamp)(value, 0., 100.);
+
+            this._balance = percent;
+
+            this._update();
+        },
+        get: function get() {
+            return this._balance;
+        }
+    }]);
+
+    return DialogEnhancementProcessorMode1;
+}(_index2.default);
+},{"../core/index.js":2,"../core/utils.js":3,"../dsp/multichannelgain.js":11}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3150,6 +3484,21 @@ var MultichannelGainNode = function (_AbstractNode) {
             */
         value: function getNumChannels() {
             return this._gainNodes.length;
+        }
+
+        //==============================================================================
+        /**
+         * Sets the same gain to all channels
+         * @param {float} value: linear gain
+         */
+
+    }, {
+        key: 'setAllGains',
+        value: function setAllGains(value) {
+
+            for (var k = 0; k < this.getNumChannels(); k++) {
+                this.setGain(k, value);
+            }
         }
 
         //==============================================================================
@@ -4576,7 +4925,7 @@ var StreamRouting = function (_AbstractNode) {
         /// sanity check
         /// mainAudio (2) + extendedAmbience (6) + extendedComments (1) + extendedDialogs (1) = 10
         if (totalNumberOfChannels_ != 10) {
-            throw new Error("Ca parait pas bon...");
+            console.log("warning : total number of channels = " + totalNumberOfChannels_);
         }
 
         _this._splitterNode = audioContext.createChannelSplitter(totalNumberOfChannels_);
@@ -5271,6 +5620,9 @@ var ReceiverMix = function (_AbstractNode) {
 
         _this._isBypass = false;
         _this._shouldCompress = false;
+        _this._rmsRefreshInterval = 100; /// interval (in msec for refreshing the RMS measurement)
+        _this._durationHold = 0; /// how long (in msec) the compressor has been on hold
+        _this._minimumHoldTime = 1500; /// hold time in msec) for the compressor
 
         if (typeof audioStreamDescriptionCollection === "undefined") {
             throw new Error("the audioStreamDescriptionCollection must be defined !");
@@ -5309,7 +5661,7 @@ var ReceiverMix = function (_AbstractNode) {
         /// sanity check
         /// mainAudio (2) + extendedAmbience (6) + extendedComments (1) + extendedDialogs (1) = 10
         if (totalNumberOfChannels_ != 10) {
-            throw new Error("Ca parait pas bon...");
+            console.log("warning : total number of channels = " + totalNumberOfChannels_);
         }
 
         /// main splitter node, at the entrance of the ReceiverMix
@@ -5330,9 +5682,13 @@ var ReceiverMix = function (_AbstractNode) {
 
         _this._updateAudioGraph();
 
-        window.setInterval(function () {
-            _this._updateCompressor();
+        /*
+        window.setInterval( () => {
+            this._updateCompressor();
         }, 100);
+        */
+
+        _this._updateCompressor();
         return _this;
     }
 
@@ -5736,6 +6092,63 @@ var ReceiverMix = function (_AbstractNode) {
 
         //==============================================================================
         /**
+         * Sets the refresh interval for RMS measurement (in msec)
+         * theSlider : the slider
+         * return the actual value of the refresh interval (in msec)
+         */
+
+    }, {
+        key: 'setRefreshRmsTimeFromGui',
+        value: function setRefreshRmsTimeFromGui(theSlider) {
+
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 20;
+            var maxValue = 500;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this._rmsRefreshInterval = value;
+
+            return value;
+        }
+
+        /**
+         * Returns the refresh interval for RMS measurement (in msec)
+         * theSlider : the slider
+         */
+
+    }, {
+        key: 'getRefreshRmsTimeForGui',
+        value: function getRefreshRmsTimeForGui(theSlider) {
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 20;
+            var maxValue = 500;
+
+
+            var actualValue = this._rmsRefreshInterval;
+
+            /// scale from DSP to GUI
+            var value = M4DPAudioModules.utilities.scale(actualValue, minValue, maxValue, minFader, maxFader);
+
+            return value;
+        }
+
+        //==============================================================================
+        /**
          * Sets the attack time, according to a slider in the GUI
          * theSlider : the slider
          * return the actual value of the attack time (in msec)
@@ -5853,6 +6266,63 @@ var ReceiverMix = function (_AbstractNode) {
 
 
             var actualValue = this.getCompressorRatio();
+
+            /// scale from DSP to GUI
+            var value = M4DPAudioModules.utilities.scale(actualValue, minValue, maxValue, minFader, maxFader);
+
+            return value;
+        }
+
+        //==============================================================================
+        /**
+         * Sets the minimum hold time (in msec)
+         * theSlider : the slider
+         * return the actual value of the hold time
+         */
+
+    }, {
+        key: 'setMinimumHoldTimeFromGui',
+        value: function setMinimumHoldTimeFromGui(theSlider) {
+
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 1000;
+            var maxValue = 5000;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this._minimumHoldTime = value;
+
+            return value;
+        }
+
+        /**
+         * Returns the minimum hold time (in msec)
+         * theSlider : the slider
+         */
+
+    }, {
+        key: 'getMinimumHoldTimeForGui',
+        value: function getMinimumHoldTimeForGui(theSlider) {
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 1000;
+            var maxValue = 5000;
+
+
+            var actualValue = this._minimumHoldTime;
 
             /// scale from DSP to GUI
             var value = M4DPAudioModules.utilities.scale(actualValue, minValue, maxValue, minFader, maxFader);
@@ -6105,9 +6575,36 @@ var ReceiverMix = function (_AbstractNode) {
 
         //==============================================================================
         /**
-         * This method should be called periodically
+         * This method should be called once, and then it repeats itself periodically
          */
         value: function _updateCompressor() {
+            var _this2 = this;
+
+            /// execute this function again, after a given interval       
+            window.setTimeout(function () {
+                _this2._updateCompressor();
+            }, this._rmsRefreshInterval);
+
+            /// in msec
+            /// once the compression gets activated,
+            /// we will hold it for at least 1500 msec
+            /// i.e. for 1500 msec, we suspend the RMS comparison,
+            /// and the compression remains with a dry/wet of 100%
+            var minimumHoldTime = this._minimumHoldTime;
+
+            ///@todo : the hold time could also appear in the GUI
+
+            if (this.bypass === false && this._shouldCompress === true && this._durationHold <= minimumHoldTime) {
+                /// hold the compressor for at least 1000 msec
+
+                /// increment the counter
+                this._durationHold += this._rmsRefreshInterval;
+
+                return;
+            }
+
+            /// the hold period is over; now, really compare the RMS,
+            /// to activate or not the compression
 
             this._shouldCompress = false;
 
@@ -6135,10 +6632,16 @@ var ReceiverMix = function (_AbstractNode) {
                 //ratio = this._compressionRatio;
                 //this._dynamicCompressorNode.bypass = false;
                 this._dynamicCompressorNode.drywet = 100;
+
+                /// increment the counter
+                this._durationHold += this._rmsRefreshInterval;
             } else {
                 //ratio = 1.0;
                 //this._dynamicCompressorNode.bypass = true;
                 this._dynamicCompressorNode.drywet = 0;
+
+                /// increment the counter
+                this._durationHold = 0;
             }
         }
 
@@ -7480,7 +7983,7 @@ var StreamSelector = function (_AbstractNode) {
         /// sanity check
         /// mainAudio (2) + extendedAmbience (6) + extendedComments (1) + extendedDialogs (1) = 10
         if (totalNumberOfChannels_ != 10) {
-            throw new Error("Ca parait pas bon...");
+            console.log("warning : total number of channels = " + totalNumberOfChannels_);
         }
 
         _this._gainsNode = new _multichannelgain2.default(audioContext, totalNumberOfChannels_);

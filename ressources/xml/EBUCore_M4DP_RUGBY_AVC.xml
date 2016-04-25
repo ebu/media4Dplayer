@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ebucore:ebuCoreMain xmlns:ebucore="urn:ebu:metadata-schema:ebuCore_2015" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ebucore:coreMetadata>
+        <ebucore:part partName="EditorialMetadata">
+            <ebucore:title typeLabel="ProgramTitle">
+                <dc:title xsi:type="ebucore:elementType" xml:lang="fr">RUGBY</dc:title>
+            </ebucore:title>
+            <ebucore:alternativeTitle typeLabel="EpisodeTitle">
+                <dc:title xml:lang="fr">France / Angleterre</dc:title>
+            </ebucore:alternativeTitle>
+            <ebucore:description typeLabel="Synopsis">
+                <dc:description xsi:type="ebucore:elementType" xml:lang="fr">Les Bleus concluront ce tournoi 2016 par un Crunch aux allures de finale. Ces matchs France / Angleterre sont mémorables en termes d'intensité, de technicité mais surtout de combat. Rendez-vous le 19 Mars 2016 au Stade de France pour un match de gala.</dc:description>
+            </ebucore:description>
+            <ebucore:publisher>
+                <ebucore:organisationDetails>
+                    <ebucore:organisationName>F2</ebucore:organisationName>
+                </ebucore:organisationDetails>
+                <ebucore:role typeLabel="Broadcaster / diffusion linéaire"/>
+            </ebucore:publisher>
+            <ebucore:contributor>
+                <ebucore:organisationDetails>
+                    <ebucore:organisationName>innovations&amp;développements</ebucore:organisationName>
+                </ebucore:organisationDetails>
+                <ebucore:role typeLabel="Supplier / fournisseur"/>
+            </ebucore:contributor>
+            <ebucore:contributor>
+                <ebucore:contactDetails>
+                    <ebucore:givenName>Vincent</ebucore:givenName>
+                    <ebucore:familyName>DABOUINEAU</ebucore:familyName>
+                    <ebucore:salutation>M</ebucore:salutation>
+                    <ebucore:birthDate>1979-01-31+01:00</ebucore:birthDate>
+                    <ebucore:affiliation>
+                        <ebucore:organisationDetails>
+                            <ebucore:organisationName>FTVID</ebucore:organisationName>
+                        </ebucore:organisationDetails>
+                        <ebucore:role typeLabel="Broadcaster / diffusion Media4Dplayer"/>
+                    </ebucore:affiliation>
+                </ebucore:contactDetails>
+                <ebucore:role typeLabel="Producteur"/>
+            </ebucore:contributor>
+            <ebucore:contributor>
+                <ebucore:contactDetails>
+                    <ebucore:givenName>Rémy</ebucore:givenName>
+                    <ebucore:familyName>DAL MOLIN</ebucore:familyName>
+                    <ebucore:salutation>M</ebucore:salutation>
+                    <ebucore:affiliation>
+                        <ebucore:organisationDetails>
+                            <ebucore:organisationName>MFP</ebucore:organisationName>
+                        </ebucore:organisationDetails>
+                        <ebucore:role typeLabel="ST producer"/>
+                    </ebucore:affiliation>
+                </ebucore:contactDetails>
+                <ebucore:role typeLabel="ST author"/>
+            </ebucore:contributor>
+            <ebucore:date>
+                <ebucore:copyrighted startYear="2015"/>
+            </ebucore:date>
+            <ebucore:date>
+                <ebucore:alternative startDate="2015-08-22+01:00" typeLabel="DateDiffusion"/>
+            </ebucore:date>
+            <ebucore:type>
+                <ebucore:genre typeLabel="UNI" typeDefinition="ProgramType"/>
+                <ebucore:genre typeLink="sport" typeLabel="Sport" typeDefinition="ProgramGenre"/>
+            </ebucore:type>
+            <ebucore:identifier typeLabel="FTV_UID">
+                <dc:identifier xsi:type="ebucore:elementType">abcdefghijklmnopqrstuvwxyz0123456789</dc:identifier>
+            </ebucore:identifier>
+            <ebucore:identifier typeLabel="Plurimedia_ID">
+                <dc:identifier xsi:type="ebucore:elementType">118809764</dc:identifier>
+            </ebucore:identifier>
+            <ebucore:rating>
+                <ebucore:ratingValue>TP</ebucore:ratingValue>
+                <ebucore:ratingProvider>
+                    <ebucore:organisationDetails>
+                        <ebucore:organisationName>CSA</ebucore:organisationName>
+                    </ebucore:organisationDetails>
+                </ebucore:ratingProvider>
+            </ebucore:rating>
+        </ebucore:part>
+        <ebucore:part partName="Links">
+            <ebucore:format formatName="Main">
+                <ebucore:audioFormat audioFormatId="1" audioFormatName="PVF" audioPresenceFlag="true">
+                    <ebucore:audioTrack trackId="5" trackLanguage="FRA"/>
+                    <ebucore:channels>2</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">Stereo</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">L R</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-22.1</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-0.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:subtitlingFormat subtitlingFormatName="TTML" trackId="6" language="FRA" subtitlingPresenceFlag="true">
+                </ebucore:subtitlingFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-rugby-avc-ondemand/manifest.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="SL" videoPresenceFlag="false">
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-lsf.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-rugby-avc-ondemand/manifest-lsf.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="EA1">
+                <ebucore:audioFormat audioFormatId="2" audioFormatName="PVF" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
+                    <ebucore:channels>6</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C L R Ls Rs LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ea1.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-ea1.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="AD">
+                <ebucore:audioFormat audioFormatId="3" audioFormatName="PAD" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
+                    <ebucore:channels>1</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">Mono</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: C</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-21.7</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.8</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ad.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-rugby-avc-ondemand/manifest-ad.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="EA2">
+                <ebucore:audioFormat audioFormatId="4" audioFormatName="PVM" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="ENG"/>
+                    <ebucore:channels>2</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">Stereo</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">L R</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ea2.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Hugo-ondemand/manifest-ea2.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="DI">
+                <ebucore:audioFormat audioFormatId="5" audioFormatName="PDI" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
+                    <ebucore:channels>1</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">Mono</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: C</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-di.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-rugby-avc-ondemand/manifest-di.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="EA3">
+                <ebucore:audioFormat audioFormatId="6" audioFormatName="PVI" audioPresenceFlag="true">
+                    <ebucore:audioTrack trackId="0" trackLanguage="UND"/>
+                    <ebucore:channels>2</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">Stereo</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">L R</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-22.3</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">0.1</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ea3.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-rugby-avc-ondemand/manifest-ea3.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="EA4">
+                <ebucore:audioFormat audioFormatId="7" audioFormatName="PMS" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="UND"/>
+                    <ebucore:channels>2</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C L R Ls Rs LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ea4.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-rugby-avc-ondemand/manifest-ea4.mpd</ebucore:locator>
+            </ebucore:format>
+        </ebucore:part>
+        <ebucore:part partName="TechnicalMetadata">
+            <ebucore:part partName="Essence">
+                <ebucore:format formatName="EssenceTechnicalMetadata">
+                    <ebucore:videoFormat videoFormatName="AVC">
+                        <ebucore:technicalAttributeString typeLabel="VideoDefinition">HD</ebucore:technicalAttributeString>
+                        <ebucore:width unit="pixel">1920</ebucore:width>
+                        <ebucore:height unit="pixel">1080</ebucore:height>
+                        <ebucore:frameRate>25</ebucore:frameRate>
+                        <ebucore:aspectRatio typeLabel="ImageFormat">
+                            <ebucore:factorNumerator>16/9</ebucore:factorNumerator>
+                            <ebucore:factorDenominator>1</ebucore:factorDenominator>
+                        </ebucore:aspectRatio>
+                        <ebucore:videoEncoding typeLabel="Dash 264"/>
+                        <ebucore:codec>
+                            <ebucore:codecIdentifier>
+                                <dc:identifier>avc1</dc:identifier>
+                            </ebucore:codecIdentifier>
+                        </ebucore:codec>
+                        <ebucore:bitRateMode>constant</ebucore:bitRateMode>
+                        <ebucore:scanningFormat>progressive</ebucore:scanningFormat>
+                        <ebucore:videoTrack trackId="0"/>
+                        <ebucore:technicalAttributeString typeLabel="ColorSpace">YUV</ebucore:technicalAttributeString>
+                        <ebucore:technicalAttributeString typeLabel="ChromaSubsampling">4:2:0</ebucore:technicalAttributeString>
+                        <ebucore:technicalAttributeInteger typeLabel="BitDepth" unit="bit">8</ebucore:technicalAttributeInteger>
+                        <ebucore:technicalAttributeBoolean typeLabel="CABAC">true</ebucore:technicalAttributeBoolean>
+                        <ebucore:technicalAttributeBoolean typeLabel="MBAFF">false</ebucore:technicalAttributeBoolean>
+                    </ebucore:videoFormat>
+                    <ebucore:containerFormat containerFormatName="MPEG-4">
+                        <ebucore:containerEncoding formatLabel="MPEG-4"/>
+                        <ebucore:codec>
+                            <ebucore:codecIdentifier>
+                                <dc:identifier>avc1</dc:identifier>
+                            </ebucore:codecIdentifier>
+                        </ebucore:codec>
+                        <ebucore:technicalAttributeString typeLabel="FormatProfile">JVT</ebucore:technicalAttributeString>
+                    </ebucore:containerFormat>
+                </ebucore:format>
+                <ebucore:partStartTime>
+                    <ebucore:timecode>00:00:00:00000</ebucore:timecode>
+                </ebucore:partStartTime>
+                <ebucore:partDuration>
+                    <ebucore:timecode>00:28:01:24</ebucore:timecode>
+                </ebucore:partDuration>
+            </ebucore:part>
+            <ebucore:part partName="Pgm">
+                <ebucore:format formatName="PgmTechnicalMetadata">
+                    <ebucore:videoFormat videoFormatName="OriginalVideoFormat">
+                        <ebucore:scanningFormat>interlaced</ebucore:scanningFormat>
+                        <ebucore:technicalAttributeString typeLabel="OriginalVideoDefinition">HD</ebucore:technicalAttributeString>
+                        <ebucore:technicalAttributeString typeLabel="OriginalImageFormat" typeDefinition="AspectRatio">177</ebucore:technicalAttributeString>
+                        <ebucore:technicalAttributeString typeLabel="OriginalTreatment">LIN</ebucore:technicalAttributeString>
+                    </ebucore:videoFormat>
+                    <ebucore:audioFormatExtended>
+                        <ebucore:audioProgramme audioProgrammeID="APR_1001" audioProgrammeName="PVF" audioProgrammeLanguage="fra">
+                            <ebucore:audioContentIDRef>ACO_1001</ebucore:audioContentIDRef>
+                            <ebucore:loudnessMetadata>
+                                <ebucore:integratedLoudness>-22.1</ebucore:integratedLoudness>
+                                <ebucore:loudnessRange>10.1</ebucore:loudnessRange>
+                                <ebucore:maxTruePeak>-0.0</ebucore:maxTruePeak>
+                            </ebucore:loudnessMetadata>
+                        </ebucore:audioProgramme>
+                        <ebucore:audioContent audioContentID="ACO_1001" audioContentName="PVF" audioContentLanguage="fra">
+                            <ebucore:audioObjectIDRef>AO_1001</ebucore:audioObjectIDRef>
+                        </ebucore:audioContent>
+                        <ebucore:audioObject audioObjectID="AO_1001" audioObjectName="VF_obj">
+                            <ebucore:audioPackFormatIDRef>AP_00010002</ebucore:audioPackFormatIDRef>
+                            <ebucore:audioTrackUIDRef>ATU_00000001</ebucore:audioTrackUIDRef>
+                            <ebucore:audioTrackUIDRef>ATU_00000002</ebucore:audioTrackUIDRef>
+                        </ebucore:audioObject>
+                        <ebucore:audioPackFormat audioPackFormatID="AP_00010002" audioPackFormatName="Stereo" typeLabel="0001" typeDefinition="DirectSpeakers">
+                            <ebucore:audioChannelFormatIDRef>AC_00010001</ebucore:audioChannelFormatIDRef>
+                            <ebucore:audioChannelFormatIDRef>AC_00010002</ebucore:audioChannelFormatIDRef>
+                        </ebucore:audioPackFormat>
+                        <ebucore:audioChannelFormat audioChannelFormatName="FrontLeft" audioChannelFormatID="AC_00010001" typeLabel="0001" typeDefinition="DirectSpeakers">
+                            <ebucore:audioBlockFormat audioBlockFormatID="AB_00010001_00000001">
+                                <ebucore:speakerLabel>M+30</ebucore:speakerLabel>
+                                <ebucore:position coordinate="azimuth">30.0</ebucore:position>
+                                <ebucore:position coordinate="elevation">0.0</ebucore:position>
+                                <ebucore:position coordinate="distance">1.0</ebucore:position>
+                            </ebucore:audioBlockFormat>
+                        </ebucore:audioChannelFormat>
+                        <ebucore:audioChannelFormat audioChannelFormatName="FrontRight" audioChannelFormatID="AC_00010002" typeLabel="0001" typeDefinition="DirectSpeakers">
+                            <ebucore:audioBlockFormat audioBlockFormatID="AB_00010002_00000001">
+                                <ebucore:speakerLabel>M-30</ebucore:speakerLabel>
+                                <ebucore:position coordinate="azimuth">-30.0</ebucore:position>
+                                <ebucore:position coordinate="elevation">0.0</ebucore:position>
+                                <ebucore:position coordinate="distance">1.0</ebucore:position>
+                            </ebucore:audioBlockFormat>
+                        </ebucore:audioChannelFormat>
+                        <ebucore:audioStreamFormat audioStreamFormatID="AS_00010001" audioStreamFormatName="AES_FrontLeft" formatDefinition="AES_PCM">
+                            <ebucore:audioChannelFormatIDRef>AC_00010001</ebucore:audioChannelFormatIDRef>
+                            <ebucore:audioTrackFormatIDRef>AT_00010001_01</ebucore:audioTrackFormatIDRef>
+                        </ebucore:audioStreamFormat>
+                        <ebucore:audioStreamFormat audioStreamFormatID="AS_00010002" audioStreamFormatName="AES_FrontRight" formatDefinition="AES_PCM">
+                            <ebucore:audioChannelFormatIDRef>AC_00010002</ebucore:audioChannelFormatIDRef>
+                            <ebucore:audioTrackFormatIDRef>AT_00010002_01</ebucore:audioTrackFormatIDRef>
+                        </ebucore:audioStreamFormat>
+                        <ebucore:audioTrackFormat audioTrackFormatID="AT_00010001_01">
+                            <ebucore:audioStreamFormatIDRef>AS_00010001</ebucore:audioStreamFormatIDRef>
+                        </ebucore:audioTrackFormat>
+                        <ebucore:audioTrackFormat audioTrackFormatID="AT_00010002_01">
+                            <ebucore:audioStreamFormatIDRef>AS_00010002</ebucore:audioStreamFormatIDRef>
+                        </ebucore:audioTrackFormat>
+                        <ebucore:audioTrackUID UID="ATU_00000001"/>
+                        <ebucore:audioTrackUID UID="ATU_00000002"/>
+                    </ebucore:audioFormatExtended>
+                </ebucore:format>
+                <ebucore:partStartTime>
+                    <ebucore:timecode>00:00:00:00000</ebucore:timecode>
+                </ebucore:partStartTime>
+                <ebucore:partDuration>
+                    <ebucore:timecode>00:28:01:24</ebucore:timecode>
+                </ebucore:partDuration>
+            </ebucore:part>
+        </ebucore:part>
+        <ebucore:part partName="ContextualMetadata">
+            <ebucore:part partName="Seq_000000">
+                <ebucore:title typeLabel="SequenceTitle">
+                    <dc:title xsi:type="ebucore:elementType" xml:lang="fr">Programme complet</dc:title>
+                </ebucore:title>
+                <ebucore:description typeLabel="SequenceSynopsis">
+                    <dc:description xsi:type="ebucore:elementType" xml:lang="fr">Les Bleus concluront ce tournoi 2016 par un Crunch aux allures de finale. Ces matchs France / Angleterre sont mémorables en termes d'intensité, de technicité mais surtout de combat. Rendez-vous le 19 Mars 2016 au Stade de France pour un match de gala.</dc:description>
+                </ebucore:description>
+                <ebucore:type>
+                    <ebucore:genre typeLink="sport" typeLabel="Sport" typeDefinition="SequenceGenre"/>
+                </ebucore:type>
+                <ebucore:coverage>
+                    <ebucore:temporal>
+                        <ebucore:PeriodOfTime periodId="1" startDate="2015-08-22"/>
+                    </ebucore:temporal>
+                    <ebucore:spatial>
+                        <ebucore:location typeLabel="real" typeLanguage="FRA">
+                            <ebucore:name>Paris</ebucore:name>
+                            <ebucore:description>Stade de France</ebucore:description>
+                            <ebucore:coordinates>
+                                <ebucore:posy>48.9244592</ebucore:posy>
+                                <ebucore:posx>2.3579758</ebucore:posx>
+                            </ebucore:coordinates>
+                        </ebucore:location>
+                    </ebucore:spatial>
+                </ebucore:coverage>
+                <ebucore:rating>
+                    <ebucore:ratingValue>TP</ebucore:ratingValue>
+                    <ebucore:ratingProvider>
+                        <ebucore:organisationDetails>
+                            <ebucore:organisationName>CSA</ebucore:organisationName>
+                        </ebucore:organisationDetails>
+                    </ebucore:ratingProvider>
+                </ebucore:rating>
+                <ebucore:format formatName="SequenceThumbnail">
+                    <ebucore:containerFormat>
+                        <ebucore:containerEncoding formatLabel="PNG"/>
+                    </ebucore:containerFormat>
+                    <ebucore:fileName>abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.jpg</ebucore:fileName>
+                    <ebucore:locator>https://194.51.35.43:25001/fbdownload/abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.png?dlink=2f4d656469613444706c617965722f30355f52554742592f5468756d626e61696c732f6162636465666768696a6b6c6d6e6f707172737475767778797a303132333435363738392d5365715f3030303030302e706e67</ebucore:locator>
+                </ebucore:format>
+                <ebucore:partStartTime>
+                    <ebucore:timecode>00:00:00:00000</ebucore:timecode>
+                </ebucore:partStartTime>
+                <ebucore:partDuration>
+                    <ebucore:timecode>00:28:01:24</ebucore:timecode>
+                </ebucore:partDuration>
+            </ebucore:part>
+        </ebucore:part>
+    </ebucore:coreMetadata>
+</ebucore:ebuCoreMain>

@@ -93,10 +93,10 @@ Player.load = function(videoData, callback, onClose){
 
 		Media = videoData;
 		
-		if(isEmpty(Media.links.dataMain) || isEmpty(Media.links.dataEA) || isEmpty(Media.links.dataAD) || isEmpty(Media.links.dataDI)){
+		/*if(isEmpty(Media.links.dataMain) || isEmpty(Media.links.dataEA) || isEmpty(Media.links.dataAD) || isEmpty(Media.links.dataDI)){
 			log("Lecture annulée car il n'y a pas tout flux audio (isEmpty(Media.links.dataMain)="+isEmpty(Media.links.dataMain)+"; isEmpty(Media.links.dataEA)="+isEmpty(Media.links.dataEA)+";isEmpty(Media.links.dataAD)="+isEmpty(Media.links.dataAD)+";)");
 			return;
-		}
+		}*/
 
 		Media.LSFEnabled = !getHtmlStorage("LSFDisabled") && Media.links.dataLS && Media.links.dataLS.url ? true : false;
 		Media.audioEnabled = !getHtmlStorage("audioDisabled") && Media.links.dataMain && Media.links.dataMain.url ? true : false;
@@ -128,13 +128,19 @@ Player.load = function(videoData, callback, onClose){
 		if(Media.LSFEnabled){
 			this.playerManager.playerPip.attachView(this.videoPip);
 			this.playerManager.playerPip.attachSource(urlPip);
-		}	
-		this.playerManager.playerAudioFiveDotOne.attachView(this.audioFiveDotOne);
-		this.playerManager.playerAudioFiveDotOne.attachSource(urlAudioFiveDotOne);
-		this.playerManager.playerAudioFiveDotOne2.attachView(this.audioFiveDotOne2);	
-		this.playerManager.playerAudioFiveDotOne2.attachSource(urlAudioFiveDotOne2);
-		this.playerManager.playerAudio.attachView(this.videoAudio);	
-		this.playerManager.playerAudio.attachSource(urlAudioDescription);
+		}
+		if(urlAudioFiveDotOne){
+			this.playerManager.playerAudioFiveDotOne.attachView(this.audioFiveDotOne);
+			this.playerManager.playerAudioFiveDotOne.attachSource(urlAudioFiveDotOne);
+		}
+		if(urlAudioFiveDotOne2){
+			this.playerManager.playerAudioFiveDotOne2.attachView(this.audioFiveDotOne2);	
+			this.playerManager.playerAudioFiveDotOne2.attachSource(urlAudioFiveDotOne2);
+		}
+		if(urlAudioDescription){
+			this.playerManager.playerAudio.attachView(this.videoAudio);	
+			this.playerManager.playerAudio.attachSource(urlAudioDescription);			
+		}
 
 		// Add HTML-rendered TTML subtitles
 		this.playerManager.playerMain.attachTTMLRenderingDiv(this.ttmlDiv);
@@ -143,9 +149,15 @@ Player.load = function(videoData, callback, onClose){
 		if(Media.LSFEnabled){
 			this.playerManager.playerPip.play();
 		}
-		this.playerManager.playerAudioFiveDotOne.play();
-		this.playerManager.playerAudioFiveDotOne2.play();
-		this.playerManager.playerAudio.play();
+		if(urlAudioFiveDotOne){
+			this.playerManager.playerAudioFiveDotOne.play();
+		}
+		if(urlAudioFiveDotOne2){
+			this.playerManager.playerAudioFiveDotOne2.play();
+		}
+		if(urlAudioDescription){
+			this.playerManager.playerAudio.play();
+		}
 
 		this.updateActiveStreams();
 
@@ -216,18 +228,20 @@ Player.launch = function(){
 		this.playerManager.playerAudio.setAutoPlay(false);
 
 		// remove Dash.js logs
-		this.playerManager.playerMain.getDebug().setLogToBrowserConsole(false);
-		this.playerManager.playerPip.getDebug().setLogToBrowserConsole(false);
-		this.playerManager.playerAudioFiveDotOne.getDebug().setLogToBrowserConsole(false);
-		this.playerManager.playerAudioFiveDotOne2.getDebug().setLogToBrowserConsole(false);
-		this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);
+		this.disableLogs();
 
 		this.playerManager.controller = new MediaController();
 
-		this.videoMain.controller			= this.playerManager.controller;
-		this.audioFiveDotOne.controller		= this.playerManager.controller;
-		this.audioFiveDotOne2.controller	= this.playerManager.controller;
-		this.videoAudio.controller			= this.playerManager.controller;
+		this.videoMain.controller			= this.playerManager.controller;		
+		if(Media.links.dataEA.url){
+			this.audioFiveDotOne.controller	= this.playerManager.controller;
+		}
+		if(Media.links.dataDI.url){
+			this.audioFiveDotOne2.controller= this.playerManager.controller;
+		}
+		if(Media.links.dataAD.url){
+			this.videoAudio.controller		= this.playerManager.controller;
+		}
 		if(Media.LSFEnabled){
 			this.videoPip.controller		= this.playerManager.controller;			
 		}
@@ -326,6 +340,17 @@ Player.initWAA = function(){
 		var adData = Media.links.dataAD;
 		var diData = Media.links.dataDI;
 
+		/// Workaround when all the streams are not in the EBU Core
+		if(!Media.links.dataEA.type){
+			eaData.type = "MultiWithLFE";
+		}
+		if(!Media.links.dataAD.type){
+			adData.type = "Mono";
+		}
+		if(!Media.links.dataDI.type){
+			diData.type = "Mono";
+		}
+
 		// Son principal
 		mainAudioASD = new M4DPAudioModules.AudioStreamDescription(
 				mainData.type,
@@ -339,7 +364,7 @@ Player.initWAA = function(){
 		// Ambiance (pour le 5.1)
 		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
 				eaData.type,
-				this.mode === "5.1" && Media.audioEnabled,
+				typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
 				parseInt(eaData.loudness,10),
 				parseInt(eaData.maxTruePeak,10),
 				eaData.dialog === "true",
@@ -359,7 +384,7 @@ Player.initWAA = function(){
 		// Dialogue (pour le 5.1)
 		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
 				diData.type,
-				this.mode === "5.1" && Media.audioEnabled,
+				typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
 				parseInt(diData.loudness,10),
 				parseInt(diData.maxTruePeak,10),
 				diData.dialog === "true",
@@ -1164,4 +1189,12 @@ Player.updateActiveStreams = function(){
 	receiverMix.activeStreamsChanged();
 	multichannelSpatialiser.activeStreamsChanged();
 	objectSpatialiserAndMixer.activeStreamsChanged();	
+};
+
+Player.disableLogs = function(){
+	this.playerManager.playerMain.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerPip.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerAudioFiveDotOne.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerAudioFiveDotOne2.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);	
 };
