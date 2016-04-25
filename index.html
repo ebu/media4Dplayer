@@ -260,12 +260,12 @@
 				<section id="apps-list-container-sm" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Accueil</span></h1>
 					<a id="switch-to-standard-mode-btn" class="switch-btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode normal" onclick="Main.switchToMode();" tabindex="2">Basculer en mode normal</a>
-					<ul id="apps-list-sm"></ul>
+					<ul class="list-container" id="apps-list-sm"></ul>
 					<a id="logout-btn-sm" onclick="Section.change(Section.sections[0]);"><span tabindex="100" class="selectable-by-chromevox">Se déconnecter</span></a>
 				</section>
 				<section id="app-options-container" class="manual-centering">
 					<h1 id="app-title"></h1>
-					<ul id="app-options">
+					<ul class="list-container" id="app-options">
 						<li id="my-videos-btn" class="menu-item">
 							<a tabindex="2" class="selectable-by-chromevox"></a>
 						</li>
@@ -283,7 +283,7 @@
 				</section>
 				<section id="my-videos-options-container" class="manual-centering">
 					<h1></h1>
-					<ul id="my-videos-options">
+					<ul class="list-container" id="my-videos-options">
 						<li class="menu-item">
 							<a tabindex="2" class="selectable-by-chromevox">Mes vidéos favorites</a>
 						</li>
@@ -307,7 +307,7 @@
 				</section>
 				<section id="options-favorites-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Options Favoris</span></h1>
-					<ul id="options-favorites">
+					<ul class="list-container" id="options-favorites">
 						<li id="play-video-btn" class="menu-item btn">
 							<a onclick="Section.launchPlayerLoading(Dashboard.data);" tabindex="2" class="selectable-by-chromevox">Lire la vidéo</a>
 						</li>
@@ -322,7 +322,7 @@
 				</section>
 				<section id="options-signets-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Options Signets</span></h1>
-					<ul>
+					<ul class="list-container">
 						<li class="menu-item">
 							<a tabindex="2" class="selectable-by-chromevox">Lire à partir de ce signet</a>
 						</li>
@@ -337,7 +337,7 @@
 				</section>
 				<section id="options-history-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Options Historique</span></h1>
-					<ul>
+					<ul class="list-container">
 						<li class="menu-item">
 							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Lire la vidéo</a>
 						</li>
@@ -350,7 +350,7 @@
 				<section id="epg-fiche-container-sm" class="manual-centering">
 					<h1></h1>
 					<h2></h2>
-					<ul id="program-options">
+					<ul class="list-container" id="program-options">
 						<li id="play-video-btn-2" class="menu-item">
 							<a tabindex="3" class="selectable-by-chromevox" onclick="Section.launchPlayerLoading(Dashboard.data);">Accéder à la vidéo</a>
 						</li>
@@ -372,7 +372,7 @@
 				</section>
 				<section id="settings-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages</span></h1>
-					<ul>
+					<ul class="list-container">
 						<li class="menu-item">
 							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[26]);">Audio</a>
 						</li>
@@ -390,7 +390,7 @@
 				</section>
 				<section id="settings-audio-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages audio</span></h1>
-					<ul>
+					<ul class="list-container">
 						<li class="menu-item">
 							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[28]);">Choisir le mode de spatialisation</a>
 						</li>
@@ -405,7 +405,7 @@
 				</section>
 				<section id="settings-interface-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages de l'interface</span></h1>
-					<ul>
+					<ul class="list-container">
 						<li class="menu-item">
 							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[19]);">Taille du texte</a>
 						</li>
@@ -417,7 +417,7 @@
 				</section>
 				<section id="settings-subtitles-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Réglages des sous-titres</span></h1>
-					<ul>
+					<ul class="list-container">
 						<li class="menu-item">
 							<a tabindex="2" class="selectable-by-chromevox" onclick="Section.change(Section.sections[20]);">Choisir la police de caractère</a>
 						</li>
@@ -449,18 +449,18 @@
 					</div>
 				</section>
 				<section id="settings-audio-spatialisation-mode-sm-container" class="manual-centering">
-					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir le mode de spatialisation</span></h1>
-					<ul id="spatialisation-options-sm">
-						<li class="menu-item" data-value="binaural">
+					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir le mode de spatialisation</span></h1>				
+					<div class="list-container" id="spatialisation-options-sm" role="radiogroup" aria-label="Liste des modes de spatialisation">
+						<div class="menu-item" data-value="binaural" role="radio" aria-checked="false">
 							<a tabindex="2" class="selectable-by-chromevox final-option">Spatialisation au casque</a>
-						</li>
-						<li class="menu-item" data-value="binaural-EQ">
+						</div>
+						<div class="menu-item" data-value="binaural-EQ" role="radio" aria-checked="false">
 							<a tabindex="3" class="selectable-by-chromevox final-option">Spatialisation au casque EQ</a>
-						</li>
-						<li class="menu-item" data-value="transaural">
+						</div>
+						<div class="menu-item" data-value="transaural" role="radio" aria-checked="false">
 							<a tabindex="4" class="selectable-by-chromevox final-option">Spatialisation aux haut-parleurs</a>
-						</li>
-					</ul>
+						</div>
+					</div>
 					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
 				<section id="settings-audio-spatialisation-sm-container">
@@ -516,7 +516,7 @@
 				</section>
 				<section id="settings-subtitles-font-family-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la police de caractère</span></h1>
-					<ul id="font-family">
+					<ul class="list-container" id="font-family">
 						<li class="menu-item Arial">
 							<a tabindex="2" class="selectable-by-chromevox final-option">Arial</a>
 						</li>

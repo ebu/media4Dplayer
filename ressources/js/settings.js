@@ -667,7 +667,7 @@ Settings.change.audioSpatialisationMode = function(value){
 	if(Main.simplifiedMode){
 		$(document.getElementById("spatialisation-options-sm")).children(".menu-item").filter(function(){
 			return $(this).data("value") === value;
-		}).addClass("selected").siblings().removeClass("selected");
+		}).addClass("selected").attr("aria-checked", true).siblings().removeClass("selected").attr("aria-checked", false);
 		setMode(value);
 		
 	}else{
