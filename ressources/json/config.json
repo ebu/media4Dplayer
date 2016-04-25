@@ -1,6 +1,6 @@
 {
     "enableLog": true,
-	"appVersion":"0.13",
+	"appVersion":"0.14",
 	"playerTimeout":30,
     "infoBannerDelayToHide":5,
 	"infoBannerDelayToHideInSimplifiedMode":10,

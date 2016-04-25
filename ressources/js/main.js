@@ -8,8 +8,6 @@ var Main = {
 Main.onLoad = function () {
 	log("onLoad() : start;");
 	
-	$(document.getElementById("appVersion")).html("v"+Config.appVersion);
-	
 	var $errorMCSupport = $(document.getElementById("noMCSupport"));
 	if(checkMediaControllerSupport() === "unsupported"){
 		$errorMCSupport.show();
@@ -25,6 +23,9 @@ Main.onLoad = function () {
 	
 	Main.firstLaunch = true;
 	API.getConfig(function() {
+	
+		$(document.getElementById("appVersion")).html("v"+Config.appVersion);
+		
 		setTimeout(function(){
 			Section.change(Section.sections[0]);
 			Main.hideSplashScreen();
