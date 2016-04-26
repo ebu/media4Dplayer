@@ -175,6 +175,8 @@ Player.load = function(videoData, callback, onClose){
 		this.onChangeElevation("dialogues");
 		this.onChangeDistance("commentary");
 		this.onChangeDistance("dialogues");
+		
+		dialogEnhancement.bypass = true;
 
 		// update the WAA connections
 		this.updateWAAConnections();
@@ -298,6 +300,24 @@ Player.launch = function(){
 
 Player.initWAA = function(){
 	
+	var mainData = JSON.parse(JSON.stringify(Media.links.dataMain));
+	var eaData = JSON.parse(JSON.stringify(Media.links.dataEA));
+	var adData = JSON.parse(JSON.stringify(Media.links.dataAD));
+	var diData = JSON.parse(JSON.stringify(Media.links.dataDI));
+
+	/// Workaround when all the streams are not in the EBU Core
+	if(!Media.links.dataEA.type){
+		eaData.type = "MultiWithLFE";
+	}
+	if(!Media.links.dataAD.type){
+		adData.type = "Mono";
+	}
+	if(!Media.links.dataDI.type){
+		diData.type = "Mono";
+	}
+
+	//==============================================================================
+	
 	if(!this.waaAlreadyInit){
 		this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 
@@ -333,23 +353,6 @@ Player.initWAA = function(){
 		channelSplitterDescription.connect( channelMerger, 0, 8 );
 
 		channelSplitterFiveDotOne2.connect( channelMerger, 0, 9 );
-
-		//==============================================================================
-		var mainData = Media.links.dataMain;
-		var eaData = Media.links.dataEA;
-		var adData = Media.links.dataAD;
-		var diData = Media.links.dataDI;
-
-		/// Workaround when all the streams are not in the EBU Core
-		if(!Media.links.dataEA.type){
-			eaData.type = "MultiWithLFE";
-		}
-		if(!Media.links.dataAD.type){
-			adData.type = "Mono";
-		}
-		if(!Media.links.dataDI.type){
-			diData.type = "Mono";
-		}
 
 		// Son principal
 		mainAudioASD = new M4DPAudioModules.AudioStreamDescription(
@@ -441,7 +444,45 @@ Player.initWAA = function(){
 		multichannelSpatialiser.offsetGain = this.gainOffset;
 		objectSpatialiserAndMixer.offsetGain = this.gainOffset;
 		this.waaAlreadyInit = true;	
+		
+	}else{
+		mainAudioASD.type = mainData.type;
+		mainAudioASD.active = this.mode === "stereo" && Media.audioEnabled;
+		mainAudioASD.loudness = parseInt(mainData.loudness,10);
+		mainAudioASD.maxTruePeak = parseInt(mainData.maxTruePeak,10);
+		mainAudioASD.dialog = mainData.dialog === "true";
+		mainAudioASD.ambiance = mainData.ambiance === "true";
+		mainAudioASD.commentary = mainData.commentary === "true";
+		
+		extendedAmbienceASD.type = eaData.type;
+		extendedAmbienceASD.active = typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+		extendedAmbienceASD.loudness = parseInt(eaData.loudness,10);
+		extendedAmbienceASD.maxTruePeak = parseInt(eaData.maxTruePeak,10);
+		extendedAmbienceASD.dialog = eaData.dialog === "true";
+		extendedAmbienceASD.ambiance = eaData.ambiance === "true";
+		extendedAmbienceASD.commentary = eaData.commentary === "true";
+		
+		extendedCommentsASD.type = adData.type;
+		extendedCommentsASD.active = Media.audioDescriptionEnabled;
+		extendedCommentsASD.loudness = parseInt(adData.loudness,10);
+		extendedCommentsASD.maxTruePeak = parseInt(adData.maxTruePeak,10);
+		extendedCommentsASD.dialog = adData.dialog === "true";
+		extendedCommentsASD.ambiance = adData.ambiance === "true";
+		extendedCommentsASD.commentary = adData.commentary === "true";
+		
+		extendedDialogsASD.type = diData.type;
+		extendedDialogsASD.active = typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+		extendedDialogsASD.loudness = parseInt(diData.loudness,10);
+		extendedDialogsASD.maxTruePeak = parseInt(diData.maxTruePeak,10);
+		extendedDialogsASD.dialog = diData.dialog === "true";
+		extendedDialogsASD.ambiance = diData.ambiance === "true";
+		extendedDialogsASD.commentary = diData.commentary === "true";
 	}
+		
+	log(mainAudioASD);
+	log(extendedAmbienceASD);
+	log(extendedCommentsASD);
+	log(extendedDialogsASD);
 };
 
 /**
