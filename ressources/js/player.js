@@ -93,10 +93,10 @@ Player.load = function(videoData, callback, onClose){
 
 		Media = videoData;
 		
-		if(isEmpty(Media.links.dataMain) || isEmpty(Media.links.dataEA) || isEmpty(Media.links.dataAD) || isEmpty(Media.links.dataDI)){
+		/*if(isEmpty(Media.links.dataMain) || isEmpty(Media.links.dataEA) || isEmpty(Media.links.dataAD) || isEmpty(Media.links.dataDI)){
 			log("Lecture annulée car il n'y a pas tout flux audio (isEmpty(Media.links.dataMain)="+isEmpty(Media.links.dataMain)+"; isEmpty(Media.links.dataEA)="+isEmpty(Media.links.dataEA)+";isEmpty(Media.links.dataAD)="+isEmpty(Media.links.dataAD)+";)");
 			return;
-		}
+		}*/
 
 		Media.LSFEnabled = !getHtmlStorage("LSFDisabled") && Media.links.dataLS && Media.links.dataLS.url ? true : false;
 		Media.audioEnabled = !getHtmlStorage("audioDisabled") && Media.links.dataMain && Media.links.dataMain.url ? true : false;
@@ -128,13 +128,19 @@ Player.load = function(videoData, callback, onClose){
 		if(Media.LSFEnabled){
 			this.playerManager.playerPip.attachView(this.videoPip);
 			this.playerManager.playerPip.attachSource(urlPip);
-		}	
-		this.playerManager.playerAudioFiveDotOne.attachView(this.audioFiveDotOne);
-		this.playerManager.playerAudioFiveDotOne.attachSource(urlAudioFiveDotOne);
-		this.playerManager.playerAudioFiveDotOne2.attachView(this.audioFiveDotOne2);	
-		this.playerManager.playerAudioFiveDotOne2.attachSource(urlAudioFiveDotOne2);
-		this.playerManager.playerAudio.attachView(this.videoAudio);	
-		this.playerManager.playerAudio.attachSource(urlAudioDescription);
+		}
+		if(urlAudioFiveDotOne){
+			this.playerManager.playerAudioFiveDotOne.attachView(this.audioFiveDotOne);
+			this.playerManager.playerAudioFiveDotOne.attachSource(urlAudioFiveDotOne);
+		}
+		if(urlAudioFiveDotOne2){
+			this.playerManager.playerAudioFiveDotOne2.attachView(this.audioFiveDotOne2);	
+			this.playerManager.playerAudioFiveDotOne2.attachSource(urlAudioFiveDotOne2);
+		}
+		if(urlAudioDescription){
+			this.playerManager.playerAudio.attachView(this.videoAudio);	
+			this.playerManager.playerAudio.attachSource(urlAudioDescription);			
+		}
 
 		// Add HTML-rendered TTML subtitles
 		this.playerManager.playerMain.attachTTMLRenderingDiv(this.ttmlDiv);
@@ -143,9 +149,15 @@ Player.load = function(videoData, callback, onClose){
 		if(Media.LSFEnabled){
 			this.playerManager.playerPip.play();
 		}
-		this.playerManager.playerAudioFiveDotOne.play();
-		this.playerManager.playerAudioFiveDotOne2.play();
-		this.playerManager.playerAudio.play();
+		if(urlAudioFiveDotOne){
+			this.playerManager.playerAudioFiveDotOne.play();
+		}
+		if(urlAudioFiveDotOne2){
+			this.playerManager.playerAudioFiveDotOne2.play();
+		}
+		if(urlAudioDescription){
+			this.playerManager.playerAudio.play();
+		}
 
 		this.updateActiveStreams();
 
@@ -163,6 +175,8 @@ Player.load = function(videoData, callback, onClose){
 		this.onChangeElevation("dialogues");
 		this.onChangeDistance("commentary");
 		this.onChangeDistance("dialogues");
+		
+		dialogEnhancement.bypass = true;
 
 		// update the WAA connections
 		this.updateWAAConnections();
@@ -216,18 +230,20 @@ Player.launch = function(){
 		this.playerManager.playerAudio.setAutoPlay(false);
 
 		// remove Dash.js logs
-		this.playerManager.playerMain.getDebug().setLogToBrowserConsole(false);
-		this.playerManager.playerPip.getDebug().setLogToBrowserConsole(false);
-		this.playerManager.playerAudioFiveDotOne.getDebug().setLogToBrowserConsole(false);
-		this.playerManager.playerAudioFiveDotOne2.getDebug().setLogToBrowserConsole(false);
-		this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);
+		this.disableLogs();
 
 		this.playerManager.controller = new MediaController();
 
-		this.videoMain.controller			= this.playerManager.controller;
-		this.audioFiveDotOne.controller		= this.playerManager.controller;
-		this.audioFiveDotOne2.controller	= this.playerManager.controller;
-		this.videoAudio.controller			= this.playerManager.controller;
+		this.videoMain.controller			= this.playerManager.controller;		
+		if(Media.links.dataEA.url){
+			this.audioFiveDotOne.controller	= this.playerManager.controller;
+		}
+		if(Media.links.dataDI.url){
+			this.audioFiveDotOne2.controller= this.playerManager.controller;
+		}
+		if(Media.links.dataAD.url){
+			this.videoAudio.controller		= this.playerManager.controller;
+		}
 		if(Media.LSFEnabled){
 			this.videoPip.controller		= this.playerManager.controller;			
 		}
@@ -284,6 +300,24 @@ Player.launch = function(){
 
 Player.initWAA = function(){
 	
+	var mainData = JSON.parse(JSON.stringify(Media.links.dataMain));
+	var eaData = JSON.parse(JSON.stringify(Media.links.dataEA));
+	var adData = JSON.parse(JSON.stringify(Media.links.dataAD));
+	var diData = JSON.parse(JSON.stringify(Media.links.dataDI));
+
+	/// Workaround when all the streams are not in the EBU Core
+	if(!Media.links.dataEA.type){
+		eaData.type = "MultiWithLFE";
+	}
+	if(!Media.links.dataAD.type){
+		adData.type = "Mono";
+	}
+	if(!Media.links.dataDI.type){
+		diData.type = "Mono";
+	}
+
+	//==============================================================================
+	
 	if(!this.waaAlreadyInit){
 		this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
 
@@ -320,12 +354,6 @@ Player.initWAA = function(){
 
 		channelSplitterFiveDotOne2.connect( channelMerger, 0, 9 );
 
-		//==============================================================================
-		var mainData = Media.links.dataMain;
-		var eaData = Media.links.dataEA;
-		var adData = Media.links.dataAD;
-		var diData = Media.links.dataDI;
-
 		// Son principal
 		mainAudioASD = new M4DPAudioModules.AudioStreamDescription(
 				mainData.type,
@@ -339,7 +367,7 @@ Player.initWAA = function(){
 		// Ambiance (pour le 5.1)
 		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
 				eaData.type,
-				this.mode === "5.1" && Media.audioEnabled,
+				typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
 				parseInt(eaData.loudness,10),
 				parseInt(eaData.maxTruePeak,10),
 				eaData.dialog === "true",
@@ -359,7 +387,7 @@ Player.initWAA = function(){
 		// Dialogue (pour le 5.1)
 		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
 				diData.type,
-				this.mode === "5.1" && Media.audioEnabled,
+				typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
 				parseInt(diData.loudness,10),
 				parseInt(diData.maxTruePeak,10),
 				diData.dialog === "true",
@@ -416,7 +444,45 @@ Player.initWAA = function(){
 		multichannelSpatialiser.offsetGain = this.gainOffset;
 		objectSpatialiserAndMixer.offsetGain = this.gainOffset;
 		this.waaAlreadyInit = true;	
+		
+	}else{
+		mainAudioASD.type = mainData.type;
+		mainAudioASD.active = this.mode === "stereo" && Media.audioEnabled;
+		mainAudioASD.loudness = parseInt(mainData.loudness,10);
+		mainAudioASD.maxTruePeak = parseInt(mainData.maxTruePeak,10);
+		mainAudioASD.dialog = mainData.dialog === "true";
+		mainAudioASD.ambiance = mainData.ambiance === "true";
+		mainAudioASD.commentary = mainData.commentary === "true";
+		
+		extendedAmbienceASD.type = eaData.type;
+		extendedAmbienceASD.active = typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+		extendedAmbienceASD.loudness = parseInt(eaData.loudness,10);
+		extendedAmbienceASD.maxTruePeak = parseInt(eaData.maxTruePeak,10);
+		extendedAmbienceASD.dialog = eaData.dialog === "true";
+		extendedAmbienceASD.ambiance = eaData.ambiance === "true";
+		extendedAmbienceASD.commentary = eaData.commentary === "true";
+		
+		extendedCommentsASD.type = adData.type;
+		extendedCommentsASD.active = Media.audioDescriptionEnabled;
+		extendedCommentsASD.loudness = parseInt(adData.loudness,10);
+		extendedCommentsASD.maxTruePeak = parseInt(adData.maxTruePeak,10);
+		extendedCommentsASD.dialog = adData.dialog === "true";
+		extendedCommentsASD.ambiance = adData.ambiance === "true";
+		extendedCommentsASD.commentary = adData.commentary === "true";
+		
+		extendedDialogsASD.type = diData.type;
+		extendedDialogsASD.active = typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+		extendedDialogsASD.loudness = parseInt(diData.loudness,10);
+		extendedDialogsASD.maxTruePeak = parseInt(diData.maxTruePeak,10);
+		extendedDialogsASD.dialog = diData.dialog === "true";
+		extendedDialogsASD.ambiance = diData.ambiance === "true";
+		extendedDialogsASD.commentary = diData.commentary === "true";
 	}
+		
+	log(mainAudioASD);
+	log(extendedAmbienceASD);
+	log(extendedCommentsASD);
+	log(extendedDialogsASD);
 };
 
 /**
@@ -1164,4 +1230,12 @@ Player.updateActiveStreams = function(){
 	receiverMix.activeStreamsChanged();
 	multichannelSpatialiser.activeStreamsChanged();
 	objectSpatialiserAndMixer.activeStreamsChanged();	
+};
+
+Player.disableLogs = function(){
+	this.playerManager.playerMain.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerPip.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerAudioFiveDotOne.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerAudioFiveDotOne2.getDebug().setLogToBrowserConsole(false);
+	this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);	
 };
