@@ -250,7 +250,7 @@ Model.getProgramDetails.getAudiosList = function(data){
 	var newList = [];
 	newList.push(data.dataMain.lang);
 
-	if(data.dataEA.lang && data.dataDI.lang){
+	if(data.dataEA.lang && !isEmpty(data.dataDI)){
 		newList.push(data.dataEA.lang);
 	}
 	return newList;
