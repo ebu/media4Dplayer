@@ -422,7 +422,7 @@
                         <ebucore:containerEncoding formatLabel="PNG"/>
                     </ebucore:containerFormat>
                     <ebucore:fileName>abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.jpg</ebucore:fileName>
-                    <ebucore:locator>https://194.51.35.43:25001/fbdownload/abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.png?dlink=2f4d656469613444706c617965722f30305f4d4f4e44455f44455f4a414d592f5468756d626e61696c732f6162636465666768696a6b6c6d6e6f707172737475767778797a303132333435363738392d5365715f3030303030302e706e67</ebucore:locator>
+                    <ebucore:locator>ressources/img/temp/programs/lmdj.png</ebucore:locator>
                 </ebucore:format>
                 <ebucore:partStartTime>
                     <ebucore:timecode>00:00:00:00000</ebucore:timecode>
