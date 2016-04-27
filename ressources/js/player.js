@@ -358,8 +358,8 @@ Player.initWAA = function(){
 		mainAudioASD = new M4DPAudioModules.AudioStreamDescription(
 				mainData.type,
 				this.mode === "stereo" && Media.audioEnabled,
-				parseInt(mainData.loudness,10),
-				parseInt(mainData.maxTruePeak,10),
+				parseFloat(mainData.loudness,10),
+				parseFloat(mainData.maxTruePeak,10),
 				mainData.dialog === "true",
 				mainData.ambiance === "true",
 				mainData.commentary === "true");
@@ -368,8 +368,8 @@ Player.initWAA = function(){
 		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
 				eaData.type,
 				typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
-				parseInt(eaData.loudness,10),
-				parseInt(eaData.maxTruePeak,10),
+				parseFloat(eaData.loudness,10),
+				parseFloat(eaData.maxTruePeak,10),
 				eaData.dialog === "true",
 				eaData.ambiance === "true",
 				eaData.commentary === "true");
@@ -378,8 +378,8 @@ Player.initWAA = function(){
 		extendedCommentsASD = new M4DPAudioModules.AudioStreamDescription(
 				adData.type,
 				Media.audioDescriptionEnabled,
-				parseInt(adData.loudness,10),
-				parseInt(adData.maxTruePeak,10),
+				parseFloat(adData.loudness,10),
+				parseFloat(adData.maxTruePeak,10),
 				adData.dialog === "true",
 				adData.ambiance === "true",
 				adData.commentary === "true");
@@ -388,8 +388,8 @@ Player.initWAA = function(){
 		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
 				diData.type,
 				typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
-				parseInt(diData.loudness,10),
-				parseInt(diData.maxTruePeak,10),
+				parseFloat(diData.loudness,10),
+				parseFloat(diData.maxTruePeak,10),
 				diData.dialog === "true",
 				diData.ambiance === "true",
 				diData.commentary === "true");
@@ -448,32 +448,32 @@ Player.initWAA = function(){
 	}else{
 		mainAudioASD.type = mainData.type;
 		mainAudioASD.active = this.mode === "stereo" && Media.audioEnabled;
-		mainAudioASD.loudness = parseInt(mainData.loudness,10);
-		mainAudioASD.maxTruePeak = parseInt(mainData.maxTruePeak,10);
+		mainAudioASD.loudness = parseFloat(mainData.loudness,10);
+		mainAudioASD.maxTruePeak = parseFloat(mainData.maxTruePeak,10);
 		mainAudioASD.dialog = mainData.dialog === "true";
 		mainAudioASD.ambiance = mainData.ambiance === "true";
 		mainAudioASD.commentary = mainData.commentary === "true";
 		
 		extendedAmbienceASD.type = eaData.type;
 		extendedAmbienceASD.active = typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
-		extendedAmbienceASD.loudness = parseInt(eaData.loudness,10);
-		extendedAmbienceASD.maxTruePeak = parseInt(eaData.maxTruePeak,10);
+		extendedAmbienceASD.loudness = parseFloat(eaData.loudness,10);
+		extendedAmbienceASD.maxTruePeak = parseFloat(eaData.maxTruePeak,10);
 		extendedAmbienceASD.dialog = eaData.dialog === "true";
 		extendedAmbienceASD.ambiance = eaData.ambiance === "true";
 		extendedAmbienceASD.commentary = eaData.commentary === "true";
 		
 		extendedCommentsASD.type = adData.type;
 		extendedCommentsASD.active = Media.audioDescriptionEnabled;
-		extendedCommentsASD.loudness = parseInt(adData.loudness,10);
-		extendedCommentsASD.maxTruePeak = parseInt(adData.maxTruePeak,10);
+		extendedCommentsASD.loudness = parseFloat(adData.loudness,10);
+		extendedCommentsASD.maxTruePeak = parseFloat(adData.maxTruePeak,10);
 		extendedCommentsASD.dialog = adData.dialog === "true";
 		extendedCommentsASD.ambiance = adData.ambiance === "true";
 		extendedCommentsASD.commentary = adData.commentary === "true";
 		
 		extendedDialogsASD.type = diData.type;
 		extendedDialogsASD.active = typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
-		extendedDialogsASD.loudness = parseInt(diData.loudness,10);
-		extendedDialogsASD.maxTruePeak = parseInt(diData.maxTruePeak,10);
+		extendedDialogsASD.loudness = parseFloat(diData.loudness,10);
+		extendedDialogsASD.maxTruePeak = parseFloat(diData.maxTruePeak,10);
 		extendedDialogsASD.dialog = diData.dialog === "true";
 		extendedDialogsASD.ambiance = diData.ambiance === "true";
 		extendedDialogsASD.commentary = diData.commentary === "true";
