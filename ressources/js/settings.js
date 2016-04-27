@@ -580,7 +580,7 @@ Settings.change.subtitlesFontFamily = function(ff){
 	$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Verdana").addClass(ff);
 	
 	if(Main.simplifiedMode){
-		$(document.getElementById("font-family")).children(".menu-item."+ff).addClass("selected").siblings().removeClass("selected");		
+		$(document.getElementById("font-family")).children(".menu-item."+ff).attr("aria-checked", true).addClass("selected").siblings().attr("aria-checked", false).removeClass("selected");		
 	}else{
 		$(".option-font-family .font-family."+ff).addClass("selected").siblings().removeClass("selected");
 	}
