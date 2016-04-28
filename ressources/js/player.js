@@ -176,7 +176,7 @@ Player.load = function(videoData, callback, onClose){
 		this.onChangeDistance("commentary");
 		this.onChangeDistance("dialogues");
 		
-		dialogEnhancement.bypass = true;
+		//dialogEnhancement.bypass = true;
 
 		// update the WAA connections
 		this.updateWAAConnections();
