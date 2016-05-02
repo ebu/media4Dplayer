@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.2" encoding="UTF-8" standalone="yes"?>
 <ebucore:ebuCoreMain xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ebucore="urn:ebu:metadata-schema:ebuCore_2015" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ebucore:coreMetadata>
         <ebucore:part partName="EditorialMetadata">
@@ -128,8 +128,8 @@
                     <ebucore:containerFormat>
                         <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                     </ebucore:containerFormat>
-                    <ebucore:fileName>manifest-lsf.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Tchoupi-2-ondemand/manifest-lsf.mpd</ebucore:locator>
+                    <ebucore:fileName>manifest-lsf1.mpd</ebucore:fileName>
+                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Tchoupi-2-ondemand/manifest-lsf1.mpd</ebucore:locator>
                 </ebucore:format>
                 <ebucore:format formatName="EA1">
                     <ebucore:audioFormat audioFormatId="2" audioFormatName="PVF" audioPresenceFlag="true">

@@ -103,8 +103,8 @@
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
-                <ebucore:fileName>manifest-lsf.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-rugby-avc-ondemand/manifest-lsf.mpd</ebucore:locator>
+                <ebucore:fileName>manifest-lsf1.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-rugby-avc-ondemand/manifest-lsf1.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA1">
                 <ebucore:audioFormat audioFormatId="2" audioFormatName="PVF" audioPresenceFlag="false">
