@@ -20,24 +20,28 @@ Navigation.goBack = function(){
 };
 
 Navigation.moveSelecteur = function(Obj){
-	log("moveSelecteur start; TABINDEX = "+$(Obj).attr("tabindex"));
-	try {
-		if (!$(Obj).length) {
-			Obj = document.getElementById(Obj);
+	if(Main.simplifiedMode){
+		log("moveSelecteur start; TABINDEX = "+$(Obj).attr("tabindex"));
+		try {
+			if (!$(Obj).length) {
+				Obj = document.getElementById(Obj);
+			}
+
+			Obj.focus();
+		} catch (err) {
+			log("Une erreur est survenue...");
 		}
-		
-		Obj.focus();
-	} catch (err) {
-		log("Une erreur est survenue...");
 	}
 };
 
 Navigation.setFocusToFirstItem = function(){
-	var $defaultFocus = $("body").find("h1:visible span.selectable-by-chromevox, .back-button:visible span.selectable-by-chromevox, #in-construction:visible .selectable-by-chromevox, #switch-to-simplified-mode-btn.selectable-by-chromevox:visible, .closeBtn:visible, .list-container:visible .selectable-by-chromevox");
-	if($defaultFocus.length){
-		this.moveSelecteur($defaultFocus[0]);
-		
-	}else if(Main.simplifiedMode){
-		log("Je n'ai pas trouvé à qui donner le focus par défaut");
+	if(Main.simplifiedMode){
+		var $defaultFocus = $("body").find("h1:visible span.selectable-by-chromevox, .back-button:visible span.selectable-by-chromevox, #in-construction:visible .selectable-by-chromevox, #switch-to-simplified-mode-btn.selectable-by-chromevox:visible, .closeBtn:visible, .list-container:visible .selectable-by-chromevox");
+		if($defaultFocus.length){
+			this.moveSelecteur($defaultFocus[0]);
+
+		}else{
+			log("Je n'ai pas trouvé à qui donner le focus par défaut");
+		}
 	}
 };
