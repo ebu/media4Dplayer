@@ -41,8 +41,9 @@ a.switch-btn{position:absolute;top:45px;left:45px;padding:10px;margin-left:0}
 .hidden{display:none}
 .opaque{opacity: 0.5}
 #appVersion, #noMCSupport{position:absolute;text-align:center;width:100%}
-#appVersion{top:20px}
-#noMCSupport{top:40px;color:#cd0a0a}
+#appVersion{bottom:20px}
+#noMCSupport{bottom:43px;color:#cd0a0a}
+.logo{width: 60px;}
 
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
 body:not(.sm).apps-list #apps-list-container, body.in-construction #in-construction{display:table}
@@ -57,7 +58,7 @@ section .list{display:table-cell;vertical-align:middle;text-align:center}
 /* TOPBAR */
 nav, #back-to-player-button-container{height:69px}
 nav{background-color:#fff;border-bottom:1px solid #bebebe;position:absolute;width:100%}
-.topbarButton{color:#545454;float:left;font-weight:500;height:70px;line-height:70px;text-align:center;width:19.5%;list-style:none}
+.topbarButton{color:#545454;float:left;font-weight:500;height:70px;line-height:70px;text-align:center;width:18.5%;list-style:none}
 .topbarButton.sel{background-color:#c8c8c8}
 .topbarImg, .topbarText{display:inline-block;vertical-align:middle}
 .topbarImg{margin-right:5%;width:32px}
