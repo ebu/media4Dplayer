@@ -264,10 +264,10 @@ InfoBanner.playerParams.initLabels = function(){
 	var $labelAD = $(document.getElementById("label-option-ad"));
 	if(Media.audioDescriptionEnabled){
 		value = Media.audioDescriptions[Media.currentAudioDescriptionIndex].lang;
-		$labelAD.text("Choix de langue pour l'audio description : " + value + " sélectionné");
+		$labelAD.text("Choix de langue pour les commentaires : " + value + " sélectionné");
 		
 	}else{
-		$labelAD.text("Choix de langue pour l'audio description : " + none + " sélectionné");
+		$labelAD.text("Choix de langue pour les commentaires : " + none + " sélectionné");
 	}
 	
 	// LS
@@ -328,7 +328,7 @@ InfoBanner.playerParams.options.show = function(type, button){
 				return optionName === "Aucun" ? "Désactiver les sous-titres" : "Sous-titre " + optionName;
 
 			}else if(type === "ad"){
-				return optionName === "Aucun" ? "Désactiver l'audio description" : "Audio description " + optionName;
+				return optionName === "Aucun" ? "Désactiver les commentaires" : "commentaires " + optionName;
 
 			}else if(type === "ls"){
 				return optionName === "Aucun" ? "Désactiver la langue des signes" : "Langue des signes " + optionName.replace("LSF", "Français");

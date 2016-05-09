@@ -374,7 +374,7 @@ Player.initWAA = function(){
 				eaData.ambiance === "true",
 				eaData.commentary === "true");
 
-		// Audio description
+		// Commentaires
 		extendedCommentsASD = new M4DPAudioModules.AudioStreamDescription(
 				adData.type,
 				Media.audioDescriptionEnabled,
