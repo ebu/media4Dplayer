@@ -269,12 +269,29 @@ Player.launch = function(){
 							log("event name = " + event+"------------------------------------------------");
 							// Avoid overkill events, trigger timeupdate manually
 							
+							var cTime = this.currentTime();
 							switch(event){
 								
 								case "timeupdate":
+
 									if (!this.media.paused) {
+									
+										if (videos.b && videos.b.media.readyState === 4) {
+											videos.b.currentTime(cTime);
+										}
+										if (videos.c && videos.c.media.readyState === 4) {
+											videos.c.currentTime(cTime);
+										}
+										if (videos.d && videos.d.media.readyState === 4) {
+											videos.d.currentTime(cTime);
+										}
+										if (videos.e && videos.e.media.readyState === 4) {
+											videos.e.currentTime(cTime);
+										}
+										requestAnimationFrame(function(){});
 										return;
 									}
+									
 									if(videos.b){
 										videos.b.emit("timeupdate");
 									}
@@ -306,16 +323,16 @@ Player.launch = function(){
 									
 								case "seeked":
 									if(videos.b){
-										videos.b.currentTime(this.currentTime());
+										videos.b.currentTime(cTime);
 									}
 									if(videos.c){
-										videos.c.currentTime(this.currentTime());
+										videos.c.currentTime(cTime);
 									}
 									if(videos.d){
-										videos.d.currentTime(this.currentTime());
+										videos.d.currentTime(cTime);
 									}
 									if(videos.e){
-										videos.e.currentTime(this.currentTime());
+										videos.e.currentTime(cTime);
 									}
 									break;
 								
@@ -387,36 +404,6 @@ Player.launch = function(){
 				$(Player.ttmlDiv).css({top:top + "%"});
 			}
 		});
-
-		// With requestAnimationFrame, we can ensure that as 
-		// frequently as the browser would allow, 
-		// the video is resync'ed.
-		function sync() {
-			if (videos.b && videos.b.media.readyState === 4) {
-				videos.b.currentTime(
-					videos.a.currentTime()
-					);
-			}
-			if (videos.c && videos.c.media.readyState === 4) {
-				videos.c.currentTime(
-					videos.a.currentTime()
-					);
-			}
-			if (videos.d && videos.d.media.readyState === 4) {
-				videos.d.currentTime(
-					videos.a.currentTime()
-					);
-			}
-			if (videos.e && videos.e.media.readyState === 4) {
-				videos.e.currentTime(
-					videos.a.currentTime()
-					);
-			}
-			requestAnimationFrame(sync);
-		}
-		sync();
-
-		this.alreadyInit = true;
 	}
 };
 
@@ -724,6 +711,7 @@ Player.resetPlayers = function(){
 	if(Main.MCSupport){
 		
 		videos.a.destroy();
+		videos.a = null;
 		if(videos.b){
 			videos.b.destroy();
 			videos.b = null;
