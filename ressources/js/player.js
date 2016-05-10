@@ -726,15 +726,19 @@ Player.resetPlayers = function(){
 		videos.a.destroy();
 		if(videos.b){
 			videos.b.destroy();
+			videos.b = null;
 		}
 		if(videos.c){
 			videos.c.destroy();
+			videos.c = null;
 		}
 		if(videos.d){
 			videos.d.destroy();
+			videos.d = null;
 		}
 		if(videos.e){
 			videos.e.destroy();
+			videos.e = null;
 		}
 		
 		this.playerManager.playerMain.reset();
@@ -1219,13 +1223,12 @@ Player.activeOptionSigne = function(index) {
 
 		if(index !== Media.ls.length){
 
-			this.playerManager.controller.currentTime = this.videoMain.currentTime;
-			this.videoPip.controller = this.playerManager.controller;	
-
 			playerPIP.startup();
 			playerPIP.setAutoPlay(false);
 			playerPIP.attachView(this.videoPip);
-			playerPIP.attachSource(Media.ls[Media.currentLSFIndex].url);
+			playerPIP.attachSource(Media.links.dataLS.url);
+			
+			videos.e = Popcorn("#videoPlayerPip");
 
 			Media.currentLSFIndex = index;
 			Media.LSFEnabled = true;
@@ -1233,6 +1236,10 @@ Player.activeOptionSigne = function(index) {
 			$textContent.html(Media.ls[index].lang);
 
 		}else{
+			if(videos.e){
+				videos.e.destroy();
+				videos.e = null;
+			}
 			this.videoPip.controller = null;
 			playerPIP.reset();
 
