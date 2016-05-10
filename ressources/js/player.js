@@ -241,7 +241,7 @@ Player.launch = function(){
 		}
 		
 		loadCount = 0;
-		events = ("pause ended timeupdate seeking").split(/\s+/g);
+		events = ("pause ended timeupdate seeking seeked").split(/\s+/g);
 		
 		// iterate both media sources
 		Popcorn.forEach(videos, function (media, type) {
@@ -290,6 +290,21 @@ Player.launch = function(){
 									break;
 									
 								case "seeking":
+									if(videos.b){
+										videos.b.pause();
+									}
+									if(videos.c){
+										videos.c.pause();
+									}
+									if(videos.d){
+										videos.d.pause();
+									}
+									if(videos.e){
+										videos.e.pause();
+									}
+									break;
+									
+								case "seeked":
 									if(videos.b){
 										videos.b.currentTime(this.currentTime());
 									}
