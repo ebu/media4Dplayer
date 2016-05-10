@@ -145,7 +145,7 @@ Player.load = function(videoData, callback, onClose){
 		// Add HTML-rendered TTML subtitles
 		this.playerManager.playerMain.attachTTMLRenderingDiv(this.ttmlDiv);
 
-		this.playerManager.playerMain.play();	
+		//this.playerManager.playerMain.play();	
 		/*if(Media.LSFEnabled){
 			this.playerManager.playerPip.play();
 		}
@@ -231,6 +231,8 @@ Player.launch = function(){
 
 		// remove Dash.js logs
 		this.disableLogs();
+
+		this.initWAA();
 		
 		var playersToLaunch = 1;
 		var players = ["#videoPlayerMain", "#playerAudioFiveDotOne", "#playerAudioFiveDotOne-2", "#videoPlayerAudio", "#videoPlayerPip"];
@@ -255,7 +257,7 @@ Player.launch = function(){
 		}
 		
 		loadCount = 0;
-		events = ("play pause timeupdate seeking").split(/\s+/g);
+		events = ("playing pause timeupdate seeking").split(/\s+/g);
 		
 		// iterate both media sources
 		Popcorn.forEach(videos, function (media, type) {
@@ -299,14 +301,9 @@ Player.launch = function(){
 								if(videos.e){
 									videos.e.emit("timeupdate");
 								}
-
-								// update scrubber
-								//scrub.val(this.currentTime());
-
-								return;
-							}
-
-							if (event === "seeking") {
+								
+							}else if (event === "seeking") {
+								
 								if(videos.b){
 									videos.b.currentTime(this.currentTime());
 								}
@@ -319,21 +316,9 @@ Player.launch = function(){
 								if(videos.e){
 									videos.e.currentTime(this.currentTime());
 								}
-							}
-
-							if (event === "play" || event === "pause") {
-								if(videos.b){
-									videos.b[event]();
-								}
-								if(videos.c){
-									videos.c[event]();
-								}
-								if(videos.d){
-									videos.d[event]();
-								}
-								if(videos.e){
-									videos.e[event]();
-								}
+								
+							}else if(event === "pause"){
+								Player.onPause();
 							}
 						});
 					});
@@ -341,23 +326,21 @@ Player.launch = function(){
 			});
 		});
 
-		this.initWAA();
-
-		/*this.playerManager.controller.addEventListener('playing', function() {
+		videos.a.on('playing', function() {
 			Player.onPlay();
 		});
 
-		this.playerManager.controller.addEventListener('pause', function() {
+		videos.a.on('pause', function() {
 			Player.onPause();
 		});
 
-		this.playerManager.controller.addEventListener('ended', function() {
+		/*this.playerManager.controller.addEventListener('ended', function() {
 			Player.alreadyInit = false;
 			Player.validClose();
 		});*/
 
-		/*this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
-			//log("MediaPlayer.events.TEXT_TRACKS_ADDED");
+		this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
+			log("MediaPlayer.events.TEXT_TRACKS_ADDED");
 			if(getHtmlStorage("subtitlesDisabled")){
 				Player.playerManager.playerMain.setTextTrack(-1);					
 			}else{
@@ -376,7 +359,7 @@ Player.launch = function(){
 				}
 				$(Player.ttmlDiv).css({top:top + "%"});
 			}
-		});*/
+		});
 
 		// With requestAnimationFrame, we can ensure that as 
 		// frequently as the browser would allow, 
@@ -1041,7 +1024,7 @@ Player.onChangeADVolume = function(value){
 Player.launchCheckPositionVideo = function(){
 	this.stopCheckVideoPosition();
 	this.checkPositionVideo = setInterval(function(){
-		InfoBanner.progressBar.update(Player.playerManager.controller.currentTime, Player.playerManager.controller.duration);
+		InfoBanner.progressBar.update(videos.a.currentTime(), videos.a.duration());
 		
 		var upVol = document.getElementById('up-volume');
 		var isCompressed = smartFader.dynamicCompressionState;
@@ -1051,7 +1034,7 @@ Player.launchCheckPositionVideo = function(){
 		}
 		else{
 			upVol.style.backgroundColor = "rgba(0, 0, 0, 0)";
-		}		
+		}
 	}, 500);
 };
 
@@ -1078,9 +1061,9 @@ Player.stopCheckVideoPosition = function(){
 Player.rw = function(){
 	if(Main.MCSupport){
 		
-		var totalTimeSecond =  this.playerManager.controller.duration;	
+		var totalTimeSecond =  videos.a.duration();	
 		var saut = Math.round(totalTimeSecond*(5/100));
-		var currentPosition = this.playerManager.controller.currentTime;
+		var currentPosition = videos.a.currentTime();
 		var newCurrentPosition = currentPosition - saut;
 		if (newCurrentPosition < 0) {
 			newCurrentPosition = 0;
@@ -1101,9 +1084,9 @@ Player.rw = function(){
 Player.ff = function(){
 	if(Main.MCSupport){
 		
-		var totalTimeSecond =  this.playerManager.controller.duration;	
+		var totalTimeSecond =  videos.a.duration();	
 		var saut = Math.round(totalTimeSecond*(5/100));
-		var currentPosition = this.playerManager.controller.currentTime;
+		var currentPosition = videos.a.currentTime();
 		var newCurrentPosition = currentPosition + saut;
 
 		// check if the new position is seekable
@@ -1121,15 +1104,15 @@ Player.ff = function(){
 Player.doSeek = function(position){
 	log("doSeek() : position to seek  = "+position);
 	
-	var i, l = this.playerManager.controller.seekable.length;
+	var i, l = videos.a.seekable().length;
 	for (i=0; i<l; i++) {
 		
-		if (this.playerManager.controller.seekable.start(i) <= position && position <= this.playerManager.controller.seekable.end(i)) {
-			this.playerManager.controller.currentTime = position;
+		if (videos.a.seekable().start(i) <= position && position <= videos.a.seekable().end(i)) {
+			videos.a.currentTime(position);
 			InfoBanner.launchMaskingAfterDelay();
 			break;
 		}
-	}	
+	}
 };
 
 /**
@@ -1160,7 +1143,7 @@ Player.playPause = function() {
 
 Player.play = function() {
 	if(Main.MCSupport){
-		this.playerManager.controller.play();
+		videos.a.play();
 	}
 };
 
@@ -1173,7 +1156,7 @@ Player.play = function() {
 
 Player.pause = function() {
 	if(Main.MCSupport){
-		this.playerManager.controller.pause();
+		videos.a.pause();
 	}
 };
 

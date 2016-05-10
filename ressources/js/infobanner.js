@@ -691,13 +691,10 @@ InfoBanner.progressBar.init = function(){
 			var value = ui.value;
 
 			// Récupère la temps
-			var time = value * (Player.playerManager.controller.duration / 100);
+			var time = value * (videos.a.duration() / 100);
 			log("déplacement à " + value + "% ("+time+"s)");
 
 			try{
-				
-				// Le currentTime ne se mettra plus à jour si on le get pas avant de le setter !?
-				var doNotDeleteMe = Player.playerManager.controller.currentTime;
 
 				// check if the new position is seekable
 				Player.doSeek(time);
