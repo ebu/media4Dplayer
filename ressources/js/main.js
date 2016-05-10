@@ -1,20 +1,11 @@
 var isHTML5 = isHTML5 || false;
 var Main = {
 	splashscreenIsVisible:true,
-	simplifiedMode:false,
-	MCSupport:true
+	simplifiedMode:false
 };
 
 Main.onLoad = function () {
 	log("onLoad() : start;");
-	
-	var $errorMCSupport = $(document.getElementById("noMCSupport"));
-	if(checkMediaControllerSupport() === "unsupported"){
-		$errorMCSupport.show();
-	}else{
-		$errorMCSupport.hide();
-		Main.MCSupport = true;
-	}
 	
 	Main.simplifiedMode = getHtmlStorage("simplifiedMode") === "true" ? true : false;
 	

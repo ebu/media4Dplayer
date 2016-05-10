@@ -40,9 +40,8 @@ a.switch-btn{position:absolute;top:45px;left:45px;padding:10px;margin-left:0}
 .btn{cursor:pointer}
 .hidden{display:none}
 .opaque{opacity: 0.5}
-#appVersion, #noMCSupport{position:absolute;text-align:center;width:100%}
+#appVersion{position:absolute;text-align:center;width:100%}
 #appVersion{bottom:20px}
-#noMCSupport{bottom:43px;color:#cd0a0a}
 .logo{width: 60px;}
 
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
