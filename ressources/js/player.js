@@ -1214,7 +1214,7 @@ Player.activeOptionSigne = function(index) {
 			playerPIP.startup();
 			playerPIP.setAutoPlay(false);
 			playerPIP.attachView(this.videoPip);
-			playerPIP.attachSource(Media.links.dataLS.url);
+			playerPIP.attachSource(Media.ls[Media.currentLSFIndex].url);
 			
 			videos.e = Popcorn("#videoPlayerPip");
 
