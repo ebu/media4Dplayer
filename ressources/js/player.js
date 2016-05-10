@@ -145,23 +145,7 @@ Player.load = function(videoData, callback, onClose){
 		// Add HTML-rendered TTML subtitles
 		this.playerManager.playerMain.attachTTMLRenderingDiv(this.ttmlDiv);
 
-		//this.playerManager.playerMain.play();	
-		/*if(Media.LSFEnabled){
-			this.playerManager.playerPip.play();
-		}
-		if(urlAudioFiveDotOne){
-			this.playerManager.playerAudioFiveDotOne.play();
-		}
-		if(urlAudioFiveDotOne2){
-			this.playerManager.playerAudioFiveDotOne2.play();
-		}
-		if(urlAudioDescription){
-			this.playerManager.playerAudio.play();
-		}*/
-
 		this.updateActiveStreams();
-
-		//this.playerManager.controller.play();
 
 		//Gestion du PIP
 		this.setPIP();
@@ -257,7 +241,7 @@ Player.launch = function(){
 		}
 		
 		loadCount = 0;
-		events = ("playing pause timeupdate seeking").split(/\s+/g);
+		events = ("pause ended timeupdate seeking").split(/\s+/g);
 		
 		// iterate both media sources
 		Popcorn.forEach(videos, function (media, type) {
@@ -284,41 +268,54 @@ Player.launch = function(){
 						videos.a.on(event, function () {
 							log("event name = " + event+"------------------------------------------------");
 							// Avoid overkill events, trigger timeupdate manually
-							if (event === "timeupdate") {
-
-								if (!this.media.paused) {
-									return;
-								}
-								if(videos.b){
-									videos.b.emit("timeupdate");
-								}
-								if(videos.c){
-									videos.c.emit("timeupdate");
-								}
-								if(videos.d){
-									videos.d.emit("timeupdate");
-								}
-								if(videos.e){
-									videos.e.emit("timeupdate");
-								}
+							
+							switch(event){
 								
-							}else if (event === "seeking") {
+								case "timeupdate":
+									if (!this.media.paused) {
+										return;
+									}
+									if(videos.b){
+										videos.b.emit("timeupdate");
+									}
+									if(videos.c){
+										videos.c.emit("timeupdate");
+									}
+									if(videos.d){
+										videos.d.emit("timeupdate");
+									}
+									if(videos.e){
+										videos.e.emit("timeupdate");
+									}
+									break;
+									
+								case "seeking":
+									if(videos.b){
+										videos.b.currentTime(this.currentTime());
+									}
+									if(videos.c){
+										videos.c.currentTime(this.currentTime());
+									}
+									if(videos.d){
+										videos.d.currentTime(this.currentTime());
+									}
+									if(videos.e){
+										videos.e.currentTime(this.currentTime());
+									}
+									break;
 								
-								if(videos.b){
-									videos.b.currentTime(this.currentTime());
-								}
-								if(videos.c){
-									videos.c.currentTime(this.currentTime());
-								}
-								if(videos.d){
-									videos.d.currentTime(this.currentTime());
-								}
-								if(videos.e){
-									videos.e.currentTime(this.currentTime());
-								}
+								case "pause":
+									Player.onPause();
+									break;
 								
-							}else if(event === "pause"){
-								Player.onPause();
+								case "ended":
+									Player.alreadyInit = false;
+									Player.validClose();
+									break;
+									
+								default:
+									log("évènement non géré");
+									break;
 							}
 						});
 					});
@@ -329,15 +326,6 @@ Player.launch = function(){
 		videos.a.on('playing', function() {
 			Player.onPlay();
 		});
-
-		videos.a.on('pause', function() {
-			Player.onPause();
-		});
-
-		/*this.playerManager.controller.addEventListener('ended', function() {
-			Player.alreadyInit = false;
-			Player.validClose();
-		});*/
 
 		this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
 			log("MediaPlayer.events.TEXT_TRACKS_ADDED");
@@ -695,6 +683,20 @@ Player.validClose = function() {
 
 Player.resetPlayers = function(){
 	if(Main.MCSupport){
+		
+		videos.a.destroy();
+		if(videos.b){
+			videos.b.destroy();
+		}
+		if(videos.c){
+			videos.c.destroy();
+		}
+		if(videos.d){
+			videos.d.destroy();
+		}
+		if(videos.e){
+			videos.e.destroy();
+		}
 		
 		this.playerManager.playerMain.reset();
 		this.playerManager.playerPip.reset();
