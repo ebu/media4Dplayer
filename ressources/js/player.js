@@ -215,7 +215,7 @@ Player.launch = function(){
 	this.initWAA();
 
 	var playersToLaunch = 1;
-	var players = ["#videoPlayerMain", "#playerAudioFiveDotOne", "#playerAudioFiveDotOne-2", "#videoPlayerAudio", "#videoPlayerPip"];
+	var players = ["#" + this.videoMain.id, "#" + this.audioFiveDotOne.id, "#" + this.audioFiveDotOne2.id, "#" + this.videoAudio.id, "#" + this.videoPip.id];
 	videos = {
 		a:Popcorn(players[0])
 	};
@@ -235,6 +235,44 @@ Player.launch = function(){
 		videos.e = Popcorn(players[4]);
 		playersToLaunch++;
 	}
+
+	videos.a.on('playing', function() {
+		Player.onPlay();
+		if(videos.b){
+			videos.b.play();
+		}
+		if(videos.c){
+			videos.c.play();
+		}
+		if(videos.d){
+			videos.d.play();
+		}
+		if(videos.e){
+			videos.e.play();
+		}
+	});
+
+	this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
+		log("MediaPlayer.events.TEXT_TRACKS_ADDED");
+		if(getHtmlStorage("subtitlesDisabled")){
+			Player.playerManager.playerMain.setTextTrack(-1);					
+		}else{
+			Player.playerManager.playerMain.setTextTrack(Media.currentSubtitleIndex);
+		}
+
+		var yPos = getHtmlStorage("subtitlePositionY");
+		if(yPos !== "undefined"){
+			var top = Math.round(yPos);
+			if(top <= 0){
+				top = 0;
+			}else if(top >= 65){
+				top = 65 / 2;
+			}else{
+				top = top / 2;
+			}
+			$(Player.ttmlDiv).css({top:top + "%"});
+		}
+	});
 
 	loadCount = 0;
 	events = ("pause ended timeupdate seeking seeked").split(/\s+/g);
@@ -362,44 +400,6 @@ Player.launch = function(){
 			}
 		});
 	});
-
-	videos.a.on('playing', function() {
-		Player.onPlay();
-		if(videos.b){
-			videos.b.play();
-		}
-		if(videos.c){
-			videos.c.play();
-		}
-		if(videos.d){
-			videos.d.play();
-		}
-		if(videos.e){
-			videos.e.play();
-		}
-	});
-
-	this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
-			log("MediaPlayer.events.TEXT_TRACKS_ADDED");
-			if(getHtmlStorage("subtitlesDisabled")){
-				Player.playerManager.playerMain.setTextTrack(-1);					
-			}else{
-				Player.playerManager.playerMain.setTextTrack(Media.currentSubtitleIndex);
-			}
-
-			var yPos = getHtmlStorage("subtitlePositionY");
-			if(yPos !== "undefined"){
-				var top = Math.round(yPos);
-				if(top <= 0){
-					top = 0;
-				}else if(top >= 65){
-					top = 65 / 2;
-				}else{
-					top = top / 2;
-				}
-				$(Player.ttmlDiv).css({top:top + "%"});
-			}
-		});
 };
 
 /**
@@ -1196,7 +1196,7 @@ Player.activeOptionSigne = function(index) {
 		playerPIP.attachView(this.videoPip);
 		playerPIP.attachSource(Media.ls[Media.currentLSFIndex].url);
 
-		videos.e = Popcorn("#videoPlayerPip");
+		videos.e = Popcorn("#" + this.videoPip.id);
 
 		Media.currentLSFIndex = index;
 		Media.LSFEnabled = true;
