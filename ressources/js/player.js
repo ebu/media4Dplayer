@@ -306,6 +306,18 @@ Player.launch = function(){
 								
 								case "pause":
 									Player.onPause();
+									if(videos.b){
+										videos.b.pause();
+									}
+									if(videos.c){
+										videos.c.pause();
+									}
+									if(videos.d){
+										videos.d.pause();
+									}
+									if(videos.e){
+										videos.e.pause();
+									}
 									break;
 								
 								case "ended":
@@ -325,6 +337,18 @@ Player.launch = function(){
 
 		videos.a.on('playing', function() {
 			Player.onPlay();
+			if(videos.b){
+				videos.b.play();
+			}
+			if(videos.c){
+				videos.c.play();
+			}
+			if(videos.d){
+				videos.d.play();
+			}
+			if(videos.e){
+				videos.e.play();
+			}
 		});
 
 		this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
@@ -1031,10 +1055,10 @@ Player.launchCheckPositionVideo = function(){
 		var upVol = document.getElementById('up-volume');
 		var isCompressed = smartFader.dynamicCompressionState;
 		if( isCompressed === true){
-			console.error("compressed at "+ Player.playerManager.controller.currentTime);
+			console.error("compressed at "+ videos.a.currentTime());
 			upVol.style.backgroundColor = "rgba(255, 0, 0, 0.7)";
-		}
-		else{
+			
+		}else{
 			upVol.style.backgroundColor = "rgba(0, 0, 0, 0)";
 		}
 	}, 500);
