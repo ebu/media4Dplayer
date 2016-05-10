@@ -2,7 +2,7 @@ var isHTML5 = isHTML5 || false;
 var Main = {
 	splashscreenIsVisible:true,
 	simplifiedMode:false,
-	MCSupport:false
+	MCSupport:true
 };
 
 Main.onLoad = function () {

@@ -146,7 +146,7 @@ Player.load = function(videoData, callback, onClose){
 		this.playerManager.playerMain.attachTTMLRenderingDiv(this.ttmlDiv);
 
 		this.playerManager.playerMain.play();	
-		if(Media.LSFEnabled){
+		/*if(Media.LSFEnabled){
 			this.playerManager.playerPip.play();
 		}
 		if(urlAudioFiveDotOne){
@@ -157,11 +157,11 @@ Player.load = function(videoData, callback, onClose){
 		}
 		if(urlAudioDescription){
 			this.playerManager.playerAudio.play();
-		}
+		}*/
 
 		this.updateActiveStreams();
 
-		this.playerManager.controller.play();
+		//this.playerManager.controller.play();
 
 		//Gestion du PIP
 		this.setPIP();
@@ -231,26 +231,119 @@ Player.launch = function(){
 
 		// remove Dash.js logs
 		this.disableLogs();
-
-		this.playerManager.controller = new MediaController();
-
-		this.videoMain.controller			= this.playerManager.controller;		
+		
+		var playersToLaunch = 1;
+		var players = ["#videoPlayerMain", "#playerAudioFiveDotOne", "#playerAudioFiveDotOne-2", "#videoPlayerAudio", "#videoPlayerPip"];
+		videos = {
+			a:Popcorn(players[0])
+		};
 		if(Media.links.dataEA.url){
-			this.audioFiveDotOne.controller	= this.playerManager.controller;
+			videos.b = Popcorn(players[1]);
+			playersToLaunch++;
 		}
 		if(Media.links.dataDI.url){
-			this.audioFiveDotOne2.controller= this.playerManager.controller;
+			videos.c = Popcorn(players[2]);
+			playersToLaunch++;
 		}
 		if(Media.links.dataAD.url){
-			this.videoAudio.controller		= this.playerManager.controller;
+			videos.d = Popcorn(players[3]);
+			playersToLaunch++;
 		}
 		if(Media.LSFEnabled){
-			this.videoPip.controller		= this.playerManager.controller;			
+			videos.e = Popcorn(players[4]);
+			playersToLaunch++;
 		}
+		
+		loadCount = 0;
+		events = ("play pause timeupdate seeking").split(/\s+/g);
+		
+		// iterate both media sources
+		Popcorn.forEach(videos, function (media, type) {
+
+			// when each is ready... 
+			media.on("canplayall", function () {
+
+				// trigger a custom "sync" event
+				this.emit("sync");
+
+				// set the max value of the "scrubber"
+				//scrub.attr("max", this.duration());
+
+				// Listen for the custom sync event...    
+			}).on("sync", function () {
+
+				// Once both items are loaded, sync events
+				if (++loadCount === playersToLaunch) {
+
+					// Iterate all events and trigger them on the video B
+					// whenever they occur on the video A
+					events.forEach(function (event) {
+
+						videos.a.on(event, function () {
+							log("event name = " + event+"------------------------------------------------");
+							// Avoid overkill events, trigger timeupdate manually
+							if (event === "timeupdate") {
+
+								if (!this.media.paused) {
+									return;
+								}
+								if(videos.b){
+									videos.b.emit("timeupdate");
+								}
+								if(videos.c){
+									videos.c.emit("timeupdate");
+								}
+								if(videos.d){
+									videos.d.emit("timeupdate");
+								}
+								if(videos.e){
+									videos.e.emit("timeupdate");
+								}
+
+								// update scrubber
+								//scrub.val(this.currentTime());
+
+								return;
+							}
+
+							if (event === "seeking") {
+								if(videos.b){
+									videos.b.currentTime(this.currentTime());
+								}
+								if(videos.c){
+									videos.c.currentTime(this.currentTime());
+								}
+								if(videos.d){
+									videos.d.currentTime(this.currentTime());
+								}
+								if(videos.e){
+									videos.e.currentTime(this.currentTime());
+								}
+							}
+
+							if (event === "play" || event === "pause") {
+								if(videos.b){
+									videos.b[event]();
+								}
+								if(videos.c){
+									videos.c[event]();
+								}
+								if(videos.d){
+									videos.d[event]();
+								}
+								if(videos.e){
+									videos.e[event]();
+								}
+							}
+						});
+					});
+				}
+			});
+		});
 
 		this.initWAA();
 
-		this.playerManager.controller.addEventListener('playing', function() {
+		/*this.playerManager.controller.addEventListener('playing', function() {
 			Player.onPlay();
 		});
 
@@ -261,9 +354,9 @@ Player.launch = function(){
 		this.playerManager.controller.addEventListener('ended', function() {
 			Player.alreadyInit = false;
 			Player.validClose();
-		});
+		});*/
 
-		this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
+		/*this.playerManager.playerMain.addEventListener(MediaPlayer.events.TEXT_TRACKS_ADDED, function(){
 			//log("MediaPlayer.events.TEXT_TRACKS_ADDED");
 			if(getHtmlStorage("subtitlesDisabled")){
 				Player.playerManager.playerMain.setTextTrack(-1);					
@@ -283,7 +376,35 @@ Player.launch = function(){
 				}
 				$(Player.ttmlDiv).css({top:top + "%"});
 			}
-		});
+		});*/
+
+		// With requestAnimationFrame, we can ensure that as 
+		// frequently as the browser would allow, 
+		// the video is resync'ed.
+		function sync() {
+			if (videos.b && videos.b.media.readyState === 4) {
+				videos.b.currentTime(
+					videos.a.currentTime()
+					);
+			}
+			if (videos.c && videos.c.media.readyState === 4) {
+				videos.c.currentTime(
+					videos.a.currentTime()
+					);
+			}
+			if (videos.d && videos.d.media.readyState === 4) {
+				videos.d.currentTime(
+					videos.a.currentTime()
+					);
+			}
+			if (videos.e && videos.e.media.readyState === 4) {
+				videos.e.currentTime(
+					videos.a.currentTime()
+					);
+			}
+			requestAnimationFrame(sync);
+		}
+		sync();
 
 		this.alreadyInit = true;
 	}
