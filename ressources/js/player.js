@@ -768,7 +768,7 @@ Player.prepareSofaCatalog = function(callback){
 	};
 
     /// retrieves the catalog of URLs from the OpenDAP server
-	var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
+	/*var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
 	serverDataBase
          .loadCatalogue()
          .then( function(){
@@ -789,7 +789,7 @@ Player.prepareSofaCatalog = function(callback){
         })
         .catch( function (){
 			 
-         	log('could not access bili2.ircam.fr...');
+         	log('could not access bili2.ircam.fr...');*/
 
 			var currentProcessor;
 			if( Player.config === ModulesConfiguration.kMultichannelSpatialiser ){
@@ -804,7 +804,7 @@ Player.prepareSofaCatalog = function(callback){
 			Player.catalogue = [sofaUrl];
 
          	return sofaUrl;
-        });
+        //});
 };
 
 Player.onChangeProfil = function(){
