@@ -778,12 +778,12 @@ Player.prepareSofaCatalog = function(callback){
                 sampleRate: Player.playerManager.audioContext.sampleRate
             });
 			
-			Player.catalogue = urls;
             defaultUrl = urls.findIndex( function (url) {
                 return url.match('1018');
             });
 			
 			_callback(urls[defaultUrl]);
+			Player.catalogue = urls;
 
             return urls;
         })
@@ -800,8 +800,8 @@ Player.prepareSofaCatalog = function(callback){
 			}
 
 			var sofaUrl = currentProcessor._virtualSpeakers.getFallbackUrl();
-			
 			_callback(sofaUrl);
+			Player.catalogue = [sofaUrl];
 
          	return sofaUrl;
         });
@@ -821,10 +821,14 @@ Player.onChangeProfil = function(){
         }
 
         /// load the URL in the spatialiser
-        currentProcessor.loadHrtfSet( url )
-        .then( function(){
-            objectSpatialiserAndMixer._updateCommentaryPosition();
-        });
+		if(Player.catalogue.length){
+			objectSpatialiserAndMixer._updateCommentaryPosition();
+		}else{
+			currentProcessor.loadHrtfSet( url )
+			.then( function(){
+				objectSpatialiserAndMixer._updateCommentaryPosition();
+			});
+		}
 	}else{
 		log("Il n'y pas d'url de profil");
 	}
