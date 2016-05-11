@@ -12,7 +12,7 @@ a:focus{outline:0 none}
 hr{clear:both;margin:0;visibility:hidden}
 .oneline{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
 html{font-size:62.5%;width:1280px;height:720px}
-body{font-family:'Raleway',sans-serif;font-size:1.6rem;background-color:#fbfcfc;position:relative;height:100%}
+body{font-family:'Raleway',sans-serif;font-size:1.6rem;background-color:#fbfcfc;position:relative;height:100%;overflow: hidden;}
 main{height: 100%;}
 main > div{font-size:1em}
 .bold{font-weight:800}
@@ -41,8 +41,9 @@ a.switch-btn{position:absolute;top:45px;left:45px;padding:10px;margin-left:0}
 .hidden{display:none}
 .opaque{opacity: 0.5}
 #appVersion, #noMCSupport{position:absolute;text-align:center;width:100%}
-#appVersion{top:20px}
-#noMCSupport{top:40px;color:#cd0a0a}
+#appVersion{bottom:20px}
+#noMCSupport{bottom:43px;color:#cd0a0a}
+.logo{width: 60px;}
 
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
 body:not(.sm).apps-list #apps-list-container, body.in-construction #in-construction{display:table}
@@ -57,7 +58,7 @@ section .list{display:table-cell;vertical-align:middle;text-align:center}
 /* TOPBAR */
 nav, #back-to-player-button-container{height:69px}
 nav{background-color:#fff;border-bottom:1px solid #bebebe;position:absolute;width:100%}
-.topbarButton{color:#545454;float:left;font-weight:500;height:70px;line-height:70px;text-align:center;width:19.5%;list-style:none}
+.topbarButton{color:#545454;float:left;font-weight:500;height:70px;line-height:70px;text-align:center;width:18.5%;list-style:none}
 .topbarButton.sel{background-color:#c8c8c8}
 .topbarImg, .topbarText{display:inline-block;vertical-align:middle}
 .topbarImg{margin-right:5%;width:32px}
@@ -226,6 +227,7 @@ h2{font-size:1.6em;font-weight:600}
 .optionDropDownMenuButton:hover{cursor:pointer;font-weight:600}
 #playerControlADVolume{right: 153px;}
 .volume-control-ctn .volume-min{background-position:0 -25px}
+.label-slider{position: absolute;bottom: 50px;color: #fff;}
 
 /* SETTINGS */
 #back-to-player-button-container{position:absolute;background-color:#000;width:100%;line-height:70px;text-align:right;top:0}

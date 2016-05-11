@@ -2,7 +2,7 @@
 	"list":[{
 		"title":"pluzz",
 		"picture":"ressources/img/temp/home/pluzz.png",
-		"userProgramsListUrl":["ressources/xml/EBUcore_M4DP_LMDJ.xml", "ressources/xml/EBUCore_M4DP_JT_20h00.xml", "ressources/xml/EBUCore_M4DP_TCHOUPI.xml", "ressources/xml/EBUCore_M4DP_METEO.xml", "ressources/xml/EBUCore_M4DP_ALEXHUGO.xml"]
+		"userProgramsListUrl":["ressources/xml/EBUcore_M4DP_LMDJ.xml", "ressources/xml/EBUCore_M4DP_RUGBY_AVC.xml", "ressources/xml/EBUCore_M4DP_JT_20h00.xml", "ressources/xml/EBUCore_M4DP_METEO.xml", "ressources/xml/EBUCore_M4DP_ALEXHUGO.xml"]
 	},{
 		"title":"baddp",
 		"picture":"ressources/img/temp/home/baddp.png",

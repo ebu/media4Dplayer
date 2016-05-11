@@ -252,7 +252,7 @@ var bufferutilities = {
 
 exports.default = bufferutilities;
 },{"./utils.js":3}],2:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -296,7 +296,7 @@ var AbstractNode = function () {
 
 
     _createClass(AbstractNode, [{
-        key: "connect",
+        key: 'connect',
         value: function connect(node) {
             this._output.connect(node);
         }
@@ -305,7 +305,7 @@ var AbstractNode = function () {
          */
 
     }, {
-        key: "disconnect",
+        key: 'disconnect',
         value: function disconnect() {
             this._output.disconnect();
         }
@@ -316,7 +316,7 @@ var AbstractNode = function () {
          */
 
     }, {
-        key: "getCurrentSampleRate",
+        key: 'getCurrentSampleRate',
         value: function getCurrentSampleRate() {
             return this._audioContext.sampleRate;
         }
@@ -353,7 +353,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
 
 
     _createClass(AudioStreamDescriptionCollection, [{
-        key: "activeStreamsChanged",
+        key: 'activeStreamsChanged',
 
 
         //==============================================================================
@@ -369,7 +369,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
          */
 
     }, {
-        key: "streamsTrimChanged",
+        key: 'streamsTrimChanged',
         value: function streamsTrimChanged() {}
         /// nothing to do in the base class  
 
@@ -381,38 +381,23 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
          */
 
     }, {
-        key: "streams",
-        set: function set(streams) {
-            this._streams = streams;
-        }
-        /**
-         * Get the stream description collection
-         * @type {AudioStreamDescription[]}
-         */
-        ,
-        get: function get() {
-            return this._streams;
-        }
+        key: 'isChannelForExtendedDialog',
 
-        /**
-         * Returns the number of streams in the collection
-         */
-
-    }, {
-        key: "numStreams",
-        get: function get() {
-            return this._streams.length;
-        }
 
         //==============================================================================
         /**
-         * Returns the total number of channels (i.e. for all the streams)
+         * Returns true if this channel index corresponds to the extended dialog
+         *      
          */
+        value: function isChannelForExtendedDialog(channelIndex) {
 
-    }, {
-        key: "totalNumberOfChannels",
-        get: function get() {
-            var totalNumberOfChannels_ = 0;
+            if (channelIndex < 0 || channelIndex >= this.totalNumberOfChannels) {
+                throw new Error("Invalid channel index : " + channelIndex);
+            }
+
+            var index = 0;
+
+            /// go through all the streams
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
@@ -421,7 +406,19 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator = this._streams[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var stream = _step.value;
 
-                    totalNumberOfChannels_ += stream.numChannels;
+
+                    var numChannelsForThisStream = stream.numChannels;
+
+                    var isExtendedDialog = stream.isExtendedDialog;
+
+                    for (var k = 0; k < numChannelsForThisStream; k++) {
+
+                        if (channelIndex === index && isExtendedDialog === true) {
+                            return true;
+                        }
+
+                        index++;
+                    }
                 }
             } catch (err) {
                 _didIteratorError = true;
@@ -438,19 +435,26 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 }
             }
 
-            return totalNumberOfChannels_;
+            return false;
         }
 
         //==============================================================================
         /**
-         * Get the current active audio stream descriptions of the collection
-         * @type {AudioStreamDescription[]}
+         * Returns true if this channel index corresponds to the extended ambiance
+         *      
          */
 
     }, {
-        key: "actives",
-        get: function get() {
-            var actives = [];
+        key: 'isChannelForExtendedAmbiance',
+        value: function isChannelForExtendedAmbiance(channelIndex) {
+
+            if (channelIndex < 0 || channelIndex >= this.totalNumberOfChannels) {
+                throw new Error("Invalid channel index : " + channelIndex);
+            }
+
+            var index = 0;
+
+            /// go through all the streams
             var _iteratorNormalCompletion2 = true;
             var _didIteratorError2 = false;
             var _iteratorError2 = undefined;
@@ -459,8 +463,18 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator2 = this._streams[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                     var stream = _step2.value;
 
-                    if (stream.active) {
-                        actives.push(stream);
+
+                    var numChannelsForThisStream = stream.numChannels;
+
+                    var isExtendedAmbiance = stream.isExtendedAmbiance;
+
+                    for (var k = 0; k < numChannelsForThisStream; k++) {
+
+                        if (channelIndex === index && isExtendedAmbiance === true) {
+                            return true;
+                        }
+
+                        index++;
                     }
                 }
             } catch (err) {
@@ -478,17 +492,26 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 }
             }
 
-            return actives;
+            return false;
         }
 
+        //==============================================================================
         /**
-         * Returns true if at least one stream is currently active
-         * @type {boolean}
+         * Returns true if this channel index corresponds to a center channel (of 5.0 or 5.1 stream)
+         *      
          */
 
     }, {
-        key: "hasActiveStream",
-        get: function get() {
+        key: 'isChannelCenter',
+        value: function isChannelCenter(channelIndex) {
+
+            if (channelIndex < 0 || channelIndex >= this.totalNumberOfChannels) {
+                throw new Error("Invalid channel index : " + channelIndex);
+            }
+
+            var index = 0;
+
+            /// go through all the streams
             var _iteratorNormalCompletion3 = true;
             var _didIteratorError3 = false;
             var _iteratorError3 = undefined;
@@ -497,8 +520,18 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator3 = this._streams[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                     var stream = _step3.value;
 
-                    if (stream.active === true) {
-                        return true;
+
+                    var numChannelsForThisStream = stream.numChannels;
+
+                    var isMulti = stream.type === 'MultiWithoutLFE' || stream.type === 'MultiWithLFE';
+
+                    for (var k = 0; k < numChannelsForThisStream; k++) {
+
+                        if (channelIndex === index && stream.channelIsCenter(k) === true) {
+                            return true;
+                        }
+
+                        index++;
                     }
                 }
             } catch (err) {
@@ -519,8 +552,38 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
             return false;
         }
     }, {
-        key: "extendedDialog",
+        key: 'streams',
+        set: function set(streams) {
+            this._streams = streams;
+        }
+        /**
+         * Get the stream description collection
+         * @type {AudioStreamDescription[]}
+         */
+        ,
         get: function get() {
+            return this._streams;
+        }
+
+        /**
+         * Returns the number of streams in the collection
+         */
+
+    }, {
+        key: 'numStreams',
+        get: function get() {
+            return this._streams.length;
+        }
+
+        //==============================================================================
+        /**
+         * Returns the total number of channels (i.e. for all the streams)
+         */
+
+    }, {
+        key: 'totalNumberOfChannels',
+        get: function get() {
+            var totalNumberOfChannels_ = 0;
             var _iteratorNormalCompletion4 = true;
             var _didIteratorError4 = false;
             var _iteratorError4 = undefined;
@@ -529,9 +592,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator4 = this._streams[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
                     var stream = _step4.value;
 
-                    if (stream.isExtendedDialog === true) {
-                        return stream;
-                    }
+                    totalNumberOfChannels_ += stream.numChannels;
                 }
             } catch (err) {
                 _didIteratorError4 = true;
@@ -548,16 +609,19 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 }
             }
 
-            return undefined;
+            return totalNumberOfChannels_;
         }
 
+        //==============================================================================
         /**
-         * Returns true if there is at least one dialog among all the streams     
+         * Get the current active audio stream descriptions of the collection
+         * @type {AudioStreamDescription[]}
          */
 
     }, {
-        key: "hasExtendedDialog",
+        key: 'actives',
         get: function get() {
+            var actives = [];
             var _iteratorNormalCompletion5 = true;
             var _didIteratorError5 = false;
             var _iteratorError5 = undefined;
@@ -566,8 +630,8 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator5 = this._streams[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
                     var stream = _step5.value;
 
-                    if (stream.isExtendedDialog === true) {
-                        return true;
+                    if (stream.active) {
+                        actives.push(stream);
                     }
                 }
             } catch (err) {
@@ -585,15 +649,16 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 }
             }
 
-            return false;
+            return actives;
         }
 
         /**
-         * Returns true if there is at least one dialog among all the streams     
+         * Returns true if at least one stream is currently active
+         * @type {boolean}
          */
 
     }, {
-        key: "hasActiveExtendedDialog",
+        key: 'hasActiveStream',
         get: function get() {
             var _iteratorNormalCompletion6 = true;
             var _didIteratorError6 = false;
@@ -603,7 +668,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator6 = this._streams[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
                     var stream = _step6.value;
 
-                    if (stream.isExtendedDialog === true && stream.active === true) {
+                    if (stream.active === true) {
                         return true;
                     }
                 }
@@ -624,14 +689,8 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
 
             return false;
         }
-
-        //==============================================================================
-        /**
-         * Returns true if there is at least one ambiance among all the streams     
-         */
-
     }, {
-        key: "hasExtendedAmbiance",
+        key: 'extendedDialog',
         get: function get() {
             var _iteratorNormalCompletion7 = true;
             var _didIteratorError7 = false;
@@ -641,8 +700,8 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator7 = this._streams[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
                     var stream = _step7.value;
 
-                    if (stream.isExtendedAmbiance === true) {
-                        return true;
+                    if (stream.isExtendedDialog === true) {
+                        return stream;
                     }
                 }
             } catch (err) {
@@ -660,15 +719,15 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 }
             }
 
-            return false;
+            return undefined;
         }
 
         /**
-         * Returns true if there is at least one ambiance among all the streams     
+         * Returns true if there is at least one dialog among all the streams     
          */
 
     }, {
-        key: "hasActiveExtendedAmbiance",
+        key: 'hasExtendedDialog',
         get: function get() {
             var _iteratorNormalCompletion8 = true;
             var _didIteratorError8 = false;
@@ -678,7 +737,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator8 = this._streams[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
                     var stream = _step8.value;
 
-                    if (stream.isExtendedAmbiance === true && stream.active === true) {
+                    if (stream.isExtendedDialog === true) {
                         return true;
                     }
                 }
@@ -700,13 +759,12 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
             return false;
         }
 
-        //==============================================================================
         /**
-         * Returns true if there is at least one commentary among all the streams     
+         * Returns true if there is at least one dialog among all the streams     
          */
 
     }, {
-        key: "hasExtendedCommentary",
+        key: 'hasActiveExtendedDialog',
         get: function get() {
             var _iteratorNormalCompletion9 = true;
             var _didIteratorError9 = false;
@@ -716,7 +774,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator9 = this._streams[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
                     var stream = _step9.value;
 
-                    if (stream.isExtendedCommentary === true) {
+                    if (stream.isExtendedDialog === true && stream.active === true) {
                         return true;
                     }
                 }
@@ -738,13 +796,13 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
             return false;
         }
 
+        //==============================================================================
         /**
-         * Returns true if there is at least one commentary among all the streams,
-         * and if it is currently active     
+         * Returns true if there is at least one ambiance among all the streams     
          */
 
     }, {
-        key: "hasActiveExtendedCommentary",
+        key: 'hasExtendedAmbiance',
         get: function get() {
             var _iteratorNormalCompletion10 = true;
             var _didIteratorError10 = false;
@@ -754,7 +812,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator10 = this._streams[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
                     var stream = _step10.value;
 
-                    if (stream.isExtendedCommentary === true && stream.active === true) {
+                    if (stream.isExtendedAmbiance === true) {
                         return true;
                     }
                 }
@@ -776,20 +834,13 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
             return false;
         }
 
-        //==============================================================================
         /**
-         * This function returns the index of the source which corresponds to the mono commentary
-         * 
-         * Returns -1 if there is no commentary
+         * Returns true if there is at least one ambiance among all the streams     
          */
 
     }, {
-        key: "channelIndexForExtendedCommentary",
+        key: 'hasActiveExtendedAmbiance',
         get: function get() {
-
-            var channelIndex = 0;
-
-            /// go through all the streams
             var _iteratorNormalCompletion11 = true;
             var _didIteratorError11 = false;
             var _iteratorError11 = undefined;
@@ -798,18 +849,8 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 for (var _iterator11 = this._streams[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
                     var stream = _step11.value;
 
-
-                    if (stream.isExtendedCommentary === true) {
-
-                        if (stream.type !== "Mono") {
-                            throw new Error("The commentary must be mono!");
-                        }
-
-                        return channelIndex;
-                    } else {
-                        var numChannelsForThisStream = stream.numChannels;
-
-                        channelIndex += numChannelsForThisStream;
+                    if (stream.isExtendedAmbiance === true && stream.active === true) {
+                        return true;
                     }
                 }
             } catch (err) {
@@ -827,6 +868,212 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                 }
             }
 
+            return false;
+        }
+
+        //==============================================================================
+        /**
+         * Returns true if there is at least one commentary among all the streams     
+         */
+
+    }, {
+        key: 'hasExtendedCommentary',
+        get: function get() {
+            var _iteratorNormalCompletion12 = true;
+            var _didIteratorError12 = false;
+            var _iteratorError12 = undefined;
+
+            try {
+                for (var _iterator12 = this._streams[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+                    var stream = _step12.value;
+
+                    if (stream.isExtendedCommentary === true) {
+                        return true;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError12 = true;
+                _iteratorError12 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion12 && _iterator12.return) {
+                        _iterator12.return();
+                    }
+                } finally {
+                    if (_didIteratorError12) {
+                        throw _iteratorError12;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Returns true if there is at least one commentary among all the streams,
+         * and if it is currently active     
+         */
+
+    }, {
+        key: 'hasActiveExtendedCommentary',
+        get: function get() {
+            var _iteratorNormalCompletion13 = true;
+            var _didIteratorError13 = false;
+            var _iteratorError13 = undefined;
+
+            try {
+                for (var _iterator13 = this._streams[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+                    var stream = _step13.value;
+
+                    if (stream.isExtendedCommentary === true && stream.active === true) {
+                        return true;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError13 = true;
+                _iteratorError13 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion13 && _iterator13.return) {
+                        _iterator13.return();
+                    }
+                } finally {
+                    if (_didIteratorError13) {
+                        throw _iteratorError13;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Returns true if there is at least one active 5.0 or 5.1 stream, with dialog
+         */
+
+    }, {
+        key: 'hasActiveMultiWithDialog',
+        get: function get() {
+            var _iteratorNormalCompletion14 = true;
+            var _didIteratorError14 = false;
+            var _iteratorError14 = undefined;
+
+            try {
+                for (var _iterator14 = this._streams[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+                    var stream = _step14.value;
+
+                    if ((stream.type === 'MultiWithoutLFE' || stream.type === 'MultiWithLFE') && stream.active === true) {
+
+                        // && stream.dialog === true
+                        return true;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError14 = true;
+                _iteratorError14 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion14 && _iterator14.return) {
+                        _iterator14.return();
+                    }
+                } finally {
+                    if (_didIteratorError14) {
+                        throw _iteratorError14;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Returns true if there is at least one active stereo stream, with dialog
+         */
+
+    }, {
+        key: 'hasActiveStereoWithDialog',
+        get: function get() {
+            var _iteratorNormalCompletion15 = true;
+            var _didIteratorError15 = false;
+            var _iteratorError15 = undefined;
+
+            try {
+                for (var _iterator15 = this._streams[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
+                    var stream = _step15.value;
+
+                    if (stream.type === 'Stereo' && stream.dialog === true && stream.active === true) {
+                        return true;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError15 = true;
+                _iteratorError15 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion15 && _iterator15.return) {
+                        _iterator15.return();
+                    }
+                } finally {
+                    if (_didIteratorError15) {
+                        throw _iteratorError15;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        //==============================================================================
+        /**
+         * This function returns the index of the source which corresponds to the mono commentary
+         * 
+         * Returns -1 if there is no commentary
+         */
+
+    }, {
+        key: 'channelIndexForExtendedCommentary',
+        get: function get() {
+
+            var channelIndex = 0;
+
+            /// go through all the streams
+            var _iteratorNormalCompletion16 = true;
+            var _didIteratorError16 = false;
+            var _iteratorError16 = undefined;
+
+            try {
+                for (var _iterator16 = this._streams[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
+                    var stream = _step16.value;
+
+
+                    if (stream.isExtendedCommentary === true) {
+
+                        if (stream.type !== "Mono") {
+                            throw new Error("The commentary must be mono!");
+                        }
+
+                        return channelIndex;
+                    } else {
+                        var numChannelsForThisStream = stream.numChannels;
+
+                        channelIndex += numChannelsForThisStream;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError16 = true;
+                _iteratorError16 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion16 && _iterator16.return) {
+                        _iterator16.return();
+                    }
+                } finally {
+                    if (_didIteratorError16) {
+                        throw _iteratorError16;
+                    }
+                }
+            }
+
             return -1;
         }
 
@@ -838,19 +1085,19 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
          */
 
     }, {
-        key: "channelIndexForExtendedDialog",
+        key: 'channelIndexForExtendedDialog',
         get: function get() {
 
             var channelIndex = 0;
 
             /// go through all the streams
-            var _iteratorNormalCompletion12 = true;
-            var _didIteratorError12 = false;
-            var _iteratorError12 = undefined;
+            var _iteratorNormalCompletion17 = true;
+            var _didIteratorError17 = false;
+            var _iteratorError17 = undefined;
 
             try {
-                for (var _iterator12 = this._streams[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-                    var stream = _step12.value;
+                for (var _iterator17 = this._streams[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
+                    var stream = _step17.value;
 
 
                     if (stream.isExtendedDialog === true) {
@@ -867,16 +1114,16 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
                     }
                 }
             } catch (err) {
-                _didIteratorError12 = true;
-                _iteratorError12 = err;
+                _didIteratorError17 = true;
+                _iteratorError17 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion12 && _iterator12.return) {
-                        _iterator12.return();
+                    if (!_iteratorNormalCompletion17 && _iterator17.return) {
+                        _iterator17.return();
                     }
                 } finally {
-                    if (_didIteratorError12) {
-                        throw _iteratorError12;
+                    if (_didIteratorError17) {
+                        throw _iteratorError17;
                     }
                 }
             }
@@ -927,14 +1174,13 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
     }
 
     //==============================================================================
-    /**
-     * Get channel position based on audio stream type
-     * @type {number[]}
-     */
+    /// if one of the value is NaN, this most likely means the stream was
+    /// actually not in the EBU core.
+    /// it should thus be considered as inactive   
 
 
     _createClass(AudioStreamDescription, [{
-        key: "channelIsCenter",
+        key: 'channelIsCenter',
 
 
         //==============================================================================
@@ -963,7 +1209,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "channelIsLfe",
+        key: 'channelIsLfe',
         value: function channelIsLfe(channelIndex) {
 
             if (channelIndex < 0 || channelIndex >= this.numChannels) {
@@ -983,7 +1229,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "channelIsLeft",
+        key: 'channelIsLeft',
         value: function channelIsLeft(channelIndex) {
 
             if (channelIndex < 0 || channelIndex >= this.numChannels) {
@@ -1001,7 +1247,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "channelIsRight",
+        key: 'channelIsRight',
         value: function channelIsRight(channelIndex) {
 
             if (channelIndex < 0 || channelIndex >= this.numChannels) {
@@ -1019,7 +1265,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "channelIsLeftSurround",
+        key: 'channelIsLeftSurround',
         value: function channelIsLeftSurround(channelIndex) {
 
             if (channelIndex < 0 || channelIndex >= this.numChannels) {
@@ -1037,7 +1283,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "channelIsRightSurround",
+        key: 'channelIsRightSurround',
         value: function channelIsRightSurround(channelIndex) {
 
             if (channelIndex < 0 || channelIndex >= this.numChannels) {
@@ -1056,7 +1302,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "setTrimFromGui",
+        key: 'setTrimFromGui',
 
 
         //==============================================================================
@@ -1094,7 +1340,20 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "channelPositions",
+        key: 'hasNaN',
+        get: function get() {
+
+            return isNaN(this._maxTruePeak) || isNaN(this._loudness);
+        }
+
+        //==============================================================================
+        /**
+         * Get channel position based on audio stream type
+         * @type {number[]}
+         */
+
+    }, {
+        key: 'channelPositions',
         get: function get() {
             switch (this._type) {
                 case "Mono":
@@ -1115,7 +1374,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
             }
         }
     }, {
-        key: "numChannels",
+        key: 'numChannels',
         get: function get() {
             switch (this._type) {
                 case "Mono":
@@ -1138,7 +1397,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "type",
+        key: 'type',
         get: function get() {
             return this._type;
         }
@@ -1150,7 +1409,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "active",
+        key: 'active',
         set: function set(value) {
             this._active = value;
         }
@@ -1160,7 +1419,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
         ,
         get: function get() {
-            return this._active;
+            return this._active && this.hasNaN === false;
         }
 
         //==============================================================================
@@ -1170,7 +1429,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "trim",
+        key: 'trim',
         set: function set(value) {
             this._trim = value;
         }
@@ -1183,7 +1442,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
             return this._trim;
         }
     }, {
-        key: "loudness",
+        key: 'loudness',
         set: function set(value) {
             this._loudness = value;
         }
@@ -1203,7 +1462,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "maxTruePeak",
+        key: 'maxTruePeak',
         set: function set(value) {
             this._maxTruePeak = value;
         }
@@ -1223,7 +1482,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "dialog",
+        key: 'dialog',
         set: function set(value) {
             this._dialog = value;
         }
@@ -1243,7 +1502,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "isExtendedDialog",
+        key: 'isExtendedDialog',
         get: function get() {
             return this._dialog === true && this._ambiance === false && this._commentary === false;
         }
@@ -1255,7 +1514,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "ambiance",
+        key: 'ambiance',
         set: function set(value) {
             this._ambiance = value;
         }
@@ -1275,7 +1534,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "isExtendedAmbiance",
+        key: 'isExtendedAmbiance',
         get: function get() {
             return this._dialog === false && this._ambiance === true && this._commentary === false;
         }
@@ -1287,7 +1546,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "commentary",
+        key: 'commentary',
         set: function set(value) {
             this._commentary = value;
         }
@@ -1307,7 +1566,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
          */
 
     }, {
-        key: "isExtendedCommentary",
+        key: 'isExtendedCommentary',
         get: function get() {
             return this._dialog === false && this._ambiance === false && this._commentary === true;
         }
@@ -1557,6 +1816,12 @@ var _multichannelgain = require('../dsp/multichannelgain.js');
 
 var _multichannelgain2 = _interopRequireDefault(_multichannelgain);
 
+var _utils = require('../core/utils.js');
+
+var _centerenhancement = require('../dsp/centerenhancement.js');
+
+var _centerenhancement2 = _interopRequireDefault(_centerenhancement);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1573,6 +1838,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  */
 /************************************************************************************/
 
+//import utilities from '../core/utils.js';
+
+
 var DialogEnhancement = function (_AbstractNode) {
     _inherits(DialogEnhancement, _AbstractNode);
 
@@ -1587,22 +1855,33 @@ var DialogEnhancement = function (_AbstractNode) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DialogEnhancement).call(this, audioContext, audioStreamDescriptionCollection));
 
-        _this._mode = 1;
-        _this._dialogGain = 0.0;
-        _this._isBypass = true;
+        _this._mode = 0;
+        _this._balance = 100.0;
+        _this._isBypass = false;
+        _this._processor1 = new DialogEnhancementProcessorMode1(audioContext, audioStreamDescriptionCollection);
+        _this._processor2 = new DialogEnhancementProcessorMode2(audioContext, audioStreamDescriptionCollection);
+        _this._processor3 = new DialogEnhancementProcessorMode3(audioContext, audioStreamDescriptionCollection);
 
         _this._updateAudioGraph();
         return _this;
     }
 
     //==============================================================================
-    /**
-     * Enable or bypass the processor
-     * @type {boolean}
-     */
 
 
     _createClass(DialogEnhancement, [{
+        key: 'getTotalNumberOfChannels',
+        value: function getTotalNumberOfChannels() {
+            return this._audioStreamDescriptionCollection.totalNumberOfChannels;
+        }
+
+        //==============================================================================
+        /**
+         * Enable or bypass the processor
+         * @type {boolean}
+         */
+
+    }, {
         key: 'activeStreamsChanged',
 
 
@@ -1611,10 +1890,45 @@ var DialogEnhancement = function (_AbstractNode) {
          * Notification when the active stream(s) changes
          */
         value: function activeStreamsChanged() {
+
+            this._chooseAppropriateMode();
+
             this._updateAudioGraph();
         }
 
         //==============================================================================
+
+    }, {
+        key: '_chooseAppropriateMode',
+
+
+        //==============================================================================
+        value: function _chooseAppropriateMode() {
+
+            var mode = 0; ///< 0 corresponds to bypass
+
+            if (this.hasActiveExtendedDialog === true && this.hasActiveExtendedAmbiance === true) {
+                mode = 1;
+            } else if (this.hasActiveMultiWithDialog === true) {
+                mode = 2;
+            } else if (this.hasActiveStereoWithDialog === true) {
+                mode = 3;
+            }
+
+            /// mode 0 ==> bypass
+            /// mode 1 ==> balance entre le Extended dialog et le Extended Ambiance
+            /// le flux main est inchange
+            /// mode 2 ==> on agit sur la voie centrale du Main, s'il s'agit d'un 5.1 ou 5.0
+            /// mode 3 ==> lorsqu'on a juste un flux stereo
+
+            this.mode = mode;
+        }
+
+        //==============================================================================
+        /**
+         * Set Mode - value is 1, 2 or 3
+         * @type {number}
+         */
 
     }, {
         key: 'setModeFromString',
@@ -1632,46 +1946,60 @@ var DialogEnhancement = function (_AbstractNode) {
         }
 
         /**
-         * Get Mode - value is 1, 2 or 3
+         * Get Mode - value is 0, 1, 2 or 3
          * @type {number}
          */
 
     }, {
-        key: '_update',
+        key: 'setBalanceFromGui',
+        value: function setBalanceFromGui(theSlider) {
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
 
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 0;
+            var maxValue = 100;
+
+            /// scale from GUI to DSP
+            var value = (0, _utils.scale)(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this.balance = value;
+
+            return value;
+        }
+    }, {
+        key: 'getBalanceFromGui',
+        value: function getBalanceFromGui(theSlider) {
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 0;
+            var maxValue = 100;
+
+            var actualValue = this.balance;
+
+            /// scale from DSP to GUI
+            var value = M4DPAudioModules.utilities.scale(actualValue, minValue, maxValue, minFader, maxFader);
+
+            return value;
+        }
 
         //==============================================================================
-        value: function _update() {}
-
-        //==============================================================================
-        /**
-         * Returns true if the streams are available for the current mode
-         */
 
     }, {
-        key: '_canProcessCurrentMode',
-        value: function _canProcessCurrentMode() {
+        key: '_update',
+        value: function _update() {
 
-            var mode = this.mode;
-
-            if (mode === 1) {
-
-                /// ajustement total du niveau des dialogues en cas de fourniture séparée
-                /// des éléments “dialogues seuls” et “ambiances, musiques et effets”
-                if (this.hasActiveExtendedDialog === true && this.hasActiveExtendedAmbiance === true) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else if (mode === 2) {
-                /// not yet implemented
-                return true;
-            } else if (mode === 3) {
-                /// not yet implemented
-                return true;
-            } else {
-                throw new Error("Invalid mode " + value);
-            }
+            this._processor1.balance = this.balance;
+            this._processor2.balance = this.balance;
+            this._processor3.balance = this.balance;
         }
 
         //==============================================================================
@@ -1685,11 +2013,27 @@ var DialogEnhancement = function (_AbstractNode) {
 
             /// first of all, disconnect everything
             this._input.disconnect();
+            this._processor1.disconnect();
+            this._processor2.disconnect();
 
-            if (this.bypass === true || this._canProcessCurrentMode() === false) {
+            var mode = this.mode;
+
+            if (this.bypass === true || mode === 0) {
 
                 this._input.connect(this._output);
-            } else {}
+            } else {
+
+                if (mode === 1) {
+                    this._input.connect(this._processor1._input);
+                    this._processor1.connect(this._output);
+                } else if (mode === 2) {
+                    this._input.connect(this._processor2._input);
+                    this._processor2.connect(this._output);
+                } else if (mode === 3) {
+                    this._input.connect(this._processor3._input);
+                    this._processor3.connect(this._output);
+                }
+            }
 
             this._update();
         }
@@ -1725,28 +2069,29 @@ var DialogEnhancement = function (_AbstractNode) {
         get: function get() {
             return this._audioStreamDescriptionCollection.hasActiveExtendedAmbiance;
         }
-
-        //==============================================================================
-        /**
-         * Set Mode - value is 1, 2 or 3
-         * @type {number}
-         */
-
+    }, {
+        key: 'hasActiveMultiWithDialog',
+        get: function get() {
+            return this._audioStreamDescriptionCollection.hasActiveMultiWithDialog;
+        }
+    }, {
+        key: 'hasActiveStereoWithDialog',
+        get: function get() {
+            return this._audioStreamDescriptionCollection.hasActiveStereoWithDialog;
+        }
     }, {
         key: 'mode',
         set: function set(value) {
 
-            if (value < 1 || value > 3) {
+            console.log('DialogEnhancement to mode ' + value);
+
+            if (value < 0 || value > 3) {
                 throw new Error("Invalid mode " + value);
             }
 
             if (value != this._mode) {
 
-                // @todo error in some mode: eg. mode 1 and no dialog => "impossible"
-                // error mode 2 et pas de 5.0 ou 5.1
-                // error mode 3 et pas de stéréo
                 this._mode = value;
-
                 this._updateAudioGraph();
             }
         },
@@ -1754,29 +2099,28 @@ var DialogEnhancement = function (_AbstractNode) {
             return this._mode;
         }
 
-        //==============================================================================
+        //==============================================================================       
         /**
-         * Set dialogGain
-         * @type {number}
-         * @todo give range of accepted values
+         * Sets the balance (in 0 - 100 %) between dialogs and ambiance
+         *      
          */
 
     }, {
-        key: 'dialogGain',
+        key: 'balance',
         set: function set(value) {
 
-            this._dialogGain = value;
+            this._balance = value;
 
             this._update();
         }
+
         /**
-         * Get dialogGain
-         * @type {number}
-         * @todo give range of accepted values
+         * Returns the balance (in 0 - 100 %) between dialogs and ambiance
+         * @type {number}     
          */
         ,
         get: function get() {
-            return this._dialogGain;
+            return this._balance;
         }
     }]);
 
@@ -1784,7 +2128,379 @@ var DialogEnhancement = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = DialogEnhancement;
-},{"../core/index.js":2,"../dsp/multichannelgain.js":11}],5:[function(require,module,exports){
+
+var DialogEnhancementProcessorMode1 = function (_AbstractNode2) {
+    _inherits(DialogEnhancementProcessorMode1, _AbstractNode2);
+
+    //==============================================================================
+    /**
+     * @param {AudioContext} audioContext - audioContext instance.
+     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.     
+     */
+
+    function DialogEnhancementProcessorMode1(audioContext, audioStreamDescriptionCollection) {
+        _classCallCheck(this, DialogEnhancementProcessorMode1);
+
+        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(DialogEnhancementProcessorMode1).call(this, audioContext, audioStreamDescriptionCollection));
+
+        _this2._balance = 100;
+
+        /// the total number of incoming channels, including all the streams
+        /// (mainAudio, extendedAmbience, extendedComments and extendedDialogs)
+        var totalNumberOfChannels_ = _this2.getTotalNumberOfChannels();
+
+        _this2._gainsNode = new _multichannelgain2.default(audioContext, totalNumberOfChannels_);
+
+        _this2._updateAudioGraph();
+        return _this2;
+    }
+
+    //==============================================================================
+
+
+    _createClass(DialogEnhancementProcessorMode1, [{
+        key: 'getTotalNumberOfChannels',
+        value: function getTotalNumberOfChannels() {
+            return this._audioStreamDescriptionCollection.totalNumberOfChannels;
+        }
+
+        //==============================================================================
+        /**
+         * Returns the current number of channels
+         */
+
+    }, {
+        key: 'getNumChannels',
+        value: function getNumChannels() {
+            return this._gainsNode.getNumChannels();
+        }
+
+        //==============================================================================       
+        /**
+         * Sets the balance (in 0 - 100 %) between dialogs and ambiance
+         *      
+         */
+
+    }, {
+        key: 'isChannelForExtendedDialog',
+
+
+        //==============================================================================
+        /**
+         * Returns true if this channel index corresponds to the extended dialog
+         *      
+         */
+        value: function isChannelForExtendedDialog(channelIndex) {
+
+            return this._audioStreamDescriptionCollection.isChannelForExtendedDialog(channelIndex);
+        }
+
+        //==============================================================================
+        /**
+         * Returns true if this channel index corresponds to the extended ambiance
+         *      
+         */
+
+    }, {
+        key: 'isChannelForExtendedAmbiance',
+        value: function isChannelForExtendedAmbiance(channelIndex) {
+            return this._audioStreamDescriptionCollection.isChannelForExtendedAmbiance(channelIndex);
+        }
+
+        //==============================================================================
+        /**
+         * Updates the gains for each channel
+         *      
+         */
+
+    }, {
+        key: '_update',
+        value: function _update() {
+
+            var gainForDialogs = (0, _utils.scale)(this.balance, 0., 100., 0., 1.);
+            var gainForAmbiance = 1.0 - gainForDialogs;
+
+            for (var k = 0; k < this.getNumChannels(); k++) {
+
+                if (this.isChannelForExtendedDialog(k) === true) {
+                    this._gainsNode.setGain(k, gainForDialogs);
+                } else if (this.isChannelForExtendedAmbiance(k) === true) {
+                    this._gainsNode.setGain(k, gainForAmbiance);
+                } else {
+                    this._gainsNode.setGain(k, 1.0);
+                }
+            }
+        }
+
+        //==============================================================================
+        /**
+         * Updates the connections of the audio graph
+         */
+
+    }, {
+        key: '_updateAudioGraph',
+        value: function _updateAudioGraph() {
+
+            /// first of all, disconnect everything
+            this._input.disconnect();
+            this._gainsNode.disconnect();
+
+            this._input.connect(this._gainsNode._input);
+            this._gainsNode.connect(this._output);
+
+            this._update();
+        }
+    }, {
+        key: 'balance',
+        set: function set(value) {
+
+            /// 100% --> only the dialogs
+            /// 0% --> only the ambiance
+
+            var percent = (0, _utils.clamp)(value, 0., 100.);
+
+            this._balance = percent;
+
+            this._update();
+        },
+        get: function get() {
+            return this._balance;
+        }
+    }]);
+
+    return DialogEnhancementProcessorMode1;
+}(_index2.default);
+
+var DialogEnhancementProcessorMode2 = function (_AbstractNode3) {
+    _inherits(DialogEnhancementProcessorMode2, _AbstractNode3);
+
+    //==============================================================================
+    /**
+     * @param {AudioContext} audioContext - audioContext instance.
+     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.     
+     */
+
+    function DialogEnhancementProcessorMode2(audioContext, audioStreamDescriptionCollection) {
+        _classCallCheck(this, DialogEnhancementProcessorMode2);
+
+        var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(DialogEnhancementProcessorMode2).call(this, audioContext, audioStreamDescriptionCollection));
+
+        _this3._balance = 100;
+
+        /// the total number of incoming channels, including all the streams
+        /// (mainAudio, extendedAmbience, extendedComments and extendedDialogs)
+        var totalNumberOfChannels_ = _this3.getTotalNumberOfChannels();
+
+        _this3._gainsNode = new _multichannelgain2.default(audioContext, totalNumberOfChannels_);
+
+        _this3._updateAudioGraph();
+        return _this3;
+    }
+
+    //==============================================================================
+
+
+    _createClass(DialogEnhancementProcessorMode2, [{
+        key: 'getTotalNumberOfChannels',
+        value: function getTotalNumberOfChannels() {
+            return this._audioStreamDescriptionCollection.totalNumberOfChannels;
+        }
+
+        //==============================================================================
+        /**
+         * Returns the current number of channels
+         */
+
+    }, {
+        key: 'getNumChannels',
+        value: function getNumChannels() {
+            return this._gainsNode.getNumChannels();
+        }
+
+        //==============================================================================       
+        /**
+         * Sets the balance (in 0 - 100 %) between dialogs and ambiance
+         *      
+         */
+
+    }, {
+        key: 'isChannelCenter',
+
+
+        //==============================================================================
+        /**
+         * Returns true if this channel index corresponds to a center channel (of 5.0 or 5.1 stream)
+         *      
+         */
+        value: function isChannelCenter(channelIndex) {
+            return this._audioStreamDescriptionCollection.isChannelCenter(channelIndex);
+        }
+
+        //==============================================================================
+        /**
+         * Updates the gains for each channel
+         *      
+         */
+
+    }, {
+        key: '_update',
+        value: function _update() {
+
+            var balanceIndB = (0, _utils.scale)(this.balance, 0., 100., -6., 6.);
+
+            var gainForDialogs = (0, _utils.dB2lin)(balanceIndB);
+
+            for (var k = 0; k < this.getNumChannels(); k++) {
+
+                if (this.isChannelCenter(k) === true) {
+                    this._gainsNode.setGain(k, gainForDialogs);
+                } else {
+                    this._gainsNode.setGain(k, 1.0);
+                }
+            }
+        }
+
+        //==============================================================================
+        /**
+         * Updates the connections of the audio graph
+         */
+
+    }, {
+        key: '_updateAudioGraph',
+        value: function _updateAudioGraph() {
+
+            /// first of all, disconnect everything
+            this._input.disconnect();
+            this._gainsNode.disconnect();
+
+            this._input.connect(this._gainsNode._input);
+            this._gainsNode.connect(this._output);
+
+            this._update();
+        }
+    }, {
+        key: 'balance',
+        set: function set(value) {
+
+            /// 100% --> +6 dB for the dialog
+            /// 0% --> -6 dB for the dialog
+
+            var percent = (0, _utils.clamp)(value, 0., 100.);
+
+            this._balance = percent;
+
+            this._update();
+        },
+        get: function get() {
+            return this._balance;
+        }
+    }]);
+
+    return DialogEnhancementProcessorMode2;
+}(_index2.default);
+
+var DialogEnhancementProcessorMode3 = function (_AbstractNode4) {
+    _inherits(DialogEnhancementProcessorMode3, _AbstractNode4);
+
+    //==============================================================================
+    /**
+     * @param {AudioContext} audioContext - audioContext instance.
+     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.     
+     */
+
+    function DialogEnhancementProcessorMode3(audioContext, audioStreamDescriptionCollection) {
+        _classCallCheck(this, DialogEnhancementProcessorMode3);
+
+        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(DialogEnhancementProcessorMode3).call(this, audioContext, audioStreamDescriptionCollection));
+
+        _this4._balance = 100;
+
+        /// the total number of incoming channels, including all the streams
+        /// (mainAudio, extendedAmbience, extendedComments and extendedDialogs)
+        var totalNumberOfChannels_ = _this4.getTotalNumberOfChannels();
+
+        _this4._channelSplitterNode = _this4._audioContext.createChannelSplitter(totalNumberOfChannels_);
+        _this4._channelMergerNode = _this4._audioContext.createChannelMerger(totalNumberOfChannels_);
+
+        _this4._input.connect(_this4._channelSplitterNode);
+
+        _this4._channelSplitter2 = _this4._audioContext.createChannelSplitter(2);
+        _this4._channelMerger2 = _this4._audioContext.createChannelMerger(2);
+
+        ///
+        _this4._centerEnhancement = new _centerenhancement2.default(audioContext);
+
+        {
+            _this4._channelSplitterNode.connect(_this4._channelMerger2, 0, 0);
+            _this4._channelSplitterNode.connect(_this4._channelMerger2, 1, 1);
+
+            _this4._channelMerger2.connect(_this4._centerEnhancement._input);
+            _this4._centerEnhancement.connect(_this4._channelSplitter2);
+
+            _this4._channelSplitter2.connect(_this4._channelMergerNode, 0, 0);
+            _this4._channelSplitter2.connect(_this4._channelMergerNode, 1, 1);
+        }
+
+        for (var k = 2; k < totalNumberOfChannels_; k++) {
+            _this4._channelSplitterNode.connect(_this4._channelMergerNode, k, k);
+        }
+
+        _this4._channelMergerNode.connect(_this4._output);
+
+        return _this4;
+    }
+
+    //==============================================================================
+
+
+    _createClass(DialogEnhancementProcessorMode3, [{
+        key: 'getTotalNumberOfChannels',
+        value: function getTotalNumberOfChannels() {
+            return this._audioStreamDescriptionCollection.totalNumberOfChannels;
+        }
+
+        //==============================================================================       
+        /**
+         * Sets the balance (in 0 - 100 %) between dialogs and ambiance
+         *      
+         */
+
+    }, {
+        key: '_update',
+
+
+        //==============================================================================
+        /**
+         * Updates the gains for each channel
+         *      
+         */
+        value: function _update() {
+
+            var balanceIndB = (0, _utils.scale)(this.balance, 0., 100., 0., 12.);
+
+            this._centerEnhancement.gain = balanceIndB;
+        }
+    }, {
+        key: 'balance',
+        set: function set(value) {
+
+            /// 100% --> +6 dB for the dialog
+            /// 0% --> -6 dB for the dialog
+
+            var percent = (0, _utils.clamp)(value, 0., 100.);
+
+            this._balance = percent;
+
+            this._update();
+        },
+        get: function get() {
+            return this._balance;
+        }
+    }]);
+
+    return DialogEnhancementProcessorMode3;
+}(_index2.default);
+},{"../core/index.js":2,"../core/utils.js":3,"../dsp/centerenhancement.js":7,"../dsp/multichannelgain.js":13}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2404,6 +3120,126 @@ var _index = require('../core/index.js');
 
 var _index2 = _interopRequireDefault(_index);
 
+var _lrms = require('./lrms.js');
+
+var _lrms2 = _interopRequireDefault(_lrms);
+
+var _phone = require('./phone.js');
+
+var _phone2 = _interopRequireDefault(_phone);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /************************************************************************************/
+/*!
+ *   @file       centerenhancement.js
+ *   @brief      Enhance the center channel : Start from LR signals, do MS conversion
+ *               apply filtering in M, then do MS to LR conversion
+ *   @author     Thibaut Carpentier
+ *   @date       01/2016
+ *
+ */
+/************************************************************************************/
+
+var CenterEnhancementNode = function (_AbstractNode) {
+    _inherits(CenterEnhancementNode, _AbstractNode);
+
+    //==============================================================================
+    /**
+     * @brief Enhance the center channel
+     *
+     * @param {AudioContext} audioContext - audioContext instance.
+     */
+
+    function CenterEnhancementNode(audioContext) {
+        _classCallCheck(this, CenterEnhancementNode);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CenterEnhancementNode).call(this, audioContext));
+
+        _this._lr2ms = undefined;
+        _this._phone = undefined;
+        _this._ms2lr = undefined;
+
+        /// The class has 2 input signals and 2 output signals
+        /// It performs the following processing :
+        /// Start from LR signals, do MS conversion
+        /// apply filtering in M, then do MS to LR conversion
+
+        _this._lr2ms = new _lrms2.default(audioContext);
+        _this._ms2lr = new _lrms2.default(audioContext);
+        _this._phone = new _phone2.default(audioContext);
+
+        _this._channelSplitterNode = _this._audioContext.createChannelSplitter(2);
+        _this._channelMergerNode = _this._audioContext.createChannelMerger(2);
+
+        /// first convert from LR to MS
+        _this._input.connect(_this._lr2ms._input);
+
+        /// split M and S
+        _this._lr2ms.connect(_this._channelSplitterNode);
+
+        /// connect the M to the phone filter
+        _this._channelSplitterNode.connect(_this._phone._input, 0, 0);
+
+        /// connect the output of the phone filter to the 1st outlet
+        _this._phone.connect(_this._channelMergerNode, 0, 0);
+
+        /// the S signal is unaffected
+        _this._channelSplitterNode.connect(_this._channelMergerNode, 1, 1);
+
+        /// merge back the M and S
+        _this._channelMergerNode.connect(_this._ms2lr._input);
+
+        /// and perform MS to LR conversion
+        _this._ms2lr.connect(_this._output);
+
+        return _this;
+    }
+
+    //==============================================================================
+    /**
+     * Set the boost gain. It has a default value of 0 and can take a value in a nominal range of -40 to 40
+     * @type {number} gainRequest : the gain in dB (0 for no gain)
+     */
+
+
+    _createClass(CenterEnhancementNode, [{
+        key: 'gain',
+        set: function set(gainRequest) {
+            this._phone.gain = gainRequest;
+        }
+
+        /**
+         * Get the boost gain.
+         * @type {number} boost
+         */
+        ,
+        get: function get() {
+            return this._phone.gain;
+        }
+    }]);
+
+    return CenterEnhancementNode;
+}(_index2.default);
+
+exports.default = CenterEnhancementNode;
+},{"../core/index.js":2,"./lrms.js":12,"./phone.js":14}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _index = require('../core/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
 var _utils = require('../core/utils.js');
 
 var _utils2 = _interopRequireDefault(_utils);
@@ -2845,7 +3681,7 @@ var MultichannelCompressorNode = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = MultichannelCompressorNode;
-},{"../core/index.js":2,"../core/utils.js":3}],8:[function(require,module,exports){
+},{"../core/index.js":2,"../core/utils.js":3}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2972,7 +3808,7 @@ var HeadphonesEqualization = function (_CascadeNode) {
 }(_cascade2.default);
 
 exports.default = HeadphonesEqualization;
-},{"../core/index.js":2,"../dsp/cascade.js":6}],9:[function(require,module,exports){
+},{"../core/index.js":2,"../dsp/cascade.js":6}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3025,7 +3861,7 @@ exports.MultichannelGainNode = _multichannelgain2.default; /********************
  *
  */
 /************************************************************************************/
-},{"./analysis.js":5,"./cascade.js":6,"./headphoneequalization.js":8,"./multichannelgain.js":11,"./sumdiff.js":13,"./transaural.js":14,"./virtualspeakers.js":15}],10:[function(require,module,exports){
+},{"./analysis.js":5,"./cascade.js":6,"./headphoneequalization.js":9,"./multichannelgain.js":13,"./sumdiff.js":15,"./transaural.js":16,"./virtualspeakers.js":17}],11:[function(require,module,exports){
 "use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.getKemar2btFilters=getKemar2btFilters; /************************************************************************************/ /*!
  *   @file       kemar.js
  *   @brief      Kemar hard-coded filters
@@ -3044,7 +3880,85 @@ var numChannels=2;var samplerate=audioContext.sampleRate;var filterLength=0;if(s
 throw new Error("Invalid samplerate "+samplerate);} ///@n actually we could use shorter filters
 var buffer=audioContext.createBuffer(2,filterLength,samplerate); /// now fill the buffer
 var sumFilter=getKemar2btSumFilter(samplerate,speakerSpan);var diffFilter=getKemar2btDiffFilter(samplerate,speakerSpan);var sumBuffer_=buffer.getChannelData(0);var diffBuffer_=buffer.getChannelData(1);for(var i=0;i<filterLength;i++){sumBuffer_[i]=sumFilter[i];diffBuffer_[i]=diffFilter[i];}return buffer;}
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _index = require('../core/index.js');
+
+var _index2 = _interopRequireDefault(_index);
+
+var _sumdiff = require('./sumdiff.js');
+
+var _sumdiff2 = _interopRequireDefault(_sumdiff);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /************************************************************************************/
+/*!
+ *   @file       lrms.js
+ *   @brief      LR to MS or MS to LR
+ *   @author     Thibaut Carpentier
+ *   @date       01/2016
+ *
+ */
+/************************************************************************************/
+
+var LRMSNode = function (_AbstractNode) {
+    _inherits(LRMSNode, _AbstractNode);
+
+    //==============================================================================
+    /**
+     * @brief LR to MS or MS to LR
+     *
+     * @param {AudioContext} audioContext - audioContext instance.
+     */
+
+    function LRMSNode(audioContext) {
+        _classCallCheck(this, LRMSNode);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LRMSNode).call(this, audioContext));
+
+        _this._gainNode = undefined;
+        _this._sumdiff = undefined;
+
+        /// The class has 2 input signals and 2 output signals
+        /// It performs the following processing :
+        /// out[0] = ( in[0] + in[1] ) / 2
+        /// out[1] = ( in[0] - in[1] ) / 2
+
+        /// M = ( L + R ) / 2
+        /// S = ( L - R ) / 2
+        ///
+        /// L = ( M + S ) / 2
+        /// R = ( M - S ) / 2
+
+        _this._gainNode = _this._audioContext.createGain();
+        //this._gainNode.gain.value = 0.5;
+        _this._gainNode.gain.value = 0.707;
+
+        _this._sumdiff = new _sumdiff2.default(audioContext);
+
+        _this._input.connect(_this._sumdiff._input);
+
+        _this._sumdiff.connect(_this._gainNode);
+
+        _this._gainNode.connect(_this._output);
+        return _this;
+    }
+
+    return LRMSNode;
+}(_index2.default);
+
+exports.default = LRMSNode;
+},{"../core/index.js":2,"./sumdiff.js":15}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3154,6 +4068,21 @@ var MultichannelGainNode = function (_AbstractNode) {
 
         //==============================================================================
         /**
+         * Sets the same gain to all channels
+         * @param {float} value: linear gain
+         */
+
+    }, {
+        key: 'setAllGains',
+        value: function setAllGains(value) {
+
+            for (var k = 0; k < this.getNumChannels(); k++) {
+                this.setGain(k, value);
+            }
+        }
+
+        //==============================================================================
+        /**
          * Sets the gain of the i-th channel
          * @param {int} channelIndex
          * @param {float} value: linear gain
@@ -3251,7 +4180,7 @@ var MultichannelGainNode = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = MultichannelGainNode;
-},{"../core/index.js":2,"../core/utils.js":3}],12:[function(require,module,exports){
+},{"../core/index.js":2,"../core/utils.js":3}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3427,7 +4356,7 @@ var PhoneNode = function (_CascadeNode) {
 }(_cascade2.default);
 
 exports.default = PhoneNode;
-},{"../core/index.js":2,"../dsp/cascade.js":6}],13:[function(require,module,exports){
+},{"../core/index.js":2,"../dsp/cascade.js":6}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3503,7 +4432,7 @@ var SumDiffNode = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = SumDiffNode;
-},{"../core/index.js":2}],14:[function(require,module,exports){
+},{"../core/index.js":2}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3766,7 +4695,7 @@ var TransauralFeedforwardNode = exports.TransauralFeedforwardNode = function (_T
 
     return TransauralFeedforwardNode;
 }(TransauralNode);
-},{"../core/index.js":2,"./kemar.js":10,"./sumdiff.js":13}],15:[function(require,module,exports){
+},{"../core/index.js":2,"./kemar.js":11,"./sumdiff.js":15}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -4102,13 +5031,13 @@ var VirtualSpeakersNode = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = VirtualSpeakersNode;
-},{"../core/index.js":2,"binaural":46}],16:[function(require,module,exports){
+},{"../core/index.js":2,"binaural":48}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 		value: true
 });
-exports.binaural = exports.unittests = exports.utilities = exports.AudioStreamDescription = exports.AudioStreamDescriptionCollection = exports.SmartFader = exports.ObjectSpatialiserAndMixer = exports.NoiseAdaptation = exports.MultichannelSpatialiser = exports.DialogEnhancement = exports.ReceiverMix = exports.StreamSelector = exports.HeadphonesEqualization = exports.SumDiffNode = exports.CascadeNode = undefined;
+exports.binaural = exports.unittests = exports.utilities = exports.AudioStreamDescription = exports.AudioStreamDescriptionCollection = exports.SmartFader = exports.ObjectSpatialiserAndMixer = exports.NoiseAdaptation = exports.MultichannelSpatialiser = exports.DialogEnhancement = exports.ReceiverMix = exports.StreamSelector = exports.HeadphonesEqualization = exports.CenterEnhancementNode = exports.LRMSNode = exports.SumDiffNode = exports.CascadeNode = undefined;
 
 var _index = require('./dialog-enhancement/index.js');
 
@@ -4158,6 +5087,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.CascadeNode = _index16.CascadeNode;
 exports.SumDiffNode = _index16.SumDiffNode;
+exports.LRMSNode = _index16.LRMSNode;
+exports.CenterEnhancementNode = _index16.CenterEnhancementNode;
 exports.HeadphonesEqualization = _index16.HeadphonesEqualization;
 exports.StreamSelector = _index13.default;
 exports.ReceiverMix = _index15.default;
@@ -4171,7 +5102,7 @@ exports.AudioStreamDescription = _index11.AudioStreamDescription;
 exports.utilities = _utils2.default;
 exports.unittests = _index18.default;
 exports.binaural = _binaural2.default;
-},{"./core/index.js":2,"./core/utils.js":3,"./dialog-enhancement/index.js":4,"./dsp/index.js":9,"./multichannel-spatialiser/index.js":17,"./noise-adaptation/index.js":19,"./object-spatialiser-and-mixer/index.js":20,"./receiver-mix/index.js":21,"./smart-fader/index.js":22,"./stream-selector/index.js":23,"./testing/index.js":24,"binaural":46}],17:[function(require,module,exports){
+},{"./core/index.js":2,"./core/utils.js":3,"./dialog-enhancement/index.js":4,"./dsp/index.js":10,"./multichannel-spatialiser/index.js":19,"./noise-adaptation/index.js":21,"./object-spatialiser-and-mixer/index.js":22,"./receiver-mix/index.js":23,"./smart-fader/index.js":24,"./stream-selector/index.js":25,"./testing/index.js":26,"binaural":48}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -4508,7 +5439,7 @@ var MultichannelSpatialiser = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = MultichannelSpatialiser;
-},{"../core/index.js":2,"../core/utils.js":3,"../dsp/headphoneequalization.js":8,"../dsp/transaural.js":14,"../dsp/virtualspeakers.js":15,"../multichannel-spatialiser/routing.js":18}],18:[function(require,module,exports){
+},{"../core/index.js":2,"../core/utils.js":3,"../dsp/headphoneequalization.js":9,"../dsp/transaural.js":16,"../dsp/virtualspeakers.js":17,"../multichannel-spatialiser/routing.js":20}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4576,7 +5507,7 @@ var StreamRouting = function (_AbstractNode) {
         /// sanity check
         /// mainAudio (2) + extendedAmbience (6) + extendedComments (1) + extendedDialogs (1) = 10
         if (totalNumberOfChannels_ != 10) {
-            throw new Error("Ca parait pas bon...");
+            console.log("warning : total number of channels = " + totalNumberOfChannels_);
         }
 
         _this._splitterNode = audioContext.createChannelSplitter(totalNumberOfChannels_);
@@ -4703,7 +5634,7 @@ var StreamRouting = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = StreamRouting;
-},{"../core/index.js":2}],19:[function(require,module,exports){
+},{"../core/index.js":2}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -4776,7 +5707,7 @@ var NoiseAdaptation = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = NoiseAdaptation;
-},{"../core/index.js":2}],20:[function(require,module,exports){
+},{"../core/index.js":2}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5206,7 +6137,7 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 }(_index2.default);
 
 exports.default = ObjectSpatialiserAndMixer;
-},{"../core/utils.js":3,"../multichannel-spatialiser/index.js":17}],21:[function(require,module,exports){
+},{"../core/utils.js":3,"../multichannel-spatialiser/index.js":19}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5271,6 +6202,9 @@ var ReceiverMix = function (_AbstractNode) {
 
         _this._isBypass = false;
         _this._shouldCompress = false;
+        _this._rmsRefreshInterval = 100; /// interval (in msec for refreshing the RMS measurement)
+        _this._durationHold = 0; /// how long (in msec) the compressor has been on hold
+        _this._minimumHoldTime = 1500; /// hold time in msec) for the compressor
 
         if (typeof audioStreamDescriptionCollection === "undefined") {
             throw new Error("the audioStreamDescriptionCollection must be defined !");
@@ -5309,7 +6243,7 @@ var ReceiverMix = function (_AbstractNode) {
         /// sanity check
         /// mainAudio (2) + extendedAmbience (6) + extendedComments (1) + extendedDialogs (1) = 10
         if (totalNumberOfChannels_ != 10) {
-            throw new Error("Ca parait pas bon...");
+            console.log("warning : total number of channels = " + totalNumberOfChannels_);
         }
 
         /// main splitter node, at the entrance of the ReceiverMix
@@ -5330,9 +6264,13 @@ var ReceiverMix = function (_AbstractNode) {
 
         _this._updateAudioGraph();
 
-        window.setInterval(function () {
-            _this._updateCompressor();
+        /*
+        window.setInterval( () => {
+            this._updateCompressor();
         }, 100);
+        */
+
+        _this._updateCompressor();
         return _this;
     }
 
@@ -5736,6 +6674,63 @@ var ReceiverMix = function (_AbstractNode) {
 
         //==============================================================================
         /**
+         * Sets the refresh interval for RMS measurement (in msec)
+         * theSlider : the slider
+         * return the actual value of the refresh interval (in msec)
+         */
+
+    }, {
+        key: 'setRefreshRmsTimeFromGui',
+        value: function setRefreshRmsTimeFromGui(theSlider) {
+
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 20;
+            var maxValue = 500;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this._rmsRefreshInterval = value;
+
+            return value;
+        }
+
+        /**
+         * Returns the refresh interval for RMS measurement (in msec)
+         * theSlider : the slider
+         */
+
+    }, {
+        key: 'getRefreshRmsTimeForGui',
+        value: function getRefreshRmsTimeForGui(theSlider) {
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 20;
+            var maxValue = 500;
+
+
+            var actualValue = this._rmsRefreshInterval;
+
+            /// scale from DSP to GUI
+            var value = M4DPAudioModules.utilities.scale(actualValue, minValue, maxValue, minFader, maxFader);
+
+            return value;
+        }
+
+        //==============================================================================
+        /**
          * Sets the attack time, according to a slider in the GUI
          * theSlider : the slider
          * return the actual value of the attack time (in msec)
@@ -5853,6 +6848,63 @@ var ReceiverMix = function (_AbstractNode) {
 
 
             var actualValue = this.getCompressorRatio();
+
+            /// scale from DSP to GUI
+            var value = M4DPAudioModules.utilities.scale(actualValue, minValue, maxValue, minFader, maxFader);
+
+            return value;
+        }
+
+        //==============================================================================
+        /**
+         * Sets the minimum hold time (in msec)
+         * theSlider : the slider
+         * return the actual value of the hold time
+         */
+
+    }, {
+        key: 'setMinimumHoldTimeFromGui',
+        value: function setMinimumHoldTimeFromGui(theSlider) {
+
+            /// the value of the fader
+            var valueFader = parseFloat(theSlider.value);
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 1000;
+            var maxValue = 5000;
+
+            /// scale from GUI to DSP
+
+            var value = M4DPAudioModules.utilities.scale(valueFader, minFader, maxFader, minValue, maxValue);
+
+            this._minimumHoldTime = value;
+
+            return value;
+        }
+
+        /**
+         * Returns the minimum hold time (in msec)
+         * theSlider : the slider
+         */
+
+    }, {
+        key: 'getMinimumHoldTimeForGui',
+        value: function getMinimumHoldTimeForGui(theSlider) {
+
+            // get the bounds of the fader (GUI)
+            var minFader = parseFloat(theSlider.min);
+            var maxFader = parseFloat(theSlider.max);
+
+            // get the actual bounds for this parameter
+            var minValue = 1000;
+            var maxValue = 5000;
+
+
+            var actualValue = this._minimumHoldTime;
 
             /// scale from DSP to GUI
             var value = M4DPAudioModules.utilities.scale(actualValue, minValue, maxValue, minFader, maxFader);
@@ -6105,9 +7157,36 @@ var ReceiverMix = function (_AbstractNode) {
 
         //==============================================================================
         /**
-         * This method should be called periodically
+         * This method should be called once, and then it repeats itself periodically
          */
         value: function _updateCompressor() {
+            var _this2 = this;
+
+            /// execute this function again, after a given interval       
+            window.setTimeout(function () {
+                _this2._updateCompressor();
+            }, this._rmsRefreshInterval);
+
+            /// in msec
+            /// once the compression gets activated,
+            /// we will hold it for at least 1500 msec
+            /// i.e. for 1500 msec, we suspend the RMS comparison,
+            /// and the compression remains with a dry/wet of 100%
+            var minimumHoldTime = this._minimumHoldTime;
+
+            ///@todo : the hold time could also appear in the GUI
+
+            if (this.bypass === false && this._shouldCompress === true && this._durationHold <= minimumHoldTime) {
+                /// hold the compressor for at least 1000 msec
+
+                /// increment the counter
+                this._durationHold += this._rmsRefreshInterval;
+
+                return;
+            }
+
+            /// the hold period is over; now, really compare the RMS,
+            /// to activate or not the compression
 
             this._shouldCompress = false;
 
@@ -6135,10 +7214,16 @@ var ReceiverMix = function (_AbstractNode) {
                 //ratio = this._compressionRatio;
                 //this._dynamicCompressorNode.bypass = false;
                 this._dynamicCompressorNode.drywet = 100;
+
+                /// increment the counter
+                this._durationHold += this._rmsRefreshInterval;
             } else {
                 //ratio = 1.0;
                 //this._dynamicCompressorNode.bypass = true;
                 this._dynamicCompressorNode.drywet = 0;
+
+                /// increment the counter
+                this._durationHold = 0;
             }
         }
 
@@ -6618,7 +7703,7 @@ var ReceiverMix = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = ReceiverMix;
-},{"../core/index.js":2,"../core/utils.js":3,"../dsp/analysis.js":5,"../dsp/compressor.js":7}],22:[function(require,module,exports){
+},{"../core/index.js":2,"../core/utils.js":3,"../dsp/analysis.js":5,"../dsp/compressor.js":8}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7417,7 +8502,7 @@ var SmartFader = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = SmartFader;
-},{"../core/index.js":2,"../core/utils.js":3,"../dsp/compressor.js":7}],23:[function(require,module,exports){
+},{"../core/index.js":2,"../core/utils.js":3,"../dsp/compressor.js":8}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7480,7 +8565,7 @@ var StreamSelector = function (_AbstractNode) {
         /// sanity check
         /// mainAudio (2) + extendedAmbience (6) + extendedComments (1) + extendedDialogs (1) = 10
         if (totalNumberOfChannels_ != 10) {
-            throw new Error("Ca parait pas bon...");
+            console.log("warning : total number of channels = " + totalNumberOfChannels_);
         }
 
         _this._gainsNode = new _multichannelgain2.default(audioContext, totalNumberOfChannels_);
@@ -7622,7 +8707,7 @@ var StreamSelector = function (_AbstractNode) {
 }(_index2.default);
 
 exports.default = StreamSelector;
-},{"../core/index.js":2,"../core/utils.js":3,"../dsp/multichannelgain.js":11}],24:[function(require,module,exports){
+},{"../core/index.js":2,"../core/utils.js":3,"../dsp/multichannelgain.js":13}],26:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7696,7 +8781,7 @@ var unittests = {
 };
 
 exports.default = unittests;
-},{"./testanalysis.js":25,"./testbinaural.js":26,"./testbiquad.js":27,"./testcascade.js":28,"./testmultichannel.js":29,"./testphone.js":30,"./testrouting.js":31,"./testsofa.js":32,"./testsumdiff.js":33,"./testtransaural.js":34}],25:[function(require,module,exports){
+},{"./testanalysis.js":27,"./testbinaural.js":28,"./testbiquad.js":29,"./testcascade.js":30,"./testmultichannel.js":31,"./testphone.js":32,"./testrouting.js":33,"./testsofa.js":34,"./testsumdiff.js":35,"./testtransaural.js":36}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7805,7 +8890,7 @@ var analysistests = {
 };
 
 exports.default = analysistests;
-},{"../core/bufferutils.js":1,"../dsp/analysis.js":5,"../dsp/phone.js":12}],26:[function(require,module,exports){
+},{"../core/bufferutils.js":1,"../dsp/analysis.js":5,"../dsp/phone.js":14}],28:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7903,7 +8988,7 @@ var binauraltests = {
 };
 
 exports.default = binauraltests;
-},{"../core/bufferutils.js":1,"./testsofa.js":32}],27:[function(require,module,exports){
+},{"../core/bufferutils.js":1,"./testsofa.js":34}],29:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8000,7 +9085,7 @@ var biquadtests = {
 };
 
 exports.default = biquadtests;
-},{"../core/bufferutils.js":1}],28:[function(require,module,exports){
+},{"../core/bufferutils.js":1}],30:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8108,7 +9193,7 @@ var cascadetests = {
 };
 
 exports.default = cascadetests;
-},{"../core/bufferutils.js":1,"../dsp/cascade.js":6}],29:[function(require,module,exports){
+},{"../core/bufferutils.js":1,"../dsp/cascade.js":6}],31:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8190,7 +9275,7 @@ var multichanneltests = {
 };
 
 exports.default = multichanneltests;
-},{"../core/bufferutils.js":1}],30:[function(require,module,exports){
+},{"../core/bufferutils.js":1}],32:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8286,7 +9371,7 @@ var phonetests = {
 };
 
 exports.default = phonetests;
-},{"../core/bufferutils.js":1,"../dsp/phone.js":12}],31:[function(require,module,exports){
+},{"../core/bufferutils.js":1,"../dsp/phone.js":14}],33:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8376,7 +9461,7 @@ var routingtests = {
 };
 
 exports.default = routingtests;
-},{"../core/bufferutils.js":1,"../multichannel-spatialiser/routing.js":18}],32:[function(require,module,exports){
+},{"../core/bufferutils.js":1,"../multichannel-spatialiser/routing.js":20}],34:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8530,7 +9615,7 @@ var sofatests = {
 };
 
 exports.default = sofatests;
-},{"../core/utils.js":3,"binaural":46}],33:[function(require,module,exports){
+},{"../core/utils.js":3,"binaural":48}],35:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8616,7 +9701,7 @@ var sumdifftests = {
 };
 
 exports.default = sumdifftests;
-},{"../core/bufferutils.js":1,"../dsp/sumdiff.js":13}],34:[function(require,module,exports){
+},{"../core/bufferutils.js":1,"../dsp/sumdiff.js":15}],36:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8699,7 +9784,7 @@ var transauraltests = {
 };
 
 exports.default = transauraltests;
-},{"../core/bufferutils.js":1,"../dsp/transaural.js":14}],35:[function(require,module,exports){
+},{"../core/bufferutils.js":1,"../dsp/transaural.js":16}],37:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9137,7 +10222,7 @@ var BinauralPanner = exports.BinauralPanner = function () {
     // ------------- HRTF set proxies
 
     /**
-     * Set the filter positions of the HRTF set
+     * Set the filter positions of the HRTF set.
      *
      * @see {@link HrtfSet#filterPositions}
      *
@@ -9151,7 +10236,7 @@ var BinauralPanner = exports.BinauralPanner = function () {
     }
 
     /**
-     * Get the filter positions of the HRTF set
+     * Get the filter positions of the HRTF set.
      *
      * @see {@link HrtfSet#filterPositions}
      *
@@ -9243,8 +10328,8 @@ var BinauralPanner = exports.BinauralPanner = function () {
 
   }, {
     key: 'listenerCoordinateSystem',
-    set: function set(coordinateSystem) {
-      this._listener.coordinateSystem = typeof coordinateSystem !== 'undefined' ? coordinateSystem : this.coordinateSystem;
+    set: function set(system) {
+      this._listener.coordinateSystem = typeof system !== 'undefined' ? system : this.coordinateSystem;
     }
 
     /**
@@ -9295,7 +10380,7 @@ var BinauralPanner = exports.BinauralPanner = function () {
      * @see {@link Listener#up}
      * @see {@link BinauralPanner#update}
      *
-     * @param {Coordinates} positionRequest
+     * @param {Coordinates} upRequest
      */
 
   }, {
@@ -9325,7 +10410,7 @@ var BinauralPanner = exports.BinauralPanner = function () {
      * @see {@link Listener#viewIsRelative}
      * @see {@link BinauralPanner#update}
      *
-     * @param {Coordinates} positionRequest
+     * @param {Coordinates} viewRequest
      */
 
   }, {
@@ -9417,7 +10502,7 @@ var BinauralPanner = exports.BinauralPanner = function () {
 }();
 
 exports.default = BinauralPanner;
-},{"../geometry/Listener":42,"../geometry/coordinates":43,"../sofa/HrtfSet":48,"./Source":36,"gl-matrix":54}],36:[function(require,module,exports){
+},{"../geometry/Listener":44,"../geometry/coordinates":45,"../sofa/HrtfSet":50,"./Source":38,"gl-matrix":56}],38:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9451,10 +10536,10 @@ var Source = exports.Source = function () {
    * @param {Object} options
    * @param {AudioContext} options.audioContext mandatory for the creation
    * of FIR audio buffers
-   * @param {HrtfSet} hrtfSet {@link Source#hrtfSet}
-   * @param {coordinate} [position=[0,0,0]] in 'gl' coordinate system.
+   * @param {HrtfSet} options.hrtfSet {@link Source#hrtfSet}
+   * @param {coordinate} [options.position=[0,0,0]] in 'gl' coordinate system.
    * {@link Source#position}
-   * @param {Number} [crossfadeDuration] in seconds
+   * @param {Number} [options.crossfadeDuration] in seconds
    * {@link Source#crossfadeDuration}
    */
 
@@ -9692,7 +10777,7 @@ var Source = exports.Source = function () {
 }();
 
 exports.default = Source;
-},{}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9718,7 +10803,7 @@ exports.default = {
   Source: _Source2.default,
   utilities: _utilities2.default
 };
-},{"./BinauralPanner":35,"./Source":36,"./utilities":38}],38:[function(require,module,exports){
+},{"./BinauralPanner":37,"./Source":38,"./utilities":40}],40:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9867,7 +10952,7 @@ exports.default = {
   createNoiseBuffer: createNoiseBuffer,
   resampleFloat32Array: resampleFloat32Array
 };
-},{}],39:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9883,7 +10968,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   utilities: _utilities2.default
 };
-},{"./utilities":40}],40:[function(require,module,exports){
+},{"./utilities":42}],42:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9932,7 +11017,7 @@ exports.default = {
   almostEquals: almostEquals,
   almostEqualsModulo: almostEqualsModulo
 };
-},{}],41:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10001,7 +11086,7 @@ exports.default = {
   distanceSquared: distanceSquared,
   tree: _kd2.default
 };
-},{"kd.tree":64}],42:[function(require,module,exports){
+},{"kd.tree":66}],44:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10037,6 +11122,7 @@ var Listener = exports.Listener = function () {
   /**
    * Constructs a listener.
    *
+   * @param {Object} options
    * @param {CoordinateSystem} [options.coordinateSystem='gl']
    * {@link Listener#coordinateSystem}
    * @param {Coordinates} [options.position=[0,0,0]]
@@ -10116,13 +11202,13 @@ var Listener = exports.Listener = function () {
     /**
      * Set coordinate system.
      *
-     * @param {CoordinateSystem} [type='gl']
+     * @param {CoordinateSystem} [system='gl']
      */
 
   }, {
     key: 'coordinateSystem',
-    set: function set(coordinateSystem) {
-      this._coordinateSystem = typeof coordinateSystem !== 'undefined' ? coordinateSystem : 'gl';
+    set: function set(system) {
+      this._coordinateSystem = typeof system !== 'undefined' ? system : 'gl';
     }
 
     /**
@@ -10171,7 +11257,7 @@ var Listener = exports.Listener = function () {
      *
      * @see {@link Listener#update}
      *
-     * @param {Coordinates} positionRequest
+     * @param {Coordinates} upRequest
      */
 
   }, {
@@ -10201,7 +11287,7 @@ var Listener = exports.Listener = function () {
      * @see {@link Listener#viewIsRelative}
      * @see {@link Listener#update}
      *
-     * @param {Coordinates} positionRequest
+     * @param {Coordinates} viewRequest
      */
 
   }, {
@@ -10253,7 +11339,7 @@ var Listener = exports.Listener = function () {
 }();
 
 exports.default = Listener;
-},{"../geometry/coordinates":43,"gl-matrix":54}],43:[function(require,module,exports){
+},{"../geometry/coordinates":45,"gl-matrix":56}],45:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10683,7 +11769,7 @@ function glToSpat4Spherical(out, a) {
  * or spherical type.
  */
 function systemType(system) {
-  var type = undefined;
+  var type = void 0;
   if (system === 'sofaCartesian' || system === 'spat4Cartesian' || system === 'gl') {
     type = 'cartesian';
   } else if (system === 'sofaSpherical' || system === 'spat4Spherical') {
@@ -10790,7 +11876,7 @@ exports.default = {
   systemToGl: systemToGl,
   systemType: systemType
 };
-},{"./degree":44}],44:[function(require,module,exports){
+},{"./degree":46}],46:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10882,7 +11968,7 @@ exports.default = {
   toRadian: toRadian,
   toRadianFactor: toRadianFactor
 };
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10913,7 +11999,7 @@ exports.default = {
   KdTree: _KdTree2.default,
   Listener: _Listener2.default
 };
-},{"./KdTree":41,"./Listener":42,"./coordinates":43,"./degree":44}],46:[function(require,module,exports){
+},{"./KdTree":43,"./Listener":44,"./coordinates":45,"./degree":46}],48:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10955,7 +12041,7 @@ exports.default = {
   info: _info2.default,
   sofa: _sofa2.default
 };
-},{"./audio":37,"./common":39,"./geometry":45,"./info":47,"./sofa":50}],47:[function(require,module,exports){
+},{"./audio":39,"./common":41,"./geometry":47,"./info":49,"./sofa":52}],49:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11020,7 +12106,7 @@ exports.default = {
   name: name,
   version: version
 };
-},{"../package.json":65}],48:[function(require,module,exports){
+},{"../package.json":67}],50:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11162,7 +12248,7 @@ var HrtfSet = exports.HrtfSet = function () {
 
       var url = extension === 'sofa' ? sourceUrl + '.json' : sourceUrl;
 
-      var promise = undefined;
+      var promise = void 0;
 
       // need a server for partial downloading ("sofa" extension may be naive)
       var preFilter = typeof this._filterPositions !== 'undefined' && !this.filterAfterLoad && extension === 'sofa';
@@ -11222,7 +12308,7 @@ var HrtfSet = exports.HrtfSet = function () {
       // SOFA listener is the reference for HrtfSet filter positions
       // which is normalised in HrtfSet
 
-      var SourcePosition = undefined;
+      var SourcePosition = void 0;
       var SourcePositionType = _coordinates2.default.systemType(this.filterCoordinateSystem);
       switch (SourcePositionType) {
         case 'cartesian':
@@ -11327,8 +12413,7 @@ var HrtfSet = exports.HrtfSet = function () {
      *
      * @private
      *
-     * @param {Array}
-     * indicesPositionsFirs
+     * @param {Array} indicesPositionsFirs
      * @returns {this}
      */
 
@@ -11629,6 +12714,7 @@ var HrtfSet = exports.HrtfSet = function () {
      * @private
      *
      * @param {Object} data
+     * @param {String} sourceUrl
      * @throws {Error} assertion for FIR data.
      */
 
@@ -11742,8 +12828,6 @@ var HrtfSet = exports.HrtfSet = function () {
 
     /**
      * Get coordinate system for filter positions.
-     *
-     * @param {CoordinateSystem} system
      */
     ,
     get: function get() {
@@ -11789,12 +12873,10 @@ var HrtfSet = exports.HrtfSet = function () {
 
     /**
      * Get filter positions.
-     *
-     * @param {Array.<Coordinates>} positions
      */
     ,
     get: function get() {
-      var positions = undefined;
+      var positions = void 0;
       if (typeof this._filterPositions !== 'undefined') {
         switch (this.filterCoordinateSystem) {
           case 'gl':
@@ -11914,7 +12996,7 @@ var HrtfSet = exports.HrtfSet = function () {
 }();
 
 exports.default = HrtfSet;
-},{"../audio/utilities":38,"../geometry/KdTree":41,"../geometry/coordinates":43,"../info":47,"./parseDataSet":51,"./parseSofa":52,"gl-matrix":54}],49:[function(require,module,exports){
+},{"../audio/utilities":40,"../geometry/KdTree":43,"../geometry/coordinates":45,"../info":49,"./parseDataSet":53,"./parseSofa":54,"gl-matrix":56}],51:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12033,9 +13115,9 @@ var ServerDataBase = exports.ServerDataBase = function () {
           } else {
             // recursion
             var promises = [];
-            for (var ref = 0; ref < catalogueReferences.length; ++ref) {
-              var name = catalogueReferences[ref].getAttribute('name');
-              var recursiveUrl = _this._server + dataSet.getAttribute('name') + '/' + catalogueReferences[ref].getAttribute('xlink:href');
+            for (var _ref = 0; _ref < catalogueReferences.length; ++_ref) {
+              var name = catalogueReferences[_ref].getAttribute('name');
+              var recursiveUrl = _this._server + dataSet.getAttribute('name') + '/' + catalogueReferences[_ref].getAttribute('xlink:href');
               destination[name] = {};
               promises.push(_this.loadCatalogue(recursiveUrl, destination[name]));
             }
@@ -12207,7 +13289,7 @@ var ServerDataBase = exports.ServerDataBase = function () {
 }();
 
 exports.default = ServerDataBase;
-},{"./parseDataSet":51,"./parseXml":53}],50:[function(require,module,exports){
+},{"./parseDataSet":53,"./parseXml":55}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12236,7 +13318,7 @@ exports.default = {
   HrtfSet: _HrtfSet2.default,
   ServerDataBase: _ServerDataBase2.default
 };
-},{"./HrtfSet":48,"./ServerDataBase":49}],51:[function(require,module,exports){
+},{"./HrtfSet":50,"./ServerDataBase":51}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12385,7 +13467,7 @@ function parseDataSet(input) {
 }
 
 exports.default = parseDataSet;
-},{}],52:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12513,7 +13595,7 @@ function stringifySofa(sofaSet) {
   // always the same;
   var type = 'Float64';
 
-  var attributes = undefined;
+  var attributes = void 0;
 
   sofa.leaves = [];
 
@@ -12624,7 +13706,7 @@ function stringifySofa(sofaSet) {
  * @throws {Error} if system is unknown
  */
 function conformSofaCoordinateSystem(system) {
-  var type = undefined;
+  var type = void 0;
 
   switch (system) {
     case 'cartesian':
@@ -12645,7 +13727,7 @@ exports.default = {
   parseSofa: parseSofa,
   conformSofaCoordinateSystem: conformSofaCoordinateSystem
 };
-},{}],53:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12681,7 +13763,7 @@ Object.defineProperty(exports, "__esModule", {
  * }
  * request.send();
  */
-var parseXml = exports.parseXml = undefined;
+var parseXml = exports.parseXml = void 0;
 
 if (typeof window.DOMParser !== 'undefined') {
   exports.parseXml = parseXml = function parseXmlDOM(xmlStr) {
@@ -12699,7 +13781,7 @@ if (typeof window.DOMParser !== 'undefined') {
 }
 
 exports.default = parseXml;
-},{}],54:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 /**
  * @fileoverview gl-matrix - High performance matrix and vector operations
  * @author Brandon Jones
@@ -12737,7 +13819,7 @@ exports.quat = require("./gl-matrix/quat.js");
 exports.vec2 = require("./gl-matrix/vec2.js");
 exports.vec3 = require("./gl-matrix/vec3.js");
 exports.vec4 = require("./gl-matrix/vec4.js");
-},{"./gl-matrix/common.js":55,"./gl-matrix/mat2.js":56,"./gl-matrix/mat2d.js":57,"./gl-matrix/mat3.js":58,"./gl-matrix/mat4.js":59,"./gl-matrix/quat.js":60,"./gl-matrix/vec2.js":61,"./gl-matrix/vec3.js":62,"./gl-matrix/vec4.js":63}],55:[function(require,module,exports){
+},{"./gl-matrix/common.js":57,"./gl-matrix/mat2.js":58,"./gl-matrix/mat2d.js":59,"./gl-matrix/mat3.js":60,"./gl-matrix/mat4.js":61,"./gl-matrix/quat.js":62,"./gl-matrix/vec2.js":63,"./gl-matrix/vec3.js":64,"./gl-matrix/vec4.js":65}],57:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -12809,7 +13891,7 @@ glMatrix.equals = function(a, b) {
 
 module.exports = glMatrix;
 
-},{}],56:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -13247,7 +14329,7 @@ mat2.multiplyScalarAndAdd = function(out, a, b, scale) {
 
 module.exports = mat2;
 
-},{"./common.js":55}],57:[function(require,module,exports){
+},{"./common.js":57}],59:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -13718,7 +14800,7 @@ mat2d.equals = function (a, b) {
 
 module.exports = mat2d;
 
-},{"./common.js":55}],58:[function(require,module,exports){
+},{"./common.js":57}],60:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -14466,7 +15548,7 @@ mat3.equals = function (a, b) {
 
 module.exports = mat3;
 
-},{"./common.js":55}],59:[function(require,module,exports){
+},{"./common.js":57}],61:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -16604,7 +17686,7 @@ mat4.equals = function (a, b) {
 
 module.exports = mat4;
 
-},{"./common.js":55}],60:[function(require,module,exports){
+},{"./common.js":57}],62:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17206,7 +18288,7 @@ quat.equals = vec4.equals;
 
 module.exports = quat;
 
-},{"./common.js":55,"./mat3.js":58,"./vec3.js":62,"./vec4.js":63}],61:[function(require,module,exports){
+},{"./common.js":57,"./mat3.js":60,"./vec3.js":64,"./vec4.js":65}],63:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17795,7 +18877,7 @@ vec2.equals = function (a, b) {
 
 module.exports = vec2;
 
-},{"./common.js":55}],62:[function(require,module,exports){
+},{"./common.js":57}],64:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18574,7 +19656,7 @@ vec3.equals = function (a, b) {
 
 module.exports = vec3;
 
-},{"./common.js":55}],63:[function(require,module,exports){
+},{"./common.js":57}],65:[function(require,module,exports){
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19185,7 +20267,7 @@ vec4.equals = function (a, b) {
 
 module.exports = vec4;
 
-},{"./common.js":55}],64:[function(require,module,exports){
+},{"./common.js":57}],66:[function(require,module,exports){
 /**
  * AUTHOR OF INITIAL JS LIBRARY
  * k-d Tree JavaScript - V 1.0
@@ -19644,21 +20726,23 @@ module.exports = {
   }
 }
 
-},{}],65:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 module.exports={
   "name": "binaural",
   "exports": "binaural",
-  "version": "0.3.7",
+  "version": "0.3.10",
   "description": "Processing audio node which spatializes an incoming audio stream in three-dimensional space for binaural audio",
   "main": "./dist/",
   "standalone": "binaural",
   "scripts": {
-    "lint": "eslint ./src/ ./test/ && jscs --verbose ./src/ ./test/ ",
+    "lint": "eslint ./src/ ./test/ && jscs --verbose ./src/ ./test/",
+    "lint-examples": "eslint -c examples/.eslintrc ./examples/*.html",
     "compile": "rm -rf ./dist && babel ./src/ --out-dir ./dist/",
     "browserify": "browserify ./src/index.js -t [ babelify ] --standalone binaural > binaural.js",
-    "bundle": "npm run lint && npm run test && npm run doc && npm run compile && npm run browserify",
+    "bundle": "npm run lint && npm run lint-examples && npm run test && npm run doc && npm run compile && npm run browserify",
     "doc": "esdoc -c esdoc.json",
     "test": "browserify test/*/*.js -t [ babelify ] --exclude 'test/*/*_listen.js*' --exclude 'test/*/*_issues.js' | tape-run",
+    "test-browser": "browserify test/*/*.js -t [ babelify ] --exclude 'test/*/*_listen.js*' --exclude 'test/*/*_issues.js' | testling -u",
     "test-listen": "browserify test/*/*_listen.js -t [ babelify ] | tape-run",
     "test-issues": "browserify test/*/*_issues.js -t [ babelify ] | tape-run",
     "watch": "watch 'npm run browserify && echo $( date ): browserified' ./src/"
@@ -19678,7 +20762,7 @@ module.exports={
     "url": "https://github.com/Ircam-RnD/binauralFIR"
   },
   "engines": {
-    "node": "0.12 || 4.2",
+    "node": "0.12 || 4",
     "npm": ">=1.0.0 <3.0.0"
   },
   "devDependencies": {
@@ -19688,26 +20772,28 @@ module.exports={
     "babelify": "^7.2.0",
     "blue-tape": "^0.1.11",
     "browserify": "^12.0.2",
-    "esdoc": "^0.4.4",
+    "esdoc": "^0.4.6",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^1.0.2",
-    "jscs": "^2.8.0",
+    "eslint-plugin-html": "^1.4.0",
+    "jscs": "2.11.0",
+    "jscs-jsdoc": "^1.3.1",
     "tape": "^4.4.0",
     "tape-run": "^2.1.2",
     "testling": "^1.7.1",
     "watch": "^0.17.1"
   },
-  "readme": "# Binaural #\n\nThis library permits to render sources in three-dimensional space with\nbinaural audio.\n\nThis library provides an access to a server, in order to load a set of\n[HRTF]. The set of filters applies to any number of sources, given their\nposition, and a listener.\n\nThis library is compatible with the [Web Audio API]. The novelty of this\nlibrary is that it permits to use a custom [HRTF] dataset (see\n[T. Carpentier article]).\n\nIt is possible to use it without a server, with a direct URL to an [HRTF]\nset.\n\n## Documentation ##\n\nYou can consult the [API documentation] for the complete documentation.\n\n### BinauralPanner ###\n\nA `BinauralPanner` is a panner for use with the [Web Audio API]. It\nspatialises multiple audio sources, given a set of head-related transfer\nfunctions [HRTF]s, and a listener.\n\n### ServerDataBase ###\n\n**The public server that hosts a database of individual [HRTF]s is available\nfor beta-testers only and will open to public in 2016.**\n\nThe `ServerDataBase` retrieves a catalogue from a [SOFA] server. From the\ncatalogue, it get URLs matching optional filters: data-base, sample-rate,\nand any free pattern.\n\n### HRTF dataset ###\n\nYou can use any [HRTF] data-set that follows the [SOFA] standard, in JSON\nformat, using finite impulse responses (FIR). Second-order sections (SOS)\nare not supported, yet. See the [examples HRTF directory] for a few samples.\n\n### Coordinate system types ###\n\nSee the files in [src/geometry], for conversions:\n- openGL, [SOFA], and Spat4 (Ircam) conventions\n- cartesian and spherical coordinates\n- radian and degree angles\n\n\n## Examples ##\n\nPlease see the [examples directory] for complete code, and the [examples online].\n\nSee also the [API documentation] for the complete options.\n\n### BinauralPanner ###\nGiven an audio element, and a global binaural module,\n\n```html\n<html>\n    <head>\n        <script src=\"../binaural.js\"></script>\n    </head>\n    <body>\n        <audio id=\"source\" src=\"./snd/breakbeat.wav\" controls loop></audio>\n    </body>\n</html>\n```\n\ncreate a source audio node,\n\n```js\nvar audioContext = new AudioContext();\nvar $mediaElement = document.querySelector('#source');\nvar player = audioContext.createMediaElementSource($mediaElement);\n```\n\ninstantiate a `BinauralPanner` and connect it.\n\n```js\nvar binauralPanner = new binaural.audio.BinauralPanner({\n    audioContext,\n    crossfadeDuration: 0.05, // in seconds\n    coordinateSystem: 'sofaSpherical', // [azimuth, elevation, distance]\n    sourceCount: 1,\n    sourcePositions: [ [0, 0, 1] ], // initial position\n});\nbinauralPanner.connectOutputs(audioContext.destination);\nbinauralPanner.connectInputByIndex(0, player);\n\n```\n\nLoad an HRTF set (this returns a promise).\n\n```js\nbinauralPanner.loadHrtfSet(url)\n    .then(function () {\n        console.log('loaded');\n    })\n    .catch(function (error) {\n        console.log('Error while loading ' + url\n                    + error.message);\n    });\n```\n\nThen, any source can move:\n\n```js\n$azimuth.on(\"input\", function(event) {\n    // get current position\n    var position = binauralPanner.getSourcePositionByIndex(0);\n\n    // update azimuth\n    position[0] = event.target.value;\n    binauralPanner.setSourcePositionByIndex(0, position);\n\n    // update filters\n    window.requestAnimationFrame(function () {\n        binauralPanner.update();\n    });\n}\n```\n\nNote that a call to the `update` method actually updates the filters.\n\n### ServerDataBase ###\n\nInstantiate a `ServerDataBase`\n\n```js\nvar serverDataBase = new binaural.sofa.ServerDataBase();\n```\n\nand load the catalogue from the server. This returns a promise.\n\n```js\nvar catalogLoaded = serverDataBase.loadCatalogue();\n```\n\nFind URLs with `HRIR` convention, `COMPENSATED` equalisation, and a\nsample-rate matching those of the audio context.\n\n```js\nvar urlsFound = catalogLoaded.then(function () {\n    var urls = serverDataBase.getUrls({\n        convention: 'HRIR',\n        equalisation: 'COMPENSATED',\n        sampleRate: audioContext.sampleRate,\n    });\n    return urls;\n})\n.catch(function(error) {\n    console.log('Error accessing HRTF server. ' + error.message);\n});\n```\n\nThen, a `BinauralPanner` can load one of these URLs\n\n```js\nurlsFound.then(function(urls) {\n    binauralPanner.loadHrtfSet(urls[0])\n        .then(function () {\n            console.log('loaded');\n        })\n        .catch(function (error) {\n            console.log('Error while loading ' + url\n                + error.message);\n        });\n});\n```\n\n## Issues ##\n\n- the [examples HRTF directory] is too big for a repository: this is a\n  problem for cloning, and for installing with npm.\n- documentation and distribution files should go to a release branch\n  (`gh-pages`?) to limit the history on real commits.\n- re-sampling is broken on full set (Chrome 48 issue): too many parallel\n  audio contexts?\n- no HTTPS on SOFA server, yet (mixed content blocked). Let's Encrypt is on\n  the way.\n- clicks on Firefox 44-45 (during update of `convolver.buffer`)\n- in documentation, links to BinauralPanner methods are broken (esdoc)\n- ServerDataBase: avoid server with free pattern filter?\n\n## To do ##\n\n- attenuation with distance\n- dry/wet outputs for (shared) reverberation\n- support for infinite impulse responses, once [IIRFilterNode] is\n  implemented.\n\n## Developers ##\n\nThe source code is in the [src directory], in [ES2015] standard. `npm run\ncompile` with [Babel] to the [dist directory]. Note that there is a\n[.babelrc] file. `npm run bundle` runs the linters, the tests,\ngenerates the documentation, and compiles the code.\n\nBe sure to commit the distribution files and the documentation for any\nrelease, and tag it.\n\n### Style ###\n\n`npm run lint` to check that the code conforms with [.eslintrc] and\n[.jscsrc] files. The rules derive from [AirBnB] with these\nmajor points:\n- [ES2015]\n- no `'strict'` globally (already there via babel)\n- enforce curly braces (`if`, `for`, etc.)\n- allow spaces and new lines, with fewer requirements: use them for clarity\n\n### Test ###\n\nFor any function or method, there is at least a test. The hierarchy in the\n[test directory] is the same as in the [src directory].\n\n- `npm run test` for all automated tests\n- `npm run test-listen` for supervised listening tests. The test files must\n  end with `_listen.js`\n- `npm run test-issues` for unsolved issues. The issues may depend on the\n  host: operating system, user-agent, sound-device, sample-rate, etc. The\n  test files must end with `_issues.js`\n\n### Documentation ###\n\nDocument any public function and method with [JSDoc], and generate the HTML\npages with `npm run doc`. At this point, neither\n[jsdoc](https://www.npmjs.com/package/jsdoc) nor\n[esdoc](https://www.npmjs.com/package/esdoc) gives perfect\ntranscription. (See the [jsdoc.json] and [esdoc.json] files.)\n\n## License\n\nThis module is released under the [BSD-3-Clause] license.\n\n## Acknowledgements\n\nThis research was developped by both [Acoustic And Cognitive Spaces] and\n[Analysis of Musical Practices] IRCAM research teams. A previous version\nwas part of the WAVE project, funded by ANR (French National Research\nAgency). The current version, supporting multiple sources and a listener,\nthe SOFA standard, and the access to a server, is part of the [CoSiMa]\nproject, funded by ANR.\n\n[//]: # (Avoid relative links for use with https://github.com/README.md)\n[//]: # (and http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/doc/index.html)\n\n[AirBnB]: https://github.com/airbnb/javascript/\n[API documentation directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/doc/\n[API documentation]: http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/doc/index.html\n[Acoustic And Cognitive Spaces]: http://recherche.ircam.fr/equipes/salles/\n[Analysis of Musical Practices]: http://apm.ircam.fr/\n[Babel]: https://babeljs.io/\n[.babelrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.babelrc\n[BSD-3-Clause]: http://opensource.org/licenses/BSD-3-Clause\n[T. Carpentier article]: http://wac.ircam.fr/pdf/demo/wac15_submission_16.pdf\n[CoSiMa]: http://cosima.ircam.fr/\n[dist directory]:  https://github.com/Ircam-RnD/binauralFIR/tree/next/dist/\n[documentation]: #documentation\n[ES2015]: https://babeljs.io/docs/learn-es2015/\n[.eslintrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.eslintrc\n[esdoc.json]: https://github.com/Ircam-RnD/binauralFIR/tree/next/esdoc.json\n[examples directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/examples/\n[examples HRTF directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/examples/hrtf/\n[examples online]: http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/examples/index.html\n[.jscsrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.jscsrc\n[JSDoc]: http://usejsdoc.org/\n[jsdoc.json]: https://github.com/Ircam-RnD/binauralFIR/tree/next/jsdoc.json\n[HRTF]: http://en.wikipedia.org/wiki/Head-related_transfer_function\n[IIRFilterNode]: https://webaudio.github.io/web-audio-api/#idl-def-IIRFilterNode\n[SOFA]: http://www.aes.org/publications/standards/search.cfm?docID=99\n[test directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/test\n[src directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/src\n[src/geometry]: https://github.com/Ircam-RnD/binauralFIR/tree/next/src/geometry\n[Web Audio API]: https://webaudio.github.io/web-audio-api/",
+  "readme": "# Binaural #\n\nThis library permits to render sources in three-dimensional space with\nbinaural audio.\n\nThis library provides an access to a server, in order to load a set of\nHead-related transfer functions ([HRTF]). The set of filters applies to any\nnumber of sources, given their position, and a listener.\n\nThis library is compatible with the [Web Audio API]. The novelty of this\nlibrary is that it permits to use a custom [HRTF] dataset (see\n[T. Carpentier article]).\n\nIt is possible to use it without a server, with a direct URL to an [HRTF]\nset.\n\n## Documentation ##\n\nYou can consult the [API documentation] for the complete documentation.\n\n### BinauralPanner ###\n\nA `BinauralPanner` is a panner for use with the [Web Audio API]. It\nspatialises multiple audio sources, given a set of head-related transfer\nfunctions [HRTF]s, and a listener.\n\n### ServerDataBase ###\n\n**The public server that hosts a database of individual [HRTF]s is available\nfor beta-testers only and will open to public in 2016.**\n\nThe `ServerDataBase` retrieves a catalogue from a [SOFA] server. From the\ncatalogue, it get URLs matching optional filters: data-base, sample-rate,\nand any free pattern.\n\n### HRTF dataset ###\n\nYou can use any [HRTF] data-set that follows the [SOFA] standard, in JSON\nformat, using finite impulse responses (FIR). Second-order sections (SOS)\nare not supported, yet. See the [examples HRTF directory] for a few samples.\n\n### Coordinate system types ###\n\nSee the files in [src/geometry], for conversions:\n- OpenGL, [SOFA], and Spat4 (Ircam) conventions\n- cartesian and spherical coordinates\n- radian and degree angles\n\n\n## Examples ##\n\nPlease see the [examples directory] for complete code, and the [examples online].\n\nSee also the [API documentation] for the complete options.\n\n### BinauralPanner ###\nGiven an audio element, and a global binaural module,\n\n```html\n<html>\n    <head>\n        <script src=\"../binaural.js\"></script>\n    </head>\n    <body>\n        <audio id=\"source\" src=\"./snd/breakbeat.wav\" controls loop></audio>\n    </body>\n</html>\n```\n\ncreate a source audio node,\n\n```js\nvar audioContext = new AudioContext();\nvar $mediaElement = document.querySelector('#source');\nvar player = audioContext.createMediaElementSource($mediaElement);\n```\n\ninstantiate a `BinauralPanner` and connect it.\n\n```js\nvar binauralPanner = new binaural.audio.BinauralPanner({\n    audioContext,\n    crossfadeDuration: 0.05, // in seconds\n    coordinateSystem: 'sofaSpherical', // [azimuth, elevation, distance]\n    sourceCount: 1,\n    sourcePositions: [ [0, 0, 1] ], // initial position\n});\nbinauralPanner.connectOutputs(audioContext.destination);\nbinauralPanner.connectInputByIndex(0, player);\n\n```\n\nLoad an HRTF set (this returns a [Promise]).\n\n```js\nbinauralPanner.loadHrtfSet(url)\n    .then(function () {\n        console.log('loaded');\n    })\n    .catch(function (error) {\n        console.log('Error while loading ' + url + error.message);\n    });\n```\n\nThen, any source can move:\n\n```js\n$azimuth.on(\"input\", function(event) {\n    // get current position\n    var position = binauralPanner.getSourcePositionByIndex(0);\n\n    // update azimuth\n    position[0] = event.target.value;\n    binauralPanner.setSourcePositionByIndex(0, position);\n\n    // update filters\n    window.requestAnimationFrame(function () {\n        binauralPanner.update();\n    });\n});\n```\n\nNote that a call to the `update` method actually updates the filters.\n\n### ServerDataBase ###\n\nInstantiate a `ServerDataBase`\n\n```js\nvar serverDataBase = new binaural.sofa.ServerDataBase();\n```\n\nand load the catalogue from the server. This returns a promise.\n\n```js\nvar catalogLoaded = serverDataBase.loadCatalogue();\n```\n\nFind URLs with `HRIR` convention, `COMPENSATED` equalisation, and a\nsample-rate matching the one of the audio context.\n\n```js\nvar urlsFound = catalogLoaded.then(function () {\n    var urls = serverDataBase.getUrls({\n        convention: 'HRIR',\n        equalisation: 'COMPENSATED',\n        sampleRate: audioContext.sampleRate,\n    });\n    return urls;\n})\n.catch(function(error) {\n    console.log('Error accessing HRTF server. ' + error.message);\n});\n```\n\nThen, a `BinauralPanner` can load one of these URLs.\n\n```js\nurlsFound.then(function(urls) {\n    binauralPanner.loadHrtfSet(urls[0])\n        .then(function () {\n            console.log('loaded');\n        })\n        .catch(function (error) {\n            console.log('Error while loading ' + url\n                + error.message);\n        });\n});\n```\n\n## Issues ##\n\n- the [examples HRTF directory] is too big for a repository: this is a\n  problem for cloning, and for installing with npm.\n- documentation and distribution files should go to a release branch\n  (`gh-pages`?) to limit the history on real commits.\n- re-sampling is broken on full set (Chrome 48 issue): too many parallel\n  audio contexts?\n- clicks on Firefox 44-45 (during update of `convolver.buffer`)\n- in documentation, links to BinauralPanner methods are broken (esdoc)\n- ServerDataBase: avoid server with free pattern filter?\n\n## To do ##\n\n- attenuation with distance\n- dry/wet outputs for (shared) reverberation\n- support for infinite impulse responses, once [IIRFilterNode] is\n  implemented.\n\n## Developers ##\n\nThe source code is in the [src directory], in [ES2015] standard. `npm run\ncompile` with [Babel] to the [dist directory]. Note that there is a\n[.babelrc] file. `npm run bundle` runs the linters, the tests,\ngenerates the documentation, and compiles the code.\n\nBe sure to commit the distribution files and the documentation for any\nrelease, and tag it.\n\n### Style ###\n\n`npm run lint` to check that the code conforms with [.eslintrc] and\n[.jscsrc] files. The rules derive from [AirBnB] with these\nmajor points:\n- [ES2015]\n- no `'use strict'` globally (already there via babel)\n- enforce curly braces (`if`, `for`, etc.)\n- allow spaces and new lines, with fewer requirements: use them for clarity\n\n### Test ###\n\nFor any function or method, there is at least a test. The hierarchy in the\n[test directory] is the same as in the [src directory].\n\n- `npm run test` for all automated tests\n- `npm run test-listen` for supervised listening tests. The test files must\n  end with `_listen.js`\n- `npm run test-issues` for unsolved issues. The issues may depend on the\n  host: operating system, user-agent, sound-device, sample-rate, etc. The\n  test files must end with `_issues.js`. Once an issue is solved, the\n  corresponding tests are added to the automated test set.\n- `npm run test-browser` starts a server for running the tests in any browser.\n\nExamples for specific testing, when developing or resolving an issue:\n- `browserify test/geometry/test_Listener.js -t babelify | tape-run` in a\n  headless browser\n- `browserify test/geometry/test_Listener.js -t babelify | testling -u`\n  for an URL to open in any browser\n\n### Documentation ###\n\nDocument any public function and method with [JSDoc], and generate the HTML\npages with `npm run doc`. At this point, neither\n[jsdoc](https://www.npmjs.com/package/jsdoc) nor\n[esdoc](https://www.npmjs.com/package/esdoc) gives perfect\ntranscription. (See the [jsdoc.json] and [esdoc.json] files.)\n\n## License\n\nThis module is released under the [BSD-3-Clause] license.\n\n## Acknowledgements\n\nThis research was developped by both [Acoustic And Cognitive Spaces] and\n[Analysis of Musical Practices] IRCAM research teams. A previous version\nwas part of the WAVE project, funded by ANR (French National Research\nAgency). The current version, supporting multiple sources and a listener,\nthe SOFA standard, and the access to a server, is part of the [CoSiMa]\nproject, funded by ANR.\n\n[//]: # (Avoid relative links for use with https://github.com/README.md)\n[//]: # (and http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/doc/index.html)\n\n[.babelrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.babelrc\n[.eslintrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.eslintrc\n[.jscsrc]: https://github.com/Ircam-RnD/binauralFIR/tree/next/.jscsrc\n[Acoustic And Cognitive Spaces]: http://recherche.ircam.fr/equipes/salles/\n[AirBnB]: https://github.com/airbnb/javascript/\n[Analysis of Musical Practices]: http://apm.ircam.fr/\n[API documentation directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/doc/\n[API documentation]: http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/doc/index.html\n[Babel]: https://babeljs.io/\n[BSD-3-Clause]: http://opensource.org/licenses/BSD-3-Clause\n[CoSiMa]: http://cosima.ircam.fr/\n[dist directory]:  https://github.com/Ircam-RnD/binauralFIR/tree/next/dist/\n[documentation]: #documentation\n[ES2015]: https://babeljs.io/docs/learn-es2015/\n[esdoc.json]: https://github.com/Ircam-RnD/binauralFIR/tree/next/esdoc.json\n[examples directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/examples/\n[examples HRTF directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/examples/hrtf/\n[examples online]: http://cdn.rawgit.com/Ircam-RnD/binauralFIR/next/examples/index.html\n[HRTF]: http://en.wikipedia.org/wiki/Head-related_transfer_function\n[IIRFilterNode]: https://webaudio.github.io/web-audio-api/#idl-def-IIRFilterNode\n[jsdoc.json]: https://github.com/Ircam-RnD/binauralFIR/tree/next/jsdoc.json\n[JSDoc]: http://usejsdoc.org/\n[Promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise\n[SOFA]: http://www.aes.org/publications/standards/search.cfm?docID=99\n[src directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/src\n[src/geometry]: https://github.com/Ircam-RnD/binauralFIR/tree/next/src/geometry\n[T. Carpentier article]: http://wac.ircam.fr/pdf/demo/wac15_submission_16.pdf\n[test directory]: https://github.com/Ircam-RnD/binauralFIR/tree/next/test\n[Web Audio API]: https://webaudio.github.io/web-audio-api/\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/Ircam-RnD/binauralFIR/issues"
   },
   "homepage": "https://github.com/Ircam-RnD/binauralFIR",
-  "_id": "binaural@0.3.7",
-  "_shasum": "995aa879fd5cb31b796f707b5da3c7bcbec2ea37",
-  "_resolved": "git+https://github.com/Ircam-RnD/binauralFIR#243186477809856778c0978fbbfbf9623b303bbf",
-  "_from": "binaural@git+https://github.com/Ircam-RnD/binauralFIR#0.3.7"
+  "_id": "binaural@0.3.10",
+  "_shasum": "9053aaf4ba62847bb02a35701be55818ce838faf",
+  "_resolved": "git+https://github.com/Ircam-RnD/binauralFIR#eb62cd3f291fe38821489390289425ed337eb874",
+  "_from": "binaural@git+https://github.com/Ircam-RnD/binauralFIR#0.3.10"
 }
 
-},{}]},{},[16])(16)
+},{}]},{},[18])(18)
 });

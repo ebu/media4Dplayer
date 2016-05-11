@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
 	<head>
-		<title>Media 4D | Bienvenue dans Media4D</title>
+		<title>media4Dplayer | Bienvenue</title>
 		<meta charset="UTF-8"/>
 		<meta name="apple-mobile-web-app-capable" content="yes"/>
 		<meta name="viewport" content="user-scalable=no"/>
@@ -34,18 +34,19 @@
 								<img class="topbarImg" alt="Accueil" src="ressources/img/topbar/menu_accueil.png"/><span class="topbarText">Accueil</span>
 							</li>
 						</ul>
+						<img class="logo" alt="" src="ressources/img/logo.png" style="position: absolute;right: 45px;top: 16px;"/>
 					</menu>
 				</nav>
 				<section id="profils-list-container">
-					<span id="appVersion"></span>
-					<span id="noMCSupport">Votre navigateur ne prends pas en charge la lecture de plusieurs vidéo en même temps de manière synchronsisée</span>
 					<h1><span tabindex="1" class="selectable-by-chromevox">Choisissez votre profil</span></h1>
 					<div id="profils-list-container-2">
-
+						<img class="logo" alt="" src="ressources/img/logo.png" style="position: absolute;top: 24px;left: 610px;"/>
 						<ul id="profils-list" class="list">
 							<li class="user btn"><a title="Profil de invité" tabindex="2" class="selectable-by-chromevox" aria-labelledby="profil0">Invité</a><span id="profil0" aria-hidden="true" class="hidden">Profil de invité</span></li>
 						</ul>
 					</div>
+					<span id="appVersion"></span>
+					<span id="noMCSupport">Votre navigateur ne prends pas en charge la lecture de plusieurs vidéo en même temps de manière synchronsisée</span>
 				</section>
 				<section id="apps-list-container">
 					<a id="switch-to-simplified-mode-btn" class="switch-btn btn selectable-by-chromevox" title="Cliquez içi pour basculer en mode rapide et accessible" onclick="Main.switchToMode();" tabindex="1">Basculer en mode rapide et accessible</a>
@@ -77,16 +78,16 @@
 					</div>
 					<div id="synopsis-and-social-icons-container">
 						<div id="social-icons">
-							<div class="icon"><img alt="Ajouter aux favoris" src="ressources/img/dashboard/icone_favoris_actif.png"/></div>
-							<div class="icon"><img alt="Partager sur Facebook" src="ressources/img/dashboard/icone_facebook_actif.png"/></div>
-							<div class="icon"><img alt="Partager sur Twitter" src="ressources/img/dashboard/icone_twitter_actif.png"/></div>
+							<div class="icon"><img alt="" title="Ajouter aux favoris" src="ressources/img/dashboard/icone_favoris_actif.png"/></div>
+							<div class="icon"><img alt="" title="Partager sur Facebook" src="ressources/img/dashboard/icone_facebook_actif.png"/></div>
+							<div class="icon"><img alt="" title="Partager sur Twitter" src="ressources/img/dashboard/icone_twitter_actif.png"/></div>
 						</div>
 						<h2 class="oneline"></h2>
 						<div class="program-date"></div>
 						<div id="video-compatibilities-list">
 							<div class="compatibility audio" title="Contient des pistes audios"></div>
 							<div class="compatibility subtitle" title="Contient des sous-titres"></div>
-							<div class="compatibility ad" title="Contient des pistes pour l'audio description"></div>
+							<div class="compatibility ad" title="Contient des commentaires"></div>
 							<div class="compatibility ls" title="Contient des videos pour le language des signes"></div>
 						</div>
 						<div id="synopsis-container" class="synopsis-container btn">
@@ -517,6 +518,9 @@
 				<section id="settings-subtitles-font-family-sm-container" class="manual-centering">
 					<h1><span tabindex="1" class="selectable-by-chromevox">Choisir la police de caractère</span></h1>
 					<div class="list-container" id="font-family" role="radiogroup" aria-label="Liste des polices de caractère">
+						<div class="menu-item Arial" role="radio" aria-checked="false">
+							<a tabindex="2" class="selectable-by-chromevox final-option">Arial</a>
+						</div>
 						<div class="menu-item OpenDyslexic" role="radio" aria-checked="false">
 							<a tabindex="3" class="selectable-by-chromevox final-option">OpenDyslexic</a>
 						</div>
@@ -610,7 +614,7 @@
 						</div>
 						<div id="playerOptionDescription" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ad" onclick="InfoBanner.playerParams.options.show('ad', this);" tabindex="24">
 							<span id="label-option-ad" aria-hidden="true" class="hidden"></span>
-							<div id="iconeAD" class="compatibility ad" title="Audio description"></div>
+							<div id="iconeAD" class="compatibility ad" title="Commentaires"></div>
 							<div id="playerOptionDescriptionCurrentValue" class="playerOptionValue"></div>							
 						</div>
 						<div id="playerOptionSigne" class="btn video-option selectable-by-chromevox final-option" aria-labelledby="label-option-ls" onclick="InfoBanner.playerParams.options.show('ls', this);" tabindex="35">
@@ -628,6 +632,7 @@
 					</div>
 					<div id="playerControls">
 						<div id="playerControlVolume" class="volume-control-ctn">
+							<div class="label-slider">Volume principal</div>
 							<span id="volume-tooltip" class="tooltip" role="tooltip"></span> 
 							<span class="icon volume-mute"></span>
 							<div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
@@ -641,10 +646,11 @@
 							<div id="playerControlFF" class="btn selectable-by-chromevox final-option" onclick="Player.ff();" tabindex="52" title="Bouton avance rapide"></div>
 						</div>
 						<div id="playerControlADVolume" class="volume-control-ctn">
+							<div class="label-slider">Volume des commentaires</div>
 							<span id="ad-volume-tooltip" class="tooltip" role="tooltip"></span> 
 							<span class="icon volume-min"></span>
 							<div id="ad-volume-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
-								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" tabindex="53" title="Contrôle pour améliorer l'audio description" role="slider"></a>
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" tabindex="53" title="Contrôle pour améliorer les commentaires" role="slider"></a>
 							</div>
 							<span class="icon volume" id="ad-up-volume"></span>
 						</div>

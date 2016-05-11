@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.1" encoding="UTF-8" standalone="yes"?>
 <ebucore:ebuCoreMain xmlns:ebucore="urn:ebu:metadata-schema:ebuCore_2015" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ebucore:coreMetadata>
         <ebucore:part partName="EditorialMetadata">
@@ -113,133 +113,133 @@
                 <ebucore:subtitlingFormat subtitlingFormatName="TTML" trackId="6" language="FRA" subtitlingPresenceFlag="true">
                 </ebucore:subtitlingFormat>
                 <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="SL" videoPresenceFlag="true">
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-lsf1.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-lsf1.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="EA1">
+                <ebucore:audioFormat audioFormatId="2" audioFormatName="PVF" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
+                    <ebucore:channels>6</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C L R Ls Rs LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ea1.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/m4d-Meteo-2-ondemand/manifest-ea1.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="AD">
+                <ebucore:audioFormat audioFormatId="3" audioFormatName="PAD" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
+                    <ebucore:channels>1</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">Mono</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: C</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ad.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ad.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="EA2">
+                <ebucore:audioFormat audioFormatId="4" audioFormatName="PVM" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="ENG"/>
+                    <ebucore:channels>2</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">Stereo</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">L R</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
                         <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
-                    </ebucore:containerFormat>
-                    <ebucore:fileName>manifest.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest.mpd</ebucore:locator>
-                </ebucore:format>
-                <ebucore:format formatName="SL" videoPresenceFlag="true">
-                    <ebucore:containerFormat>
-                        <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
-                    </ebucore:containerFormat>
-                    <ebucore:fileName>manifest-lsf.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-lsf.mpd</ebucore:locator>
-                </ebucore:format>
-                <ebucore:format formatName="EA1">
-                    <ebucore:audioFormat audioFormatId="2" audioFormatName="PVF" audioPresenceFlag="false">
-                        <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
-                        <ebucore:channels>6</ebucore:channels>
-                        <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelLayout">C L R Ls Rs LFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
-                        <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
-                    </ebucore:audioFormat>
-                    <ebucore:containerFormat>
-                        <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
-                    </ebucore:containerFormat>
-                    <ebucore:fileName>manifest-ea1.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/m4d-Meteo-2-ondemand/manifest-ea1.mpd</ebucore:locator>
-                </ebucore:format>
-                <ebucore:format formatName="AD">
-                    <ebucore:audioFormat audioFormatId="3" audioFormatName="PAD" audioPresenceFlag="false">
-                        <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
-                        <ebucore:channels>1</ebucore:channels>
-                        <ebucore:technicalAttributeString typeLabel="type">Mono</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: C</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelLayout">C</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="ambiance">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="commentary">true</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
-                        <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
-                    </ebucore:audioFormat>
-                    <ebucore:containerFormat>
-                        <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
-                    </ebucore:containerFormat>
-                    <ebucore:fileName>manifest-ad.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ad.mpd</ebucore:locator>
-                </ebucore:format>
-                <ebucore:format formatName="EA2">
-                    <ebucore:audioFormat audioFormatId="4" audioFormatName="PVM" audioPresenceFlag="false">
-                        <ebucore:audioTrack trackId="0" trackLanguage="ENG"/>
-                        <ebucore:channels>2</ebucore:channels>
-                        <ebucore:technicalAttributeString typeLabel="type">Stereo</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelLayout">L R</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
-                        <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
-                    </ebucore:audioFormat>
-                    <ebucore:containerFormat>
-                        <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
-                    </ebucore:containerFormat>
-                    <ebucore:fileName>manifest-ea2.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea2.mpd</ebucore:locator>
-                </ebucore:format>
-                <ebucore:format formatName="DI">
-                    <ebucore:audioFormat audioFormatId="5" audioFormatName="PDI" audioPresenceFlag="false">
-                        <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
-                        <ebucore:channels>1</ebucore:channels>
-                        <ebucore:technicalAttributeString typeLabel="type">Mono</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: C</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelLayout">C</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="ambiance">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
-                        <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
-                    </ebucore:audioFormat>
-                    <ebucore:containerFormat>
-                        <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
-                    </ebucore:containerFormat>
-                    <ebucore:fileName>manifest-di.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-di.mpd</ebucore:locator>
-                </ebucore:format>
-                <ebucore:format formatName="EA3">
-                    <ebucore:audioFormat audioFormatId="6" audioFormatName="PVI" audioPresenceFlag="false">
-                        <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
-                        <ebucore:channels>6</ebucore:channels>
-                        <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelLayout">C L R Ls Rs LFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
-                        <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
-                    </ebucore:audioFormat>
-                    <ebucore:containerFormat>
-                        <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
-                    </ebucore:containerFormat>
-                    <ebucore:fileName>manifest-ea3.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea3.mpd</ebucore:locator>
-                </ebucore:format>
-                <ebucore:format formatName="EA4">
-                    <ebucore:audioFormat audioFormatId="7" audioFormatName="PMS" audioPresenceFlag="false">
-                        <ebucore:audioTrack trackId="0" trackLanguage="UND"/>
-                        <ebucore:channels>6</ebucore:channels>
-                        <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeString typeLabel="ChannelLayout">C L R Ls Rs LFE</ebucore:technicalAttributeString>
-                        <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
-                        <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
-                        <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
-                    </ebucore:audioFormat>
-                    <ebucore:containerFormat>
-                        <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
-                    </ebucore:containerFormat>
-                    <ebucore:fileName>manifest-ea4.mpd</ebucore:fileName>
-                    <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea4.mpd</ebucore:locator>
-                </ebucore:format>
-            </ebucore:part>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ea2.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea2.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="DI">
+                <ebucore:audioFormat audioFormatId="5" audioFormatName="PDI" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
+                    <ebucore:channels>1</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">Mono</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: C</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-di.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-di.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="EA3">
+                <ebucore:audioFormat audioFormatId="6" audioFormatName="PVI" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="FRA"/>
+                    <ebucore:channels>6</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C L R Ls Rs LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ea3.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea3.mpd</ebucore:locator>
+            </ebucore:format>
+            <ebucore:format formatName="EA4">
+                <ebucore:audioFormat audioFormatId="7" audioFormatName="PMS" audioPresenceFlag="false">
+                    <ebucore:audioTrack trackId="0" trackLanguage="UND"/>
+                    <ebucore:channels>6</ebucore:channels>
+                    <ebucore:technicalAttributeString typeLabel="type">MultiWithLFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelPositions">Front: L R / Front: L C R, Side: L R, LFE / Front: L C R, Side: L R, LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeString typeLabel="ChannelLayout">C L R Ls Rs LFE</ebucore:technicalAttributeString>
+                    <ebucore:technicalAttributeBoolean typeLabel="dialog">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="ambiance">true</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeBoolean typeLabel="commentary">false</ebucore:technicalAttributeBoolean>
+                    <ebucore:technicalAttributeFloat typeLabel="loudness">-23.0</ebucore:technicalAttributeFloat>
+                    <ebucore:technicalAttributeFloat typeLabel="maxTruePeak">-3.0</ebucore:technicalAttributeFloat>
+                </ebucore:audioFormat>
+                <ebucore:containerFormat>
+                    <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
+                </ebucore:containerFormat>
+                <ebucore:fileName>manifest-ea4.mpd</ebucore:fileName>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea4.mpd</ebucore:locator>
+            </ebucore:format>
+        </ebucore:part>
         <ebucore:part partName="TechnicalMetadata">
             <ebucore:part partName="Essence">
                 <ebucore:format formatName="EssenceTechnicalMetadata">
@@ -354,63 +354,63 @@
                     <ebucore:timecode>00:01:52:00</ebucore:timecode>
                 </ebucore:partDuration>
             </ebucore:part>
-            <ebucore:part partName="ContextualMetadata">
-                <ebucore:part partName="Seq_000000">
-                    <ebucore:title typeLabel="SequenceTitle">
-                        <dc:title xsi:type="ebucore:elementType" xml:lang="fr">Programme complet</dc:title>
-                    </ebucore:title>
-                    <ebucore:description typeLabel="SequenceSynopsis">
-                        <dc:description xsi:type="ebucore:elementType" xml:lang="fr">Bulletin météo précédant le journal de 20h00 de David PUJADAS…</dc:description>
-                    </ebucore:description>
-                    <ebucore:contributor>
-                        <ebucore:contactDetails>
-                            <ebucore:givenName>Philippe</ebucore:givenName>
-                            <ebucore:familyName>VERDIER</ebucore:familyName>
-                            <ebucore:salutation>M</ebucore:salutation>
-                            <ebucore:birthDate>1968-05-23+01:00</ebucore:birthDate>
-                        </ebucore:contactDetails>
-                        <ebucore:role typeLabel="Philippe"/>
-                    </ebucore:contributor>
-                    <ebucore:type>
-                        <ebucore:genre typeLink="info" typeLabel="Informations &amp; actualités" typeDefinition="SequenceGenre"/>
-                    </ebucore:type>
-                    <ebucore:coverage>
-                        <ebucore:temporal>
-                            <ebucore:PeriodOfTime periodId="1" startDate="2015-09-15"/>
-                        </ebucore:temporal>
-                        <ebucore:spatial>
-                            <ebucore:location typeLabel="real" typeLanguage="FRA">
-                                <ebucore:name>Paris</ebucore:name>
-                                <ebucore:description>France Télévisions | Régie A/B</ebucore:description>
-                                <ebucore:coordinates>
-                                    <ebucore:posy>48.836075</ebucore:posy>
-                                    <ebucore:posx>2.278332</ebucore:posx>
-                                </ebucore:coordinates>
-                            </ebucore:location>
-                        </ebucore:spatial>
-                    </ebucore:coverage>
-                    <ebucore:rating>
-                        <ebucore:ratingValue>TP</ebucore:ratingValue>
-                        <ebucore:ratingProvider>
-                            <ebucore:organisationDetails>
-                                <ebucore:organisationName>CSA</ebucore:organisationName>
-                            </ebucore:organisationDetails>
-                        </ebucore:ratingProvider>
-                    </ebucore:rating>
-                    <ebucore:format formatName="SequenceThumbnail">
-                        <ebucore:containerFormat>
-                            <ebucore:containerEncoding formatLabel="PNG"/>
-                        </ebucore:containerFormat>
-                        <ebucore:fileName>abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.jpg</ebucore:fileName>
-                        <ebucore:locator>https://194.51.35.43:25001/fbdownload/abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.png?dlink=2f4d656469613444706c617965722f30315f4dc38954c3894f2f5468756d626e61696c732f6162636465666768696a6b6c6d6e6f707172737475767778797a303132333435363738392d5365715f3030303030302e706e67</ebucore:locator>
-                    </ebucore:format>
-                    <ebucore:partStartTime>
-                        <ebucore:timecode>00:00:00:00000</ebucore:timecode>
-                    </ebucore:partStartTime>
-                    <ebucore:partDuration>
-                        <ebucore:timecode>00:01:52:00</ebucore:timecode>
-                    </ebucore:partDuration>
-                </ebucore:part>    
+        </ebucore:part>
+        <ebucore:part partName="ContextualMetadata">
+            <ebucore:part partName="Seq_000000">
+                <ebucore:title typeLabel="SequenceTitle">
+                    <dc:title xsi:type="ebucore:elementType" xml:lang="fr">Programme complet</dc:title>
+                </ebucore:title>
+                <ebucore:description typeLabel="SequenceSynopsis">
+                    <dc:description xsi:type="ebucore:elementType" xml:lang="fr">Bulletin météo précédant le journal de 20h00 de David PUJADAS…</dc:description>
+                </ebucore:description>
+                <ebucore:contributor>
+                    <ebucore:contactDetails>
+                        <ebucore:givenName>Philippe</ebucore:givenName>
+                        <ebucore:familyName>VERDIER</ebucore:familyName>
+                        <ebucore:salutation>M</ebucore:salutation>
+                        <ebucore:birthDate>1968-05-23+01:00</ebucore:birthDate>
+                    </ebucore:contactDetails>
+                    <ebucore:role typeLabel="Philippe"/>
+                </ebucore:contributor>
+                <ebucore:type>
+                    <ebucore:genre typeLink="info" typeLabel="Informations &amp; actualités" typeDefinition="SequenceGenre"/>
+                </ebucore:type>
+                <ebucore:coverage>
+                    <ebucore:temporal>
+                        <ebucore:PeriodOfTime periodId="1" startDate="2015-09-15"/>
+                    </ebucore:temporal>
+                    <ebucore:spatial>
+                        <ebucore:location typeLabel="real" typeLanguage="FRA">
+                            <ebucore:name>Paris</ebucore:name>
+                            <ebucore:description>France Télévisions | Régie A/B</ebucore:description>
+                            <ebucore:coordinates>
+                                <ebucore:posy>48.836075</ebucore:posy>
+                                <ebucore:posx>2.278332</ebucore:posx>
+                            </ebucore:coordinates>
+                        </ebucore:location>
+                    </ebucore:spatial>
+                </ebucore:coverage>
+                <ebucore:rating>
+                    <ebucore:ratingValue>TP</ebucore:ratingValue>
+                    <ebucore:ratingProvider>
+                        <ebucore:organisationDetails>
+                            <ebucore:organisationName>CSA</ebucore:organisationName>
+                        </ebucore:organisationDetails>
+                    </ebucore:ratingProvider>
+                </ebucore:rating>
+                <ebucore:format formatName="SequenceThumbnail">
+                    <ebucore:containerFormat>
+                        <ebucore:containerEncoding formatLabel="PNG"/>
+                    </ebucore:containerFormat>
+                    <ebucore:fileName>abcdefghijklmnopqrstuvwxyz0123456789-Seq_000000.jpg</ebucore:fileName>
+                    <ebucore:locator>ressources/img/temp/programs/meteo.png</ebucore:locator>
+                </ebucore:format>
+                <ebucore:partStartTime>
+                    <ebucore:timecode>00:00:00:00000</ebucore:timecode>
+                </ebucore:partStartTime>
+                <ebucore:partDuration>
+                    <ebucore:timecode>00:01:52:00</ebucore:timecode>
+                </ebucore:partDuration>
             </ebucore:part>
         </ebucore:part>
     </ebucore:coreMetadata>
