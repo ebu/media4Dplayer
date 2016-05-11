@@ -792,7 +792,7 @@ Player.prepareSofaCatalog = function(callback){
          	log('could not access bili2.ircam.fr...');
 
 			var currentProcessor;
-			if( this.config === ModulesConfiguration.kMultichannelSpatialiser ){
+			if( Player.config === ModulesConfiguration.kMultichannelSpatialiser ){
 				currentProcessor = multichannelSpatialiser;
 
 			}else{
