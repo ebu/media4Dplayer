@@ -309,20 +309,20 @@ Player.launch = function(){
 							case "timeupdate":
 
 								if (!this.media.paused) {
+									requestAnimationFrame(function(){});
 
-									if (videos.b && videos.b.media.readyState === 4) {
+									if (videos.b && videos.b.media.readyState === 4 && Math.abs(cTime-videos.b.currentTime())>0.1) {
 										videos.b.currentTime(cTime);
 									}
-									if (videos.c && videos.c.media.readyState === 4) {
+									if (videos.c && videos.c.media.readyState === 4 && Math.abs(cTime-videos.c.currentTime())>0.1) {
 										videos.c.currentTime(cTime);
 									}
-									if (videos.d && videos.d.media.readyState === 4) {
+									if (videos.d && videos.d.media.readyState === 4 && Math.abs(cTime-videos.d.currentTime())>0.1) {
 										videos.d.currentTime(cTime);
 									}
-									if (videos.e && videos.e.media.readyState === 4) {
+									if (videos.e && videos.e.media.readyState === 4 && Math.abs(cTime-videos.e.currentTime())>0.1) {
 										videos.e.currentTime(cTime);
 									}
-									requestAnimationFrame(function(){});
 									return;
 								}
 
