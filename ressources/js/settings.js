@@ -472,7 +472,9 @@ Settings.init.subtitles.pip = function(){
 		}
 	});
 	
-	Settings.updateARIAPropertiesForPIP($pipVideo, "sub");
+	requestAnimationFrame(function(){
+		Settings.updateARIAPropertiesForPIP($pipVideo, "sub");
+	});
 };
 
 /**
