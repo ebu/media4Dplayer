@@ -273,6 +273,30 @@ Player.launch = function(){
 			$(Player.ttmlDiv).css({top:top + "%"});
 		}
 	});
+	var updateCurrentTime = function(media, cTime){
+		media.currentTime(cTime);
+	},
+		resyncCurrentTime = function(media, cTime){
+		if(media && media.media.readyState === 4){
+			var cTime2 = media.currentTime(), diff = Math.abs(cTime-cTime2), id = media.media.id;
+			if (diff > 0.1) {
+				log("-----------------------------------------------Recalage nécessaire ("+diff+">0.1) pour "+id);
+				updateCurrentTime(media, cTime);
+			}else{
+				log("Recalage pas nécessaire ("+diff+"<0.1) pour "+id);
+			}			
+		}
+	},
+		emitTimetableEvent = function(media){
+		if(media){
+			media.emit("timeupdate");
+		}
+	},
+		emitPauseEvent = function(media){
+		if(media){
+			media.pause();
+		}
+	};
 
 	loadCount = 0;
 	events = ("pause ended timeupdate seeking seeked").split(/\s+/g);
@@ -310,80 +334,41 @@ Player.launch = function(){
 
 								if (!this.media.paused) {
 									requestAnimationFrame(function(){});
-
-									if (videos.b && videos.b.media.readyState === 4 && Math.abs(cTime-videos.b.currentTime())>0.1) {
-										videos.b.currentTime(cTime);
-									}
-									if (videos.c && videos.c.media.readyState === 4 && Math.abs(cTime-videos.c.currentTime())>0.1) {
-										videos.c.currentTime(cTime);
-									}
-									if (videos.d && videos.d.media.readyState === 4 && Math.abs(cTime-videos.d.currentTime())>0.1) {
-										videos.d.currentTime(cTime);
-									}
-									if (videos.e && videos.e.media.readyState === 4 && Math.abs(cTime-videos.e.currentTime())>0.1) {
-										videos.e.currentTime(cTime);
-									}
+									
+									resyncCurrentTime(videos.b, cTime);
+									resyncCurrentTime(videos.c, cTime);
+									resyncCurrentTime(videos.d, cTime);
+									resyncCurrentTime(videos.e, cTime);
 									return;
 								}
-
-								if(videos.b){
-									videos.b.emit("timeupdate");
-								}
-								if(videos.c){
-									videos.c.emit("timeupdate");
-								}
-								if(videos.d){
-									videos.d.emit("timeupdate");
-								}
-								if(videos.e){
-									videos.e.emit("timeupdate");
-								}
+								
+								emitTimetableEvent(videos.b);
+								emitTimetableEvent(videos.c);
+								emitTimetableEvent(videos.d);
+								emitTimetableEvent(videos.e);
 								break;
 
 							case "seeking":
-								if(videos.b){
-									videos.b.pause();
-								}
-								if(videos.c){
-									videos.c.pause();
-								}
-								if(videos.d){
-									videos.d.pause();
-								}
-								if(videos.e){
-									videos.e.pause();
-								}
+								emitPauseEvent(videos.b);
+								emitPauseEvent(videos.c);
+								emitPauseEvent(videos.d);
+								emitPauseEvent(videos.e);
 								break;
 
 							case "seeked":
-								if(videos.b){
-									videos.b.currentTime(cTime);
-								}
-								if(videos.c){
-									videos.c.currentTime(cTime);
-								}
-								if(videos.d){
-									videos.d.currentTime(cTime);
-								}
-								if(videos.e){
-									videos.e.currentTime(cTime);
-								}
+								updateCurrentTime(videos.b, cTime);
+								updateCurrentTime(videos.c, cTime);
+								updateCurrentTime(videos.d, cTime);
+								updateCurrentTime(videos.e, cTime);
 								break;
 
 							case "pause":
 								Player.onPause();
-								if(videos.b){
-									videos.b.pause();
-								}
-								if(videos.c){
-									videos.c.pause();
-								}
-								if(videos.d){
-									videos.d.pause();
-								}
-								if(videos.e){
-									videos.e.pause();
-								}
+								
+								emitPauseEvent(videos.b);
+								emitPauseEvent(videos.c);
+								emitPauseEvent(videos.d);
+								emitPauseEvent(videos.e);
 								break;
 
 							case "ended":
