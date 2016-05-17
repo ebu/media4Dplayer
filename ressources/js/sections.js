@@ -34,11 +34,13 @@ var Section = {
 		"settings-interface-theme",			// 27
 		"settings-audio-spatialisation-mode",
 		"settings-audio-comments-spatialisation",
-		"settings-audio-dialogues-spatialisation"],
+		"settings-audio-dialogues-spatialisation",
+		"search"],
 
 	"rubrics": {
 		"settings":["interface","audio","subtitles","ls"],
-		"playlist":["favorites","signets","history","related"]
+		"playlist":["favorites","signets","history","related"],
+		"search":["full-result"]
 	},
 	"rubric": null,
 	"template": "",
@@ -81,6 +83,10 @@ Section.change = function(newSection, rubric, mixed_var){
 		// Le player
 		}else if(newSection === this.sections[12]){
 			this.change.toPlayer(mixed_var);
+			
+		// Recherche
+		}else if(newSection === this.sections[31]){
+			this.change.toSearch(newSection, rubric);
 			
 		// Ecran "en construction"
 		}else if(newSection === this.sections[24]){
@@ -271,6 +277,18 @@ Section.change.toPlayer = function(data){
 			Section.addClass("player");		
 		});
 	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the search section
+ * @param {String} newSection The name of the new section
+ * @param {Integer} rubric The rubric's name of the section
+ */
+
+Section.change.toSearch = function(newSection, rubric){
+	Section.handleMenuSel(newSection);
+	Section.addClass(newSection + " " + rubric);
 };
 
 /**
@@ -589,6 +607,10 @@ Section.handleMenuSel = function(newSection){
 
 			case this.sections[4]:
 				$nav.find(".settings").addClass("sel");
+				break;
+				
+			case this.sections[31]:
+				$nav.find(".search").addClass("sel");
 				break;
 			
 			default:
