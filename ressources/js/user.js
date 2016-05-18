@@ -2,7 +2,7 @@ var User = {
 	data:null,
 	lsName:"authenticate",
 	lsData:null,
-	mediaListsId:null
+	tokens:{}
 };
 
 /**
