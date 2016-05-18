@@ -26,6 +26,10 @@ Main.onLoad = function () {
 	
 		$(document.getElementById("appVersion")).html("v"+Config.appVersion);
 		
+		API.loadConfigurationSet(function(){
+			API.getUserTokens();
+		});
+		
 		setTimeout(function(){
 			Section.change(Section.sections[0]);
 			Main.hideSplashScreen();
