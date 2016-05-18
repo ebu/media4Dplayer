@@ -336,9 +336,9 @@ MediaPlayer.dependencies.SourceBufferExtensions.prototype = {
     },
 
     abort: function (mediaSource, buffer) {
-        "use strict";
+		const alwaysReset = Object.prototype.toString.call(buffer).slice(8, -1) === 'Object';
         try {
-            if (mediaSource.readyState === "open") {
+            if (mediaSource.readyState === 'open' || alwaysReset) {
                 buffer.abort();
             }
         } catch(ex){

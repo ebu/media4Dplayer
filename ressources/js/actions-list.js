@@ -6,7 +6,7 @@ var actionList = {};
 																	/* ******************/
 	
 $(document.getElementById("menu")).on("click", ".btn", function(){
-	var section, sections = Section.sections, classList = $(this).attr("class"), mixed_var;
+	var section, sections = Section.sections, classList = $(this).attr("class"), mixed_var, rubric;
 	if(classList.indexOf(sections[0]) !== -1){
 		section = sections[0];
 	
@@ -22,11 +22,16 @@ $(document.getElementById("menu")).on("click", ".btn", function(){
 	// Les settings
 	}else if(classList.indexOf(sections[4]) !== -1){
 		section = sections[4];
+	
+	// Recherche
+	}else if(classList.indexOf(sections[31]) !== -1){
+		section = sections[31];
+		rubric = Section.rubrics[section][0];
 	}
 	
 	if(section){
 		Section.oldClass = [];
-		Section.change(section, null, mixed_var, $(this));
+		Section.change(section, rubric, mixed_var, $(this));
 	}else{
 		Section.change(sections[24]);
 	}

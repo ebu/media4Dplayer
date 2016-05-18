@@ -2,7 +2,7 @@ var Settings = {
 	fontSizeRange:[16,24],
 	minOpacity:0,
 	minSubtitlesSize:16,
-	subtitlesSizeRange:[16,24],
+	subtitlesSizeRange:[16,34],
 	subtitlesDefaultPosition:71,
 	defaultLSPIPCoordonates: {x:75,y:4.5,w:22.51131221719457,h:40.04024144869215},
 	fontList:["Arial","OpenDyslexic","Andika","Helvetica","Verdana"],

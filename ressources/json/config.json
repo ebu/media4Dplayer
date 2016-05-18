@@ -6,5 +6,6 @@
 	"infoBannerDelayToHideInSimplifiedMode":10,
 	"jsonTimeout":30,
     "userCredentialsIsSavedFor":86400,
-	"timeoutHidePIP":3
+	"timeoutHidePIP":3,
+	"perfectMemoryWS":"https://wisdom.prod1.perfect-memory.com/ftv/v1/"
 }

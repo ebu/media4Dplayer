@@ -47,7 +47,7 @@ a.switch-btn{position:absolute;top:45px;left:45px;padding:10px;margin-left:0}
 
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
 body:not(.sm).apps-list #apps-list-container, body.in-construction #in-construction{display:table}
-body.splashscreen #splashscreen,body.profils-list #profils-list-container,body.sm.apps-list #apps-list-container-sm,body.sm.app-options #app-options-container,body.app-playlists #app-playlists,body.sm.my-videos-options #my-videos-options-container,body.sm.app-playlists #app-playlists-sm,body.sm.options-favorites #options-favorites-container,body.sm.options-signets #options-signets-container,body.sm.options-history #options-history-container,body.sm.epg-fiche #epg-fiche-container-sm,body.epg-fiche #epg-fiche-container,body.full-synopsis #full-synopsis,body.player #videoPlayerContainer,body.settings #settings,body.sm.settings #settings-sm-container,body.sm.settings-audio-menu #settings-audio-sm-container,body.sm.settings-interface-menu #settings-interface-sm-container,body.sm.settings-subtitles-menu #settings-subtitles-sm-container,body.sm.settings-ls #settings-ls-sm-container,body.sm.settings-subtitles-font-family #settings-subtitles-font-family-sm-container,body.sm.settings-audio-spatialisation-mode #settings-audio-spatialisation-mode-sm-container,body.sm.settings-audio-spatialisation #settings-audio-spatialisation-sm-container,body.sm.settings-font-size #settings-font-size-sm-container,body.sm.settings-subtitles-color #settings-subtitles-color-sm-container,body.sm.settings-subtitles-bgcolor #settings-subtitles-bgcolor-sm-container,body.sm.settings-subtitles-pip #settings-subtitles-pip-sm-container{display:block}
+body.splashscreen #splashscreen,body.profils-list #profils-list-container,body.sm.apps-list #apps-list-container-sm,body.sm.app-options #app-options-container,body.app-playlists #app-playlists,body.sm.my-videos-options #my-videos-options-container,body.sm.app-playlists #app-playlists-sm,body.sm.options-favorites #options-favorites-container,body.sm.options-signets #options-signets-container,body.sm.options-history #options-history-container,body.sm.epg-fiche #epg-fiche-container-sm,body.epg-fiche #epg-fiche-container,body.full-synopsis #full-synopsis,body.player #videoPlayerContainer,body.settings #settings,body.sm.settings #settings-sm-container,body.sm.settings-audio-menu #settings-audio-sm-container,body.sm.settings-interface-menu #settings-interface-sm-container,body.sm.settings-subtitles-menu #settings-subtitles-sm-container,body.sm.settings-ls #settings-ls-sm-container,body.sm.settings-subtitles-font-family #settings-subtitles-font-family-sm-container,body.sm.settings-audio-spatialisation-mode #settings-audio-spatialisation-mode-sm-container,body.sm.settings-audio-spatialisation #settings-audio-spatialisation-sm-container,body.sm.settings-font-size #settings-font-size-sm-container,body.sm.settings-subtitles-color #settings-subtitles-color-sm-container,body.sm.settings-subtitles-bgcolor #settings-subtitles-bgcolor-sm-container,body.sm.settings-subtitles-pip #settings-subtitles-pip-sm-container, body.search #search, body.search.full-result #full-results-container{display:block}
 body.splashscreen #sections-container,body.sm:not(.profils-list) #sections-container{display:none}
 
 /* GESTION DU MASQUAGE/AFFICHAGE DU MENU */
@@ -102,7 +102,7 @@ h2{font-size:1.6em;font-weight:600}
 .item-playlist .delete{width:77px;text-align:center}
 .item-playlist .delete-icon{display:inline-block;vertical-align:middle}
 .item-playlist .item-infos{margin-left:2.5%;width:65%}
-.item-playlist .item-infos > div{line-height:normal}
+.item-playlist .item-infos > div, .search-result .item-infos > div{line-height:normal}
 .item-playlist .item-infos .title{font-weight:500;margin-top:1%}
 .item-playlist .item-infos .subtitle{text-transform:uppercase}
 .item-playlist .item-infos .subtitle, .item-playlist .item-infos .infos{font-weight:300;font-size:.75em}
@@ -153,7 +153,7 @@ h2{font-size:1.6em;font-weight:600}
 #synopsis-and-social-icons-container h2{font-size:1.8em;text-align:left;margin-top:25px;    padding: 1% 0;}
 .program-date{margin-top:10px;text-transform:uppercase}
 #video-compatibilities-list{height:24px;margin:10px 0}
-.compatibility{float:left;height:100%;margin-right:16px;background-repeat:no-repeat;background-size:contain;width:33px}
+.compatibility{float:left;height:100%;margin-right:14px;background-repeat:no-repeat;background-size:contain;width:33px}
 .compatibility.audio{background-image:url(../img/compatibilities/Langue_petit.png)}
 .compatibility.ls{background-image:url(../img/compatibilities/LSF_petit.png)}
 .compatibility.subtitle{background-image:url(../img/compatibilities/ST_petit.png)}
@@ -254,7 +254,7 @@ h2{font-size:1.6em;font-weight:600}
 .option-slider > div:not(.label){float:left;height:100%;box-sizing:border-box}
 .min-value, .max-value{line-height:30px;width:8%}
 .min-font-size{font-size:1.6rem}
-.max-font-size{font-size:2.4rem;}
+.max-font-size{font-size:3.4rem;}
 .max-value{text-align:right}
 .slider-horizontal{height:100%}
 .slider-horizontal.font-size{width:84%}
@@ -363,6 +363,24 @@ h2{font-size:1.6em;font-weight:600}
 .slider-horizontal .ui-slider-horizontal{height: 2px;cursor: pointer;box-shadow: 0 0 0 #000000;background: #C4C4C4;border-radius: 0;border: 0 solid #000000;display: inline-block;vertical-align: middle;width: 100%;}
 .slider-horizontal .ui-slider-handle{box-shadow: 1px 1px 2px #808080;border: 1px solid #bababa;height: 32px;width: 10px;border-radius: 0;background: #FFF;cursor: pointer;margin-top: -11.5px;margin-left: 0;}
 .slider-horizontal .ui-slider-range{background: none transparent;}
+
+/* RECHERCHE */ 
+#search > div{display: none;}
+/* Recherche - résultats complets */
+#full-results-container{padding-left: 45px;padding-right: 45px;}
+#full-results-container h1, #full-results-container h2{height: 16px;}
+#full-result-title{padding-top: 30px;text-align: left;font-size: inherit;}
+#full-result-subtitle{text-align: left;margin-top: 10px;text-transform: uppercase;font-size: inherit;}
+#full-result{margin-top: 10px;overflow-y: auto;height: 568px;}
+.search-result{height: 130px;line-height: 130px;overflow: hidden;margin-bottom: 35px;}
+.search-result > div, .search-result .thumb{float: left;}
+.search-result .thumb{width: 232px;line-height: 20px;}
+.search-result .item-infos{margin-left: 16px;width: 925px;}
+.search-result .item-infos .title{font-weight: 600;text-transform: uppercase;}
+.search-result .item-infos .subtitle{text-transform: uppercase;font-size: 0.9em;font-weight: 300;}
+.compatibilities-list{height: 20px;margin: 2px 0;}
+.search-result .compatibility{margin-right: 9px;}
+.search-result .item-infos .synopsis{font-size: 0.85em;margin-top: 5px;line-height: 1.3;}
 
 /* FOCUS */
 body.sm :focus{border: 1px solid #000 !important;}

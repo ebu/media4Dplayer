@@ -15,6 +15,120 @@ API.getConfig = function(callback_function){
     });
 };
 
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.loadConfigurationSet = function(callback_function){
+	json.load({
+        url: Config.perfectMemoryWS + "configuration/sets",
+		headers: {
+			"Accept-language":"fr"
+		},
+        callback: function(data) {
+			console.log(data);
+			
+			if(typeOf(callback_function) === "function"){
+				callback_function(data);
+			}
+        }
+    });
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getUserTokens = function(callback_function){
+	json.load({
+        url: Config.perfectMemoryWS + "tokens",
+		type:"post",
+		headers: {
+		    "Authorization": "Basic " + btoa("dotscreen_api:Hetep5At")
+		},
+        callback: function(data) {
+			console.log(data);
+			if(typeOf(data) === "object"){
+				User.tokens = data;
+			}
+			
+			if(typeOf(callback_function) === "function"){
+				callback_function();
+			}
+        },
+		onError:function(){
+			
+		}
+    });
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getMediasList = function(callback_function){
+	json.load({
+        url: Config.perfectMemoryWS + "medias?auth_token=" + User.tokens.auth_token + "&types=movie&max_count=10&offset=0",
+        callback: function(data) {
+			console.log(data);
+			
+			if(typeOf(callback_function) === "function"){
+				callback_function(data);
+			}
+        },
+		headers: {
+			"Accept-language":"fr"
+		}
+    });
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getMedia = function(id, callback_function){
+	json.load({
+        url: Config.perfectMemoryWS + "medias/"+id+"?auth_token=" + User.tokens.auth_token,
+        callback: function(data) {
+			console.log(data);
+			
+			if(typeOf(callback_function) === "function"){
+				callback_function(data);
+			}
+        },
+		headers: {
+			"Accept-language":"fr"
+		}
+    });
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.searchMedia = function(term, callback_function){
+    json.load({
+        url: Config.perfectMemoryWS + "medias/search?auth_token=" + User.tokens.auth_token,
+		type:"post",
+        callback: function(data) {
+			console.log(data);
+			
+			if(typeOf(callback_function) === "function"){
+				callback_function(data);
+			}
+        },
+		headers: {
+			"Accept-language":"fr"
+		},
+		data:JSON.stringify({"max_count":30,"offset":0,"filters":[],"sort_order":-1,"sort_fields":"created_at",value:term})
+    });
+};
+
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Launches a request to get the apps list

@@ -768,7 +768,7 @@ Player.prepareSofaCatalog = function(callback){
 	};
 
     /// retrieves the catalog of URLs from the OpenDAP server
-	var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
+	/*var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
 	serverDataBase
          .loadCatalogue()
          .then( function(){
@@ -778,21 +778,21 @@ Player.prepareSofaCatalog = function(callback){
                 sampleRate: Player.playerManager.audioContext.sampleRate
             });
 			
-			Player.catalogue = urls;
             defaultUrl = urls.findIndex( function (url) {
                 return url.match('1018');
             });
 			
 			_callback(urls[defaultUrl]);
+			Player.catalogue = urls;
 
             return urls;
         })
         .catch( function (){
 			 
-         	log('could not access bili2.ircam.fr...');
+         	log('could not access bili2.ircam.fr...');*/
 
 			var currentProcessor;
-			if( this.config === ModulesConfiguration.kMultichannelSpatialiser ){
+			if( Player.config === ModulesConfiguration.kMultichannelSpatialiser ){
 				currentProcessor = multichannelSpatialiser;
 
 			}else{
@@ -800,11 +800,11 @@ Player.prepareSofaCatalog = function(callback){
 			}
 
 			var sofaUrl = currentProcessor._virtualSpeakers.getFallbackUrl();
-			
 			_callback(sofaUrl);
+			Player.catalogue = [sofaUrl];
 
          	return sofaUrl;
-        });
+        //});
 };
 
 Player.onChangeProfil = function(){
@@ -821,10 +821,14 @@ Player.onChangeProfil = function(){
         }
 
         /// load the URL in the spatialiser
-        currentProcessor.loadHrtfSet( url )
-        .then( function(){
-            objectSpatialiserAndMixer._updateCommentaryPosition();
-        });
+		if(Player.catalogue.length){
+			objectSpatialiserAndMixer._updateCommentaryPosition();
+		}else{
+			currentProcessor.loadHrtfSet( url )
+			.then( function(){
+				objectSpatialiserAndMixer._updateCommentaryPosition();
+			});
+		}
 	}else{
 		log("Il n'y pas d'url de profil");
 	}
