@@ -253,7 +253,7 @@ h2{font-size:1.6em;font-weight:600}
 .option-slider > div:not(.label){float:left;height:100%;box-sizing:border-box}
 .min-value, .max-value{line-height:30px;width:8%}
 .min-font-size{font-size:1.6rem}
-.max-font-size{font-size:2.4rem;}
+.max-font-size{font-size:3.4rem;}
 .max-value{text-align:right}
 .slider-horizontal{height:100%}
 .slider-horizontal.font-size{width:84%}
