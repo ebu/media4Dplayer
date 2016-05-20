@@ -116,14 +116,14 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-3-ondemand/manifest.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="SL" videoPresenceFlag="true">
                 <ebucore:containerFormat>
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-lsf1.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-lsf1.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-3-ondemand/manifest-lsf1.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA1">
                 <ebucore:audioFormat audioFormatId="2" audioFormatName="PVF" audioPresenceFlag="false">
@@ -142,7 +142,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea1.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/m4d-Meteo-2-ondemand/manifest-ea1.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/m4d-Meteo-3-ondemand/manifest-ea1.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="AD">
                 <ebucore:audioFormat audioFormatId="3" audioFormatName="PAD" audioPresenceFlag="false">
@@ -161,7 +161,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ad.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ad.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-3-ondemand/manifest-ad.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA2">
                 <ebucore:audioFormat audioFormatId="4" audioFormatName="PVM" audioPresenceFlag="false">
@@ -180,7 +180,7 @@
                         <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea2.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea2.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-3-ondemand/manifest-ea2.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="DI">
                 <ebucore:audioFormat audioFormatId="5" audioFormatName="PDI" audioPresenceFlag="false">
@@ -199,7 +199,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-di.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-di.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-3-ondemand/manifest-di.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA3">
                 <ebucore:audioFormat audioFormatId="6" audioFormatName="PVI" audioPresenceFlag="false">
@@ -218,7 +218,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea3.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea3.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-3-ondemand/manifest-ea3.mpd</ebucore:locator>
             </ebucore:format>
             <ebucore:format formatName="EA4">
                 <ebucore:audioFormat audioFormatId="7" audioFormatName="PMS" audioPresenceFlag="false">
@@ -237,7 +237,7 @@
                     <ebucore:containerEncoding formatLabel="MPEG-DASH"></ebucore:containerEncoding>
                 </ebucore:containerFormat>
                 <ebucore:fileName>manifest-ea4.mpd</ebucore:fileName>
-                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-2-ondemand/manifest-ea4.mpd</ebucore:locator>
+                <ebucore:locator>http://videos-pmd.francetv.fr/innovation/media4D/m4d-Meteo-3-ondemand/manifest-ea4.mpd</ebucore:locator>
             </ebucore:format>
         </ebucore:part>
         <ebucore:part partName="TechnicalMetadata">
