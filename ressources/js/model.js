@@ -126,42 +126,21 @@ Model.getProgramDetails2 = function(data){
 
 Model.getProgramDetails.getDetails = function(programType, startDate, duration){
 
-	var type = programType || "Émission";
+	var type = this.getDetails.programType(programType),
+		date,
+		stringDuration = [];
 
 	if($(startDate).length && $(startDate).attr("startDate")){
 		var stringDate = $(startDate).attr("startDate").split("-");
 		stringDate[2] = stringDate[2].split("+")[0];
-		var date = new Date(stringDate[0], stringDate[1], stringDate[2]);
-		var formatedDate = getStringDate(date.getFullYear(), date.getMonth()-1, date.getDate());			
+		date = new Date(stringDate[0], stringDate[1]-1, stringDate[2]);		
 	}
 
-	var durationMin = "";
 	if($(duration).length && $(duration).children().length){
-		var stringDuration = $(duration).children().text().split(":"), hasHour, hasMin;
-		durationMin =  " | ";
-		if(parseInt(stringDuration[0],10)){
-			hasHour = true;
-			durationMin = durationMin + (parseInt(stringDuration[0],10) > 1 ? parseInt(stringDuration[0],10) + " heures" : parseInt(stringDuration[0],10) + " heure");
-		}
-
-		if(parseInt(stringDuration[1],10)){
-			hasMin = true;
-
-			if(hasHour){
-				durationMin = durationMin + " ";
-			}
-			durationMin = durationMin + (parseInt(stringDuration[1],10) > 1 ? parseInt(stringDuration[1],10) + " minutes" : parseInt(stringDuration[1],10) + " minute");
-		}
-
-		if(parseInt(stringDuration[2],10)){
-
-			if(hasMin){
-				durationMin = durationMin + " ";
-			}
-			durationMin = durationMin + stringDuration[2];
-		}
+		stringDuration = $(duration).children().text().split(":");
 	}
-	return type + " du " + formatedDate + durationMin;
+	
+	return {type:type, date:{d:date.getDate(), m:date.getMonth()+1, y:date.getFullYear()}, duration:{h:parseInt(stringDuration[0],10), m:parseInt(stringDuration[1],10), s:parseInt(stringDuration[2],10)}};
 };
 
 /**
@@ -174,8 +153,7 @@ Model.getProgramDetails.getDetails = function(programType, startDate, duration){
 
 Model.getProgramDetails.getDetails2 = function(programType, startDate, duration){
 	
-	var types = ["documentary","kids","sport","culture_magazine"];
-	var type = types.indexOf(programType) !== -1 ? ["Documentaire","Dessin animé","Sport","Magazine culturel"][types.indexOf(programType)] : "Genre inconnu";
+	var type = Model.getProgramDetails.getDetails.programType(programType);
 	
 	var date;
 	if(startDate){
@@ -185,6 +163,19 @@ Model.getProgramDetails.getDetails2 = function(programType, startDate, duration)
 	}
 	
 	return {type:type, date:{d:date.getDate(), m:date.getMonth()+1, y:date.getFullYear()}, duration:{h:Math.floor(duration / 60 / 60), m:Math.floor(duration / 60), s:Math.floor(duration % 60)}};
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Processes the data received by the API for menu, then launches the callback function
+ * @param {Object} data The response returned by the request
+ * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
+ * @param {Function} callback The function which will be triggered after data processing
+ */
+
+Model.getProgramDetails.getDetails.programType = function(programType){
+	var types = Config.programTypes;
+	return types[programType] ? types[programType] : "Genre inconnu";	
 };
 
 /**

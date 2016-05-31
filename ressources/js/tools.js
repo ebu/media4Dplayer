@@ -190,6 +190,45 @@ function getStringDate2(year, month, day) {
 	}
 }
 
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Returns a date to string (for example : 10 Janvier 2014 or Janvier 2014)
+ * @param {String} year The year
+ * @param {String} month The month
+ * @param {String} day The day
+ * @return {String} The date converted in string
+ */
+
+function getStringDuration(hour, min, seconde) {
+	var stringDuration = "";
+	if(hour || min || seconde){
+		
+		var hasHour, hasMin;
+		if(hour){
+			hasHour = true;
+			stringDuration = hour > 1 ? hour + " heures" : hour + " heure";
+		}
+
+		if(min){
+			hasMin = true;
+
+			if(hasHour){
+				stringDuration = stringDuration + " ";
+			}
+			stringDuration = stringDuration + (min > 1 ? pad(min) + " minutes" : pad(min) + " minute");
+		}
+
+		if(seconde){
+
+			if(hasMin){
+				stringDuration = stringDuration + " ";
+			}
+			stringDuration = stringDuration + seconde;
+		}
+	}
+	return stringDuration;
+}
+
 //Covert datetime by GMT offset 
 //If toUTC is true then return UTC time other wise return local time
 function convertLocalDateToUTCDate(date, toUTC) {
@@ -625,4 +664,8 @@ Array.prototype.remove = function() {
         }
     }
     return this;
+};
+
+getMediaLabel = function(detail){
+	return detail.type + " du " + getStringDate(detail.date.y, detail.date.m, detail.date.d) + " | " + getStringDuration(detail.duration.h, detail.duration.m, detail.duration.s);
 };

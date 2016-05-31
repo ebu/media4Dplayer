@@ -53,7 +53,7 @@ Dashboard.generate = function(){
     $(document.getElementById("media-thumb")).attr("src", mediaData.picture);
 	
     $(document.getElementById("synopsis")).html(mediaData.synopsis);
-	$(document.getElementById("synopsis-and-social-icons-container")).children("h2").html(mediaData.subtitle).end().children(".program-date").html(mediaData.detail);
+	$(document.getElementById("synopsis-and-social-icons-container")).children("h2").html(mediaData.subtitle).end().children(".program-date").html(getMediaLabel(mediaData.detail));
 	
 	/* RELATED CONTENT */
 	var list = mediaData.relatedContent;
@@ -68,19 +68,19 @@ Dashboard.generate = function(){
 	
 	/* OPTIONS ACCESSIBILITEES */
 	$ctn = $(document.getElementById("video-compatibilities-list"));
-	if(mediaData.video.links.dataAD && mediaData.video.links.dataAD.url){
+	if(typeOf(mediaData.video.audioDescriptions) === "array" && mediaData.video.audioDescriptions.length){
 		$ctn.children(".ad").show();
 	}
 	
-	if(mediaData.video.links.dataLS && mediaData.video.links.dataLS.url){
+	if(typeOf(mediaData.video.ls) === "array" && mediaData.video.ls.length){
 		$ctn.children(".ls").show();
 	}
 	
-	if(1/*typeOf(mediaData.video.subtitlesList) === "array" && mediaData.video.subtitlesList.length*/){
+	if(typeOf(mediaData.video.subtitlesList) === "array" && mediaData.video.subtitlesList.length){
 		$ctn.children(".subtitle").show();
 	}
 	
-	if(mediaData.video.links.dataMain && mediaData.video.links.dataMain.url){
+	if(typeOf(mediaData.video.audiosList) === "array" && mediaData.video.audiosList.length){
 		$ctn.children(".audio").show();
 	}
 };
@@ -95,7 +95,7 @@ Dashboard.generateFullscreenSynopsis = function(){
 	var mediaData = Dashboard.data;
 	var title = mediaData.subtitle ? mediaData.subtitle : mediaData.title && mediaData.subtitle ? mediaData.title+" : " + mediaData.subtitle : mediaData.title;
 	$(document.getElementById("full-synopsis")).children("h2").html('<span tabindex="2" class="selectable-by-chromevox">'+title+'</span>').end()
-		.children(".program-date").html('<span tabindex="3" class="selectable-by-chromevox">'+mediaData.detail+'</span>');
+		.children(".program-date").html('<span tabindex="3" class="selectable-by-chromevox">'+getMediaLabel(mediaData.detail)+'</span>');
 	
     $(document.getElementById("synopsis2")).html(mediaData.synopsis);
 };

@@ -13,5 +13,11 @@
 		"subtitle":["Français","Anglais"],
 		"ad":["Français","Anglais"],
 		"ls":["LSF","LSA"]
+	},
+	"programTypes":{
+		"documentary":"Documentaire",
+		"kids":"Dessin animé",
+		"sport":"Émission sportive",
+		"culture_magazine":"Magazine culturel"
 	}
 }

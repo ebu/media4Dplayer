@@ -143,7 +143,7 @@ Apps.programs.generates = function(){
 							'<div class="item-infos">'+
 								'<div class="title">'+program.title+'</div>'+
 								'<div class="subtitle">'+program.subtitle+'</div>'+
-								'<div class="infos">'+program.detail+'</div>	'+								
+								'<div class="infos">'+getMediaLabel(program.detail)+'</div>	'+								
 							'</div>'+
 							'<div tabindex="'+(tabindex+2)+'" class="play">'+
 								'<img src="ressources/img/fav_play_icone.png" alt="Lecture de la vidéo">'+

@@ -174,6 +174,11 @@ $(document.getElementById("methods-container")).on("click", "input[type=radio]",
 	Search.changeMethod();	
 });
 
+$(document.getElementById("full-results-list-container")).on("click", ".search-result", function(e){
+	Section.save();
+	Section.change(Section.sections[3], null, $(this).data("data"));
+});
+
 																	/* **************/
 																	/*	 MODE SM	*/
 																	/* **************/
