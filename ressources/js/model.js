@@ -49,11 +49,13 @@ Model.getProgramDetails = function(xml){
 	if(!((typeOf(xml) === "document" || typeOf(xml) === "xmldocument") && xml.getElementsByTagName('ebucore:ebuCoreMain'))){
 		return {};
 	}
-
+	
+	var objectType = getElementFromXML(xml, "genre", "ebucore", {type:"typeDefinition", value:"ProgramGenre"});
+	var type = objectType.attr("typeLabel");
 	var program = {
 		"title": getTextFromElement(getElementFromXML(xml, "title", "dc")),
 		"subtitle": getTextFromElement(getElementFromXML(xml, "alternativeTitle", "ebucore", {type:"typeLabel", value:"EpisodeTitle"})),
-		"detail": this.getProgramDetails.getDetails(getTextFromElement(getElementFromXML(xml, "genre", "ebucore", {type:"typeDefinition", value:"ProgramType"})), getElementFromXML(xml, "alternative", "ebucore", {type:"typeLabel", value:"DateDiffusion"}), getElementFromXML(xml, "partDuration", "ebucore")),
+		"detail": this.getProgramDetails.getDetails(type, getElementFromXML(xml, "alternative", "ebucore", {type:"typeLabel", value:"DateDiffusion"}), getElementFromXML(xml, "partDuration", "ebucore")),
 		"thumbnail":this.getProgramDetails.getThumbnail(getElementFromXML(xml, "format", "ebucore", {type:"formatName", value:"SequenceThumbnail"})),
 		"picture": this.getProgramDetails.getThumbnail(getElementFromXML(xml, "format", "ebucore", {type:"formatName", value:"SequenceThumbnail"})),
 		"synopsis": getTextFromElement(getElementFromXML(xml, "description", "ebucore", {type:"typeLabel", value:"Synopsis"})),
@@ -175,7 +177,7 @@ Model.getProgramDetails.getDetails2 = function(programType, startDate, duration)
 
 Model.getProgramDetails.getDetails.programType = function(programType){
 	var types = Config.programTypes;
-	return types[programType] ? types[programType] : "Genre inconnu";	
+	return types[programType] ? types[programType] : programType ? programType : "Genre inconnu";	
 };
 
 /**
