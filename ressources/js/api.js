@@ -90,6 +90,80 @@ API.getMediasList = function(callback_function){
  * @param {Function} callback_function The function which will be triggered after receiving data
  */
 
+API.autocomplete = function(term, method, callback_function){
+	if(method === "content"){
+		json.load({
+			url: "ressources/json/autocomplete.json",
+			callback: function(data) {
+				if(typeOf(callback_function) === "function"){
+					callback_function(data);
+				}
+			}
+		});
+		
+	}else if(typeOf(callback_function) === "function"){
+		callback_function();
+	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getTermsOfAffination = function(term, method, callback_function){
+	if(method === "content"){
+		json.load({
+			url: "ressources/json/group-list.json",
+			callback: function(data) {		
+				Model.getTermsOfAffination(method, data, callback_function);
+			}
+		});
+		
+	}else if(typeOf(callback_function) === "function"){
+		callback_function();
+	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getResults = function(term, termsOfAffination, method, callback_function){
+	if(method === "content" && typeOf(callback_function) === "function"){
+		json.load({
+			url: "ressources/json/SearchWords_Response.json",
+			callback: function(data) {
+				
+				var urls = Model.getUrlsListForSearch(method, data);
+				if(urls.length){
+					
+					var def = API.getMultipleJSON(urls);
+					$.when.apply($, def)
+						.then(function(){
+						Model.getResults(getWSResponseForMultipleRequests(arguments, urls.length), callback_function);
+					
+					}, function(){
+						callback_function();
+					});
+					
+				}else{
+					callback_function();
+				}
+			}
+		});
+		
+	}else{
+		callback_function();
+	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
 API.getMedia = function(id, callback_function){
 	json.load({
         url: Config.perfectMemoryWS + "medias/"+id+"?auth_token=" + User.tokens.auth_token,

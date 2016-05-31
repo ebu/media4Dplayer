@@ -124,7 +124,56 @@ $("body").on("keydown", function(e){
 		Navigation.moveSelecteur(document.getElementById("playerClose"));
 	}
 });
+
+$(document.getElementById("terms-search")).on("mouseover", function(){
+	this.focus();	
+});
+
+$(document.getElementById("autocomplete")).on("click", ".term", function(){
+	Search.autocomplete.selectTerm($(this).text());
 	
+}).on("mouseover", function(){
+	$(document.getElementById("terms-search")).blur();
+});
+
+$(document.getElementById("terms-of-affination")).on("click", ".term-of-affination", function(){
+	var $showResults = $(document.getElementById("display-results-button"));
+	if(Search.method === Search.methods[0]){
+		
+		if($(this).hasClass("sel")){
+			$(this).removeClass("sel");
+			Search.termsOfAffination.terms = [];
+			$showResults.removeClass("on");
+			
+		}else{
+			$(document.getElementById("terms-of-affination")).find(".sel").removeClass("sel");
+			$(this).addClass("sel");
+			Search.termsOfAffination.terms = [$(this).text()];
+			$showResults.addClass("on");
+		}
+	}else{
+		
+		if($(this).hasClass("sel")){
+			$(this).removeClass("sel");
+			Search.termsOfAffination.terms.remove($(this).text());
+			
+			if(!Search.termsOfAffination.terms.length){
+				$showResults.removeClass("on");
+			}
+			
+		}else{
+			$(this).addClass("sel");
+			Search.termsOfAffination.terms.push($(this).text());
+			$showResults.addClass("on");
+		}		
+	}
+	log(Search.termsOfAffination.terms);
+});
+
+$(document.getElementById("methods-container")).on("click", "input[type=radio]", function(){
+	Search.changeMethod();	
+});
+
 																	/* **************/
 																	/*	 MODE SM	*/
 																	/* **************/

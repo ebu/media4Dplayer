@@ -1,0 +1,273 @@
+{
+	"GrupID_0" : [{
+			"sug" : "Allemagne",
+			"sc" : 69.0
+		}, {
+			"sug" : "politique",
+			"sc" : 51.0
+		}, {
+			"sug" : "fédéralisme",
+			"sc" : 49.0
+		}, {
+			"sug" : "Parlement",
+			"sc" : 47.0
+		}, {
+			"sug" : "Allemands",
+			"sc" : 42.0
+		}, {
+			"sug" : "Europe",
+			"sc" : 31.0
+		}, {
+			"sug" : "guerre",
+			"sc" : 24.0
+		}, {
+			"sug" : "Bruxelles",
+			"sc" : 18.0
+		}, {
+			"sug" : "culture",
+			"sc" : 18.0
+		}, {
+			"sug" : "modèle",
+			"sc" : 18.0
+		}, {
+			"sug" : "sorte",
+			"sc" : 18.0
+		}, {
+			"sug" : "gouvernement",
+			"sc" : 14.0
+		}, {
+			"sug" : "convergence",
+			"sc" : 13.0
+		}, {
+			"sug" : "frontières",
+			"sc" : 12.0
+		}, {
+			"sug" : "dette",
+			"sc" : 11.0
+		}, {
+			"sug" : "réformes",
+			"sc" : 11.0
+		}, {
+			"sug" : "intégration",
+			"sc" : 11.0
+		}, {
+			"sug" : "symbole",
+			"sc" : 11.0
+		}, {
+			"sug" : "Grecs",
+			"sc" : 10.0
+		}, {
+			"sug" : "souveraineté",
+			"sc" : 10.0
+		}
+	],
+	"GrupID_1" : [{
+			"sug" : "gîtes",
+			"sc" : 84.0
+		}, {
+			"sug" : "Gîtes de France",
+			"sc" : 56.0
+		}, {
+			"sug" : "présidents",
+			"sc" : 52.0
+		}, {
+			"sug" : "Tour de France",
+			"sc" : 52.0
+		}, {
+			"sug" : "juillet",
+			"sc" : 42.0
+		}, {
+			"sug" : "course",
+			"sc" : 28.0
+		}, {
+			"sug" : "François Hollande",
+			"sc" : 21.0
+		}, {
+			"sug" : "coureurs",
+			"sc" : 17.0
+		}, {
+			"sug" : "Jules Bianchi",
+			"sc" : 14.0
+		}, {
+			"sug" : "pilote",
+			"sc" : 14.0
+		}, {
+			"sug" : "François",
+			"sc" : 14.0
+		}, {
+			"sug" : "Alpes",
+			"sc" : 14.0
+		}, {
+			"sug" : "journalistes",
+			"sc" : 14.0
+		}, {
+			"sug" : "agriculteurs",
+			"sc" : 14.0
+		}, {
+			"sug" : "accident",
+			"sc" : 12.0
+		}, {
+			"sug" : "tradition",
+			"sc" : 7.0
+		}, {
+			"sug" : "Formule 1",
+			"sc" : 6.0
+		}, {
+			"sug" : "orages",
+			"sc" : 4.0
+		}, {
+			"sug" : "Grèce",
+			"sc" : 4.0
+		}, {
+			"sug" : "retraits d'argent",
+			"sc" : 4.0
+		}
+	],
+	"GrupID_2" : [{
+			"sug" : "Marignan",
+			"sc" : 88.0
+		}, {
+			"sug" : "bataille",
+			"sc" : 66.0
+		}, {
+			"sug" : "François Ier",
+			"sc" : 55.0
+		}, {
+			"sug" : "Milan",
+			"sc" : 33.0
+		}, {
+			"sug" : "blessés",
+			"sc" : 22.0
+		}, {
+			"sug" : "Europe",
+			"sc" : 11.0
+		}, {
+			"sug" : "anglais",
+			"sc" : 11.0
+		}
+	],
+	"GrupID_3" : [{
+			"sug" : "Tour de France",
+			"sc" : 34.0
+		}, {
+			"sug" : "Radioscopie",
+			"sc" : 16.0
+		}, {
+			"sug" : "Jacques Chancel",
+			"sc" : 16.0
+		}, {
+			"sug" : "Greg LeMond",
+			"sc" : 16.0
+		}, {
+			"sug" : "Laurent Fignon",
+			"sc" : 16.0
+		}, {
+			"sug" : "juillet",
+			"sc" : 8.0
+		}, {
+			"sug" : "étape",
+			"sc" : 8.0
+		}, {
+			"sug" : "télévision",
+			"sc" : 8.0
+		}, {
+			"sug" : "maillot jaune",
+			"sc" : 8.0
+		}, {
+			"sug" : "musique classique",
+			"sc" : 8.0
+		}, {
+			"sug" : "passion",
+			"sc" : 6.0
+		}, {
+			"sug" : "Bernard",
+			"sc" : 4.0
+		}, {
+			"sug" : "politique",
+			"sc" : 4.0
+		}, {
+			"sug" : "radio",
+			"sc" : 4.0
+		}, {
+			"sug" : "émissions",
+			"sc" : 4.0
+		}, {
+			"sug" : "Pivot",
+			"sc" : 4.0
+		}, {
+			"sug" : "retard",
+			"sc" : 4.0
+		}, {
+			"sug" : "Pedro",
+			"sc" : 4.0
+		}, {
+			"sug" : "Grand Echiquier",
+			"sc" : 4.0
+		}, {
+			"sug" : "Pedro Delgado",
+			"sc" : 4.0
+		}
+	],
+	"GrupID_4" : [{
+			"sug" : "départ",
+			"sc" : 55.0
+		}, {
+			"sug" : "départ",
+			"sc" : 21.0
+		}, {
+			"sug" : "Digne",
+			"sc" : 20.0
+		}, {
+			"sug" : "Hinault",
+			"sc" : 14.0
+		}, {
+			"sug" : "champions",
+			"sc" : 13.0
+		}, {
+			"sug" : "Laurent Fignon",
+			"sc" : 8.0
+		}, {
+			"sug" : "Bernard Hinault",
+			"sc" : 7.0
+		}, {
+			"sug" : "Bernard",
+			"sc" : 6.0
+		}, {
+			"sug" : "maillot vert",
+			"sc" : 6.0
+		}, {
+			"sug" : "Anquetil et Merckx",
+			"sc" : 5.0
+		}, {
+			"sug" : "droits",
+			"sc" : 5.0
+		}, {
+			"sug" : "chute",
+			"sc" : 3.0
+		}, {
+			"sug" : "coeur",
+			"sc" : 3.0
+		}, {
+			"sug" : "occasion",
+			"sc" : 3.0
+		}, {
+			"sug" : "repos",
+			"sc" : 3.0
+		}, {
+			"sug" : "Laurent",
+			"sc" : 2.0
+		}, {
+			"sug" : "arrivée",
+			"sc" : 2.0
+		}, {
+			"sug" : "Pyrénées",
+			"sc" : 2.0
+		}, {
+			"sug" : "cyclisme",
+			"sc" : 2.0
+		}, {
+			"sug" : "Bernard Tapie",
+			"sc" : 2.0
+		}
+	]
+}

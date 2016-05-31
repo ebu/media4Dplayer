@@ -7,5 +7,11 @@
 	"jsonTimeout":30,
     "userCredentialsIsSavedFor":86400,
 	"timeoutHidePIP":3,
-	"perfectMemoryWS":"https://wisdom.prod1.perfect-memory.com/ftv/v1/"
+	"perfectMemoryWS":"https://wisdom.prod1.perfect-memory.com/ftv/v1/",
+	"filtersLanguages":{
+		"audio":["Français","Anglais"],
+		"subtitle":["Français","Anglais"],
+		"ad":["Français","Anglais"],
+		"ls":["LSF","LSA"]
+	}
 }

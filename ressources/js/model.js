@@ -92,6 +92,38 @@ Model.getProgramDetails = function(xml){
  * @param {Function} callback The function which will be triggered after data processing
  */
 
+Model.getProgramDetails2 = function(data){
+
+	var program = {
+		"title": data.title || "Titre inconnu",
+		"subtitle": data.label || "",
+		"detail": this.getProgramDetails.getDetails2(data.types ? data.types[data.types.length-1] : null, data.created_at, data.duration),
+		"thumbnail":this.getProgramDetails.getThumbnail2(data.thumbnails) || "",
+		"picture": this.getProgramDetails.getThumbnail2(data.thumbnails) || "",
+		"synopsis": data.description || "",
+		"relatedContent":[]
+	};
+
+	program.video = {
+		links:{}//this.getProgramDetails.getLinkDetails(getElementFromXML(xml, "part", "ebucore", {type:"partName", value:"Links"}))
+	};
+	//program.video.subtitlesList = !isEmpty(program.video.links.dataSub) ? ["Français"] : null;
+	program.video.subtitlesList = ["Français"];
+	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":program.video.links.dataAD.url}] : null;
+	program.video.ls = !isEmpty(program.video.links.dataLS) ? [{"lang":"LSF", "url":program.video.links.dataLS.url}] : null;
+	program.video.audiosList = ["Français"];//this.getProgramDetails.getAudiosList(program.video.links);
+	
+	return program;
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Processes the data received by the API for menu, then launches the callback function
+ * @param {Object} data The response returned by the request
+ * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
+ * @param {Function} callback The function which will be triggered after data processing
+ */
+
 Model.getProgramDetails.getDetails = function(programType, startDate, duration){
 
 	var type = programType || "Émission";
@@ -130,6 +162,29 @@ Model.getProgramDetails.getDetails = function(programType, startDate, duration){
 		}
 	}
 	return type + " du " + formatedDate + durationMin;
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Processes the data received by the API for menu, then launches the callback function
+ * @param {Object} data The response returned by the request
+ * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
+ * @param {Function} callback The function which will be triggered after data processing
+ */
+
+Model.getProgramDetails.getDetails2 = function(programType, startDate, duration){
+	
+	var types = ["documentary","kids","sport","culture_magazine"];
+	var type = types.indexOf(programType) !== -1 ? ["Documentaire","Dessin animé","Sport","Magazine culturel"][types.indexOf(programType)] : "Genre inconnu";
+	
+	var date;
+	if(startDate){
+		var stringDate = startDate.split("-");
+		stringDate[2] = stringDate[2].split("T")[0];
+		date = new Date(stringDate[0], stringDate[1]-1, stringDate[2]);		
+	}
+	
+	return {type:type, date:{d:date.getDate(), m:date.getMonth()+1, y:date.getFullYear()}, duration:{h:Math.floor(duration / 60 / 60), m:Math.floor(duration / 60), s:Math.floor(duration % 60)}};
 };
 
 /**
@@ -271,4 +326,91 @@ Model.getProgramDetails.getThumbnail = function(ctn){
 			return $(thumbElement).text();
 		}
 	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Processes the data received by the API for menu, then launches the callback function
+ * @param {Object} data The response returned by the request
+ * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
+ * @param {Function} callback The function which will be triggered after data processing
+ */
+
+Model.getProgramDetails.getThumbnail2 = function(list){
+	if(typeOf(list) === "array" && typeOf(list[0]) === "object"){
+		return list[0].url || "";
+	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+Model.getTermsOfAffination = function(method, data, callback_function){
+	if(method === "content"){
+		if(typeOf(data) === "object"){
+			
+			// Récupère les 1er de chaque groupe
+			var list = [], term;
+			for(var index in data){
+				if(typeOf(data[index]) === "array" && data[index].length){
+					term = data[index][0];
+					list.push({term:term.sug, score:term.sc});
+				}
+			}
+			
+			if(typeOf(callback_function) === "function"){
+				callback_function(list);
+			}
+		}
+	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+Model.getUrlsListForSearch = function(method, data){
+	var list = [];
+	if(method === "content"){
+		if(typeOf(data) === "array"){
+			
+			var i, media;
+			for(i=0;i<data.length;i++){
+				media = data[i];
+				if(typeOf(media) === "object" && media.idMovie){
+					list.push({
+						url: Config.perfectMemoryWS + "medias/"+media.idMovie+"?auth_token=" + User.tokens.auth_token,
+						headers: {
+							"Accept-language":"fr"
+						}
+					});
+				}
+			}
+		}
+	}
+	return list;
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+Model.getResults = function(data, callback_function){
+	var list = [];
+	if(typeOf(data) === "array"){
+
+		var i, media;
+		for(i=0;i<data.length;i++){
+			media = data[i];
+			if(typeOf(media) === "object"){
+				list.push(this.getProgramDetails2(media));
+			}
+		}
+	}
+	
+	callback_function(list);
 };

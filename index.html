@@ -255,80 +255,60 @@
 					</div>
 				</section>
 				<section id="search" class="section-with-topbar">
+					<div id="terms-search-container">
+						<div id="input-and-options-container">
+							<div id="input-container">
+								<input name="terms-search" id="terms-search" type="text" placeholder="Que cherchez vous ?" onchange="Search.autocomplete.init(this.value);" oninput="this.onchange();"/>
+								<input name="validate-terms-button" id="validate-terms-button" type="button" value="ok" onclick="Search.autocomplete.getTermsOfAffination();"/>
+								<div id="methods-container">
+									<div class="method-ctn">
+										<input type="radio" name="method" value="term" id="method-term"/><label for="method-term">Par thème</label>
+									</div>
+									<div class="method-ctn">
+										<input type="radio" name="method" value="content" id="method-content" checked="checked"/><label for="method-content">Par contenu</label>
+									</div>
+								</div>
+								<div id="autocomplete"></div>
+							</div>
+							<div id="terms-of-affination-buttons-container">
+								<a class="back-button btn">Retour</a>
+								<div id="display-results-button" class="btn" onclick="Section.change(Section.sections[31], Section.rubrics[Section.sections[31]][1]);">Accéder aux résultats</div>
+							</div>
+						</div>
+						<div id="terms-of-affination-container">
+							<div id="search-message"><span></span></div>
+							<div id="terms-of-affination">
+								<div class="col top"></div>
+								<div class="col bottom"></div>
+							</div>
+						</div>
+					</div>
 					<div id="full-results-container">
-						<h1 id="full-result-title">Résultats pour : Jamy / Le monde de Jamy</h1>
-						<h2 id="full-result-subtitle">Des forêts et des hommes</h2>
+						<div id="back-and-filters-container">
+							<a class="back-button btn">Retour</a>
+							<div id="filters-container">
+								<div id="filter-audio" class="btn" onclick="Search.filters.show('audio', this);">
+									<div class="compatibility audio"></div>
+									<div class="filter-value">Fra</div>
+								</div>
+								<div id="filter-sub" class="btn" onclick="Search.filters.show('subtitle', this);">
+									<div class="compatibility subtitle"></div>
+									<div class="filter-value">Fra</div>
+								</div>
+								<div id="filter-ad" class="btn" onclick="Search.filters.show('ad', this);">
+									<div class="compatibility ad"></div>
+									<div class="filter-value">Fra</div>
+								</div>
+								<div id="filter-ls" class="btn" onclick="Search.filters.show('ls', this);">
+									<div class="compatibility ls"></div>
+									<div class="filter-value">LSF</div>
+								</div>
+							</div>
+							<div id="filter-values-list" class="optionDropDownMenu"></div>
+						</div>
 						<div id="full-result">
-							<div class="search-result btn">
-								<img alt="Vignette de Le Monde de Jamy" src="ressources/img/temp/programs/lmdj.png" class="thumb"/>
-								<div class="item-infos">
-									<div class="title">Le Monde de Jamy</div>
-									<div class="subtitle">15/07/2015 / Des volcans et des hommes</div>
-									<div class="compatibilities-list">
-										<div class="compatibility audio" title="Contient des pistes audios" style="display: block;"></div>
-										<div class="compatibility subtitle" title="Contient des sous-titres" style="display: block;"></div>
-										<div class="compatibility ad" title="Contient des commentaires" style="display: block;"></div>
-										<div class="compatibility ls" title="Contient des videos pour le language des signes" style="display: block;"></div>
-									</div>
-									<div class="synopsis">Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite. Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux.Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps.</div>
-								</div>
-							</div>
-							<div class="search-result btn">
-								<img alt="Vignette de Le Monde de Jamy" src="ressources/img/temp/programs/lmdj.png" class="thumb"/>
-								<div class="item-infos">
-									<div class="title">Le Monde de Jamy</div>
-									<div class="subtitle">15/07/2015 / Des volcans et des hommes</div>
-									<div class="compatibilities-list">
-										<div class="compatibility audio" title="Contient des pistes audios" style="display: block;"></div>
-										<div class="compatibility subtitle" title="Contient des sous-titres" style="display: block;"></div>
-										<div class="compatibility ad" title="Contient des commentaires" style="display: block;"></div>
-										<div class="compatibility ls" title="Contient des videos pour le language des signes" style="display: block;"></div>
-									</div>
-									<div class="synopsis">Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite. Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux.Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps.</div>
-								</div>
-							</div>
-							<div class="search-result btn">
-								<img alt="Vignette de Le Monde de Jamy" src="ressources/img/temp/programs/lmdj.png" class="thumb"/>
-								<div class="item-infos">
-									<div class="title">Le Monde de Jamy</div>
-									<div class="subtitle">15/07/2015 / Des volcans et des hommes</div>
-									<div class="compatibilities-list">
-										<div class="compatibility audio" title="Contient des pistes audios" style="display: block;"></div>
-										<div class="compatibility subtitle" title="Contient des sous-titres" style="display: block;"></div>
-										<div class="compatibility ad" title="Contient des commentaires" style="display: block;"></div>
-										<div class="compatibility ls" title="Contient des videos pour le language des signes" style="display: block;"></div>
-									</div>
-									<div class="synopsis">Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite. Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux.Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps.</div>
-								</div>
-							</div>
-							<div class="search-result btn">
-								<img alt="Vignette de Le Monde de Jamy" src="ressources/img/temp/programs/lmdj.png" class="thumb"/>
-								<div class="item-infos">
-									<div class="title">Le Monde de Jamy</div>
-									<div class="subtitle">15/07/2015 / Des volcans et des hommes</div>
-									<div class="compatibilities-list">
-										<div class="compatibility audio" title="Contient des pistes audios" style="display: block;"></div>
-										<div class="compatibility subtitle" title="Contient des sous-titres" style="display: block;"></div>
-										<div class="compatibility ad" title="Contient des commentaires" style="display: block;"></div>
-										<div class="compatibility ls" title="Contient des videos pour le language des signes" style="display: block;"></div>
-									</div>
-									<div class="synopsis">Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite. Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux.Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps.</div>
-								</div>
-							</div>
-							<div class="search-result btn">
-								<img alt="Vignette de Le Monde de Jamy" src="ressources/img/temp/programs/lmdj.png" class="thumb"/>
-								<div class="item-infos">
-									<div class="title">Le Monde de Jamy</div>
-									<div class="subtitle">15/07/2015 / Des volcans et des hommes</div>
-									<div class="compatibilities-list">
-										<div class="compatibility audio" title="Contient des pistes audios" style="display: block;"></div>
-										<div class="compatibility subtitle" title="Contient des sous-titres" style="display: block;"></div>
-										<div class="compatibility ad" title="Contient des commentaires" style="display: block;"></div>
-										<div class="compatibility ls" title="Contient des videos pour le language des signes" style="display: block;"></div>
-									</div>
-									<div class="synopsis">Pour ce premier numéro consacré aux volcans, Jamy nous convie à un voyage extraordinaire à la découverte d’une planète qui vit, gronde et palpite. Des lieux et des territoires en fusion dont les secrets, les mystères et les légendes nous sont révélés par ceux qui les connaissent le mieux.Ces hommes et ces femmes avec lesquels Jamy a rendez-vous in situ sont chercheurs, scientifiques, historiens ou simples témoins d’un phénomène redouté mais qui fascine pourtant depuis la nuit des temps.</div>
-								</div>
-							</div>
+							<div id="full-results-list-container"></div>
+							<div id="full-results-message"><span></span></div>
 						</div>
 					</div>
 				</section>
@@ -932,5 +912,6 @@
 		<script type="text/javascript" src="ressources/js/dashboard.js"></script>
 		<script type="text/javascript" src="ressources/js/settings.js"></script>
 		<script type="text/javascript" src="ressources/js/apps.js"></script>	
+		<script type="text/javascript" src="ressources/js/search.js"></script>
 	</body>
 </html>
