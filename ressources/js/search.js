@@ -117,7 +117,9 @@ Search.autocomplete.init = function(value){
  */
 
 Search.autocomplete.reset = function(){
-	$(document.getElementById("autocomplete")).empty();
+	$(document.getElementById("autocomplete")).fadeOut(200, function(){
+		$(this).empty();
+	});
 };
 	
 /**
@@ -149,7 +151,7 @@ Search.autocomplete.showList = function(list){
 			word = list[i].replace(term, '<span>'+term+'</span>');
 			html += '<div class="term oneline">'+word+'</div>';
 		}
-		$ctn.html(html).show();
+		$ctn.html(html).clearQueue().stop().fadeIn(200);
 		
 	}else{
 		this.reset();
@@ -300,7 +302,7 @@ Search.termsOfAffination.showList = function(list){
 	for(i=0; i<l&&i<this.limit;i++){
 		data = list[i];
 		score = (data.score*100/scoreFirst);
-		$term = $('<div class="term-of-affination" style="zoom:'+Math.round(score)+'%;background-color: rgba(0,0,0,'+roundDecimal(score/100, 1)+')"><span>'+data.term+'</span></div>');
+		$term = $('<div class="term-of-affination" style="zoom:'+Math.round(score)+'%;background-color: rgba(0,0,0,'+roundDecimal(score/100, 1)+')"><span style="zoom:'+Math.round((100-score)*2+100)+'%;">'+data.term+'</span></div>');
 		
 		if(toTop.indexOf(i) !== -1){
 			
@@ -484,10 +486,6 @@ Search.filters.show = function(type, button){
 		if(this.isOptionDropDownMenuDisplayed && type === this.currentOptionDropDownMenu) {
 			this.hide();
 			return;
-			
-		}else if(!this.isOptionDropDownMenuDisplayed) {
-			$ctn.addClass("on");
-			this.isOptionDropDownMenuDisplayed = true;
 		}
 		this.currentOptionDropDownMenu = type;
 		
@@ -516,6 +514,11 @@ Search.filters.show = function(type, button){
 		}
 		
 		this.select(type, $ctn);
+		
+		if(!this.isOptionDropDownMenuDisplayed) {
+			$ctn.fadeIn(200);
+			this.isOptionDropDownMenuDisplayed = true;
+		}
 	}
 };
 
@@ -525,7 +528,7 @@ Search.filters.show = function(type, button){
  */
 
 Search.filters.hide = function(){
-	$(document.getElementById("filter-values-list")).removeClass("on");
+	$(document.getElementById("filter-values-list")).fadeOut(200);
 	this.isOptionDropDownMenuDisplayed = false;		
 };
 

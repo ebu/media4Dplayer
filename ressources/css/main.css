@@ -377,13 +377,13 @@ h2{font-size:1.6em;font-weight:600}
 .terms-of-affination-list #terms-of-affination-buttons-container{display: block;}
 .terms-of-affination-list #input-container{display: none;}
 #search .back-button{position: static;margin-left: 45px;display: inline-block}
-#display-results-button{display: inline-block;padding: 0 15px;box-sizing: border-box;position: absolute;right: 45px;background-color: #5d5d5d;opacity: .5;}
+#display-results-button{display: inline-block;padding: 0 15px;box-sizing: border-box;position: absolute;right: 45px;background-color: #5d5d5d;opacity: .5;transition-duration: 500ms;}
 #display-results-button.on{opacity: 1;}
 #terms-search{text-indent: 45px;background-color: #3f3f3f;}
 #terms-search, #autocomplete{width: 696px;}
 #input-container #validate-terms-button{width: 88px;border-left:1px solid #000;cursor: pointer;}
 #validate-terms-button, #autocomplete{background-color: #383838;}
-#autocomplete{position: absolute;top: 100%;}
+#autocomplete{position: absolute;top: 100%;box-shadow: 0 2px 4px rgba(0,0,0,0.5);}
 #autocomplete .term{height: 50px;line-height: 50px;padding: 0 6px 0 45px;box-sizing: border-box;color: rgba(255,255,255,0.5)}
 #autocomplete .term:hover{cursor: pointer;font-weight: 600;}
 #autocomplete .term span{color: #fff}
@@ -392,35 +392,25 @@ h2{font-size:1.6em;font-weight:600}
 #search-message{line-height: 575px;text-align: center;color: #fff;display: block;}
 #terms-of-affination{text-align: center;padding-top: 35px;box-sizing: border-box;}
 #terms-of-affination .top{margin-bottom: 12px;}
-.term-of-affination{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 5px;padding: 10px 0 0 10px;width: 532px;height: 253px;cursor: pointer;}
+.term-of-affination{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 5px;padding: 10px 0 0 10px;width: 532px;height: 253px;cursor: pointer;transition-duration: 500ms;overflow: hidden;}
 .term-of-affination:last-child{margin-right: 0;}
 .top .term-of-affination{vertical-align: bottom;}
+.bottom .term-of-affination{vertical-align: top;}
 .term-of-affination.sel, .term-of-affination:hover{border-color: #14a700;}
+.term-of-affination span{background-color: #000;}
 #methods-container{float: left;height: 100%;text-align: center;line-height: 75px;width: 496px;}
 .method-ctn{display: inline-block;text-align: left;margin-right: 50px;}
 .method-ctn input{display: inline-block;margin-top: -2px;margin-right: 10px;zoom: 150%;}
 .method-ctn input, .method-ctn label{cursor: pointer;}
-/*.term-of-affination.score-2{zoom: 80%;background-color: rgba(0,0,0,0.8)}
-.term-of-affination.score-3{zoom: 60%;background-color: rgba(0,0,0,0.6)}
-.term-of-affination.score-4{zoom: 40%;background-color: rgba(0,0,0,0.4)}
-.term-of-affination.score-5{zoom: 30%;background-color: rgba(0,0,0,0.3)}
-.term-of-affination.score-6{zoom: 20%;background-color: rgba(0,0,0,0.2)}
-.term-of-affination.score-7{zoom: 10%;background-color: rgba(0,0,0,0.1)}
-.term-of-affination.score-2 span{zoom: 1.5;}
-.term-of-affination.score-3 span{zoom: 2;}
-.term-of-affination.score-4 span{zoom: 3;}
-.term-of-affination.score-5 span{zoom: 3;}
-.term-of-affination.score-6 span{zoom: 5;}
-.term-of-affination.score-7 span{zoom: 8;}*/
 
 /* Recherche - résultats complets */
-#full-results-container{}
 #back-and-filters-container{display: block;position: relative;position: relative;}
 #full-result{margin: 45px 45px 0 45px;overflow-y: auto;height: 530px;}
-.search-result{height: 130px;line-height: 130px;overflow: hidden;margin-bottom: 35px;}
+.search-result{height: 160px;line-height: 160px;padding: 15px 0;box-sizing: border-box;}
+.search-result:hover{background-color: #c8c8c8;transition-duration: 500ms;transition-property: background-color;}
 .search-result > div, .search-result .thumb{float: left;}
 .search-result .thumb{width: 232px;height: 100%;line-height: 20px;}
-.search-result .item-infos{margin-left: 16px;width: 925px;}
+.search-result .item-infos{margin-left: 16px;width: 925px;height: 100%;overflow: hidden;}
 .search-result .item-infos .title{font-weight: 600;text-transform: uppercase;}
 .search-result .item-infos .subtitle{text-transform: uppercase;font-size: 0.9em;font-weight: 300;}
 .compatibilities-list{height: 20px;margin: 2px 0;}
