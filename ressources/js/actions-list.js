@@ -155,7 +155,7 @@ $(document.getElementById("terms-of-affination")).on("click", ".term-of-affinati
 		
 		if($(this).hasClass("sel")){
 			$(this).removeClass("sel");
-			Search.termsOfAffination.terms.remove($(this).text());
+			removeA(Search.termsOfAffination.terms, $(this).text());
 			
 			if(!Search.termsOfAffination.terms.length){
 				$showResults.removeClass("on");
