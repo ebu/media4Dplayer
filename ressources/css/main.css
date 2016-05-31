@@ -220,9 +220,10 @@ h2{font-size:1.6em;font-weight:600}
 #video-caption div{width:100%;display:block}
 #playerUI .ui-ls{height:100%}
 #pipContainer{border-style:hidden}
-.optionDropDownMenu{position:absolute;bottom:280px;left:130px;width:180px}
+.optionDropDownMenu{position:absolute;bottom:280px;left:130px;width:180px;transition: left 500ms;}
 .optionDropDownMenu.hidden{display:none}
-.optionDropDownMenuButton{position:relative;width:100%;height:50px;display:block;border-color:#fff;border-width:1px;border-style:solid;background-color:#000;text-align:center;color:#fff;line-height:45px;font-weight:500}
+.optionDropDownMenuButton{position:relative;width:100%;height:50px;display:block;background-color:#000;text-align:center;color:#fff;line-height:45px;font-weight:500}
+#optionDropDownMenu .optionDropDownMenuButton{border-bottom: 1px solid #fff;}
 .optionDropDownMenuButton:hover{cursor:pointer;font-weight:600}
 #playerControlADVolume{right: 153px;}
 .volume-control-ctn .volume-min{background-position:0 -25px}
@@ -392,7 +393,7 @@ h2{font-size:1.6em;font-weight:600}
 #search-message{line-height: 575px;text-align: center;color: #fff;display: block;}
 #terms-of-affination{text-align: center;padding-top: 35px;box-sizing: border-box;}
 #terms-of-affination .top{margin-bottom: 12px;}
-.term-of-affination{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 13px;padding: 10px 0 0 10px;width: 400px;height: 253px;cursor: pointer;transition-duration: 500ms;overflow: hidden;}
+.term-of-affination{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 13px;padding: 10px 0 0 10px;width: 400px;height: 253px;cursor: pointer;transition-duration: 500ms;overflow: hidden;box-shadow: 0 0 5px #000;}
 .term-of-affination:last-child{margin-right: 0;}
 .top .term-of-affination{vertical-align: bottom;}
 .bottom .term-of-affination{vertical-align: top;}
@@ -423,6 +424,7 @@ h2{font-size:1.6em;font-weight:600}
 #filter-values-list{display: none;top: 75px;}
 #filter-values-list.on{display: block;}
 #full-results-message{height: 100%;line-height: 530px;color: #000;text-align: center;}
+#filter-values-list .btn{background-color:#4e4e4e;border-top: #fff solid 1px;}
 
 /* FOCUS */
 body.sm :focus{border: 1px solid #000 !important;}
