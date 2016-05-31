@@ -179,6 +179,12 @@ $(document.getElementById("full-results-list-container")).on("click", ".search-r
 	Section.change(Section.sections[3], null, $(this).data("data"));
 });
 
+$(document.getElementById("display-results-button")).on("click", function(e){
+	if($(this).hasClass("on")){
+		Section.change(Section.sections[31], Section.rubrics[Section.sections[31]][1]);
+	}
+});
+
 																	/* **************/
 																	/*	 MODE SM	*/
 																	/* **************/
