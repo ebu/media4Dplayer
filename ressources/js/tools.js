@@ -666,6 +666,18 @@ function removeA(arr) {
     return arr;
 }
 
+function removeKey(arrayName, key) {
+	var x;
+	var tmpArray = new Array();
+	for (x in arrayName)
+	{
+		if (x != key) {
+			tmpArray[x] = arrayName[x];
+		}
+	}
+	return tmpArray;
+}
+
 getMediaLabel = function(detail){
 	return detail.type + " du " + getStringDate(detail.date.y, detail.date.m, detail.date.d) + " | " + getStringDuration(detail.duration.h, detail.duration.m, detail.duration.s);
 };

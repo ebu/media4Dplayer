@@ -1,14 +1,14 @@
 var Search = {
 	term:"",
 	minLength:3,
-	initialMessage:"Un large choix de vidéo vous attends...",
+	initialMessage:"Un large choix de vidéo vous attend...",
 	method:"content",
 	methods:["term","content"],
 	autocomplete:{
 		limit:5
 	},
 	termsOfAffination:{
-		limit:5,
+		limit:6,
 		terms:[]
 	},
 	filters:{
@@ -277,50 +277,56 @@ Search.termsOfAffination.showList = function(list){
 	// Supprime les termes en double
 	var _getIndexNextTerm = function(start, term){
 		var indexes = [];
-		for(var i=start;i<list.length-termsDeleted;i++){
-			if(list[i].term === term){
+		for(var i=start;i<list.length;i++){
+			if(list[i] && list[i].term === term){
 				indexes.push(i);
 			}
 		}
 		return indexes;
 	};
-	var termsDeleted = 0, i, occurencesIndex;
-	for(i=0;i<list.length-termsDeleted;i++){
-		log("test de "+list[i].term);
-		occurencesIndex = _getIndexNextTerm(i+1, list[i].term);
-		if(occurencesIndex.length){
-			log("Il y a plusieurs occurences pour "+list[i].term);
-			for(var x=0;x<occurencesIndex.length;x++){
-				delete list[occurencesIndex[x]];
-				termsDeleted++;
+	var i, occurencesIndex;
+	for(i=0;i<list.length;i++){
+		if(list[i]){
+			log("test de "+list[i].term);
+			occurencesIndex = _getIndexNextTerm(i+1, list[i].term);
+			if(occurencesIndex.length){
+				log("Il y a plusieurs occurences pour "+list[i].term);
+				for(var x=0;x<occurencesIndex.length;x++){
+					delete list[occurencesIndex[x]];
+				}
 			}
 		}
 	}
 
-	var i, l = list.length-termsDeleted, data, score, $topCol = $ctn.children(".top"), $bottomCol = $ctn.children(".bottom"), $term, scoreFirst = list[0].score;
-	var toTop = [0, 3, 4];
-	for(i=0; i<l&&i<this.limit;i++){
-		data = list[i];
-		score = (data.score*100/scoreFirst);
-		$term = $('<div class="term-of-affination" style="zoom:'+Math.round(score)+'%;background-color: rgba(0,0,0,'+roundDecimal(score/100, 1)+')"><span style="zoom:'+Math.round((100-score)*2+100)+'%;">'+data.term+'</span></div>');
+	var i, l = list.length, data, score, $topCol = $ctn.children(".top"), $bottomCol = $ctn.children(".bottom"), $term, scoreFirst = list[0].score;
+	var toTop = [0, 3, 4], insered = 0;
+	for(i=0;i<l&&i<this.limit;i++){
 		
-		if(toTop.indexOf(i) !== -1){
+		data = list[i];
+		if(typeOf(data) === "object"){
 			
-			// Le 3ème devra être insérer en 1er
-			if(i === 4){
-				$topCol.prepend($term);
+			score = (data.score*100/scoreFirst);
+			$term = $('<div class="term-of-affination" style="zoom:'+Math.round(score)+'%;background-color: rgba(0,0,0,'+roundDecimal(score/100, 1)+')"><span style="zoom:'+Math.round((100-score)*2+100)+'%;">'+data.term+'</span></div>');
+
+			if(toTop.indexOf(insered) !== -1){
+
+				// Le 3ème devra être insérer en 1er
+				if(insered === 4){
+					$topCol.prepend($term);
+				}else{
+					$topCol.append($term);
+				}
+
 			}else{
-				$topCol.append($term);
+
+				// Le 5ème devra être insérer en 1er
+				if(insered === 5){
+					$bottomCol.prepend($term);
+				}else{
+					$bottomCol.append($term);
+				}
 			}
-			
-		}else{
-			
-			// Le 5ème devra être insérer en 1er
-			if(i === 6){
-				$bottomCol.prepend($term);
-			}else{
-				$bottomCol.append($term);
-			}
+			insered++;
 		}
 	}
 	

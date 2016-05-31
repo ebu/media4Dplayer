@@ -392,7 +392,7 @@ h2{font-size:1.6em;font-weight:600}
 #search-message{line-height: 575px;text-align: center;color: #fff;display: block;}
 #terms-of-affination{text-align: center;padding-top: 35px;box-sizing: border-box;}
 #terms-of-affination .top{margin-bottom: 12px;}
-.term-of-affination{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 5px;padding: 10px 0 0 10px;width: 532px;height: 253px;cursor: pointer;transition-duration: 500ms;overflow: hidden;}
+.term-of-affination{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 13px;padding: 10px 0 0 10px;width: 400px;height: 253px;cursor: pointer;transition-duration: 500ms;overflow: hidden;}
 .term-of-affination:last-child{margin-right: 0;}
 .top .term-of-affination{vertical-align: bottom;}
 .bottom .term-of-affination{vertical-align: top;}
