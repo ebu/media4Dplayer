@@ -93,12 +93,15 @@ API.getMediasList = function(callback_function){
 API.autocomplete = function(term, method, callback_function){
 	if(method === "content"){
 		json.load({
-			url: "ressources/json/autocomplete.json",
+			url: Config.TSPWS,
 			callback: function(data) {
 				if(typeOf(callback_function) === "function"){
 					callback_function(data);
 				}
-			}
+			},
+			type:"post",
+			data:{type:"autocomplete",phrase:term},
+			contentType:"application/x-www-form-urlencoded"
 		});
 		
 	}else if(typeOf(callback_function) === "function"){
@@ -114,10 +117,13 @@ API.autocomplete = function(term, method, callback_function){
 API.getTermsOfAffination = function(term, method, callback_function){
 	if(method === "content"){
 		json.load({
-			url: "ressources/json/group-list.json",
-			callback: function(data) {		
+			url: Config.TSPWS,
+			callback: function(data) {
 				Model.getTermsOfAffination(method, data, callback_function);
-			}
+			},
+			type:"post",
+			data:{type:"wordCloud",phrase:term},
+			contentType:"application/x-www-form-urlencoded"
 		});
 		
 	}else if(typeOf(callback_function) === "function"){
