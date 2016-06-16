@@ -343,18 +343,8 @@ Model.getProgramDetails.getThumbnail2 = function(list){
 Model.getTermsOfAffination = function(method, data, callback_function){
 	if(method === "content"){
 		if(typeOf(data) === "object"){
-			
-			// Récupère les 1er de chaque groupe
-			var list = [], term;
-			for(var index in data){
-				if(typeOf(data[index]) === "array" && data[index].length){
-					term = data[index][0];
-					list.push({term:term.sug, score:term.sc});
-				}
-			}
-			
 			if(typeOf(callback_function) === "function"){
-				callback_function(list);
+				callback_function(data);
 			}
 		}
 	}

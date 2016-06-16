@@ -136,32 +136,37 @@ API.getTermsOfAffination = function(term, method, callback_function){
  * @param {Function} callback_function The function which will be triggered after receiving data
  */
 
-API.getResults = function(term, termsOfAffination, method, callback_function){
-	if(method === "content" && typeOf(callback_function) === "function"){
-		json.load({
-			url: "ressources/json/SearchWords_Response.json",
-			callback: function(data) {
-				
-				var urls = Model.getUrlsListForSearch(method, data);
-				if(urls.length){
-					
-					var def = API.getMultipleJSON(urls);
-					$.when.apply($, def)
-						.then(function(){
-						Model.getResults(getWSResponseForMultipleRequests(arguments, urls.length), callback_function);
-					
-					}, function(){
+API.getResults = function(term, method, callback_function){
+	if(typeOf(callback_function) === "function"){
+		if(method === "content"){
+			json.load({
+				url: Config.TSPWS,
+				callback: function(data) {
+
+					var urls = Model.getUrlsListForSearch(method, data);
+					if(urls.length){
+
+						var def = API.getMultipleJSON(urls);
+						$.when.apply($, def)
+							.then(function(){
+							Model.getResults(getWSResponseForMultipleRequests(arguments, urls.length), callback_function);
+
+						}, function(){
+							callback_function();
+						});
+
+					}else{
 						callback_function();
-					});
-					
-				}else{
-					callback_function();
-				}
-			}
-		});
-		
-	}else{
-		callback_function();
+					}
+				},
+				type:"post",
+				data:{type:"query",phrase:term},
+				contentType:"application/x-www-form-urlencoded"
+			});
+
+		}else{
+			callback_function();
+		}
 	}
 };
 
