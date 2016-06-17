@@ -385,7 +385,7 @@ Search.results.load = function(){
 	this.reset();
 	this.showLoader();
 	
-	API.getResults(Search.termsOfAffination.terms.toString().replace(/,/g, "|"), Search.method, function(list){
+	API.getResults(Search.term+"|"+Search.termsOfAffination.terms.toString().replace(/,/g, "|"), Search.method, function(list){
 		Search.results.init(list);
 	});
 };

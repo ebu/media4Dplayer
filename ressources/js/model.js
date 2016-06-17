@@ -367,7 +367,7 @@ Model.getUrlsListForSearch = function(method, data){
 				media = data[i];
 				if(typeOf(media) === "object" && media.idMovie){
 					list.push({
-						url: Config.perfectMemoryWS + "medias/"+media.idMovie+"?auth_token=" + User.tokens.auth_token,
+						url: Config.perfectMemoryWS + "medias/root_id:"+media.idMovie.replace(".ttml", "")+"?auth_token=" + User.tokens.auth_token,
 						headers: {
 							"Accept-language":"fr"
 						}
