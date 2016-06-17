@@ -285,15 +285,10 @@ Search.termsOfAffination.showList = function(list){
 
 			if(insered<this.limit){
 
-				var _insertWords = function(){
-
-				};
-
 				words = list[groupID];
 				if(typeOf(words) === "array" && words.length){
 
 					$group = $('<div class="block group"></div>').data({groupID: groupID, list:words});
-					_insertWords(words, $group);
 
 					if(insered<3){
 						$topCol.append($group);
@@ -301,21 +296,23 @@ Search.termsOfAffination.showList = function(list){
 						$bottomCol.append($group);
 					}
 					insered++;
+					
+					$group.jQCloud(words);
 				}
 			}
 		}
 		
 	}else if(typeOf(list) === "array" && list.length){
 		
-		var i, l = list.length, data, score, $term, scoreFirst = list[0].sc;
+		var i, l = list.length, data, score, $term, scoreFirst = list[0].weight;
 		var toTop = [0, 3, 4];
 		for(i=0;i<l&&i<this.limit;i++){
 
 			data = list[i];
 			if(typeOf(data) === "object"){
 
-				score = (data.sc*100/scoreFirst);
-				$term = $('<div class="block term-of-affination" style="zoom:'+Math.round(score)+'%;background-color: rgba(0,0,0,'+roundDecimal(score/100, 1)+')"><span style="zoom:'+Math.round((100-score)*2+100)+'%;">'+data.sug+'</span></div>');
+				score = (data.weight*100/scoreFirst);
+				$term = $('<div class="block term-of-affination" style="zoom:'+Math.round(score)+'%;background-color: rgba(0,0,0,'+roundDecimal(score/100, 1)+')"><span style="zoom:'+Math.round((100-score)*2+100)+'%;">'+data.text+'</span></div>');
 
 				if(toTop.indexOf(insered) !== -1){
 

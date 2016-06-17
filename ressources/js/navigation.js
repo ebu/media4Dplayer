@@ -18,6 +18,8 @@ Navigation.goBack = function(){
 			
 			Search.termsOfAffination.groupID = null;
 			Search.termsOfAffination.reset();
+			
+			$(document.getElementById("terms-of-affination")).hide();
 			Search.termsOfAffination.showList(Search.termsOfAffination.groupList);
 			
 		}else{

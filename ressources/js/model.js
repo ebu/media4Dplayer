@@ -343,6 +343,8 @@ Model.getProgramDetails.getThumbnail2 = function(list){
 Model.getTermsOfAffination = function(method, data, callback_function){
 	if(method === "content"){
 		if(typeOf(data) === "object"){
+			
+			data = JSON.parse(JSON.stringify(data).replace(/"sug"/gi, '"text"').replace(/"sc"/gi, '"weight"'));
 			if(typeOf(callback_function) === "function"){
 				callback_function(data);
 			}

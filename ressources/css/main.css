@@ -393,7 +393,8 @@ h2{font-size:1.6em;font-weight:600}
 #search-message{line-height: 575px;text-align: center;color: #fff;display: block;}
 #terms-of-affination{text-align: center;padding-top: 35px;box-sizing: border-box;}
 #terms-of-affination .top{margin-bottom: 12px;}
-#terms-of-affination .block{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 13px;padding: 10px 0 0 10px;width: 400px;height: 253px;cursor: pointer;transition-duration: 500ms;overflow: hidden;box-shadow: 0 0 5px #000;}
+#terms-of-affination .block{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 13px;width: 400px;height: 253px;cursor: pointer;transition-duration: 500ms;overflow: hidden;box-shadow: 0 0 5px #000;}
+#terms-of-affination .term-of-affination{padding: 10px 0 0 10px;}
 #terms-of-affination .block:last-child{margin-right: 0;}
 #terms-of-affination .top .block{vertical-align: bottom;}
 #terms-of-affination .bottom .block{vertical-align: top;}
