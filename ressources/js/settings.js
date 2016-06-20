@@ -12,8 +12,8 @@ var Settings = {
 	init:{},
 	change:{},
 	defaultVolumeValue:70,
-	defaultADVolumeValue:0,
-	adGainRange:[-60,30],
+	defaultDialogEnhancementBalance:50,
+	adGainRange:[0,100],
 	backToPlayerFromSettings:false,
 	minDistance:30
 };

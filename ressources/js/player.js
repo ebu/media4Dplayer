@@ -160,7 +160,6 @@ Player.load = function(videoData, callback, onClose){
 	this.onChangeDistance("commentary");
 	this.onChangeDistance("dialogues");
 
-	dialogEnhancement.balance = 50;
 
 	// update the WAA connections
 	this.updateWAAConnections();
@@ -960,35 +959,9 @@ Player.onChangeSpatilisationMode = function(){
 
 Player.onChangeADVolume = function(value){
 		
-	// Si je veux augmenter l'AD je dois baisser les autres et laisser l'AD à 0
-	if(value > 0){
-		var range = Settings.adGainRange;
-		var rangePositive = [0, range[1]];
-		var rangeNegative = [0, range[0]];
-		var nValue = ((value - rangePositive[0]) * (rangeNegative[1] - rangeNegative[0]) / (rangePositive[1] - rangePositive[0])) + rangeNegative[0];
-
-		mainAudioASD._trim = nValue;
-		extendedAmbienceASD._trim = nValue;
-		extendedDialogsASD._trim = nValue;
-
-		extendedCommentsASD._trim = 0;
-		log("Valeur d'entrée : "+value+"; Je passe l'AD à 0 et les autres à "+nValue);
-
-	// Sinon je dois baisser l'AD et laisser les autres à 0
-	}else{
-		mainAudioASD._trim = 0;
-		extendedAmbienceASD._trim = 0;
-		extendedDialogsASD._trim = 0;
-
-		extendedCommentsASD._trim = value;	
-		log("Je passe l'AD à "+value+" et les autres à 0");	
-	}	
-
-	streamSelector.streamsTrimChanged();	
-
-	setHtmlStorage("ADvolumeValue", value);
+	dialogEnhancement.balance = value;
+	setHtmlStorage("dialogEnhancementBalance", value);
 };
-
 																								/********************************
 																								*	GESTION DE LA PROGRESSBAR	*
 																								********************************/
@@ -1209,7 +1182,6 @@ Player.activeOptionSub = function(index) {
 
 Player.activeOptionDescription = function(index) {
 
-	var $sliderADVol = $(document.getElementById("playerControlADVolume"));
 	var $textContent = $(document.getElementById("playerOptionDescriptionCurrentValue"));
 
 	if(index !== Media.audioDescriptions.length){
@@ -1220,10 +1192,7 @@ Player.activeOptionDescription = function(index) {
 		removeHtmlStorage("audioDescriptionDisabled");
 		$textContent.html(Media.audioDescriptions[index].lang);
 
-		$sliderADVol.show();
-
-		var value = parseFloat(getHtmlStorage("ADvolumeValue")) || Settings.defaultADVolumeValue;
-		this.onChangeADVolume(value);
+		var value = parseFloat(getHtmlStorage("dialogEnhancementBalance")) || Settings.defaultDialogEnhancementBalance;
 		$( document.getElementById("ad-volume-slider") ).slider("value", value);
 
 	}else{
@@ -1233,9 +1202,6 @@ Player.activeOptionDescription = function(index) {
 		Media.audioDescriptionEnabled = false;
 		setHtmlStorage("audioDescriptionDisabled", 1);
 		$textContent.html("Aucun");
-
-		this.onChangeADVolume(0);
-		$sliderADVol.hide();
 	}
 
 	this.updateActiveStreams();
@@ -1297,7 +1263,9 @@ Player.updateActiveStreams = function(){
     dialogEnhancement.activeStreamsChanged();
 	receiverMix.activeStreamsChanged();
 	multichannelSpatialiser.activeStreamsChanged();
-	objectSpatialiserAndMixer.activeStreamsChanged();	
+	objectSpatialiserAndMixer.activeStreamsChanged();
+	
+	InfoBanner.initADVolumeSlider.onSlide($( document.getElementById("ad-volume-slider") ), dialogEnhancement.balance);
 };
 
 Player.disableLogs = function(){
