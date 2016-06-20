@@ -165,9 +165,20 @@ $(document.getElementById("terms-of-affination")).on("click", ".term-of-affinati
 			$(this).addClass("sel");
 			Search.termsOfAffination.terms.push($(this).text());
 			$showResults.addClass("on");
-		}		
+		}
 	}
 	log(Search.termsOfAffination.terms);
+});
+
+$(document.getElementById("terms-of-affination")).on("click", ".group", function(){
+	
+	var id = $(this).data("groupID"), list = $(this).data("list");
+	if(id && list){
+		
+		Search.termsOfAffination.groupID = id;
+		Search.termsOfAffination.reset();
+		Search.termsOfAffination.showList(list);
+	}
 });
 
 $(document.getElementById("methods-container")).on("click", "input[type=radio]", function(){

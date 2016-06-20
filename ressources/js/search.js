@@ -9,7 +9,9 @@ var Search = {
 	},
 	termsOfAffination:{
 		limit:6,
-		terms:[]
+		terms:[],
+		groupID:null,
+		groupList:null
 	},
 	filters:{
 		currentOptionDropDownMenu:null,
@@ -48,6 +50,8 @@ Search.reset = function(rubric){
 		this.autocomplete.reset();
 		
 		Search.term = "";
+		Search.termsOfAffination.groupID = null;
+		Search.termsOfAffination.groupList = null;
 		this.method = this.getMethod();
 		
 	}else{
@@ -249,8 +253,10 @@ Search.termsOfAffination.load = function(){
 
 Search.termsOfAffination.init = function(list){
 	console.log(list);
-	if(typeOf(list) === "array" && list.length){
-		
+	
+	var isGroupList = typeOf(list) === "object" && !isEmpty(list);
+	if(isGroupList || (typeOf(list) === "array" && list.length)){
+		this.groupList = isGroupList ? list : null;
 		this.hideLoader();
 		this.showList(list);
 		
@@ -268,66 +274,67 @@ Search.termsOfAffination.init = function(list){
 
 Search.termsOfAffination.showList = function(list){
 	var $ctn = $(document.getElementById("terms-of-affination"));
+	var $topCol = $ctn.children(".top"), $bottomCol = $ctn.children(".bottom");
 	
-	// Trie la liste dans l'ordre décroissant
-	list.sort(function(a, b){
-		return b.score - a.score;
-	});
+	var insered = 0;
 	
-	// Supprime les termes en double
-	var _getIndexNextTerm = function(start, term){
-		var indexes = [];
-		for(var i=start;i<list.length;i++){
-			if(list[i] && list[i].term === term){
-				indexes.push(i);
-			}
-		}
-		return indexes;
-	};
-	var i, occurencesIndex;
-	for(i=0;i<list.length;i++){
-		if(list[i]){
-			log("test de "+list[i].term);
-			occurencesIndex = _getIndexNextTerm(i+1, list[i].term);
-			if(occurencesIndex.length){
-				log("Il y a plusieurs occurences pour "+list[i].term);
-				for(var x=0;x<occurencesIndex.length;x++){
-					delete list[occurencesIndex[x]];
-				}
-			}
-		}
-	}
-
-	var i, l = list.length, data, score, $topCol = $ctn.children(".top"), $bottomCol = $ctn.children(".bottom"), $term, scoreFirst = list[0].score;
-	var toTop = [0, 3, 4], insered = 0;
-	for(i=0;i<l&&i<this.limit;i++){
+	if(Search.method === Search.methods[1] && !this.groupID && typeOf(list) === "object" && !isEmpty(list)){
 		
-		data = list[i];
-		if(typeOf(data) === "object"){
-			
-			score = (data.score*100/scoreFirst);
-			$term = $('<div class="term-of-affination" style="zoom:'+Math.round(score)+'%;background-color: rgba(0,0,0,'+roundDecimal(score/100, 1)+')"><span style="zoom:'+Math.round((100-score)*2+100)+'%;">'+data.term+'</span></div>');
+		var words, $group;
+		for(var groupID in list){
 
-			if(toTop.indexOf(insered) !== -1){
+			if(insered<this.limit){
 
-				// Le 3ème devra être insérer en 1er
-				if(insered === 4){
-					$topCol.prepend($term);
-				}else{
-					$topCol.append($term);
-				}
+				words = list[groupID];
+				if(typeOf(words) === "array" && words.length){
 
-			}else{
+					$group = $('<div class="block group"></div>').data({groupID: groupID, list:words});
 
-				// Le 5ème devra être insérer en 1er
-				if(insered === 5){
-					$bottomCol.prepend($term);
-				}else{
-					$bottomCol.append($term);
+					if(insered<3){
+						$topCol.append($group);
+					}else{
+						$bottomCol.append($group);
+					}
+					insered++;
+					
+					$group.jQCloud(words);
 				}
 			}
-			insered++;
 		}
+		
+	}else if(typeOf(list) === "array" && list.length){
+		
+		var i, l = list.length, data, score, $term, scoreFirst = list[0].weight;
+		var toTop = [0, 3, 4];
+		for(i=0;i<l&&i<this.limit;i++){
+
+			data = list[i];
+			if(typeOf(data) === "object"){
+
+				score = (data.weight*100/scoreFirst);
+				$term = $('<div class="block term-of-affination" style="zoom:'+Math.round(score)+'%;background-color: rgba(0,0,0,'+roundDecimal(score/100, 1)+')"><span style="zoom:'+Math.round((100-score)*2+100)+'%;">'+data.text+'</span></div>');
+
+				if(toTop.indexOf(insered) !== -1){
+
+					// Le 3ème devra être insérer en 1er
+					if(insered === 4){
+						$topCol.prepend($term);
+					}else{
+						$topCol.append($term);
+					}
+
+				}else{
+
+					// Le 5ème devra être insérer en 1er
+					if(insered === 5){
+						$bottomCol.prepend($term);
+					}else{
+						$bottomCol.append($term);
+					}
+				}
+				insered++;
+			}
+		}		
 	}
 	
 	$ctn.show();
@@ -378,7 +385,7 @@ Search.results.load = function(){
 	this.reset();
 	this.showLoader();
 	
-	API.getResults(Search.term, Search.termsOfAffination.terms, Search.method, function(list){
+	API.getResults(Search.term+"|"+Search.termsOfAffination.terms.toString().replace(/,/g, "|"), Search.method, function(list){
 		Search.results.init(list);
 	});
 };

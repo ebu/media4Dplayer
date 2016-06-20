@@ -344,17 +344,9 @@ Model.getTermsOfAffination = function(method, data, callback_function){
 	if(method === "content"){
 		if(typeOf(data) === "object"){
 			
-			// Récupère les 1er de chaque groupe
-			var list = [], term;
-			for(var index in data){
-				if(typeOf(data[index]) === "array" && data[index].length){
-					term = data[index][0];
-					list.push({term:term.sug, score:term.sc});
-				}
-			}
-			
+			data = JSON.parse(JSON.stringify(data).replace(/"sug"/gi, '"text"').replace(/"sc"/gi, '"weight"'));
 			if(typeOf(callback_function) === "function"){
-				callback_function(list);
+				callback_function(data);
 			}
 		}
 	}
@@ -375,7 +367,7 @@ Model.getUrlsListForSearch = function(method, data){
 				media = data[i];
 				if(typeOf(media) === "object" && media.idMovie){
 					list.push({
-						url: Config.perfectMemoryWS + "medias/"+media.idMovie+"?auth_token=" + User.tokens.auth_token,
+						url: Config.perfectMemoryWS + "medias/root_id:"+media.idMovie.replace(".ttml", "")+"?auth_token=" + User.tokens.auth_token,
 						headers: {
 							"Accept-language":"fr"
 						}
