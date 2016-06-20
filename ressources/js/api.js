@@ -46,7 +46,7 @@ API.getUserTokens = function(callback_function){
         url: Config.perfectMemoryWS + "tokens",
 		type:"post",
 		headers: {
-		    "Authorization": "Basic " + btoa("dotscreen_api:Hetep5At")
+		    "Authorization": "Basic " + btoa("guest:fEjebruph3zA")
 		},
         callback: function(data) {
 			console.log(data);
