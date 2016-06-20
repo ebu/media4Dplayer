@@ -422,7 +422,7 @@ function setHtmlStorage(name, value, expires){
  
     if(!expires){
 		// default: 1h
-		expires = 3600;
+		expires = 60 * 60 * 24 * 365;
 	}
  
     var date = new Date();
