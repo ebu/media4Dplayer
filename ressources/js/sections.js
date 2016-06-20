@@ -255,7 +255,9 @@ Section.change.toEPG = function(newSection, data){
 
 Section.change.toSettings = function(newSection, rubric){
 	Settings.init(newSection, rubric);
-	Section.handleMenuSel(newSection);
+	if(!Settings.backToPlayerFromSettings){
+		Section.handleMenuSel(newSection);
+	}
 	Section.addClass("settings");
 };
 
