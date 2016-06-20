@@ -62,6 +62,8 @@ var Player = {
 	binauralEQ:false,
 	catalogue:[],
 	selectedProfil:null,
+	profilLoaded:false,
+	defaultSampleRate:48000,
 	config:null,
 	attackTime:10,
 	releaseTime:150,
@@ -758,53 +760,16 @@ Player.prepareSofaCatalog = function(callback){
 		return;
 	}
 	
-	var _callback = function(url){
-		Player.selectedProfil = url;
-		Player.onChangeProfil(url);
+	var _callback = function(list){
+		Settings.init.audio.audioProfil.setAudioProfil(list);
+		Player.onChangeProfil();
 
 		if(typeOf(callback) === "object" && callback.onSuccess){
 			callback.onSuccess();
 		}		
 	};
-
-    /// retrieves the catalog of URLs from the OpenDAP server
-	/*var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
-	serverDataBase
-         .loadCatalogue()
-         .then( function(){
-            var urls = serverDataBase.getUrls({
-                convention: 'HRIR',
-                equalisation: 'compensated',
-                sampleRate: Player.playerManager.audioContext.sampleRate
-            });
-			
-            defaultUrl = urls.findIndex( function (url) {
-                return url.match('1018');
-            });
-			
-			_callback(urls[defaultUrl]);
-			Player.catalogue = urls;
-
-            return urls;
-        })
-        .catch( function (){
-			 
-         	log('could not access bili2.ircam.fr...');*/
-
-			var currentProcessor;
-			if( Player.config === ModulesConfiguration.kMultichannelSpatialiser ){
-				currentProcessor = multichannelSpatialiser;
-
-			}else{
-				currentProcessor = objectSpatialiserAndMixer;
-			}
-
-			var sofaUrl = currentProcessor._virtualSpeakers.getFallbackUrl();
-			_callback(sofaUrl);
-			Player.catalogue = [sofaUrl];
-
-         	return sofaUrl;
-        //});
+	
+	getSofaCatalogue(Player.playerManager.audioContext.sampleRate, _callback);
 };
 
 Player.onChangeProfil = function(){
@@ -821,11 +786,12 @@ Player.onChangeProfil = function(){
         }
 
         /// load the URL in the spatialiser
-		if(Player.catalogue.length){
+		if(this.profilLoaded){
 			objectSpatialiserAndMixer._updateCommentaryPosition();
 		}else{
 			currentProcessor.loadHrtfSet( url )
 			.then( function(){
+				Player.profilLoaded =  true;
 				objectSpatialiserAndMixer._updateCommentaryPosition();
 			});
 		}

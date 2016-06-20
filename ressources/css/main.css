@@ -341,8 +341,8 @@ h2{font-size:1.6em;font-weight:600}
 #ambiance-adaptation-btn{background-image:url(../img/bruit_ambiant.png)}
 #dialogues-extended-btn{background-image:url(../img/renforcement_dialogue.png)}
 #audio-settings .active{background-color:#82c174}
-#spatialisation-options-ctn{margin-top:40px;}
-#spatialisation-options{width:100%}
+#spatialisation-options-ctn, #audio-profils-options-ctn{margin-top:40px;}
+#spatialisation-options, #audio-profils-options{width:100%}
 .ui-selectmenu-button{background:#fff;border:#e7e8e8 2px solid;border-radius:0;box-sizing:border-box}
 .ui-widget{font-family:inherit}
 .ui-selectmenu-text{font-weight:500}

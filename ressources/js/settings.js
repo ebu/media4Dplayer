@@ -72,6 +72,9 @@ Settings.init.audio = function(){
 		
 	/* Le choix du mode de spatialisation */
 	this.audio.spatialisationMode();
+		
+	/* Le choix d'un profil */
+	this.audio.audioProfil();
 	
 	/* Le niveau des commentaires */
 	this.audio.elevationLevel($(document.getElementById("comments-elevation-level")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel);
@@ -105,6 +108,58 @@ Settings.init.audio.spatialisationMode = function(){
 			}
 		});
 	}	
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Loads the profils catalogue for the audio screen
+ */
+
+Settings.init.audio.audioProfil = function(){
+	
+	var _callback = function(list){
+		
+		if(!Main.simplifiedMode){
+			
+			var $select = $(document.getElementById("audio-profils-options")), $option;
+			if(!$select.children().length){	
+				
+				list.forEach( function (url) {
+					$option = document.createElement('option');
+					$option.textContent = url;
+					$option.value = url;
+					$select.append($option);
+				});
+			}			
+			
+			Settings.init.audio.audioProfil.setAudioProfil(list);
+				
+			$select.selectmenu({
+				select: function( event, ui ) {
+					Settings.change.audioProfil(ui.item.value);
+				}
+			});
+		}
+	};
+	
+	if(Player.catalogue.length){
+		_callback(Player.catalogue);
+	}else{
+		getSofaCatalogue(Player.defaultSampleRate, _callback);
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Sets the default audio profil
+ */
+
+Settings.init.audio.audioProfil.setAudioProfil = function(list){
+	var audioProfil = getHtmlStorage("audioProfil");
+	Player.catalogue = list;
+
+	var val = audioProfil && list.indexOf(audioProfil) !== -1 ? audioProfil : list[0];
+	Settings.change.audioProfil(val);
 };
 
 /**
@@ -674,6 +729,32 @@ Settings.change.audioSpatialisationMode = function(value){
 		
 	}else{
 		$(document.getElementById("spatialisation-options")).val(value);
+		setMode(value);
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Changes the audio profil
+ * @param {String} value The new mode
+ */
+
+Settings.change.audioProfil = function(value){
+	
+	var setMode = function(val){
+		Player.profilLoaded =  false;
+		Player.selectedProfil = val;
+		setHtmlStorage("audioProfil", val);
+	};
+	
+	if(Main.simplifiedMode){
+		/*$(document.getElementById("spatialisation-options-sm")).children(".menu-item").filter(function(){
+			return $(this).data("value") === value;
+		}).addClass("selected").attr("aria-checked", true).siblings().removeClass("selected").attr("aria-checked", false);
+		setMode(value);*/
+		
+	}else{
+		$(document.getElementById("audio-profils-options")).val(value);
 		setMode(value);
 	}
 };
