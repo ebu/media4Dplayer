@@ -678,6 +678,25 @@ function removeKey(arrayName, key) {
 	return tmpArray;
 }
 
-getMediaLabel = function(detail){
+var getMediaLabel = function(detail){
 	return detail.type + " du " + getStringDate(detail.date.y, detail.date.m, detail.date.d) + " | " + getStringDuration(detail.duration.h, detail.duration.m, detail.duration.s);
+};
+
+var removeDuplicateItemInList = function(list, property){
+	
+	var newList = [];
+	if(typeOf(list) === "array" && property){
+		
+		var i, l = list.length, item, itemPassed = [];
+		for(i=0;i<l;i++){
+			
+			item = list[i];
+			if(item[property] && itemPassed.indexOf(item[property]) === -1){
+				
+				itemPassed.push(item[property]);
+				newList.push(item);
+			}
+		}
+	}
+	return newList;
 };

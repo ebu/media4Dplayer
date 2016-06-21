@@ -142,7 +142,10 @@ API.getResults = function(term, method, callback_function){
 			json.load({
 				url: Config.TSPWS,
 				callback: function(data) {
-
+					
+					// Doit enlever les doublons
+					data = removeDuplicateItemInList(data, "idMovie");
+					
 					var urls = Model.getUrlsListForSearch(method, data);
 					if(urls.length){
 
