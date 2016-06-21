@@ -124,7 +124,78 @@ $("body").on("keydown", function(e){
 		Navigation.moveSelecteur(document.getElementById("playerClose"));
 	}
 });
+
+$(document.getElementById("terms-search")).on("mouseover", function(){
+	this.focus();	
+});
+
+$(document.getElementById("autocomplete")).on("click", ".term", function(){
+	Search.autocomplete.selectTerm($(this).text());
 	
+}).on("mouseover", function(){
+	$(document.getElementById("terms-search")).blur();
+});
+
+$(document.getElementById("terms-of-affination")).on("click", ".term-of-affination", function(){
+	var $showResults = $(document.getElementById("display-results-button"));
+	if(Search.method === Search.methods[0]){
+		
+		if($(this).hasClass("sel")){
+			$(this).removeClass("sel");
+			Search.termsOfAffination.terms = [];
+			$showResults.removeClass("on");
+			
+		}else{
+			$(document.getElementById("terms-of-affination")).find(".sel").removeClass("sel");
+			$(this).addClass("sel");
+			Search.termsOfAffination.terms = [$(this).text()];
+			$showResults.addClass("on");
+		}
+	}else{
+		
+		if($(this).hasClass("sel")){
+			$(this).removeClass("sel");
+			removeA(Search.termsOfAffination.terms, $(this).text());
+			
+			if(!Search.termsOfAffination.terms.length){
+				$showResults.removeClass("on");
+			}
+			
+		}else{
+			$(this).addClass("sel");
+			Search.termsOfAffination.terms.push($(this).text());
+			$showResults.addClass("on");
+		}
+	}
+	log(Search.termsOfAffination.terms);
+});
+
+$(document.getElementById("terms-of-affination")).on("click", ".group", function(){
+	
+	var id = $(this).data("groupID"), list = $(this).data("list");
+	if(id && list){
+		
+		Search.termsOfAffination.groupID = id;
+		Search.termsOfAffination.reset();
+		Search.termsOfAffination.showList(list);
+	}
+});
+
+$(document.getElementById("methods-container")).on("click", "input[type=radio]", function(){
+	Search.changeMethod();	
+});
+
+$(document.getElementById("full-results-list-container")).on("click", ".search-result", function(e){
+	Section.save();
+	Section.change(Section.sections[3], null, $(this).data("data"));
+});
+
+$(document.getElementById("display-results-button")).on("click", function(e){
+	if($(this).hasClass("on")){
+		Section.change(Section.sections[31], Section.rubrics[Section.sections[31]][1]);
+	}
+});
+
 																	/* **************/
 																	/*	 MODE SM	*/
 																	/* **************/
