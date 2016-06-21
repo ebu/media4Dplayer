@@ -224,7 +224,8 @@ h2{font-size:1.6em;font-weight:600}
 .optionDropDownMenu{position:absolute;bottom:280px;left:130px;width:180px;transition: left 500ms;}
 .optionDropDownMenu.hidden{display:none}
 .optionDropDownMenuButton{position:relative;width:100%;height:50px;display:block;background-color:#000;text-align:center;color:#fff;line-height:45px;font-weight:500}
-#optionDropDownMenu .optionDropDownMenuButton{border-bottom: 1px solid #fff;}
+#optionDropDownMenu .optionDropDownMenuButton{border-top: 1px solid #fff;}
+#optionDropDownMenu .optionDropDownMenuButton:last-child{border-bottom: 1px solid #fff;}
 .optionDropDownMenuButton:hover{cursor:pointer;font-weight:600}
 #playerControlADVolume{right: 153px;}
 .volume-control-ctn .volume-min{background-position:0 -25px}
