@@ -357,33 +357,6 @@ Model.getTermsOfAffination = function(method, data, callback_function){
  * @param {Function} callback_function The function which will be triggered after receiving data
  */
 
-Model.getUrlsListForSearch = function(method, data){
-	var list = [];
-	if(method === "content"){
-		if(typeOf(data) === "array"){
-			
-			var i, media;
-			for(i=0;i<data.length&&i<Config.limitResultForSearch;i++){
-				media = data[i];
-				if(typeOf(media) === "object" && media.idMovie){
-					list.push({
-						url: Config.perfectMemoryWS + "medias/root_id:"+media.idMovie.replace(".ttml", "")+"?auth_token=" + User.tokens.auth_token,
-						headers: {
-							"Accept-language":"fr"
-						}
-					});
-				}
-			}
-		}
-	}
-	return list;
-};
-
-/* @description Launches a request to get the config json of the environnement
- * @param {String} env The environnement
- * @param {Function} callback_function The function which will be triggered after receiving data
- */
-
 Model.getResults = function(data, callback_function){
 	var list = [];
 	if(typeOf(data) === "array"){
