@@ -20,5 +20,6 @@
 		"kids":"Dessin animé",
 		"sport":"Émission sportive",
 		"culture_magazine":"Magazine culturel"
-	}
+	},
+	"limitResultForSearch":10
 }

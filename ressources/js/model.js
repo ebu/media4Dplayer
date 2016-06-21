@@ -363,7 +363,7 @@ Model.getUrlsListForSearch = function(method, data){
 		if(typeOf(data) === "array"){
 			
 			var i, media;
-			for(i=0;i<data.length;i++){
+			for(i=0;i<data.length&&i<Config.limitResultForSearch;i++){
 				media = data[i];
 				if(typeOf(media) === "object" && media.idMovie){
 					list.push({
