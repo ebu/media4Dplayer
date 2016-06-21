@@ -11,6 +11,26 @@ Navigation.goBack = function(){
 	if(Settings.backToPlayerFromSettings && $("body").hasClass("sm settings")){
 		Section.launchPlayerFromSettings();
 		
+	}else if($("body").hasClass("search terms-search")){
+		
+		// Doit revenir à la liste des groupes si c'est le mode content
+		if(Search.method === Search.methods[1] && Search.termsOfAffination.groupID){
+			
+			Search.termsOfAffination.groupID = null;
+			Search.termsOfAffination.reset();
+			
+			$(document.getElementById("terms-of-affination")).hide();
+			Search.termsOfAffination.showList(Search.termsOfAffination.groupList);
+			
+		}else{
+			$(document.getElementById("terms-search-container")).removeClass("terms-of-affination-list");
+			$(document.getElementById("terms-of-affination")).hide();
+			$(document.getElementById("search-message")).show().children("span").text(Search.initialMessage);			
+		}
+		
+	}else if($("body").hasClass("search full-result")){
+		$("body").attr("class", "search terms-search");
+		
 	}else if(Section.oldClass.length){
 		$("body").attr("class", Section.oldClass[Section.oldClass.length-1]);
 		Section.oldClass.pop();

@@ -17,6 +17,11 @@ Main.onLoad = function () {
 	
 		$(document.getElementById("appVersion")).html("v"+Config.appVersion);
 		
+		Search.filters.setList(Config.filtersLanguages.audio, "audio");
+		Search.filters.setList(Config.filtersLanguages.subtitle, "subtitle");
+		Search.filters.setList(Config.filtersLanguages.ad, "ad");
+		Search.filters.setList(Config.filtersLanguages.ls, "ls");
+		
 		API.loadConfigurationSet(function(){
 			API.getUserTokens();
 		});

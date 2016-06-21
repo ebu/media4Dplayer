@@ -190,6 +190,45 @@ function getStringDate2(year, month, day) {
 	}
 }
 
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Returns a date to string (for example : 10 Janvier 2014 or Janvier 2014)
+ * @param {String} year The year
+ * @param {String} month The month
+ * @param {String} day The day
+ * @return {String} The date converted in string
+ */
+
+function getStringDuration(hour, min, seconde) {
+	var stringDuration = "";
+	if(hour || min || seconde){
+		
+		var hasHour, hasMin;
+		if(hour){
+			hasHour = true;
+			stringDuration = hour > 1 ? hour + " heures" : hour + " heure";
+		}
+
+		if(min){
+			hasMin = true;
+
+			if(hasHour){
+				stringDuration = stringDuration + " ";
+			}
+			stringDuration = stringDuration + (min > 1 ? pad(min) + " minutes" : pad(min) + " minute");
+		}
+
+		if(seconde){
+
+			if(hasMin){
+				stringDuration = stringDuration + " ";
+			}
+			stringDuration = stringDuration + seconde;
+		}
+	}
+	return stringDuration;
+}
+
 //Covert datetime by GMT offset 
 //If toUTC is true then return UTC time other wise return local time
 function convertLocalDateToUTCDate(date, toUTC) {
@@ -650,4 +689,55 @@ var getSofaCatalogue = function(sampleRate, callback){
 			callback(defaultList);
 			return defaultList;
 		//});
+};
+function roundDecimal(nombre, precision){
+    precision = precision || 2;
+    var tmp = Math.pow(10, precision);
+    return Math.round( nombre*tmp )/tmp;
+}
+
+function removeA(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+}
+
+function removeKey(arrayName, key) {
+	var x;
+	var tmpArray = new Array();
+	for (x in arrayName)
+	{
+		if (x != key) {
+			tmpArray[x] = arrayName[x];
+		}
+	}
+	return tmpArray;
+}
+
+var getMediaLabel = function(detail){
+	return detail.type + " du " + getStringDate(detail.date.y, detail.date.m, detail.date.d) + " | " + getStringDuration(detail.duration.h, detail.duration.m, detail.duration.s);
+};
+
+var removeDuplicateItemInList = function(list, property){
+	
+	var newList = [];
+	if(typeOf(list) === "array" && property){
+		
+		var i, l = list.length, item, itemPassed = [];
+		for(i=0;i<l;i++){
+			
+			item = list[i];
+			if(item[property] && itemPassed.indexOf(item[property]) === -1){
+				
+				itemPassed.push(item[property]);
+				newList.push(item);
+			}
+		}
+	}
+	return newList;
 };

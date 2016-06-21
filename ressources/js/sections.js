@@ -40,7 +40,7 @@ var Section = {
 	"rubrics": {
 		"settings":["interface","audio","subtitles","ls"],
 		"playlist":["favorites","signets","history","related"],
-		"search":["full-result"]
+		"search":["terms-search","full-result"]
 	},
 	"rubric": null,
 	"template": "",
@@ -289,8 +289,15 @@ Section.change.toPlayer = function(data){
  */
 
 Section.change.toSearch = function(newSection, rubric){
+	
+	Search.reset(rubric);
+	
 	Section.handleMenuSel(newSection);
 	Section.addClass(newSection + " " + rubric);
+	
+	if(rubric === Section.rubrics[newSection][1]){
+		Search.results.load();
+	}
 };
 
 /**

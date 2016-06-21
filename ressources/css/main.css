@@ -46,7 +46,7 @@ a.switch-btn{position:absolute;top:45px;left:45px;padding:10px;margin-left:0}
 
 /* GESTION DU MASQUAGE/AFFICHAGE DES ECRANS */
 body:not(.sm).apps-list #apps-list-container, body.in-construction #in-construction{display:table}
-body.splashscreen #splashscreen,body.profils-list #profils-list-container,body.sm.apps-list #apps-list-container-sm,body.sm.app-options #app-options-container,body.app-playlists #app-playlists,body.sm.my-videos-options #my-videos-options-container,body.sm.app-playlists #app-playlists-sm,body.sm.options-favorites #options-favorites-container,body.sm.options-signets #options-signets-container,body.sm.options-history #options-history-container,body.sm.epg-fiche #epg-fiche-container-sm,body.epg-fiche #epg-fiche-container,body.full-synopsis #full-synopsis,body.player #videoPlayerContainer,body.settings #settings,body.sm.settings #settings-sm-container,body.sm.settings-audio-menu #settings-audio-sm-container,body.sm.settings-interface-menu #settings-interface-sm-container,body.sm.settings-subtitles-menu #settings-subtitles-sm-container,body.sm.settings-ls #settings-ls-sm-container,body.sm.settings-subtitles-font-family #settings-subtitles-font-family-sm-container,body.sm.settings-audio-spatialisation-mode #settings-audio-spatialisation-mode-sm-container,body.sm.settings-audio-spatialisation #settings-audio-spatialisation-sm-container,body.sm.settings-font-size #settings-font-size-sm-container,body.sm.settings-subtitles-color #settings-subtitles-color-sm-container,body.sm.settings-subtitles-bgcolor #settings-subtitles-bgcolor-sm-container,body.sm.settings-subtitles-pip #settings-subtitles-pip-sm-container, body.search #search, body.search.full-result #full-results-container{display:block}
+body.splashscreen #splashscreen,body.profils-list #profils-list-container,body.sm.apps-list #apps-list-container-sm,body.sm.app-options #app-options-container,body.app-playlists #app-playlists,body.sm.my-videos-options #my-videos-options-container,body.sm.app-playlists #app-playlists-sm,body.sm.options-favorites #options-favorites-container,body.sm.options-signets #options-signets-container,body.sm.options-history #options-history-container,body.sm.epg-fiche #epg-fiche-container-sm,body.epg-fiche #epg-fiche-container,body.full-synopsis #full-synopsis,body.player #videoPlayerContainer,body.settings #settings,body.sm.settings #settings-sm-container,body.sm.settings-audio-menu #settings-audio-sm-container,body.sm.settings-interface-menu #settings-interface-sm-container,body.sm.settings-subtitles-menu #settings-subtitles-sm-container,body.sm.settings-ls #settings-ls-sm-container,body.sm.settings-subtitles-font-family #settings-subtitles-font-family-sm-container,body.sm.settings-audio-spatialisation-mode #settings-audio-spatialisation-mode-sm-container,body.sm.settings-audio-spatialisation #settings-audio-spatialisation-sm-container,body.sm.settings-font-size #settings-font-size-sm-container,body.sm.settings-subtitles-color #settings-subtitles-color-sm-container,body.sm.settings-subtitles-bgcolor #settings-subtitles-bgcolor-sm-container,body.sm.settings-subtitles-pip #settings-subtitles-pip-sm-container, body.search #search, body.search.full-result #full-results-container, body.search.terms-search #terms-search-container{display:block}
 body.splashscreen #sections-container,body.sm:not(.profils-list) #sections-container{display:none}
 
 /* GESTION DU MASQUAGE/AFFICHAGE DU MENU */
@@ -108,7 +108,7 @@ h2{font-size:1.6em;font-weight:600}
 .item-playlist .item-infos .infos{color:rgba(0,0,0,0.5);margin-top:.4%}
 .item-playlist .play{margin-left:3%;width:4%}
 .item-playlist .play img{vertical-align:middle;width:45px}
-.sm .buttons-container, #epg-fiche-container .back-button, #epg-fiche-container h1{height:25px;line-height:25px}
+.sm .buttons-container, #epg-fiche-container .back-button, #epg-fiche-container h1, #search .back-button{height:25px;line-height:25px}
 .sm .buttons-container{margin-top:30px;position:relative}
 .sm .buttons-container a, .back-button{position:absolute;height:100%;background-repeat:no-repeat;background-size:contain}
 .back-button, .sm .buttons-container .prev{padding-left:30px;background-position:left center}
@@ -220,9 +220,10 @@ h2{font-size:1.6em;font-weight:600}
 #video-caption div{width:100%;display:block}
 #playerUI .ui-ls{height:100%}
 #pipContainer{border-style:hidden}
-.optionDropDownMenu{position:absolute;bottom:280px;left:130px;width:180px}
+.optionDropDownMenu{position:absolute;bottom:280px;left:130px;width:180px;transition: left 500ms;}
 .optionDropDownMenu.hidden{display:none}
-.optionDropDownMenuButton{position:relative;width:100%;height:50px;display:block;border-color:#fff;border-width:1px;border-style:solid;background-color:#000;text-align:center;color:#fff;line-height:45px;font-weight:500}
+.optionDropDownMenuButton{position:relative;width:100%;height:50px;display:block;background-color:#000;text-align:center;color:#fff;line-height:45px;font-weight:500}
+#optionDropDownMenu .optionDropDownMenuButton{border-bottom: 1px solid #fff;}
 .optionDropDownMenuButton:hover{cursor:pointer;font-weight:600}
 #playerControlADVolume{right: 153px;}
 .volume-control-ctn .volume-min{background-position:0 -25px}
@@ -365,21 +366,66 @@ h2{font-size:1.6em;font-weight:600}
 
 /* RECHERCHE */ 
 #search > div{display: none;}
+
+/* Recherche - termes de recherche */
+.search.terms-search #search{background-color: #5a5a5a}
+#terms-search-container{height: 100%;}
+#input-and-options-container, #back-and-filters-container{height: 75px;background-color: #4e4e4e;color: #fff;}
+#input-container{position: relative;height: 100%;}
+#input-container > input{float: left;height: 100%;border: 0 none;padding: 0;color: inherit;font-size: 100%;}
+#terms-of-affination-buttons-container{display: none;height: 100%;}
+#terms-of-affination-buttons-container, #back-and-filters-container{line-height: 55px;padding: 10px 0;box-sizing: border-box;}
+.terms-of-affination-list #terms-of-affination-buttons-container{display: block;}
+.terms-of-affination-list #input-container{display: none;}
+#search .back-button{position: static;margin-left: 45px;display: inline-block}
+#display-results-button{display: inline-block;padding: 0 15px;box-sizing: border-box;position: absolute;right: 45px;background-color: #5d5d5d;opacity: .5;transition-duration: 500ms;}
+#display-results-button.on{opacity: 1;}
+#terms-search{text-indent: 45px;background-color: #3f3f3f;}
+#terms-search, #autocomplete{width: 696px;}
+#input-container #validate-terms-button{width: 88px;border-left:1px solid #000;cursor: pointer;}
+#validate-terms-button, #autocomplete{background-color: #383838;}
+#autocomplete{position: absolute;top: 100%;box-shadow: 0 2px 4px rgba(0,0,0,0.5);}
+#autocomplete .term{height: 50px;line-height: 50px;padding: 0 6px 0 45px;box-sizing: border-box;color: rgba(255,255,255,0.5)}
+#autocomplete .term:hover{cursor: pointer;font-weight: 600;}
+#autocomplete .term span{color: #fff}
+#terms-of-affination-container{height: 575px;}
+#search-message, #terms-of-affination{height: 100%;display: none;}
+#search-message{line-height: 575px;text-align: center;color: #fff;display: block;}
+#terms-of-affination{text-align: center;padding-top: 27px;box-sizing: border-box;}
+#terms-of-affination .top{margin-bottom: 12px;}
+#terms-of-affination .block{display: inline-block;border: 3px solid transparent;box-sizing: border-box;background-color: #000;color: #fff;text-align: left;margin-right: 13px;width: 400px;height: 253px;cursor: pointer;transition-duration: 500ms;overflow: hidden;box-shadow: 0 0 5px #000;}
+#terms-of-affination .term-of-affination{padding: 10px 0 0 10px;}
+#terms-of-affination .block:last-child{margin-right: 0;}
+#terms-of-affination .top .block{vertical-align: bottom;}
+#terms-of-affination .bottom .block{vertical-align: top;}
+#terms-of-affination .block.sel, #terms-of-affination .block:hover{border-color: #14a700;}
+#terms-of-affination .block span{background-color: #000;}
+#methods-container{float: left;height: 100%;text-align: center;line-height: 75px;width: 496px;}
+.method-ctn{display: inline-block;text-align: left;margin-right: 50px;}
+.method-ctn input{display: inline-block;margin-top: -2px;margin-right: 10px;zoom: 150%;}
+.method-ctn input, .method-ctn label{cursor: pointer;}
+
 /* Recherche - résultats complets */
-#full-results-container{padding-left: 45px;padding-right: 45px;}
-#full-results-container h1, #full-results-container h2{height: 16px;}
-#full-result-title{padding-top: 30px;text-align: left;font-size: inherit;}
-#full-result-subtitle{text-align: left;margin-top: 10px;text-transform: uppercase;font-size: inherit;}
-#full-result{margin-top: 10px;overflow-y: auto;height: 568px;}
-.search-result{height: 130px;line-height: 130px;overflow: hidden;margin-bottom: 35px;}
+#back-and-filters-container{display: block;position: relative;position: relative;}
+#full-result{margin: 45px 45px 0 45px;overflow-y: auto;height: 530px;}
+.search-result{height: 160px;line-height: 160px;padding: 15px 0;box-sizing: border-box;}
+.search-result:hover{background-color: #c8c8c8;transition-duration: 500ms;transition-property: background-color;}
 .search-result > div, .search-result .thumb{float: left;}
-.search-result .thumb{width: 232px;line-height: 20px;}
-.search-result .item-infos{margin-left: 16px;width: 925px;}
+.search-result .thumb{width: 232px;height: 100%;line-height: 20px;}
+.search-result .item-infos{margin-left: 16px;width: 925px;height: 100%;overflow: hidden;}
 .search-result .item-infos .title{font-weight: 600;text-transform: uppercase;}
 .search-result .item-infos .subtitle{text-transform: uppercase;font-size: 0.9em;font-weight: 300;}
 .compatibilities-list{height: 20px;margin: 2px 0;}
-.search-result .compatibility{margin-right: 9px;}
+.search-result .compatibility{margin-right: 9px;display: none;}
 .search-result .item-infos .synopsis{font-size: 0.85em;margin-top: 5px;line-height: 1.3;}
+#filters-container{display: inline-block;position: absolute;right: 45px;}
+#filters-container > div{float: left;margin-left: 50px;}
+#filters-container .btn > div{float: none;display: inline-block;vertical-align: middle;}
+#filters-container .compatibility{height: 40px;width: 55px;}
+#filter-values-list{display: none;top: 75px;}
+#filter-values-list.on{display: block;}
+#full-results-message{height: 100%;line-height: 530px;color: #000;text-align: center;}
+#filter-values-list .btn{background-color:#4e4e4e;border-top: #fff solid 1px;}
 
 /* FOCUS */
 body.sm :focus{border: 1px solid #000 !important;}

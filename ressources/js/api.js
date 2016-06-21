@@ -46,7 +46,7 @@ API.getUserTokens = function(callback_function){
         url: Config.perfectMemoryWS + "tokens",
 		type:"post",
 		headers: {
-		    "Authorization": "Basic " + btoa("dotscreen_api:Hetep5At")
+		    "Authorization": "Basic " + btoa("guest:fEjebruph3zA")
 		},
         callback: function(data) {
 			console.log(data);
@@ -83,6 +83,128 @@ API.getMediasList = function(callback_function){
 			"Accept-language":"fr"
 		}
     });
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.autocomplete = function(term, method, callback_function){
+	if(method === "content"){
+		json.load({
+			url: Config.TSPWS,
+			callback: function(data) {
+				if(typeOf(callback_function) === "function"){
+					callback_function(data);
+				}
+			},
+			type:"post",
+			data:{type:"autocomplete",phrase:term},
+			contentType:"application/x-www-form-urlencoded"
+		});
+		
+	}else if(typeOf(callback_function) === "function"){
+		callback_function();
+	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getTermsOfAffination = function(term, method, callback_function){
+	if(method === "content"){
+		json.load({
+			url: Config.TSPWS,
+			callback: function(data) {
+				Model.getTermsOfAffination(method, data, callback_function);
+			},
+			type:"post",
+			data:{type:"wordCloud",phrase:term},
+			contentType:"application/x-www-form-urlencoded"
+		});
+		
+	}else if(typeOf(callback_function) === "function"){
+		callback_function();
+	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getResults = function(term, method, callback_function){
+	if(typeOf(callback_function) === "function"){
+		if(method === "content"){
+			json.load({
+				url: Config.TSPWS,
+				callback: function(data) {
+					
+					// Doit enlever les doublons
+					data = removeDuplicateItemInList(data, "idMovie");
+					
+					// Charge les items les uns après les autres (la méthode when/then tombe en fail si l'une des requetes échoue)					
+					API.getItemsListForSearch(method, data, function(list){
+						if(list.length){
+							Model.getResults(list, callback_function);
+							
+						}else{
+							callback_function();
+						}
+					});
+				},
+				type:"post",
+				data:{type:"query",phrase:term},
+				contentType:"application/x-www-form-urlencoded"
+			});
+
+		}else{
+			callback_function();
+		}
+	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getItemsListForSearch = function(method, data, callback){
+	var list = [];
+	if(method === "content"){
+		if(typeOf(data) === "array"){
+			
+			var l = data.length, count = 0, limit = Config.limitResultForSearch;
+			var _onComplete = function(jqXHR, textStatus){
+				if(textStatus === "success" && jqXHR.responseJSON){
+					list.push(jqXHR.responseJSON);
+				}				
+				count++;
+				
+				if(count === l || count === limit){
+					callback(list);
+				}
+			};
+			
+			var i, media;
+			for(i=0;i<data.length&&i<limit;i++){
+				media = data[i];
+				if(typeOf(media) === "object" && media.idMovie){
+					$.ajax({
+						url: Config.perfectMemoryWS + "medias/root_id:"+media.idMovie+"?auth_token=" + User.tokens.auth_token,
+						complete:_onComplete,
+						timeout:Config.jsonTimeout * 1000,
+						headers: {
+							"Accept-language":"fr"
+						}
+					});
+				}
+			}
+		}
+	}
 };
 
 /* @description Launches a request to get the config json of the environnement
