@@ -126,7 +126,7 @@ Settings.init.audio.audioProfil = function(){
 				
 				list.forEach( function (url) {
 					$option = document.createElement('option');
-					$option.textContent = url;
+					$option.textContent = url.replace("http://bili2.ircam.fr/SimpleFreeFieldHRIR/", ".../").replace("_C_HRIR.sofa", "");
 					$option.value = url;
 					$select.append($option);
 				});
@@ -138,7 +138,7 @@ Settings.init.audio.audioProfil = function(){
 				select: function( event, ui ) {
 					Settings.change.audioProfil(ui.item.value);
 				}
-			});
+			}).selectmenu( "menuWidget" ).addClass( "overflow" );
 		}
 	};
 	

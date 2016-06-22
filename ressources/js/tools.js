@@ -663,7 +663,7 @@ var getFallbackUrls = function(sampleRate) {
 var getSofaCatalogue = function(sampleRate, callback){
 	
 	/// retrieves the catalog of URLs from the OpenDAP server
-	/*var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
+	var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
 	serverDataBase
 		 .loadCatalogue()
 		 .then( function(){
@@ -672,23 +672,17 @@ var getSofaCatalogue = function(sampleRate, callback){
 				equalisation: 'compensated',
 				sampleRate: sampleRate,
 			});
-
-			var defaultList = getFallbackUrls();
-
-			var list = urls.findIndex( function (url) {
-				return url.match('1018');
-			});
-
+			callback(urls);
 			return urls;
 		})
-		.catch( function (){*/
+		.catch( function (){
 
 			log('could not access bili2.ircam.fr...');
 
 			var defaultList = getFallbackUrls(sampleRate);
 			callback(defaultList);
 			return defaultList;
-		//});
+		});
 };
 function roundDecimal(nombre, precision){
     precision = precision || 2;
