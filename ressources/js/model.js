@@ -105,15 +105,25 @@ Model.getProgramDetails2 = function(data){
 		"synopsis": data.description || "",
 		"relatedContent":[]
 	};
-
+	
+	var metadata = function(){
+		if(typeOf(data.properties) === "array"){
+			for(var i = 0;i<data.properties.length;i++){
+				var prop = data.properties[i];
+				if(prop.predicate && prop.predicate.label === "Metadata" && prop.value){
+					return JSON.parse(prop.value);
+				}
+			}
+		}
+	}();
+	
 	program.video = {
-		links:{}//this.getProgramDetails.getLinkDetails(getElementFromXML(xml, "part", "ebucore", {type:"partName", value:"Links"}))
+		links:this.getProgramDetails.getLinkDetails2(metadata)
 	};
-	//program.video.subtitlesList = !isEmpty(program.video.links.dataSub) ? ["Français"] : null;
-	program.video.subtitlesList = ["Français"];
+	program.video.subtitlesList = program.video.links.dataMain.subtitle ? ["Français"] : null;
 	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":program.video.links.dataAD.url}] : null;
 	program.video.ls = !isEmpty(program.video.links.dataLS) ? [{"lang":"LSF", "url":program.video.links.dataLS.url}] : null;
-	program.video.audiosList = ["Français"];//this.getProgramDetails.getAudiosList(program.video.links);
+	program.video.audiosList = this.getProgramDetails.getAudiosList(program.video.links);
 	
 	return program;
 };
@@ -282,6 +292,84 @@ Model.getProgramDetails.getLinkDetails = function(ctn){
 			data.dataMC.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 			data.dataMC.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
 		}*/
+	}
+	return data;
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Processes the data received by the API for menu, then launches the callback function
+ * @param {Object} data The response returned by the request
+ * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
+ * @param {Function} callback The function which will be triggered after data processing
+ */
+
+Model.getProgramDetails.getLinkDetails2 = function(list){
+	var data = {
+		dataMain:{},
+		dataLS:{},
+		dataAD:{},
+		dataEA:{},
+		dataDI:{}
+	};
+
+	if(typeOf(list) === "array" && list.length){
+		
+		var convertTrackLanguage = function(value, isFiveDotOne){
+			value = typeOf(value) === "string" ? value.toLowerCase() : "";
+			var values = {fra:"Français",und:"Indéterminé"};
+			var lang = values[value] ? values[value] : value;
+			if(isFiveDotOne){
+				lang+= " 5.1";
+			}
+			return lang;
+		};
+		
+		var getData = function(item){
+			return {
+				type:item.type,
+				dialog:item.dialog,
+				ambiance:item.ambiance,
+				commentary:item.commentary,
+				loudness:item.loudness,
+				maxTruePeak:item.maxTruePeak,
+				url:item.locator
+			};
+		};
+		
+		var i, l = list.length, item;
+		for(i = 0;i<l;i++){
+			item = list[i];
+			
+			switch(item.formatName){
+				case"Main":
+					data.dataMain = getData(item);
+					data.dataMain.subtitle = item.subtitle;
+					data.dataMain.lang = convertTrackLanguage(item.trackLanguage);
+					break;
+					
+				case"AD":
+					data.dataAD = getData(item);
+					break;
+					
+				case"SL":
+					data.dataLS = getData(item);
+					break;
+					
+				case"DI":
+					data.dataDI = getData(item);
+					data.dataDI.lang = convertTrackLanguage(item.trackLanguage, true);
+					break;
+					
+				case"EA3":
+					data.dataEA = getData(item);
+					data.dataEA.lang = convertTrackLanguage(item.trackLanguage, true);
+					break;
+					
+				default:
+					break;
+			}
+		}
 	}
 	return data;
 };

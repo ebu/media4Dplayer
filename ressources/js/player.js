@@ -415,6 +415,9 @@ Player.initWAA = function(){
 	}
 
 	//==============================================================================
+	var isTrue = function(prop){
+		return prop === "true" || prop === true;
+	};
 	
 	if(!this.waaAlreadyInit){
 		this.playerManager.audioContext = new(window.AudioContext || window.webkitAudioContext)();
@@ -458,9 +461,9 @@ Player.initWAA = function(){
 				this.mode === "stereo" && Media.audioEnabled,
 				parseFloat(mainData.loudness,10),
 				parseFloat(mainData.maxTruePeak,10),
-				mainData.dialog === "true",
-				mainData.ambiance === "true",
-				mainData.commentary === "true");
+				isTrue(mainData.dialog),
+				isTrue(mainData.ambiance),
+				isTrue(mainData.commentary));
 
 		// Ambiance (pour le 5.1)
 		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
@@ -468,9 +471,9 @@ Player.initWAA = function(){
 				typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
 				parseFloat(eaData.loudness,10),
 				parseFloat(eaData.maxTruePeak,10),
-				eaData.dialog === "true",
-				eaData.ambiance === "true",
-				eaData.commentary === "true");
+				isTrue(eaData.dialog),
+				isTrue(eaData.ambiance),
+				isTrue(eaData.commentary));
 
 		// Commentaires
 		extendedCommentsASD = new M4DPAudioModules.AudioStreamDescription(
@@ -478,9 +481,9 @@ Player.initWAA = function(){
 				Media.audioDescriptionEnabled,
 				parseFloat(adData.loudness,10),
 				parseFloat(adData.maxTruePeak,10),
-				adData.dialog === "true",
-				adData.ambiance === "true",
-				adData.commentary === "true");
+				isTrue(adData.dialog),
+				isTrue(adData.ambiance),
+				isTrue(adData.commentary));
 
 		// Dialogue (pour le 5.1)
 		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
@@ -488,9 +491,9 @@ Player.initWAA = function(){
 				typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
 				parseFloat(diData.loudness,10),
 				parseFloat(diData.maxTruePeak,10),
-				diData.dialog === "true",
-				diData.ambiance === "true",
-				diData.commentary === "true");
+				isTrue(diData.dialog),
+				isTrue(diData.ambiance),
+				isTrue(diData.commentary));
 
 		var asdc = new M4DPAudioModules.AudioStreamDescriptionCollection(
 				[mainAudioASD, extendedAmbienceASD, extendedCommentsASD, extendedDialogsASD]
@@ -546,35 +549,35 @@ Player.initWAA = function(){
 	}else{
 		mainAudioASD.type = mainData.type;
 		mainAudioASD.active = this.mode === "stereo" && Media.audioEnabled;
-		mainAudioASD.loudness = parseFloat(mainData.loudness,10);
-		mainAudioASD.maxTruePeak = parseFloat(mainData.maxTruePeak,10);
-		mainAudioASD.dialog = mainData.dialog === "true";
-		mainAudioASD.ambiance = mainData.ambiance === "true";
-		mainAudioASD.commentary = mainData.commentary === "true";
+		mainAudioASD.loudness = parseFloat(mainData.loudness);
+		mainAudioASD.maxTruePeak = parseFloat(mainData.maxTruePeak);
+		mainAudioASD.dialog = isTrue(mainData.dialog);
+		mainAudioASD.ambiance = isTrue(mainData.ambiance);
+		mainAudioASD.commentary = isTrue(mainData.commentary);
 		
 		extendedAmbienceASD.type = eaData.type;
 		extendedAmbienceASD.active = typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
-		extendedAmbienceASD.loudness = parseFloat(eaData.loudness,10);
-		extendedAmbienceASD.maxTruePeak = parseFloat(eaData.maxTruePeak,10);
-		extendedAmbienceASD.dialog = eaData.dialog === "true";
-		extendedAmbienceASD.ambiance = eaData.ambiance === "true";
-		extendedAmbienceASD.commentary = eaData.commentary === "true";
+		extendedAmbienceASD.loudness = parseFloat(eaData.loudness);
+		extendedAmbienceASD.maxTruePeak = parseFloat(eaData.maxTruePeak);
+		extendedAmbienceASD.dialog = isTrue(eaData.dialog);
+		extendedAmbienceASD.ambiance = isTrue(eaData.ambiance);
+		extendedAmbienceASD.commentary = isTrue(eaData.commentary);
 		
 		extendedCommentsASD.type = adData.type;
 		extendedCommentsASD.active = Media.audioDescriptionEnabled;
-		extendedCommentsASD.loudness = parseFloat(adData.loudness,10);
-		extendedCommentsASD.maxTruePeak = parseFloat(adData.maxTruePeak,10);
-		extendedCommentsASD.dialog = adData.dialog === "true";
-		extendedCommentsASD.ambiance = adData.ambiance === "true";
-		extendedCommentsASD.commentary = adData.commentary === "true";
+		extendedCommentsASD.loudness = parseFloat(adData.loudness);
+		extendedCommentsASD.maxTruePeak = parseFloat(adData.maxTruePeak);
+		extendedCommentsASD.dialog = isTrue(adData.dialog);
+		extendedCommentsASD.ambiance = isTrue(adData.ambiance);
+		extendedCommentsASD.commentary = isTrue(adData.commentary);
 		
 		extendedDialogsASD.type = diData.type;
 		extendedDialogsASD.active = typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
-		extendedDialogsASD.loudness = parseFloat(diData.loudness,10);
-		extendedDialogsASD.maxTruePeak = parseFloat(diData.maxTruePeak,10);
-		extendedDialogsASD.dialog = diData.dialog === "true";
-		extendedDialogsASD.ambiance = diData.ambiance === "true";
-		extendedDialogsASD.commentary = diData.commentary === "true";
+		extendedDialogsASD.loudness = parseFloat(diData.loudness);
+		extendedDialogsASD.maxTruePeak = parseFloat(diData.maxTruePeak);
+		extendedDialogsASD.dialog = isTrue(diData.dialog);
+		extendedDialogsASD.ambiance = isTrue(diData.ambiance);
+		extendedDialogsASD.commentary = isTrue(diData.commentary);
 	}
 		
 	log(mainAudioASD);
