@@ -173,19 +173,56 @@ API.getResults = function(term, method, callback_function){
  */
 
 API.getItemsListForSearch = function(method, data, callback){
+	
+	var predicate_id = function(){
+		var mAnnot = getItemByAttr(Config.configurationSet, "name", "media_annotations");
+		if(typeOf(mAnnot) === "object" && mAnnot.items){
+			var emission = getItemByAttr(mAnnot.items, "label", "émission", "predicate");
+			return emission.predicate.id;
+		}
+	}();
+	
+	if(!predicate_id){
+		return callback();
+	}
+	
 	var list = [];
 	if(method === "content"){
 		if(typeOf(data) === "array"){
 			
 			var l = data.length, count = 0, limit = Config.limitResultForSearch;
-			var _onComplete = function(jqXHR, textStatus){
+			var _onLoadMediaData = function(jqXHR, textStatus){
 				if(textStatus === "success" && jqXHR.responseJSON){
-					list.push(jqXHR.responseJSON);
-				}				
-				count++;
-				
-				if(count === l || count === limit){
-					callback(list);
+					
+					var data = jqXHR.responseJSON;
+					var _onLoadTitle = function(jqXHR, textStatus){
+						if(textStatus === "success" && jqXHR.responseJSON){
+							
+							var title = jqXHR.responseJSON[0].subject.label;
+							data.title = title;
+							list.push(data);
+							
+							count++;
+							if(count === l || count === limit){
+								callback(list);
+							}
+						}
+					};
+					
+					$.ajax({
+						url: Config.perfectMemoryWS + "medias/"+data.id+"/annotations?media_predicate_id="+predicate_id+"&auth_token=" + User.tokens.auth_token,
+						complete:_onLoadTitle,
+						timeout:Config.jsonTimeout * 1000,
+						headers: {
+							"Accept-language":"fr"
+						}
+					});
+					
+				}else{
+					count++;
+					if(count === l || count === limit){
+						callback(list);
+					}
 				}
 			};
 			
@@ -195,7 +232,7 @@ API.getItemsListForSearch = function(method, data, callback){
 				if(typeOf(media) === "object" && media.idMovie){
 					$.ajax({
 						url: Config.perfectMemoryWS + "medias/root_id:"+media.idMovie+"?auth_token=" + User.tokens.auth_token,
-						complete:_onComplete,
+						complete:_onLoadMediaData,
 						timeout:Config.jsonTimeout * 1000,
 						headers: {
 							"Accept-language":"fr"
