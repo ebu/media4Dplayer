@@ -31,7 +31,8 @@ Main.onLoad = function () {
 		Search.filters.setList(Config.filtersLanguages.ad, "ad");
 		Search.filters.setList(Config.filtersLanguages.ls, "ls");
 		
-		API.loadConfigurationSet(function(){
+		API.loadConfigurationSet(function(data){
+			Config.configurationSet = data;
 			API.getUserTokens();
 		});
 		
