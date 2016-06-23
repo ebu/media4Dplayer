@@ -679,7 +679,7 @@ function removeKey(arrayName, key) {
 }
 
 var getMediaLabel = function(detail){
-	return detail.type + " du " + getStringDate(detail.date.y, detail.date.m, detail.date.d) + " | " + getStringDuration(detail.duration.h, detail.duration.m, detail.duration.s);
+	return detail.type + " du " + getStringDate(detail.date.y, detail.date.m, detail.date.d) + " | " + (getStringDuration(detail.duration.h, detail.duration.m, detail.duration.s) || "Durée inconnue");
 };
 
 var removeDuplicateItemInList = function(list, property){
@@ -699,4 +699,18 @@ var removeDuplicateItemInList = function(list, property){
 		}
 	}
 	return newList;
+};
+
+var getItemByAttr = function(list, attr, value, childrenProperty){
+	
+	if(typeOf(list) === "array"){
+		var i, l = list.length, item;
+		for(i=0;i<l;i++){
+
+			item = list[i];
+			if(item[attr] === value || (childrenProperty && item[childrenProperty][attr] === value)){
+				return item;
+			}
+		}
+	}
 };
