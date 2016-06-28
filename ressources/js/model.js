@@ -83,6 +83,9 @@ Model.getProgramDetails = function(xml){
 	program.video.ls = !isEmpty(program.video.links.dataLS) ? [{"lang":"LSF", "url":program.video.links.dataLS.url}] : null;
 	program.video.audiosList = this.getProgramDetails.getAudiosList(program.video.links);
 	
+	program.video.hasEA3DIStream = program.video.links.dataEA.url && program.video.links.dataDI.url ? true : false;
+	program.video.hasMCStream = program.video.links.dataMC.url ? true : false;
+	
 	return program;
 };
 
@@ -124,6 +127,9 @@ Model.getProgramDetails2 = function(data){
 	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":program.video.links.dataAD.url}] : null;
 	program.video.ls = !isEmpty(program.video.links.dataLS) ? [{"lang":"LSF", "url":program.video.links.dataLS.url}] : null;
 	program.video.audiosList = this.getProgramDetails.getAudiosList(program.video.links);
+	
+	program.video.hasEA3DIStream = program.video.links.dataEA.url && program.video.links.dataDI.url ? true : false;
+	program.video.hasMCStream = program.video.links.dataMC.url ? true : false;
 	
 	return program;
 };
@@ -284,14 +290,14 @@ Model.getProgramDetails.getLinkDetails = function(ctn){
 		}
 
 		// Pour le 5.1; les dialogues et l'ambiance incluent
-		// MC
-		/*$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"MC"}));
+		// EA1
+		$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"EA1"}));
 		$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-		if($data.length){
+		if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
 			data.dataMC = getData($audioFormat);
 			data.dataMC.url = getElementFromXML($data, "locator", "ebucore").text().trim();
 			data.dataMC.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
-		}*/
+		}
 	}
 	return data;
 };
@@ -310,7 +316,8 @@ Model.getProgramDetails.getLinkDetails2 = function(list){
 		dataLS:{},
 		dataAD:{},
 		dataEA:{},
-		dataDI:{}
+		dataDI:{},
+		dataMC:{}
 	};
 
 	if(typeOf(list) === "array" && list.length){
@@ -366,6 +373,11 @@ Model.getProgramDetails.getLinkDetails2 = function(list){
 					data.dataEA.lang = convertTrackLanguage(item.trackLanguage, true);
 					break;
 					
+				case"EA1":
+					data.dataMC = getData(item);
+					data.dataMC.lang = convertTrackLanguage(item.trackLanguage, true);
+					break;
+					
 				default:
 					break;
 			}
@@ -386,8 +398,8 @@ Model.getProgramDetails.getAudiosList = function(data){
 	var newList = [];
 	newList.push(data.dataMain.lang);
 
-	if(data.dataEA.lang && !isEmpty(data.dataDI)){
-		newList.push(data.dataEA.lang);
+	if((!isEmpty(data.dataEA) && data.dataEA.lang && !isEmpty(data.dataDI)) || (!isEmpty(data.dataMC) && data.dataMC.lang)){
+		newList.push(data.dataEA.lang || data.dataMC.lang);
 	}
 	return newList;
 };
