@@ -12,7 +12,7 @@ var Settings = {
 	init:{},
 	change:{},
 	defaultVolumeValue:70,
-	defaultDialogEnhancementBalance:50,
+	defaultDialogEnhancementBalance:100,
 	adGainRange:[0,100],
 	backToPlayerFromSettings:false,
 	minDistance:30
@@ -69,6 +69,15 @@ Settings.init.interface = function(){
  */
 
 Settings.init.audio = function(){
+	
+	/* Le bouton Renforcement des dialogues */
+	var $dE = $(document.getElementById("dialogues-extended-btn"));
+	Player.dialogsEnhanced = Player.getDialogsEnhancedState();
+	if(Player.dialogsEnhanced){
+		$dE.addClass("active");
+	}else{
+		$dE.removeClass("active");
+	}
 		
 	/* Le choix du mode de spatialisation */
 	this.audio.spatialisationMode();

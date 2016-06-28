@@ -18,6 +18,13 @@ var InfoBanner = {
 
 InfoBanner.reset = function(){
 	
+	var $sliderADVol = $(document.getElementById("playerControlADVolume"));
+	if(Player.dialogsEnhanced){
+		$sliderADVol.show();
+	}else{
+		$sliderADVol.hide();
+	}
+		
 	this.progressBar.reset();	
 	this.playerParams.reset();
 	
@@ -51,7 +58,9 @@ InfoBanner.generate = function(){
 	
 	// VOLUME
 	this.initVolumeSlider();	
-	this.initADVolumeSlider();
+	if(Player.dialogsEnhanced){
+		this.initADVolumeSlider();
+	}
 };
 
 /**
@@ -604,7 +613,7 @@ InfoBanner.initADVolumeSlider = function(){
         }
 	});
 	
-	this.initADVolumeSlider.onSlide($slider, defaultValue);
+	this.initADVolumeSlider.onSlide($slider, parseInt(defaultValue, 10));
 };
 
 /**
