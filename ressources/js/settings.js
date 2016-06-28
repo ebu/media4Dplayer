@@ -88,14 +88,8 @@ Settings.init.audio = function(){
 	/* Le niveau des commentaires */
 	this.audio.elevationLevel($(document.getElementById("comments-elevation-level")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel);
 	
-	/* Le niveau des dialogues */
-	this.audio.elevationLevel($(document.getElementById("dialogues-elevation-level")), getHtmlStorage("dialoguesElevationLevel") || Player.dialoguesElevationLevel);
-	
 	/* La zone des commentaires */
 	this.audio.azimDistance($(document.getElementById("comments-spatialisation-zone")));
-	
-	/* La zone des dialogues */
-	this.audio.azimDistance($(document.getElementById("dialogues-spatialisation-zone")));
 };
 
 /**
@@ -777,47 +771,36 @@ Settings.change.audioProfil = function(value){
 
 Settings.change.audioElevationLevel = function(value, el){
 
-	var type = $(el).data("type");
-	if(["commentary", "dialogues"].indexOf(type) !== -1){
-		
-		// Converti les steps en leur valeur correspondante
-		if(Main.simplifiedMode){
-			var range = Player.elevationRange;
-			value = value === 2 ? parseInt((range[1] - Math.abs(range[0])) / 2, 10) : value === 1 ? range[0] : range[1];	
-		}
-		
-		if(type === "commentary"){
-			Player.commentsElevationLevel = value;
-			setHtmlStorage("commentsElevationLevel", value);
-			log("Niveau d'élévation des commentaires : " + value + "°");
+	// Converti les steps en leur valeur correspondante
+	if(Main.simplifiedMode){
+		var range = Player.elevationRange;
+		value = value === 2 ? parseInt((range[1] - Math.abs(range[0])) / 2, 10) : value === 1 ? range[0] : range[1];	
+	}
 
-		}else{
-			Player.dialoguesElevationLevel = value;
-			setHtmlStorage("dialoguesElevationLevel", value);
-			log("Niveau d'élévation des dialogues : " + value + "°");			
-		}
-		
-		var $slider = $(el).children("a");
-		if($slider.length){
-			
-			var valueText = function(){
-				if(value >= 45) {
-					return "Haut";
+	Player.commentsElevationLevel = value;
+	setHtmlStorage("commentsElevationLevel", value);
+	log("Niveau d'élévation des commentaires : " + value + "°");
 
-				}else if (value <= 0) {
-					return "Bas";
+	var $slider = $(el).children("a");
+	if($slider.length){
 
-				}else{
-					return "Tête";
-				}
-			}();
+		var valueText = function(){
+			if(value >= 45) {
+				return "Haut";
 
-			if(Main.simplifiedMode){
-				$slider.attr("aria-valuenow", value).attr("aria-valuetext", valueText/*value + "°"*/);
+			}else if (value <= 0) {
+				return "Bas";
 
 			}else{
-				$slider.text(valueText);
+				return "Tête";
 			}
+		}();
+
+		if(Main.simplifiedMode){
+			$slider.attr("aria-valuenow", value).attr("aria-valuetext", valueText/*value + "°"*/);
+
+		}else{
+			$slider.text(valueText);
 		}
 	}
 };
@@ -830,29 +813,18 @@ Settings.change.audioElevationLevel = function(value, el){
  */
 
 Settings.change.audioAzim = function(value, el){
-	
-	var type = $(el).data("type");
-	if(["commentary", "dialogues"].indexOf(type) !== -1){
 		
-		// Converti les steps en leur valeur correspondante
-		if(Main.simplifiedMode){
-			value = value === 5 ? 180 : value === 4 ? 90 : value === 3 ? 0 : value === 2 ? -90 : -180;
-		}
-		
-		if(type === "commentary"){
-			Player.commentsAzim = value;
-			setHtmlStorage("commentsAzim", value);
-			log("Orientation des commentaires : " + value + "°");
+	// Converti les steps en leur valeur correspondante
+	if(Main.simplifiedMode){
+		value = value === 5 ? 180 : value === 4 ? 90 : value === 3 ? 0 : value === 2 ? -90 : -180;
+	}
 
-		}else{
-			Player.dialoguesAzim = value;
-			setHtmlStorage("dialoguesAzim", value);
-			log("Orientation des dialogues : " + value + "°");
-		}
-		
-		if(Main.simplifiedMode){
-			$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + "°");
-		}		
+	Player.commentsAzim = value;
+	setHtmlStorage("commentsAzim", value);
+	log("Orientation des commentaires : " + value + "°");
+
+	if(Main.simplifiedMode){
+		$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + "°");
 	}
 };
 
@@ -865,15 +837,8 @@ Settings.change.audioAzim = function(value, el){
 
 Settings.change.audioDistance = function(value, el){
 	
-	var type = $(el).data("type");
-	if(type === "commentary"){
-		Player.commentsDistance = value;
-		setHtmlStorage("commentsDistance", value);
-
-	}else{
-		Player.dialoguesDistance = value;
-		setHtmlStorage("dialoguesDistance", value);				
-	}
+	Player.commentsDistance = value;
+	setHtmlStorage("commentsDistance", value);
 		
 	if(Main.simplifiedMode){
 		$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + " mètre");
