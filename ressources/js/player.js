@@ -53,9 +53,6 @@ var Player = {
 	commentsAzim:0,
 	commentsElevationLevel:0,
 	commentsDistance:1,
-	dialoguesAzim:0,
-	dialoguesElevationLevel:0,
-	dialoguesDistance:1,
 	azimRadius:180,
 	distanceRange:[0.5, 10],
 	elevationRange:[-40, 90],
@@ -86,11 +83,8 @@ Player.load = function(videoData, callback, onClose){
 	
 	this.spatializationMode = getHtmlStorage("spatializationMode") || this.spatializationMode;
 	this.commentsElevationLevel = getHtmlStorage("commentsElevationLevel") || this.commentsElevationLevel;
-	this.dialoguesElevationLevel = getHtmlStorage("dialoguesElevationLevel") || this.dialoguesElevationLevel;
 	this.commentsDistance = getHtmlStorage("commentsDistance") || this.commentsDistance;
-	this.dialoguesDistance = getHtmlStorage("dialoguesDistance") || this.dialoguesDistance;
 	this.commentsAzim = getHtmlStorage("commentsAzim") || this.commentsAzim;
-	this.dialoguesAzim = getHtmlStorage("dialoguesAzim") || this.dialoguesAzim;
 	this.dialogsEnhanced = this.getDialogsEnhancedState();
 
 	if(!this.alreadyInit || (videoData.links.dataMain.url !== Media.links.dataMain.url)){
@@ -178,13 +172,11 @@ Player.load = function(videoData, callback, onClose){
 
 		this.initSubtitlesParams();
 
-		this.onChangeEqualization();
-		this.onChangeAzim("commentary");
-		this.onChangeAzim("dialogues");
-		this.onChangeElevation("commentary");
-		this.onChangeElevation("dialogues");
-		this.onChangeDistance("commentary");
-		this.onChangeDistance("dialogues");
+	this.onChangeEqualization();
+	this.onChangeAzim();
+	this.onChangeElevation();
+	this.onChangeDistance();
+
 
 		// update the WAA connections
 		this.updateWAAConnections();
@@ -861,31 +853,16 @@ Player.onChangeEqualization = function(){
 	}	
 };
 
-Player.onChangeAzim = function(type){
-	if(type === "commentary"){
-		objectSpatialiserAndMixer.setCommentaryAzimuth( parseFloat( this.commentsAzim ) );
-		
-	}else if(type === "dialogues"){
-		objectSpatialiserAndMixer.setDialogAzimuth( this.dialoguesAzim );
-	}
+Player.onChangeAzim = function(){
+	objectSpatialiserAndMixer.setCommentaryAzimuth( parseFloat( this.commentsAzim ) );
 };
 
-Player.onChangeElevation = function(type){
-	if(type === "commentary"){
-		objectSpatialiserAndMixer.setCommentaryElevation( parseFloat( this.commentsElevationLevel ) );
-		
-	}else if(type === "dialogues"){
-		objectSpatialiserAndMixer.setDialogElevation( this.dialoguesElevationLevel );
-	}
+Player.onChangeElevation = function(){
+	objectSpatialiserAndMixer.setCommentaryElevation( parseFloat( this.commentsElevationLevel ) );
 };
 
-Player.onChangeDistance = function(type){
-	if(type === "commentary"){
-		objectSpatialiserAndMixer.setCommentaryDistance( parseFloat( this.commentsDistance ) );
-		
-	}else if(type === "dialogues"){
-		objectSpatialiserAndMixer.setDialogDistance( this.dialoguesDistance );
-	}
+Player.onChangeDistance = function(){
+	objectSpatialiserAndMixer.setCommentaryDistance( parseFloat( this.commentsDistance ) );
 };
 
 Player.onChangeSpatilisationMode = function(){

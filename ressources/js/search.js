@@ -42,7 +42,7 @@ var Search = {
  */
 
 Search.reset = function(rubric){
-	if(rubric === Section.rubrics[Section.sections[31]][0]){
+	if(rubric === Section.rubrics[Section.sections[30]][0]){
 		$(document.getElementById("terms-search")).val("");
 		$(document.getElementById("search-message")).show().siblings().hide();
 		$(document.getElementById("terms-search-container")).removeAttr("class");
@@ -92,7 +92,7 @@ Search.getMethod = function(){
  */
 
 Search.changeMethod = function(){
-	Search.reset(Section.rubrics[Section.sections[31]][0]);
+	Search.reset(Section.rubrics[Section.sections[30]][0]);
 };
 	
 /**

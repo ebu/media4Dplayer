@@ -24,8 +24,8 @@ $(document.getElementById("menu")).on("click", ".btn", function(){
 		section = sections[4];
 	
 	// Recherche
-	}else if(classList.indexOf(sections[31]) !== -1){
-		section = sections[31];
+	}else if(classList.indexOf(sections[30]) !== -1){
+		section = sections[30];
 		rubric = Section.rubrics[section][0];
 	}
 	
@@ -192,7 +192,7 @@ $(document.getElementById("full-results-list-container")).on("click", ".search-r
 
 $(document.getElementById("display-results-button")).on("click", function(e){
 	if($(this).hasClass("on")){
-		Section.change(Section.sections[31], Section.rubrics[Section.sections[31]][1]);
+		Section.change(Section.sections[30], Section.rubrics[Section.sections[30]][1]);
 	}
 });
 

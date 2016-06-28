@@ -350,9 +350,7 @@ h2{font-size:1.6em;font-weight:600}
 .ui-widget{font-family:inherit}
 .ui-selectmenu-text{font-weight:500}
 .ui-selectmenu-button span.ui-icon{background:url(../img/fleche_menu_deroulant.png) center center no-repeat}
-.spatialisation-control{margin-top:25px;}
-.spatialisation-control:first-child{float: left;}
-.spatialisation-control:last-child{float: right;}
+.spatialisation-control{margin-top:25px;float: left;}
 .spatialisation-control .title{margin-bottom: 15px;}
 .spatialisation-control .control-container{float:left}
 .vertical-slider-container{width:125px;height:281px;background:url(../img/spatial__hauteur.png) no-repeat;background-size:contain;padding:46px 0 46px 14px;box-sizing:border-box;}

@@ -85,7 +85,7 @@ Section.change = function(newSection, rubric, mixed_var){
 			this.change.toPlayer(mixed_var);
 			
 		// Recherche
-		}else if(newSection === this.sections[31]){
+		}else if(newSection === this.sections[30]){
 			this.change.toSearch(newSection, rubric);
 			
 		// Ecran "en construction"
@@ -618,7 +618,7 @@ Section.handleMenuSel = function(newSection){
 				$nav.find(".settings").addClass("sel");
 				break;
 				
-			case this.sections[31]:
+			case this.sections[30]:
 				$nav.find(".search").addClass("sel");
 				break;
 			
