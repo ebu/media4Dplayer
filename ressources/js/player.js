@@ -157,9 +157,11 @@ Player.load = function(videoData, callback, onClose){
 	this.initSubtitlesParams();
 
 	this.onChangeEqualization();
-	this.onChangeAzim();
-	this.onChangeElevation();
-	this.onChangeDistance();
+	if(this.mode === "5.1"){
+		this.onChangeAzim();
+		this.onChangeElevation();
+		this.onChangeDistance();		
+	}
 
 
 	// update the WAA connections
@@ -532,8 +534,6 @@ Player.initWAA = function(){
 			kObjectSpatialiserAndMixer : 1
 		};
 
-		this.config = ModulesConfiguration.kObjectSpatialiserAndMixer;
-
 		streamSelector = new M4DPAudioModules.StreamSelector( this.playerManager.audioContext, asdc );
 		smartFader = new M4DPAudioModules.SmartFader( this.playerManager.audioContext, asdc );
 		dialogEnhancement = new M4DPAudioModules.DialogEnhancement( this.playerManager.audioContext, asdc );
@@ -622,6 +622,8 @@ Player.initWAA = function(){
 		extendedCommentsASD.ambiance = isTrue(adData.ambiance);
 		extendedCommentsASD.commentary = isTrue(adData.commentary);
 	}
+
+	this.config = this.mode === "5.1" ? ModulesConfiguration.kObjectSpatialiserAndMixer : ModulesConfiguration.kMultichannelSpatialiser;
 		
 	log(mainAudioASD);
 	log(extendedAmbienceASD);
