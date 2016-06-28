@@ -67,7 +67,8 @@ var Player = {
 	config:null,
 	attackTime:10,
 	releaseTime:150,
-	gainOffset:2
+	gainOffset:2,
+	dialogsEnhanced:0
 };
 
 /**
@@ -90,6 +91,7 @@ Player.load = function(videoData, callback, onClose){
 	this.dialoguesDistance = getHtmlStorage("dialoguesDistance") || this.dialoguesDistance;
 	this.commentsAzim = getHtmlStorage("commentsAzim") || this.commentsAzim;
 	this.dialoguesAzim = getHtmlStorage("dialoguesAzim") || this.dialoguesAzim;
+	this.dialogsEnhanced = this.getDialogsEnhancedState();
 
 	if(!this.alreadyInit || (videoData.links.dataMain.url !== Media.links.dataMain.url)){
 
@@ -120,8 +122,16 @@ Player.load = function(videoData, callback, onClose){
 	var urlMain 			= Media.links.dataMain.url;
 	var urlPip 				= Media.links.dataLS.url;
 	var urlAudioDescription	= Media.links.dataAD.url;
-	var urlAudioFiveDotOne 	= Media.links.dataEA.url;
-	var urlAudioFiveDotOne2	= Media.links.dataDI.url;
+	
+	// Doit privilégier EA3 + DI, sinon EA1
+	var urlAudioFiveDotOne, urlAudioFiveDotOne2;
+	if(videoData.hasEA3DIStream){
+		urlAudioFiveDotOne 	= Media.links.dataEA.url;
+		urlAudioFiveDotOne2	= Media.links.dataDI.url;
+		
+	}else{
+		urlAudioFiveDotOne 	= Media.links.dataMC.url;
+	}
 
 	this.playerManager.playerMain.attachView(this.videoMain);
 	this.playerManager.playerMain.attachSource(urlMain);	
@@ -220,12 +230,13 @@ Player.launch = function(){
 	videos = {
 		a:Popcorn(players[0])
 	};
-	if(Media.links.dataEA.url){
+	if(Media.hasEA3DIStream){
 		videos.b = Popcorn(players[1]);
-		playersToLaunch++;
-	}
-	if(Media.links.dataDI.url){
 		videos.c = Popcorn(players[2]);
+		playersToLaunch+=2;
+		
+	}else if(Media.links.dataMC.url){
+		videos.b = Popcorn(players[1]);		
 		playersToLaunch++;
 	}
 	if(Media.links.dataAD.url){
@@ -275,16 +286,18 @@ Player.launch = function(){
 		}
 	});
 	var updateCurrentTime = function(media, cTime){
-		media.currentTime(cTime);
+		if(media){
+			media.currentTime(cTime);
+		}
 	},
 		resyncCurrentTime = function(media, cTime){
 		if(media && media.media.readyState === 4){
 			var cTime2 = media.currentTime(), diff = Math.abs(cTime-cTime2), id = media.media.id;
 			if (diff > 0.1) {
-				log("-----------------------------------------------Recalage nécessaire ("+diff+">0.1) pour "+id);
+				//log("-----------------------------------------------Recalage nécessaire ("+diff+">0.1) pour "+id);
 				updateCurrentTime(media, cTime);
 			}else{
-				log("Recalage pas nécessaire ("+diff+"<0.1) pour "+id);
+				//log("Recalage pas nécessaire ("+diff+"<0.1) pour "+id);
 			}			
 		}
 	},
@@ -325,7 +338,7 @@ Player.launch = function(){
 				events.forEach(function (event) {
 
 					videos.a.on(event, function () {
-						log("event name = " + event+"------------------------------------------------");
+						//log("event name = " + event+"------------------------------------------------");
 						// Avoid overkill events, trigger timeupdate manually
 
 						var cTime = this.currentTime();
@@ -403,6 +416,7 @@ Player.initWAA = function(){
 	var eaData = JSON.parse(JSON.stringify(Media.links.dataEA));
 	var adData = JSON.parse(JSON.stringify(Media.links.dataAD));
 	var diData = JSON.parse(JSON.stringify(Media.links.dataDI));
+	var mcData = JSON.parse(JSON.stringify(Media.links.dataMC));
 
 	/// Workaround when all the streams are not in the EBU Core
 	if(!Media.links.dataEA.type){
@@ -466,15 +480,43 @@ Player.initWAA = function(){
 				isTrue(mainData.ambiance),
 				isTrue(mainData.commentary));
 
-		// Ambiance (pour le 5.1)
-		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
-				eaData.type,
-				typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
-				parseFloat(eaData.loudness,10),
-				parseFloat(eaData.maxTruePeak,10),
-				isTrue(eaData.dialog),
-				isTrue(eaData.ambiance),
-				isTrue(eaData.commentary));
+		if(Media.hasEA3DIStream){
+			
+			// Ambiance (pour le 5.1) / Ambiance + dialogues (pour le 5.1 multicanal)
+			extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
+					eaData.type,
+					typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
+					parseFloat(eaData.loudness,10),
+					parseFloat(eaData.maxTruePeak,10),
+					isTrue(eaData.dialog),
+					isTrue(eaData.ambiance),
+					isTrue(eaData.commentary));
+
+			// Dialogue (pour le 5.1)
+			extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
+					diData.type,
+					typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
+					parseFloat(diData.loudness,10),
+					parseFloat(diData.maxTruePeak,10),
+					isTrue(diData.dialog),
+					isTrue(diData.ambiance),
+					isTrue(diData.commentary));
+			
+		}else{
+			
+			// Ambiance (pour le 5.1) / Ambiance + dialogues (pour le 5.1 multicanal)
+			extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
+					mcData.type,
+					typeof( Media.links.dataMC.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
+					parseFloat(mcData.loudness,10),
+					parseFloat(mcData.maxTruePeak,10),
+					isTrue(mcData.dialog),
+					isTrue(mcData.ambiance),
+					isTrue(mcData.commentary));
+
+			// Dialogue (pour le 5.1)
+			extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(diData.type);
+		}
 
 		// Commentaires
 		extendedCommentsASD = new M4DPAudioModules.AudioStreamDescription(
@@ -485,16 +527,6 @@ Player.initWAA = function(){
 				isTrue(adData.dialog),
 				isTrue(adData.ambiance),
 				isTrue(adData.commentary));
-
-		// Dialogue (pour le 5.1)
-		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
-				diData.type,
-				typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
-				parseFloat(diData.loudness,10),
-				parseFloat(diData.maxTruePeak,10),
-				isTrue(diData.dialog),
-				isTrue(diData.ambiance),
-				isTrue(diData.commentary));
 
 		var asdc = new M4DPAudioModules.AudioStreamDescriptionCollection(
 				[mainAudioASD, extendedAmbienceASD, extendedCommentsASD, extendedDialogsASD]
@@ -556,13 +588,40 @@ Player.initWAA = function(){
 		mainAudioASD.ambiance = isTrue(mainData.ambiance);
 		mainAudioASD.commentary = isTrue(mainData.commentary);
 		
-		extendedAmbienceASD.type = eaData.type;
-		extendedAmbienceASD.active = typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
-		extendedAmbienceASD.loudness = parseFloat(eaData.loudness);
-		extendedAmbienceASD.maxTruePeak = parseFloat(eaData.maxTruePeak);
-		extendedAmbienceASD.dialog = isTrue(eaData.dialog);
-		extendedAmbienceASD.ambiance = isTrue(eaData.ambiance);
-		extendedAmbienceASD.commentary = isTrue(eaData.commentary);
+		if(Media.hasEA3DIStream){
+			extendedAmbienceASD.type = eaData.type;
+			extendedAmbienceASD.active = typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+			extendedAmbienceASD.loudness = parseFloat(eaData.loudness);
+			extendedAmbienceASD.maxTruePeak = parseFloat(eaData.maxTruePeak);
+			extendedAmbienceASD.dialog = isTrue(eaData.dialog);
+			extendedAmbienceASD.ambiance = isTrue(eaData.ambiance);
+			extendedAmbienceASD.commentary = isTrue(eaData.commentary);
+
+			extendedDialogsASD.type = diData.type;
+			extendedDialogsASD.active = typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+			extendedDialogsASD.loudness = parseFloat(diData.loudness);
+			extendedDialogsASD.maxTruePeak = parseFloat(diData.maxTruePeak);
+			extendedDialogsASD.dialog = isTrue(diData.dialog);
+			extendedDialogsASD.ambiance = isTrue(diData.ambiance);
+			extendedDialogsASD.commentary = isTrue(diData.commentary);
+			
+		}else{	
+
+			extendedAmbienceASD.type = mcData.type;
+			extendedAmbienceASD.active = typeof( Media.links.dataMC.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+			extendedAmbienceASD.loudness = parseFloat(mcData.loudness);
+			extendedAmbienceASD.maxTruePeak = parseFloat(mcData.maxTruePeak);
+			extendedAmbienceASD.dialog = isTrue(mcData.dialog);
+			extendedAmbienceASD.ambiance = isTrue(mcData.ambiance);
+			extendedAmbienceASD.commentary = isTrue(mcData.commentary);
+
+			extendedDialogsASD.active = false;
+			extendedDialogsASD.loudness = false;
+			extendedDialogsASD.maxTruePeak = false;
+			extendedDialogsASD.dialog = false;
+			extendedDialogsASD.ambiance = false;
+			extendedDialogsASD.commentary = false;
+		}
 		
 		extendedCommentsASD.type = adData.type;
 		extendedCommentsASD.active = Media.audioDescriptionEnabled;
@@ -571,20 +630,12 @@ Player.initWAA = function(){
 		extendedCommentsASD.dialog = isTrue(adData.dialog);
 		extendedCommentsASD.ambiance = isTrue(adData.ambiance);
 		extendedCommentsASD.commentary = isTrue(adData.commentary);
-		
-		extendedDialogsASD.type = diData.type;
-		extendedDialogsASD.active = typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
-		extendedDialogsASD.loudness = parseFloat(diData.loudness);
-		extendedDialogsASD.maxTruePeak = parseFloat(diData.maxTruePeak);
-		extendedDialogsASD.dialog = isTrue(diData.dialog);
-		extendedDialogsASD.ambiance = isTrue(diData.ambiance);
-		extendedDialogsASD.commentary = isTrue(diData.commentary);
 	}
 		
 	log(mainAudioASD);
 	log(extendedAmbienceASD);
-	log(extendedCommentsASD);
 	log(extendedDialogsASD);
+	log(extendedCommentsASD);
 };
 
 /**
@@ -1268,7 +1319,15 @@ Player.updateActiveStreams = function(){
 	multichannelSpatialiser.activeStreamsChanged();
 	objectSpatialiserAndMixer.activeStreamsChanged();
 	
-	InfoBanner.initADVolumeSlider.onSlide($( document.getElementById("ad-volume-slider") ), dialogEnhancement.balance);
+	if(Player.dialogsEnhanced){
+		dialogEnhancement.balance = parseInt(getHtmlStorage("dialogEnhancementBalance"), 10) || Settings.defaultDialogEnhancementBalance;
+	}else{
+		dialogEnhancement.balance = Settings.defaultDialogEnhancementBalance;
+	}
+};
+
+Player.getDialogsEnhancedState = function(){
+	return parseInt(getHtmlStorage("dialogsEnhanced"),10) || 0;
 };
 
 Player.disableLogs = function(){

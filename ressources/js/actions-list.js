@@ -196,6 +196,17 @@ $(document.getElementById("display-results-button")).on("click", function(e){
 	}
 });
 
+$(document.getElementById("dialogues-extended-btn")).on("click", function(){
+	if(Player.dialogsEnhanced){
+		Player.dialogsEnhanced = 0;
+		// TODO doit resetter les valeurs neutre 
+	}else{
+		Player.dialogsEnhanced = 1;
+	}
+	setHtmlStorage("dialogsEnhanced", Player.dialogsEnhanced);
+	$(this).toggleClass("active");
+});
+
 																	/* **************/
 																	/*	 MODE SM	*/
 																	/* **************/
