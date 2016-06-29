@@ -73,15 +73,29 @@ API.getFavorites = function(callback_function){
 			callback: function(data) {
 				
 				// Génère une liste d'ID
-				var ids = [], x, dl = data.length;
+				var ids = [], positions = [], x, dl = data.length;
 				for(x=0;x<dl;x++){
 					ids.push({idMovie:data[x].root_id});
+					positions.push(data[x].root_id);
 				}
 
 				// Charge les items les uns après les autres (la méthode when/then tombe en fail si l'une des requetes échoue)					
 				API.getItemsListForSearch(10, ids, function(list){
 					if(list.length){
-						Model.getResults(list, function(favorites){
+							
+						// Rétablie les positions
+						var sortedList = [];
+						for(var i=0;i<positions.length;i++){
+							
+							// Si l'item se trouve dans la nouvelle list l'insère dans la liste triée
+							for(var z=0;z<list.length;z++){
+								if(list[z].root_id === positions[i]){
+									sortedList.push(list[z]);
+								}
+							}
+						}
+							
+						Model.getResults(sortedList, function(favorites){
 							callback_function({favorites:favorites});
 						});
 
