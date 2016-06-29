@@ -396,7 +396,9 @@ Model.getProgramDetails.getLinkDetails2 = function(list){
 
 Model.getProgramDetails.getAudiosList = function(data){
 	var newList = [];
-	newList.push(data.dataMain.lang);
+	if(data.dataMain.lang){
+		newList.push(data.dataMain.lang);
+	}
 
 	if((!isEmpty(data.dataEA) && data.dataEA.lang && !isEmpty(data.dataDI)) || (!isEmpty(data.dataMC) && data.dataMC.lang)){
 		newList.push(data.dataEA.lang || data.dataMC.lang);
