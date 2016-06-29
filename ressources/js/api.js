@@ -213,6 +213,7 @@ API.getItemsListForSearch = function(method, data, callback){
 					var _onLoadTitle = function(title){
 						if(title){
 							data.title = title;
+							list.push(data);
 							count++;
 							if(count === l || count === limit){
 								callback(list);
