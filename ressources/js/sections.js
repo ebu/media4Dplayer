@@ -34,7 +34,6 @@ var Section = {
 		"settings-interface-theme",			// 27
 		"settings-audio-spatialisation-mode",
 		"settings-audio-comments-spatialisation",
-		"settings-audio-dialogues-spatialisation",
 		"search"],
 
 	"rubrics": {
