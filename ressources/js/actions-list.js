@@ -348,12 +348,12 @@ $("body").on("keydown", ".selectable-by-chromevox", function(e){
 	}
 	
 }).on("click", ".selectable-by-chromevox:not(.final-option)", function(){
-	log("click event for screen player not final option");
+	//log("click event for screen player not final option");
 	$("body > .cvox_indicator_container").find(".cvox_indicator_top, .cvox_indicator_middle_nw, .cvox_indicator_middle_ne, .cvox_indicator_middle_sw, .cvox_indicator_middle_se, .cvox_indicator_bottom").removeAttr("style");
 	this.blur();
 	$(this).mouseout();
 	
 }).on("focus", "#videoPlayerContainer .selectable-by-chromevox", function(){
-	log("focus event on player section");
+	//log("focus event on player section");
 	InfoBanner.launchMaskingAfterDelay();
 });

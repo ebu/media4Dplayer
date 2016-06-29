@@ -78,8 +78,8 @@ Apps.programs.reset = function(){
 Apps.programs.load = function(appIndex, callbackList, rubric){
 	this.reset();
 	var app = Apps.list[appIndex];
-	if(typeOf(app) === "object" && app.userProgramsListUrl){
-		API.getAppPlaylistsOfUser(app.userProgramsListUrl, appIndex, function(data, jqXHR){
+	if(typeOf(app) === "object" && !app.disabled){
+		API.getFavorites(function(data, jqXHR){
 			Apps.programs.load.callback(data, jqXHR, callbackList, appIndex, rubric);
 		});
 	
