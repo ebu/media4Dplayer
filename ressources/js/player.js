@@ -1,4 +1,4 @@
-var checkPositionVideo;
+var checkPositionVideo, dialogEnhancement = {};
 
 var Media = {
 	audiosList:[],
