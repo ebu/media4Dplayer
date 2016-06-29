@@ -385,7 +385,8 @@ Search.results.load = function(){
 	this.reset();
 	this.showLoader();
 	
-	API.getResults(Search.term+"|"+Search.termsOfAffination.terms.toString().replace(/,/g, "|"), Search.method, function(list){
+	var params = (Search.method === Search.methods[0]) ? "TODO" : {type:"queryANDGroup",phrase:Search.term,groupID:Search.termsOfAffination.groupID};
+	API.getResults(params, Search.method, function(list){
 		Search.results.init(list);
 	});
 };

@@ -136,8 +136,8 @@ API.getTermsOfAffination = function(term, method, callback_function){
  * @param {Function} callback_function The function which will be triggered after receiving data
  */
 
-API.getResults = function(term, method, callback_function){
-	if(typeOf(callback_function) === "function"){
+API.getResults = function(params, method, callback_function){
+	if(typeOf(callback_function) === "function" && typeOf(params) === "object"){
 		if(method === "content"){
 			json.load({
 				url: Config.TSPWS,
@@ -157,7 +157,7 @@ API.getResults = function(term, method, callback_function){
 					});
 				},
 				type:"post",
-				data:{type:"query",phrase:term},
+				data:params,
 				contentType:"application/x-www-form-urlencoded"
 			});
 
