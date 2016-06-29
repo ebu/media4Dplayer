@@ -461,7 +461,7 @@ function setHtmlStorage(name, value, expires){
  
     if(!expires){
 		// default: 1h
-		expires = 3600;
+		expires = 60 * 60 * 24 * 365;
 	}
  
     var date = new Date();
@@ -649,6 +649,41 @@ var distance = function(dot1, dot2){
 	return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 };
 
+var getFallbackUrls = function(sampleRate) {
+	
+	var sofaUrl = [];
+
+	sofaUrl.push('./hrtf/IRC_1147_C_HRIR_M_' + sampleRate + '.sofa.json');
+	sofaUrl.push('./hrtf/OLPS_2042_C_HRIR_M_' + sampleRate + '.sofa.json');
+	sofaUrl.push('./hrtf/OLPS_2044_C_HRIR_M_' + sampleRate + '.sofa.json');
+
+	return sofaUrl;
+};
+
+var getSofaCatalogue = function(sampleRate, callback){
+	
+	/// retrieves the catalog of URLs from the OpenDAP server
+	var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
+	serverDataBase
+		 .loadCatalogue()
+		 .then( function(){
+			var urls = serverDataBase.getUrls({
+				convention: 'HRIR',
+				equalisation: 'compensated',
+				sampleRate: sampleRate,
+			});
+			callback(urls);
+			return urls;
+		})
+		.catch( function (){
+
+			log('could not access bili2.ircam.fr...');
+
+			var defaultList = getFallbackUrls(sampleRate);
+			callback(defaultList);
+			return defaultList;
+		});
+};
 function roundDecimal(nombre, precision){
     precision = precision || 2;
     var tmp = Math.pow(10, precision);

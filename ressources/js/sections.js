@@ -34,7 +34,6 @@ var Section = {
 		"settings-interface-theme",			// 27
 		"settings-audio-spatialisation-mode",
 		"settings-audio-comments-spatialisation",
-		"settings-audio-dialogues-spatialisation",
 		"search"],
 
 	"rubrics": {
@@ -85,7 +84,7 @@ Section.change = function(newSection, rubric, mixed_var){
 			this.change.toPlayer(mixed_var);
 			
 		// Recherche
-		}else if(newSection === this.sections[31]){
+		}else if(newSection === this.sections[30]){
 			this.change.toSearch(newSection, rubric);
 			
 		// Ecran "en construction"
@@ -255,7 +254,9 @@ Section.change.toEPG = function(newSection, data){
 
 Section.change.toSettings = function(newSection, rubric){
 	Settings.init(newSection, rubric);
-	Section.handleMenuSel(newSection);
+	if(!Settings.backToPlayerFromSettings){
+		Section.handleMenuSel(newSection);
+	}
 	Section.addClass("settings");
 };
 
@@ -616,7 +617,7 @@ Section.handleMenuSel = function(newSection){
 				$nav.find(".settings").addClass("sel");
 				break;
 				
-			case this.sections[31]:
+			case this.sections[30]:
 				$nav.find(".search").addClass("sel");
 				break;
 			

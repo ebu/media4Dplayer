@@ -143,31 +143,23 @@
 							</div>
 							<div class="right-col col">
 								<div id="dialogues-extended-btn" class="button"><span>Renforcement des dialogues</span></div>
+								<div id="audio-profils-options-ctn">
+									<select name="audio-profils-options" id="audio-profils-options" title="Choix d'un profil audio"></select>
+								</div>
 							</div>
 							<hr/>
 							<div id="spatialisations-ctn">
 								<div id="comments-spatialisation" class="spatialisation-control">
 									<div class="title">Spatialisation des commentaires</div>
 									<div class="control-container vertical-slider-container">
-										<div id="comments-elevation-level" data-type="commentary" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des commentaires">
+										<div id="comments-elevation-level" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des commentaires">
 											<a class="ui-slider-handle ui-state-default ui-corner-all oneline" title="Contrôle du niveau d'élévation des commentaires"></a>
 										</div>
 									</div>
 									<div id="comments-spatialisation-zone-ctn" class="control-container spatialisation-zone-ctn">
-										<div id="comments-spatialisation-zone" class="spatialisation-zone ad" data-type="commentary"></div>
+										<div id="comments-spatialisation-zone" class="spatialisation-zone ad"></div>
 									</div>
 								</div>
-								<div id="dialogues-spatialisation" class="spatialisation-control">
-									<div class="title">Spatialisation des dialogues</div>
-									<div class="control-container vertical-slider-container">
-										<div id="dialogues-elevation-level" data-type="dialogues" class="ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" title="Niveau d'élévation des dialogues">
-											<a class="ui-slider-handle ui-state-default ui-corner-all oneline" title="Contrôle du niveau d'élévation des dialogues"></a>
-										</div>
-									</div>
-									<div id="dialogues-spatialisation-zone-ctn" class="control-container spatialisation-zone-ctn">
-										<div id="dialogues-spatialisation-zone" class="spatialisation-zone di" data-type="dialogues"></div>
-									</div>
-								</div>							
 							</div>
 						</div>
 
@@ -456,9 +448,6 @@
 						<li class="menu-item">
 							<a tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[29]);">Changer la spatialisation des commentaires</a>
 						</li>
-						<li class="menu-item">
-							<a tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[30]);">Changer la spatialisation des dialogues</a>
-						</li>
 					</ul>
 					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
@@ -704,11 +693,11 @@
 							<div id="playerControlFF" class="btn selectable-by-chromevox final-option" onclick="Player.ff();" tabindex="52" title="Bouton avance rapide"></div>
 						</div>
 						<div id="playerControlADVolume" class="volume-control-ctn">
-							<div class="label-slider">Volume des commentaires</div>
+							<div class="label-slider">Renforcement des dialogues</div>
 							<span id="ad-volume-tooltip" class="tooltip" role="tooltip"></span> 
 							<span class="icon volume-min"></span>
 							<div id="ad-volume-slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
-								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" tabindex="53" title="Contrôle pour améliorer les commentaires" role="slider"></a>
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox final-option" tabindex="53" title="Contrôle pour améliorer les dialogues" role="slider"></a>
 							</div>
 							<span class="icon volume" id="ad-up-volume"></span>
 						</div>

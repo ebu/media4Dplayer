@@ -4838,7 +4838,7 @@ var VirtualSpeakersNode = function (_AbstractNode) {
          */
 
     }, {
-        key: 'getFallbackUrl',
+        key: 'getFallbackUrls',
 
 
         //==============================================================================
@@ -4846,10 +4846,19 @@ var VirtualSpeakersNode = function (_AbstractNode) {
          * Returns a fallabck url in case bili2 is not accessible
          * @type {string} url
          */
-        value: function getFallbackUrl() {
+        value: function getFallbackUrls() {
             var sampleRate = this._audioContext.sampleRate;
 
-            var sofaUrl = './hrtf/IRC_1147_C_HRIR_M_' + sampleRate + '.sofa.json';
+            /*
+            const sofaUrl = './hrtf/IRC_1147_C_HRIR_M_' + sampleRate + '.sofa.json';
+             return sofaUrl;
+            */
+
+            var sofaUrl = [];
+
+            sofaUrl.push('./hrtf/IRC_1147_C_HRIR_M_' + sampleRate + '.sofa.json');
+            sofaUrl.push('./hrtf/OLPS_2042_C_HRIR_M_' + sampleRate + '.sofa.json');
+            sofaUrl.push('./hrtf/OLPS_2044_C_HRIR_M_' + sampleRate + '.sofa.json');
 
             return sofaUrl;
         }

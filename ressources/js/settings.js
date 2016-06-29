@@ -12,8 +12,8 @@ var Settings = {
 	init:{},
 	change:{},
 	defaultVolumeValue:70,
-	defaultADVolumeValue:0,
-	adGainRange:[-60,30],
+	defaultDialogEnhancementBalance:100,
+	adGainRange:[0,100],
 	backToPlayerFromSettings:false,
 	minDistance:30
 };
@@ -69,21 +69,27 @@ Settings.init.interface = function(){
  */
 
 Settings.init.audio = function(){
+	
+	/* Le bouton Renforcement des dialogues */
+	var $dE = $(document.getElementById("dialogues-extended-btn"));
+	Player.dialogsEnhanced = Player.getDialogsEnhancedState();
+	if(Player.dialogsEnhanced){
+		$dE.addClass("active");
+	}else{
+		$dE.removeClass("active");
+	}
 		
 	/* Le choix du mode de spatialisation */
 	this.audio.spatialisationMode();
+		
+	/* Le choix d'un profil */
+	this.audio.audioProfil();
 	
 	/* Le niveau des commentaires */
 	this.audio.elevationLevel($(document.getElementById("comments-elevation-level")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel);
 	
-	/* Le niveau des dialogues */
-	this.audio.elevationLevel($(document.getElementById("dialogues-elevation-level")), getHtmlStorage("dialoguesElevationLevel") || Player.dialoguesElevationLevel);
-	
 	/* La zone des commentaires */
 	this.audio.azimDistance($(document.getElementById("comments-spatialisation-zone")));
-	
-	/* La zone des dialogues */
-	this.audio.azimDistance($(document.getElementById("dialogues-spatialisation-zone")));
 };
 
 /**
@@ -105,6 +111,58 @@ Settings.init.audio.spatialisationMode = function(){
 			}
 		});
 	}	
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Loads the profils catalogue for the audio screen
+ */
+
+Settings.init.audio.audioProfil = function(){
+	
+	var _callback = function(list){
+		
+		if(!Main.simplifiedMode){
+			
+			var $select = $(document.getElementById("audio-profils-options")), $option;
+			if(!$select.children().length){	
+				
+				list.forEach( function (url) {
+					$option = document.createElement('option');
+					$option.textContent = url.replace("http://bili2.ircam.fr/SimpleFreeFieldHRIR/", ".../").replace("_C_HRIR.sofa", "");
+					$option.value = url;
+					$select.append($option);
+				});
+			}			
+			
+			Settings.init.audio.audioProfil.setAudioProfil(list);
+				
+			$select.selectmenu({
+				select: function( event, ui ) {
+					Settings.change.audioProfil(ui.item.value);
+				}
+			}).selectmenu( "menuWidget" ).addClass( "overflow" );
+		}
+	};
+	
+	if(Player.catalogue.length){
+		_callback(Player.catalogue);
+	}else{
+		getSofaCatalogue(Player.defaultSampleRate, _callback);
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Sets the default audio profil
+ */
+
+Settings.init.audio.audioProfil.setAudioProfil = function(list){
+	var audioProfil = getHtmlStorage("audioProfil");
+	Player.catalogue = list;
+
+	var val = audioProfil && list.indexOf(audioProfil) !== -1 ? audioProfil : list[0];
+	Settings.change.audioProfil(val);
 };
 
 /**
@@ -680,6 +738,32 @@ Settings.change.audioSpatialisationMode = function(value){
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
+ * @description Changes the audio profil
+ * @param {String} value The new mode
+ */
+
+Settings.change.audioProfil = function(value){
+	
+	var setMode = function(val){
+		Player.profilLoaded =  false;
+		Player.selectedProfil = val;
+		setHtmlStorage("audioProfil", val);
+	};
+	
+	if(Main.simplifiedMode){
+		/*$(document.getElementById("spatialisation-options-sm")).children(".menu-item").filter(function(){
+			return $(this).data("value") === value;
+		}).addClass("selected").attr("aria-checked", true).siblings().removeClass("selected").attr("aria-checked", false);
+		setMode(value);*/
+		
+	}else{
+		$(document.getElementById("audio-profils-options")).val(value);
+		setMode(value);
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
  * @description Changes the audio elevation level
  * @param {Integer} value The new mode
  * @param {jQuery Object} el The slider element
@@ -687,47 +771,36 @@ Settings.change.audioSpatialisationMode = function(value){
 
 Settings.change.audioElevationLevel = function(value, el){
 
-	var type = $(el).data("type");
-	if(["commentary", "dialogues"].indexOf(type) !== -1){
-		
-		// Converti les steps en leur valeur correspondante
-		if(Main.simplifiedMode){
-			var range = Player.elevationRange;
-			value = value === 2 ? parseInt((range[1] - Math.abs(range[0])) / 2, 10) : value === 1 ? range[0] : range[1];	
-		}
-		
-		if(type === "commentary"){
-			Player.commentsElevationLevel = value;
-			setHtmlStorage("commentsElevationLevel", value);
-			log("Niveau d'élévation des commentaires : " + value + "°");
+	// Converti les steps en leur valeur correspondante
+	if(Main.simplifiedMode){
+		var range = Player.elevationRange;
+		value = value === 2 ? parseInt((range[1] - Math.abs(range[0])) / 2, 10) : value === 1 ? range[0] : range[1];	
+	}
 
-		}else{
-			Player.dialoguesElevationLevel = value;
-			setHtmlStorage("dialoguesElevationLevel", value);
-			log("Niveau d'élévation des dialogues : " + value + "°");			
-		}
-		
-		var $slider = $(el).children("a");
-		if($slider.length){
-			
-			var valueText = function(){
-				if(value >= 45) {
-					return "Haut";
+	Player.commentsElevationLevel = value;
+	setHtmlStorage("commentsElevationLevel", value);
+	log("Niveau d'élévation des commentaires : " + value + "°");
 
-				}else if (value <= 0) {
-					return "Bas";
+	var $slider = $(el).children("a");
+	if($slider.length){
 
-				}else{
-					return "Tête";
-				}
-			}();
+		var valueText = function(){
+			if(value >= 45) {
+				return "Haut";
 
-			if(Main.simplifiedMode){
-				$slider.attr("aria-valuenow", value).attr("aria-valuetext", valueText/*value + "°"*/);
+			}else if (value <= 0) {
+				return "Bas";
 
 			}else{
-				$slider.text(valueText);
+				return "Tête";
 			}
+		}();
+
+		if(Main.simplifiedMode){
+			$slider.attr("aria-valuenow", value).attr("aria-valuetext", valueText/*value + "°"*/);
+
+		}else{
+			$slider.text(valueText);
 		}
 	}
 };
@@ -740,29 +813,18 @@ Settings.change.audioElevationLevel = function(value, el){
  */
 
 Settings.change.audioAzim = function(value, el){
-	
-	var type = $(el).data("type");
-	if(["commentary", "dialogues"].indexOf(type) !== -1){
 		
-		// Converti les steps en leur valeur correspondante
-		if(Main.simplifiedMode){
-			value = value === 5 ? 180 : value === 4 ? 90 : value === 3 ? 0 : value === 2 ? -90 : -180;
-		}
-		
-		if(type === "commentary"){
-			Player.commentsAzim = value;
-			setHtmlStorage("commentsAzim", value);
-			log("Orientation des commentaires : " + value + "°");
+	// Converti les steps en leur valeur correspondante
+	if(Main.simplifiedMode){
+		value = value === 5 ? 180 : value === 4 ? 90 : value === 3 ? 0 : value === 2 ? -90 : -180;
+	}
 
-		}else{
-			Player.dialoguesAzim = value;
-			setHtmlStorage("dialoguesAzim", value);
-			log("Orientation des dialogues : " + value + "°");
-		}
-		
-		if(Main.simplifiedMode){
-			$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + "°");
-		}		
+	Player.commentsAzim = value;
+	setHtmlStorage("commentsAzim", value);
+	log("Orientation des commentaires : " + value + "°");
+
+	if(Main.simplifiedMode){
+		$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + "°");
 	}
 };
 
@@ -775,15 +837,8 @@ Settings.change.audioAzim = function(value, el){
 
 Settings.change.audioDistance = function(value, el){
 	
-	var type = $(el).data("type");
-	if(type === "commentary"){
-		Player.commentsDistance = value;
-		setHtmlStorage("commentsDistance", value);
-
-	}else{
-		Player.dialoguesDistance = value;
-		setHtmlStorage("dialoguesDistance", value);				
-	}
+	Player.commentsDistance = value;
+	setHtmlStorage("commentsDistance", value);
 		
 	if(Main.simplifiedMode){
 		$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + " mètre");

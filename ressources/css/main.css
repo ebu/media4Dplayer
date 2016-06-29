@@ -342,15 +342,14 @@ h2{font-size:1.6em;font-weight:600}
 #ambiance-adaptation-btn{background-image:url(../img/bruit_ambiant.png)}
 #dialogues-extended-btn{background-image:url(../img/renforcement_dialogue.png)}
 #audio-settings .active{background-color:#82c174}
-#spatialisation-options-ctn{margin-top:40px;}
-#spatialisation-options{width:100%}
+#audio-settings .button{transition:background-color .2s;}
+#spatialisation-options-ctn, #audio-profils-options-ctn{margin-top:40px;}
+#spatialisation-options, #audio-profils-options{width:100%}
 .ui-selectmenu-button{background:#fff;border:#e7e8e8 2px solid;border-radius:0;box-sizing:border-box}
 .ui-widget{font-family:inherit}
 .ui-selectmenu-text{font-weight:500}
 .ui-selectmenu-button span.ui-icon{background:url(../img/fleche_menu_deroulant.png) center center no-repeat}
-.spatialisation-control{margin-top:25px;}
-.spatialisation-control:first-child{float: left;}
-.spatialisation-control:last-child{float: right;}
+.spatialisation-control{margin-top:25px;float: left;}
 .spatialisation-control .title{margin-bottom: 15px;}
 .spatialisation-control .control-container{float:left}
 .vertical-slider-container{width:125px;height:281px;background:url(../img/spatial__hauteur.png) no-repeat;background-size:contain;padding:46px 0 46px 14px;box-sizing:border-box;}
@@ -364,6 +363,7 @@ h2{font-size:1.6em;font-weight:600}
 .slider-horizontal .ui-slider-horizontal{height: 2px;cursor: pointer;box-shadow: 0 0 0 #000000;background: #C4C4C4;border-radius: 0;border: 0 solid #000000;display: inline-block;vertical-align: middle;width: 100%;}
 .slider-horizontal .ui-slider-handle{box-shadow: 1px 1px 2px #808080;border: 1px solid #bababa;height: 32px;width: 10px;border-radius: 0;background: #FFF;cursor: pointer;margin-top: -11.5px;margin-left: 0;}
 .slider-horizontal .ui-slider-range{background: none transparent;}
+.ui-selectmenu-menu .overflow{max-height: 345px;max-width: 402px;font-size: 1em;}
 
 /* RECHERCHE */ 
 #search > div{display: none;}

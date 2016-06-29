@@ -19,12 +19,12 @@ var InfoBanner = {
 InfoBanner.reset = function(){
 	
 	var $sliderADVol = $(document.getElementById("playerControlADVolume"));
-	if(Media.audioDescriptionEnabled){
+	if(Player.dialogsEnhanced){
 		$sliderADVol.show();
 	}else{
 		$sliderADVol.hide();
 	}
-	
+		
 	this.progressBar.reset();	
 	this.playerParams.reset();
 	
@@ -58,7 +58,9 @@ InfoBanner.generate = function(){
 	
 	// VOLUME
 	this.initVolumeSlider();	
-	this.initADVolumeSlider();
+	if(Player.dialogsEnhanced){
+		this.initADVolumeSlider();
+	}
 };
 
 /**
@@ -589,37 +591,8 @@ InfoBanner.initVolumeSlider = function(){
 
 InfoBanner.initADVolumeSlider = function(){
 
-	var defaultValue = getHtmlStorage("ADvolumeValue") || Settings.defaultADVolumeValue;
+	var defaultValue = getHtmlStorage("dialogEnhancementBalance") || Settings.defaultDialogEnhancementBalance;
 	var $tooltip = $(document.getElementById("ad-volume-tooltip")).hide();
-	var _onSlide = function(el, value) {
-		
-		InfoBanner.launchMaskingAfterDelay();
-
-		var $volume = $(document.getElementById("ad-up-volume"));
-		var $sliderControl = $(el).children("a");
-		$tooltip.css('left', $sliderControl.css("left")).text(value);
-
-		if(value <= 5) { 
-			$volume.css('background-position', '0 -25px');
-
-		}else if (value <= 15) {
-			$volume.css('background-position', '0 -25px');
-
-		}else if (value <= 30) {
-			$volume.css('background-position', '0 -50px');
-
-		}else{
-			$volume.css('background-position', '0 -75px');
-		}
-
-		$sliderControl.attr("aria-valuenow", value).attr("aria-valuetext", value + " décibel");
-		
-		try{
-			Player.onChangeADVolume(value);			
-		}catch(e){
-			log(e);
-		}
-	};
 	var range = Settings.adGainRange;
 	var $slider = $( document.getElementById("ad-volume-slider") ).slider({
         range: "min",
@@ -632,7 +605,7 @@ InfoBanner.initADVolumeSlider = function(){
         },
 		
         slide: function(event, ui){
-			_onSlide(this, ui.value);
+			InfoBanner.initADVolumeSlider.onSlide(this, ui.value);
 		}, 
 		
         stop: function() {
@@ -640,9 +613,73 @@ InfoBanner.initADVolumeSlider = function(){
         }
 	});
 	
-	if(Media.audioDescriptionEnabled){
-		_onSlide($slider, defaultValue);
+	this.initADVolumeSlider.onSlide($slider, parseInt(defaultValue, 10));
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Executes the hiding the info banner
+ */
+
+InfoBanner.initADVolumeSlider.onSlide = function(el, value){
+	InfoBanner.launchMaskingAfterDelay();
+
+	var $volume = $(document.getElementById("ad-up-volume"));
+	var $sliderControl = $(el).children("a");
+	var _getTextValue = function(getBruteVal){
+		var mode = dialogEnhancement.mode, val;
+		if(mode > 0){
+			
+			if( mode === 1 ){
+				val = Math.round(value).toString();
+				if(getBruteVal){
+					return val;
+				}else{
+					log('Je passe la balance à ' + val + ' % (ambiance | dialog)');
+					return val + " %";
+				}
+
+			}else{
+				if( mode === 2 ){
+					val = Math.round(M4DPAudioModules.utilities.scale( value, 0, 100, -6, 6 )).toFixed(1);
+
+				}else if( mode === 3 ){
+					val = Math.round(M4DPAudioModules.utilities.scale( value, 0, 100, 0, 6 )).toFixed(1);
+				}
+				
+				if(getBruteVal){
+					return val;
+				}else{
+					log('Je passe la balance à ' + val + ' décibel');
+					return val + " décibel";
+				}
+			}
+		}else{
+			return "";
+		}		
+	};
+	$(document.getElementById("ad-volume-tooltip")).css('left', $sliderControl.css("left")).text(_getTextValue(true));
+
+	if(value <= 5) { 
+		$volume.css('background-position', '0 -25px');
+
+	}else if (value <= 15) {
+		$volume.css('background-position', '0 -25px');
+
+	}else if (value <= 30) {
+		$volume.css('background-position', '0 -50px');
+
+	}else{
+		$volume.css('background-position', '0 -75px');
 	}
+
+	$sliderControl.attr("aria-valuenow", _getTextValue(true)).attr("aria-valuetext", _getTextValue());
+
+	try{
+		Player.onChangeADVolume(value);			
+	}catch(e){
+		log(e);
+	}	
 };
 
 																								/********************************

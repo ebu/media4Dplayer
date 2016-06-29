@@ -53,19 +53,19 @@ var Player = {
 	commentsAzim:0,
 	commentsElevationLevel:0,
 	commentsDistance:1,
-	dialoguesAzim:0,
-	dialoguesElevationLevel:0,
-	dialoguesDistance:1,
 	azimRadius:180,
 	distanceRange:[0.5, 10],
 	elevationRange:[-40, 90],
 	binauralEQ:false,
 	catalogue:[],
 	selectedProfil:null,
+	profilLoaded:false,
+	defaultSampleRate:48000,
 	config:null,
 	attackTime:10,
 	releaseTime:150,
-	gainOffset:2
+	gainOffset:2,
+	dialogsEnhanced:0
 };
 
 /**
@@ -83,11 +83,9 @@ Player.load = function(videoData, callback, onClose){
 	
 	this.spatializationMode = getHtmlStorage("spatializationMode") || this.spatializationMode;
 	this.commentsElevationLevel = getHtmlStorage("commentsElevationLevel") || this.commentsElevationLevel;
-	this.dialoguesElevationLevel = getHtmlStorage("dialoguesElevationLevel") || this.dialoguesElevationLevel;
 	this.commentsDistance = getHtmlStorage("commentsDistance") || this.commentsDistance;
-	this.dialoguesDistance = getHtmlStorage("dialoguesDistance") || this.dialoguesDistance;
 	this.commentsAzim = getHtmlStorage("commentsAzim") || this.commentsAzim;
-	this.dialoguesAzim = getHtmlStorage("dialoguesAzim") || this.dialoguesAzim;
+	this.dialogsEnhanced = this.getDialogsEnhancedState();
 
 	if(!this.alreadyInit || (videoData.links.dataMain.url !== Media.links.dataMain.url)){
 
@@ -118,8 +116,16 @@ Player.load = function(videoData, callback, onClose){
 	var urlMain 			= Media.links.dataMain.url;
 	var urlPip 				= Media.links.dataLS.url;
 	var urlAudioDescription	= Media.links.dataAD.url;
-	var urlAudioFiveDotOne 	= Media.links.dataEA.url;
-	var urlAudioFiveDotOne2	= Media.links.dataDI.url;
+	
+	// Doit privilégier EA3 + DI, sinon EA1
+	var urlAudioFiveDotOne, urlAudioFiveDotOne2;
+	if(videoData.hasEA3DIStream){
+		urlAudioFiveDotOne 	= Media.links.dataEA.url;
+		urlAudioFiveDotOne2	= Media.links.dataDI.url;
+		
+	}else{
+		urlAudioFiveDotOne 	= Media.links.dataMC.url;
+	}
 
 	this.playerManager.playerMain.attachView(this.videoMain);
 	this.playerManager.playerMain.attachSource(urlMain);	
@@ -151,14 +157,12 @@ Player.load = function(videoData, callback, onClose){
 	this.initSubtitlesParams();
 
 	this.onChangeEqualization();
-	this.onChangeAzim("commentary");
-	this.onChangeAzim("dialogues");
-	this.onChangeElevation("commentary");
-	this.onChangeElevation("dialogues");
-	this.onChangeDistance("commentary");
-	this.onChangeDistance("dialogues");
+	if(this.mode === "5.1"){
+		this.onChangeAzim();
+		this.onChangeElevation();
+		this.onChangeDistance();		
+	}
 
-	dialogEnhancement.balance = 50;
 
 	// update the WAA connections
 	this.updateWAAConnections();
@@ -219,12 +223,13 @@ Player.launch = function(){
 	videos = {
 		a:Popcorn(players[0])
 	};
-	if(Media.links.dataEA.url){
+	if(Media.hasEA3DIStream){
 		videos.b = Popcorn(players[1]);
-		playersToLaunch++;
-	}
-	if(Media.links.dataDI.url){
 		videos.c = Popcorn(players[2]);
+		playersToLaunch+=2;
+		
+	}else if(Media.links.dataMC.url){
+		videos.b = Popcorn(players[1]);		
 		playersToLaunch++;
 	}
 	if(Media.links.dataAD.url){
@@ -274,16 +279,18 @@ Player.launch = function(){
 		}
 	});
 	var updateCurrentTime = function(media, cTime){
-		media.currentTime(cTime);
+		if(media){
+			media.currentTime(cTime);
+		}
 	},
 		resyncCurrentTime = function(media, cTime){
 		if(media && media.media.readyState === 4){
 			var cTime2 = media.currentTime(), diff = Math.abs(cTime-cTime2), id = media.media.id;
 			if (diff > 0.1) {
-				log("-----------------------------------------------Recalage nécessaire ("+diff+">0.1) pour "+id);
+				//log("-----------------------------------------------Recalage nécessaire ("+diff+">0.1) pour "+id);
 				updateCurrentTime(media, cTime);
 			}else{
-				log("Recalage pas nécessaire ("+diff+"<0.1) pour "+id);
+				//log("Recalage pas nécessaire ("+diff+"<0.1) pour "+id);
 			}			
 		}
 	},
@@ -324,7 +331,7 @@ Player.launch = function(){
 				events.forEach(function (event) {
 
 					videos.a.on(event, function () {
-						log("event name = " + event+"------------------------------------------------");
+						//log("event name = " + event+"------------------------------------------------");
 						// Avoid overkill events, trigger timeupdate manually
 
 						var cTime = this.currentTime();
@@ -402,6 +409,7 @@ Player.initWAA = function(){
 	var eaData = JSON.parse(JSON.stringify(Media.links.dataEA));
 	var adData = JSON.parse(JSON.stringify(Media.links.dataAD));
 	var diData = JSON.parse(JSON.stringify(Media.links.dataDI));
+	var mcData = JSON.parse(JSON.stringify(Media.links.dataMC));
 
 	/// Workaround when all the streams are not in the EBU Core
 	if(!Media.links.dataEA.type){
@@ -465,15 +473,43 @@ Player.initWAA = function(){
 				isTrue(mainData.ambiance),
 				isTrue(mainData.commentary));
 
-		// Ambiance (pour le 5.1)
-		extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
-				eaData.type,
-				typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
-				parseFloat(eaData.loudness,10),
-				parseFloat(eaData.maxTruePeak,10),
-				isTrue(eaData.dialog),
-				isTrue(eaData.ambiance),
-				isTrue(eaData.commentary));
+		if(Media.hasEA3DIStream){
+			
+			// Ambiance (pour le 5.1) / Ambiance + dialogues (pour le 5.1 multicanal)
+			extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
+					eaData.type,
+					typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
+					parseFloat(eaData.loudness,10),
+					parseFloat(eaData.maxTruePeak,10),
+					isTrue(eaData.dialog),
+					isTrue(eaData.ambiance),
+					isTrue(eaData.commentary));
+
+			// Dialogue (pour le 5.1)
+			extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
+					diData.type,
+					typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
+					parseFloat(diData.loudness,10),
+					parseFloat(diData.maxTruePeak,10),
+					isTrue(diData.dialog),
+					isTrue(diData.ambiance),
+					isTrue(diData.commentary));
+			
+		}else{
+			
+			// Ambiance (pour le 5.1) / Ambiance + dialogues (pour le 5.1 multicanal)
+			extendedAmbienceASD = new M4DPAudioModules.AudioStreamDescription(
+					mcData.type,
+					typeof( Media.links.dataMC.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
+					parseFloat(mcData.loudness,10),
+					parseFloat(mcData.maxTruePeak,10),
+					isTrue(mcData.dialog),
+					isTrue(mcData.ambiance),
+					isTrue(mcData.commentary));
+
+			// Dialogue (pour le 5.1)
+			extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(diData.type);
+		}
 
 		// Commentaires
 		extendedCommentsASD = new M4DPAudioModules.AudioStreamDescription(
@@ -484,16 +520,6 @@ Player.initWAA = function(){
 				isTrue(adData.dialog),
 				isTrue(adData.ambiance),
 				isTrue(adData.commentary));
-
-		// Dialogue (pour le 5.1)
-		extendedDialogsASD = new M4DPAudioModules.AudioStreamDescription(
-				diData.type,
-				typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled,
-				parseFloat(diData.loudness,10),
-				parseFloat(diData.maxTruePeak,10),
-				isTrue(diData.dialog),
-				isTrue(diData.ambiance),
-				isTrue(diData.commentary));
 
 		var asdc = new M4DPAudioModules.AudioStreamDescriptionCollection(
 				[mainAudioASD, extendedAmbienceASD, extendedCommentsASD, extendedDialogsASD]
@@ -507,8 +533,6 @@ Player.initWAA = function(){
 			kMultichannelSpatialiser : 0,
 			kObjectSpatialiserAndMixer : 1
 		};
-
-		this.config = ModulesConfiguration.kObjectSpatialiserAndMixer;
 
 		streamSelector = new M4DPAudioModules.StreamSelector( this.playerManager.audioContext, asdc );
 		smartFader = new M4DPAudioModules.SmartFader( this.playerManager.audioContext, asdc );
@@ -555,13 +579,40 @@ Player.initWAA = function(){
 		mainAudioASD.ambiance = isTrue(mainData.ambiance);
 		mainAudioASD.commentary = isTrue(mainData.commentary);
 		
-		extendedAmbienceASD.type = eaData.type;
-		extendedAmbienceASD.active = typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
-		extendedAmbienceASD.loudness = parseFloat(eaData.loudness);
-		extendedAmbienceASD.maxTruePeak = parseFloat(eaData.maxTruePeak);
-		extendedAmbienceASD.dialog = isTrue(eaData.dialog);
-		extendedAmbienceASD.ambiance = isTrue(eaData.ambiance);
-		extendedAmbienceASD.commentary = isTrue(eaData.commentary);
+		if(Media.hasEA3DIStream){
+			extendedAmbienceASD.type = eaData.type;
+			extendedAmbienceASD.active = typeof( Media.links.dataEA.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+			extendedAmbienceASD.loudness = parseFloat(eaData.loudness);
+			extendedAmbienceASD.maxTruePeak = parseFloat(eaData.maxTruePeak);
+			extendedAmbienceASD.dialog = isTrue(eaData.dialog);
+			extendedAmbienceASD.ambiance = isTrue(eaData.ambiance);
+			extendedAmbienceASD.commentary = isTrue(eaData.commentary);
+
+			extendedDialogsASD.type = diData.type;
+			extendedDialogsASD.active = typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+			extendedDialogsASD.loudness = parseFloat(diData.loudness);
+			extendedDialogsASD.maxTruePeak = parseFloat(diData.maxTruePeak);
+			extendedDialogsASD.dialog = isTrue(diData.dialog);
+			extendedDialogsASD.ambiance = isTrue(diData.ambiance);
+			extendedDialogsASD.commentary = isTrue(diData.commentary);
+			
+		}else{	
+
+			extendedAmbienceASD.type = mcData.type;
+			extendedAmbienceASD.active = typeof( Media.links.dataMC.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
+			extendedAmbienceASD.loudness = parseFloat(mcData.loudness);
+			extendedAmbienceASD.maxTruePeak = parseFloat(mcData.maxTruePeak);
+			extendedAmbienceASD.dialog = isTrue(mcData.dialog);
+			extendedAmbienceASD.ambiance = isTrue(mcData.ambiance);
+			extendedAmbienceASD.commentary = isTrue(mcData.commentary);
+
+			extendedDialogsASD.active = false;
+			extendedDialogsASD.loudness = false;
+			extendedDialogsASD.maxTruePeak = false;
+			extendedDialogsASD.dialog = false;
+			extendedDialogsASD.ambiance = false;
+			extendedDialogsASD.commentary = false;
+		}
 		
 		extendedCommentsASD.type = adData.type;
 		extendedCommentsASD.active = Media.audioDescriptionEnabled;
@@ -570,20 +621,14 @@ Player.initWAA = function(){
 		extendedCommentsASD.dialog = isTrue(adData.dialog);
 		extendedCommentsASD.ambiance = isTrue(adData.ambiance);
 		extendedCommentsASD.commentary = isTrue(adData.commentary);
-		
-		extendedDialogsASD.type = diData.type;
-		extendedDialogsASD.active = typeof( Media.links.dataDI.type ) !== "undefined" && this.mode === "5.1" && Media.audioEnabled;
-		extendedDialogsASD.loudness = parseFloat(diData.loudness);
-		extendedDialogsASD.maxTruePeak = parseFloat(diData.maxTruePeak);
-		extendedDialogsASD.dialog = isTrue(diData.dialog);
-		extendedDialogsASD.ambiance = isTrue(diData.ambiance);
-		extendedDialogsASD.commentary = isTrue(diData.commentary);
 	}
+
+	this.config = this.mode === "5.1" ? ModulesConfiguration.kObjectSpatialiserAndMixer : ModulesConfiguration.kMultichannelSpatialiser;
 		
 	log(mainAudioASD);
 	log(extendedAmbienceASD);
-	log(extendedCommentsASD);
 	log(extendedDialogsASD);
+	log(extendedCommentsASD);
 };
 
 /**
@@ -874,53 +919,16 @@ Player.prepareSofaCatalog = function(callback){
 		return;
 	}
 	
-	var _callback = function(url){
-		Player.selectedProfil = url;
-		Player.onChangeProfil(url);
+	var _callback = function(list){
+		Settings.init.audio.audioProfil.setAudioProfil(list);
+		Player.onChangeProfil();
 
 		if(typeOf(callback) === "object" && callback.onSuccess){
 			callback.onSuccess();
 		}		
 	};
-
-    /// retrieves the catalog of URLs from the OpenDAP server
-	/*var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
-	serverDataBase
-         .loadCatalogue()
-         .then( function(){
-            var urls = serverDataBase.getUrls({
-                convention: 'HRIR',
-                equalisation: 'compensated',
-                sampleRate: Player.playerManager.audioContext.sampleRate
-            });
-			
-            defaultUrl = urls.findIndex( function (url) {
-                return url.match('1018');
-            });
-			
-			_callback(urls[defaultUrl]);
-			Player.catalogue = urls;
-
-            return urls;
-        })
-        .catch( function (){
-			 
-         	log('could not access bili2.ircam.fr...');*/
-
-			var currentProcessor;
-			if( Player.config === ModulesConfiguration.kMultichannelSpatialiser ){
-				currentProcessor = multichannelSpatialiser;
-
-			}else{
-				currentProcessor = objectSpatialiserAndMixer;
-			}
-
-			var sofaUrl = currentProcessor._virtualSpeakers.getFallbackUrl();
-			_callback(sofaUrl);
-			Player.catalogue = [sofaUrl];
-
-         	return sofaUrl;
-        //});
+	
+	getSofaCatalogue(Player.playerManager.audioContext.sampleRate, _callback);
 };
 
 Player.onChangeProfil = function(){
@@ -937,11 +945,12 @@ Player.onChangeProfil = function(){
         }
 
         /// load the URL in the spatialiser
-		if(Player.catalogue.length){
+		if(this.profilLoaded){
 			objectSpatialiserAndMixer._updateCommentaryPosition();
 		}else{
 			currentProcessor.loadHrtfSet( url )
 			.then( function(){
+				Player.profilLoaded =  true;
 				objectSpatialiserAndMixer._updateCommentaryPosition();
 			});
 		}
@@ -963,31 +972,16 @@ Player.onChangeEqualization = function(){
 	}	
 };
 
-Player.onChangeAzim = function(type){
-	if(type === "commentary"){
-		objectSpatialiserAndMixer.setCommentaryAzimuth( parseFloat( this.commentsAzim ) );
-		
-	}else if(type === "dialogues"){
-		objectSpatialiserAndMixer.setDialogAzimuth( this.dialoguesAzim );
-	}
+Player.onChangeAzim = function(){
+	objectSpatialiserAndMixer.setCommentaryAzimuth( parseFloat( this.commentsAzim ) );
 };
 
-Player.onChangeElevation = function(type){
-	if(type === "commentary"){
-		objectSpatialiserAndMixer.setCommentaryElevation( parseFloat( this.commentsElevationLevel ) );
-		
-	}else if(type === "dialogues"){
-		objectSpatialiserAndMixer.setDialogElevation( this.dialoguesElevationLevel );
-	}
+Player.onChangeElevation = function(){
+	objectSpatialiserAndMixer.setCommentaryElevation( parseFloat( this.commentsElevationLevel ) );
 };
 
-Player.onChangeDistance = function(type){
-	if(type === "commentary"){
-		objectSpatialiserAndMixer.setCommentaryDistance( parseFloat( this.commentsDistance ) );
-		
-	}else if(type === "dialogues"){
-		objectSpatialiserAndMixer.setDialogDistance( this.dialoguesDistance );
-	}
+Player.onChangeDistance = function(){
+	objectSpatialiserAndMixer.setCommentaryDistance( parseFloat( this.commentsDistance ) );
 };
 
 Player.onChangeSpatilisationMode = function(){
@@ -997,35 +991,9 @@ Player.onChangeSpatilisationMode = function(){
 
 Player.onChangeADVolume = function(value){
 		
-	// Si je veux augmenter l'AD je dois baisser les autres et laisser l'AD à 0
-	if(value > 0){
-		var range = Settings.adGainRange;
-		var rangePositive = [0, range[1]];
-		var rangeNegative = [0, range[0]];
-		var nValue = ((value - rangePositive[0]) * (rangeNegative[1] - rangeNegative[0]) / (rangePositive[1] - rangePositive[0])) + rangeNegative[0];
-
-		mainAudioASD._trim = nValue;
-		extendedAmbienceASD._trim = nValue;
-		extendedDialogsASD._trim = nValue;
-
-		extendedCommentsASD._trim = 0;
-		log("Valeur d'entrée : "+value+"; Je passe l'AD à 0 et les autres à "+nValue);
-
-	// Sinon je dois baisser l'AD et laisser les autres à 0
-	}else{
-		mainAudioASD._trim = 0;
-		extendedAmbienceASD._trim = 0;
-		extendedDialogsASD._trim = 0;
-
-		extendedCommentsASD._trim = value;	
-		log("Je passe l'AD à "+value+" et les autres à 0");	
-	}	
-
-	streamSelector.streamsTrimChanged();	
-
-	setHtmlStorage("ADvolumeValue", value);
+	dialogEnhancement.balance = value;
+	setHtmlStorage("dialogEnhancementBalance", value);
 };
-
 																								/********************************
 																								*	GESTION DE LA PROGRESSBAR	*
 																								********************************/
@@ -1246,7 +1214,6 @@ Player.activeOptionSub = function(index) {
 
 Player.activeOptionDescription = function(index) {
 
-	var $sliderADVol = $(document.getElementById("playerControlADVolume"));
 	var $textContent = $(document.getElementById("playerOptionDescriptionCurrentValue"));
 
 	if(index !== Media.audioDescriptions.length){
@@ -1257,10 +1224,7 @@ Player.activeOptionDescription = function(index) {
 		removeHtmlStorage("audioDescriptionDisabled");
 		$textContent.html(Media.audioDescriptions[index].lang);
 
-		$sliderADVol.show();
-
-		var value = parseFloat(getHtmlStorage("ADvolumeValue")) || Settings.defaultADVolumeValue;
-		this.onChangeADVolume(value);
+		var value = parseFloat(getHtmlStorage("dialogEnhancementBalance")) || Settings.defaultDialogEnhancementBalance;
 		$( document.getElementById("ad-volume-slider") ).slider("value", value);
 
 	}else{
@@ -1270,9 +1234,6 @@ Player.activeOptionDescription = function(index) {
 		Media.audioDescriptionEnabled = false;
 		setHtmlStorage("audioDescriptionDisabled", 1);
 		$textContent.html("Aucun");
-
-		this.onChangeADVolume(0);
-		$sliderADVol.hide();
 	}
 
 	this.updateActiveStreams();
@@ -1334,7 +1295,17 @@ Player.updateActiveStreams = function(){
     dialogEnhancement.activeStreamsChanged();
 	receiverMix.activeStreamsChanged();
 	multichannelSpatialiser.activeStreamsChanged();
-	objectSpatialiserAndMixer.activeStreamsChanged();	
+	objectSpatialiserAndMixer.activeStreamsChanged();
+	
+	if(Player.dialogsEnhanced){
+		dialogEnhancement.balance = parseInt(getHtmlStorage("dialogEnhancementBalance"), 10) || Settings.defaultDialogEnhancementBalance;
+	}else{
+		dialogEnhancement.balance = Settings.defaultDialogEnhancementBalance;
+	}
+};
+
+Player.getDialogsEnhancedState = function(){
+	return parseInt(getHtmlStorage("dialogsEnhanced"),10) || 0;
 };
 
 Player.disableLogs = function(){
