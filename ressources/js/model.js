@@ -45,66 +45,14 @@ Model.getAppPlaylistsOfUser = function(data, jqXHR, callback){
  * @param {Function} callback The function which will be triggered after data processing
  */
 
-Model.getProgramDetails = function(xml){
-	if(!((typeOf(xml) === "document" || typeOf(xml) === "xmldocument") && xml.getElementsByTagName('ebucore:ebuCoreMain'))){
-		return {};
-	}
-	
-	var objectType = getElementFromXML(xml, "genre", "ebucore", {type:"typeDefinition", value:"ProgramGenre"});
-	var type = objectType.attr("typeLabel");
-	var program = {
-		"title": getTextFromElement(getElementFromXML(xml, "title", "dc")),
-		"subtitle": getTextFromElement(getElementFromXML(xml, "alternativeTitle", "ebucore", {type:"typeLabel", value:"EpisodeTitle"})),
-		"detail": this.getProgramDetails.getDetails(type, getElementFromXML(xml, "alternative", "ebucore", {type:"typeLabel", value:"DateDiffusion"}), getElementFromXML(xml, "partDuration", "ebucore")),
-		"thumbnail":this.getProgramDetails.getThumbnail(getElementFromXML(xml, "format", "ebucore", {type:"formatName", value:"SequenceThumbnail"})),
-		"picture": this.getProgramDetails.getThumbnail(getElementFromXML(xml, "format", "ebucore", {type:"formatName", value:"SequenceThumbnail"})),
-		"synopsis": getTextFromElement(getElementFromXML(xml, "description", "ebucore", {type:"typeLabel", value:"Synopsis"})),
-		"relatedContent":[/*{
-			   "title": "Le Monde de Jamy : A couper le souffle.",
-			   "subtitle": "Des forêts et des hommes",
-			   "picture": "ressources/img/temp/related/icone_pt_video_soufle.png"
-		   },{
-			   "title": "Le repas des koalas",
-			   "subtitle": "Des forêts et des hommes",
-			   "picture": "ressources/img/temp/related/icone_pt_video_koala.png"
-		   },{
-			   "title": "Attention sangsue !",
-			   "subtitle": "Des forêts et des hommes",
-			   "picture": "ressources/img/temp/related/icone_pt_video_sangsue.png"
-		}*/]
-	};
-
-	program.video = {
-		links:this.getProgramDetails.getLinkDetails(getElementFromXML(xml, "part", "ebucore", {type:"partName", value:"Links"}))
-	};
-	//program.video.subtitlesList = !isEmpty(program.video.links.dataSub) ? ["Français"] : null;
-	program.video.subtitlesList = ["Français"];
-	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":program.video.links.dataAD.url}] : null;
-	program.video.ls = !isEmpty(program.video.links.dataLS) ? [{"lang":"LSF", "url":program.video.links.dataLS.url}] : null;
-	program.video.audiosList = this.getProgramDetails.getAudiosList(program.video.links);
-	
-	program.video.hasEA3DIStream = program.video.links.dataEA.url && program.video.links.dataDI.url ? true : false;
-	program.video.hasMCStream = program.video.links.dataMC.url ? true : false;
-	
-	return program;
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Processes the data received by the API for menu, then launches the callback function
- * @param {Object} data The response returned by the request
- * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
- * @param {Function} callback The function which will be triggered after data processing
- */
-
-Model.getProgramDetails2 = function(data){
+Model.getProgramDetails = function(data){
 
 	var program = {
 		"title": data.title || "Titre inconnu",
 		"subtitle": data.label || "",
-		"detail": this.getProgramDetails.getDetails2(data.types ? data.types[data.types.length-1] : null, data.created_at, data.duration),
-		"thumbnail":this.getProgramDetails.getThumbnail2(data.thumbnails) || "",
-		"picture": this.getProgramDetails.getThumbnail2(data.thumbnails) || "",
+		"detail": this.getProgramDetails.getDetails(data.types ? data.types[data.types.length-1] : null, data.created_at, data.duration),
+		"thumbnail":this.getProgramDetails.getThumbnail(data.thumbnails) || "",
+		"picture": this.getProgramDetails.getThumbnail(data.thumbnails) || "",
 		"synopsis": data.description || "",
 		"relatedContent":[]
 	};
@@ -121,7 +69,7 @@ Model.getProgramDetails2 = function(data){
 	}();
 	
 	program.video = {
-		links:this.getProgramDetails.getLinkDetails2(metadata)
+		links:this.getProgramDetails.getLinkDetails(metadata)
 	};
 	program.video.subtitlesList = program.video.links.dataMain.subtitle ? ["Français"] : null;
 	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":program.video.links.dataAD.url}] : null;
@@ -143,35 +91,8 @@ Model.getProgramDetails2 = function(data){
  */
 
 Model.getProgramDetails.getDetails = function(programType, startDate, duration){
-
-	var type = this.getDetails.programType(programType),
-		date,
-		stringDuration = [];
-
-	if($(startDate).length && $(startDate).attr("startDate")){
-		var stringDate = $(startDate).attr("startDate").split("-");
-		stringDate[2] = stringDate[2].split("+")[0];
-		date = new Date(stringDate[0], stringDate[1]-1, stringDate[2]);		
-	}
-
-	if($(duration).length && $(duration).children().length){
-		stringDuration = $(duration).children().text().split(":");
-	}
 	
-	return {type:type, date:{d:date.getDate(), m:date.getMonth()+1, y:date.getFullYear()}, duration:{h:parseInt(stringDuration[0],10), m:parseInt(stringDuration[1],10), s:parseInt(stringDuration[2],10)}};
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Processes the data received by the API for menu, then launches the callback function
- * @param {Object} data The response returned by the request
- * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
- * @param {Function} callback The function which will be triggered after data processing
- */
-
-Model.getProgramDetails.getDetails2 = function(programType, startDate, duration){
-	
-	var type = Model.getProgramDetails.getDetails.programType(programType);
+	var type = this.getDetails.programType(programType);
 	
 	var date;
 	if(startDate){
@@ -204,113 +125,7 @@ Model.getProgramDetails.getDetails.programType = function(programType){
  * @param {Function} callback The function which will be triggered after data processing
  */
 
-Model.getProgramDetails.getLinkDetails = function(ctn){
-	var data = {
-		dataMain:{},
-		dataLS:{},
-		dataAD:{},
-		dataSub:{},
-		dataEA:{},
-		dataDI:{},
-		dataMC:{}
-	};
-
-	if($(ctn).length){
-
-		var getData = function($data){
-			var data = {};
-			$data.children().each(function(){
-				if($(this).attr("typeLabel")){
-					data[$(this).attr("typeLabel")] = $(this).text().trim();
-				}
-			});
-			return data;
-		};
-
-		var convertTrackLanguage = function(value, isFiveDotOne){
-			value = typeOf(value) === "string" ? value.toLowerCase() : "";
-			var values = {fra:"Français",und:"Indéterminé"};
-			var lang = values[value] ? values[value] : value;
-			if(isFiveDotOne){
-				lang+= " 5.1";
-			}
-			return lang;
-		};
-
-		// Main
-		var $data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"Main"})),
-			$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-		if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
-			data.dataMain = getData($audioFormat);
-			data.dataMain.url = getElementFromXML($data, "locator", "ebucore").text().trim();
-			data.dataMain.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"));
-		}
-
-		// LS
-		$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"SL"}));
-		if($data.length && $data.attr("videoPresenceFlag") === "true"){
-			data.dataLS = {
-				url:getElementFromXML($data, "locator", "ebucore").text().trim()
-			};
-		}
-
-		// AD
-		$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"AD"}));
-		$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-		if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
-			data.dataAD = getData($audioFormat);
-			data.dataAD.url = getElementFromXML($data, "locator", "ebucore").text().trim();
-			data.dataAD.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"));
-		}
-
-		// SUB
-		$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"TTML"}));
-		if($data.length){
-			data.dataSub = {
-				url:getElementFromXML($data, "locator", "ebucore").text().trim()
-			};
-		}
-
-		// Pour le 5.1; les dialogues et l'ambiance sont séparés. Il faut donc récupérer les 2 sources
-		// EA
-		$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"EA3"}));
-		$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-		if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
-			data.dataEA = getData($audioFormat);
-			data.dataEA.url = getElementFromXML($data, "locator", "ebucore").text().trim();
-			data.dataEA.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
-		}
-
-		// DI
-		$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"DI"}));
-		$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-		if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
-			data.dataDI = getData($audioFormat);
-			data.dataDI.url = getElementFromXML($data, "locator", "ebucore").text().trim();
-		}
-
-		// Pour le 5.1; les dialogues et l'ambiance incluent
-		// EA1
-		$data = $(getElementFromXML(ctn, "format", "ebucore", {type:"formatName", value:"EA1"}));
-		$audioFormat = getElementFromXML($data, "audioFormat", "ebucore");
-		if($data.length && $audioFormat.length && $audioFormat.attr("audioPresenceFlag") === "true"){
-			data.dataMC = getData($audioFormat);
-			data.dataMC.url = getElementFromXML($data, "locator", "ebucore").text().trim();
-			data.dataMC.lang = convertTrackLanguage(getElementFromXML($audioFormat, "audioTrack", "ebucore").attr("trackLanguage"), true);
-		}
-	}
-	return data;
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Processes the data received by the API for menu, then launches the callback function
- * @param {Object} data The response returned by the request
- * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
- * @param {Function} callback The function which will be triggered after data processing
- */
-
-Model.getProgramDetails.getLinkDetails2 = function(list){
+Model.getProgramDetails.getLinkDetails = function(list){
 	var data = {
 		dataMain:{},
 		dataLS:{},
@@ -414,24 +229,7 @@ Model.getProgramDetails.getAudiosList = function(data){
  * @param {Function} callback The function which will be triggered after data processing
  */
 
-Model.getProgramDetails.getThumbnail = function(ctn){
-	if($(ctn).length){
-		var thumbElement = getElementFromXML(ctn, "locator", "ebucore");
-		if($(thumbElement).length){
-			return $(thumbElement).text();
-		}
-	}
-};
-
-/**
- * @author Johny EUGENE (DOTSCREEN)
- * @description Processes the data received by the API for menu, then launches the callback function
- * @param {Object} data The response returned by the request
- * @param {Object} jqXHR The jQuery XMLHttpRequest returned by the request
- * @param {Function} callback The function which will be triggered after data processing
- */
-
-Model.getProgramDetails.getThumbnail2 = function(list){
+Model.getProgramDetails.getThumbnail = function(list){
 	if(typeOf(list) === "array" && typeOf(list[0]) === "object"){
 		return list[0].url || "";
 	}
@@ -467,7 +265,7 @@ Model.getResults = function(data, callback_function){
 		for(i=0;i<data.length;i++){
 			media = data[i];
 			if(typeOf(media) === "object"){
-				list.push(this.getProgramDetails2(media));
+				list.push(this.getProgramDetails(media));
 			}
 		}
 	}
