@@ -164,7 +164,7 @@ Apps.programs.generatesForSM = function(rubric){
 	var list = this.list[rubric === rubrics[0] ? "favorites" : rubric === rubrics[1] ? "signets" : "history"], i, l = list.length, program;
 	for(i=this.start;i<l&&i<limit;i++){
 		program = list[i];
-		$item = $('<li tabindex="'+tabindex+'" class="item btn selectable-by-chromevox"><div class="title">'+program.title+'</div><div class="subtitle">'+program.subtitle+'</div><div class="type">'+program.detail+'</div></li>').appendTo($container);
+		$item = $('<li tabindex="'+tabindex+'" class="item btn selectable-by-chromevox"><div class="title">'+program.title+'</div><div class="subtitle">'+program.subtitle+'</div><div class="type">'+getMediaLabel(program.detail)+'</div></li>').appendTo($container);
 					
 		$item.data("data", program);
 		tabindex++;
