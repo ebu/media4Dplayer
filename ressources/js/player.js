@@ -421,6 +421,9 @@ Player.initWAA = function(){
 	if(!Media.links.dataDI.type){
 		diData.type = "Mono";
 	}
+	if(!Media.links.dataMC.type){
+		mcData.type = "MultiWithLFE";
+	}
 
 	//==============================================================================
 	var isTrue = function(prop){
