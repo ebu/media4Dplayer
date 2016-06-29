@@ -151,21 +151,6 @@ $(document.getElementById("terms-of-affination")).on("click", ".term-of-affinati
 			Search.termsOfAffination.terms = [$(this).text()];
 			$showResults.addClass("on");
 		}
-	}else{
-		
-		if($(this).hasClass("sel")){
-			$(this).removeClass("sel");
-			removeA(Search.termsOfAffination.terms, $(this).text());
-			
-			if(!Search.termsOfAffination.terms.length){
-				$showResults.removeClass("on");
-			}
-			
-		}else{
-			$(this).addClass("sel");
-			Search.termsOfAffination.terms.push($(this).text());
-			$showResults.addClass("on");
-		}
 	}
 	log(Search.termsOfAffination.terms);
 });
@@ -176,8 +161,7 @@ $(document.getElementById("terms-of-affination")).on("click", ".group", function
 	if(id && list){
 		
 		Search.termsOfAffination.groupID = id;
-		Search.termsOfAffination.reset();
-		Search.termsOfAffination.showList(list);
+		Section.change(Section.sections[30], Section.rubrics[Section.sections[30]][1]);
 	}
 });
 
