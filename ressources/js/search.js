@@ -407,7 +407,7 @@ Search.results.init = function(list){
 		this.showList(list);
 		
 	}else{
-		$(document.getElementById("full-results-message")).children("span").text("Aucun résultat trouvé pour " + Search.term);
+		$(document.getElementById("full-results-message")).show().children("span").text("Aucun résultat trouvé pour " + Search.term);
 	}
 };
 	
