@@ -27,8 +27,6 @@ API.loadConfigurationSet = function(callback_function){
 			"Accept-language":"fr"
 		},
         callback: function(data) {
-			console.log(data);
-			
 			if(typeOf(callback_function) === "function"){
 				callback_function(data);
 			}
@@ -49,7 +47,6 @@ API.getUserTokens = function(callback_function){
 		    "Authorization": "Basic " + btoa("guest:fEjebruph3zA")
 		},
         callback: function(data) {
-			console.log(data);
 			if(typeOf(data) === "object"){
 				User.tokens = data;
 			}
@@ -69,20 +66,50 @@ API.getUserTokens = function(callback_function){
  * @param {Function} callback_function The function which will be triggered after receiving data
  */
 
-API.getMediasList = function(callback_function){
-	json.load({
-        url: Config.perfectMemoryWS + "medias?auth_token=" + User.tokens.auth_token + "&types=movie&max_count=10&offset=0",
-        callback: function(data) {
-			console.log(data);
-			
-			if(typeOf(callback_function) === "function"){
-				callback_function(data);
+API.getFavorites = function(callback_function){
+	if(typeOf(callback_function) === "function"){
+		json.load({
+			url: Config.perfectMemoryWS + "medias?auth_token=" + User.tokens.auth_token + "&types=movie&max_count=10&offset=0&sort_fields=created_at&sort_order=-1",
+			callback: function(data) {
+				console.log(data);
+				
+				var i, list = [], count = 0, l = data.length;
+				for(i=0;i<l;i++){
+					
+					(function(media){
+						if(typeOf(media) === "object" && media.id){
+							var _onLoadTitle = function(title){
+								if(title){
+									media.title = title;
+									list.push(media);
+								}else{
+									log("L'item avec ce label n'a pas de titre : "+media.label);
+								}
+
+								count++;
+								if(count === l){
+									if(list.length){
+										Model.getResults(list, function(favorites){
+											callback_function({favorites:favorites});
+										});
+
+									}else{
+										callback_function();
+									}
+								}
+							};
+
+							// Fait une requete pour récuperer le titre du programme					
+							API.getProgramTitle(media.id, _onLoadTitle);
+						}
+					})(data[i]);
+				}				
+			},
+			headers: {
+				"Accept-language":"fr"
 			}
-        },
-		headers: {
-			"Accept-language":"fr"
-		}
-    });
+		});
+	}
 };
 
 /* @description Launches a request to get the config json of the environnement
@@ -173,19 +200,7 @@ API.getResults = function(term, method, callback_function){
  */
 
 API.getItemsListForSearch = function(method, data, callback){
-	
-	var predicate_id = function(){
-		var mAnnot = getItemByAttr(Config.configurationSet, "name", "media_annotations");
-		if(typeOf(mAnnot) === "object" && mAnnot.items){
-			var emission = getItemByAttr(mAnnot.items, "label", "émission", "predicate");
-			return emission.predicate.id;
-		}
-	}();
-	
-	if(!predicate_id){
-		return callback();
-	}
-	
+		
 	var list = [];
 	if(method === "content"){
 		if(typeOf(data) === "array"){
@@ -195,13 +210,9 @@ API.getItemsListForSearch = function(method, data, callback){
 				if(textStatus === "success" && jqXHR.responseJSON){
 					
 					var data = jqXHR.responseJSON;
-					var _onLoadTitle = function(jqXHR, textStatus){
-						if(textStatus === "success" && jqXHR.responseJSON){
-							
-							var title = jqXHR.responseJSON[0].subject.label;
+					var _onLoadTitle = function(title){
+						if(title){
 							data.title = title;
-							list.push(data);
-							
 							count++;
 							if(count === l || count === limit){
 								callback(list);
@@ -209,14 +220,8 @@ API.getItemsListForSearch = function(method, data, callback){
 						}
 					};
 					
-					$.ajax({
-						url: Config.perfectMemoryWS + "medias/"+data.id+"/annotations?media_predicate_id="+predicate_id+"&auth_token=" + User.tokens.auth_token,
-						complete:_onLoadTitle,
-						timeout:Config.jsonTimeout * 1000,
-						headers: {
-							"Accept-language":"fr"
-						}
-					});
+					// Fait une requete pour récuperer le titre du programme
+					API.getProgramTitle(data.id, _onLoadTitle);
 					
 				}else{
 					count++;
@@ -226,6 +231,7 @@ API.getItemsListForSearch = function(method, data, callback){
 				}
 			};
 			
+			// Récupère les infos du programme
 			var i, media;
 			for(i=0;i<data.length&&i<limit;i++){
 				media = data[i];
@@ -242,6 +248,30 @@ API.getItemsListForSearch = function(method, data, callback){
 			}
 		}
 	}
+};
+
+/* @description Launches a request to get the config json of the environnement
+ * @param {String} env The environnement
+ * @param {Function} callback_function The function which will be triggered after receiving data
+ */
+
+API.getProgramTitle = function(id, callback){
+	$.ajax({
+		url: Config.perfectMemoryWS + "medias/"+id+"/annotations?media_predicate_id="+Config.predicate_id+"&auth_token=" + User.tokens.auth_token,
+		complete:function(jqXHR, textStatus){
+			if(textStatus === "success" && jqXHR.responseJSON){
+				try{
+					callback(jqXHR.responseJSON[0].subject.label);
+				}catch(e){
+					callback();
+				}
+			}
+		},
+		timeout:Config.jsonTimeout * 1000,
+		headers: {
+			"Accept-language":"fr"
+		}
+	});	
 };
 
 /* @description Launches a request to get the config json of the environnement

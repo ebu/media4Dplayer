@@ -25,6 +25,14 @@ Main.onLoad = function () {
 		API.loadConfigurationSet(function(data){
 			Config.configurationSet = data;
 			API.getUserTokens();
+			
+			Config.predicate_id = function(){
+				var mAnnot = getItemByAttr(Config.configurationSet, "name", "media_annotations");
+				if(typeOf(mAnnot) === "object" && mAnnot.items){
+					var emission = getItemByAttr(mAnnot.items, "label", "émission", "predicate");
+					return emission.predicate.id;
+				}
+			}();			
 		});
 		
 		setTimeout(function(){
