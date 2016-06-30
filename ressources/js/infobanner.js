@@ -220,7 +220,7 @@ InfoBanner.playerParams.init = function(){
 	// LS
 	var $ls = $(document.getElementById("playerOptionSigneCurrentValue"));
 	if(Media.LSFEnabled){
-		value = Media.ls[Media.currentLSFIndex].lang;
+		value = Media.ls[Media.currentLSFIndex];
 		$ls.text(value);
 		
 	}else{
@@ -275,7 +275,7 @@ InfoBanner.playerParams.initLabels = function(){
 	// LS
 	var $labelLS = $(document.getElementById("label-option-ls"));
 	if(Media.LSFEnabled){
-		value = Media.ls[Media.currentLSFIndex].lang;
+		value = Media.ls[Media.currentLSFIndex];
 		$labelLS.text("Choix de langue pour la langue des signes : " + value + " sélectionné");
 		
 	}else{
