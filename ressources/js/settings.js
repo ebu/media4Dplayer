@@ -232,15 +232,8 @@ Settings.init.audio.azimDistance = function($drag){
 		canvas.center = [canvas.left + canvas.width / 2, canvas.top + canvas.height / 2];
 		canvas.radius = canvas.width / 2;
 
-		var azim, dist, type = $drag.data("type");
-		if(type === "commentary"){
-			azim = getHtmlStorage("commentsAzim") || Player.commentsAzim;
+		var azim = getHtmlStorage("commentsAzim") || Player.commentsAzim,
 			dist = getHtmlStorage("commentsDistance") || Player.commentsDistance;
-
-		}else{
-			azim = getHtmlStorage("dialoguesAzim") || Player.dialoguesAzim;
-			dist = getHtmlStorage("dialoguesDistance") || Player.dialoguesDistance;
-		}
 		
 		dist = getDistance(dist, Player.distanceRange, [minDistance, canvas.radius]);
 		var acos = parseInt(azim, 10) * Math.PI / Player.azimRadius;
@@ -269,57 +262,54 @@ Settings.init.audio.azimDistance = function($drag){
 Settings.onDragAzimDistance = function(ui, item, canvas){
 	if(typeOf(ui) === "object" && typeOf(canvas) === "object"){
 		
-		var minDistance = Settings.minDistance,
-			type = $(item).data("type");
-		if(["commentary", "dialogues"].indexOf(type) !== -1){	
+		var minDistance = Settings.minDistance;
 
-			var limit = function(x, y){
-				var dist = distance([x, y], canvas.center);
-				if (dist <= canvas.radius && dist >= minDistance) {
-					return {x: x, y: y};
+		var limit = function(x, y){
+			var dist = distance([x, y], canvas.center);
+			if (dist <= canvas.radius && dist >= minDistance) {
+				return {x: x, y: y};
 
-				}else{
-					var radius = dist <= minDistance ? minDistance : canvas.radius;
-					x = x - canvas.center[0];
-					y = y - canvas.center[1];
-					var radians = Math.atan2(y, x);
-					return {
-						x: Math.cos(radians) * radius + canvas.center[0],
-						y: Math.sin(radians) * radius + canvas.center[1]
-					};		
-				}
-			};
+			}else{
+				var radius = dist <= minDistance ? minDistance : canvas.radius;
+				x = x - canvas.center[0];
+				y = y - canvas.center[1];
+				var radians = Math.atan2(y, x);
+				return {
+					x: Math.cos(radians) * radius + canvas.center[0],
+					y: Math.sin(radians) * radius + canvas.center[1]
+				};		
+			}
+		};
 
-			var result = limit(ui.position.left, ui.position.top);			
-			ui.position.left = result.x;
-			ui.position.top = result.y;
+		var result = limit(ui.position.left, ui.position.top);			
+		ui.position.left = result.x;
+		ui.position.top = result.y;
 
-			// Récupère la distance
-			var dist = distance([result.x, result.y], canvas.center);
-			var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
-			var distanceMeter = getDistance(dist2, [minDistance, canvas.radius], Player.distanceRange);
-			Settings.change.audioDistance(distanceMeter, item);
-			//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
+		// Récupère la distance
+		var dist = distance([result.x, result.y], canvas.center);
+		var dist2 = dist < minDistance ? minDistance : dist > canvas.radius ? canvas.radius : dist;
+		var distanceMeter = getDistance(dist2, [minDistance, canvas.radius], Player.distanceRange);
+		Settings.change.audioDistance(distanceMeter, item);
+		//log("distance = " + dist2 + "px ("+distanceMeter+"m)");
 
-			// Récupère l'angle
-			var getAzim = function(sinus, angle){
-				if(sinus <= 0){
-					return  0 - angle;
-				}else{
-					return angle;
-				}
-			};
+		// Récupère l'angle
+		var getAzim = function(sinus, angle){
+			if(sinus <= 0){
+				return  0 - angle;
+			}else{
+				return angle;
+			}
+		};
 
-			var cosinus = -(ui.position.top - canvas.center[1]) / dist;
-			var sinus = (ui.position.left - canvas.center[0]) / dist;
+		var cosinus = -(ui.position.top - canvas.center[1]) / dist;
+		var sinus = (ui.position.left - canvas.center[0]) / dist;
 
-			var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
-			var azim = Math.round(getAzim(sinus, angle1));
-			Settings.change.audioAzim(azim, item);
-			//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
+		var angle1 = Math.acos(cosinus) * Player.azimRadius / Math.PI;
+		var azim = Math.round(getAzim(sinus, angle1));
+		Settings.change.audioAzim(azim, item);
+		//log("angle1 = " + angle1+"; sinus = " + sinus+"; azim = "+azim);
 
-			log(type + " > distance = "+distanceMeter+"m; azim = " + azim + "°");				
-		}
+		log("distance = "+distanceMeter+"m; azim = " + azim + "°");
 	}
 };
 
