@@ -73,7 +73,7 @@ Model.getProgramDetails = function(data){
 	};
 	program.video.subtitlesList = program.video.links.dataMain.subtitle ? ["Français"] : null;
 	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":program.video.links.dataAD.url}] : null;
-	program.video.ls = !isEmpty(program.video.links.dataLS) ? [{"lang":"LSF", "url":program.video.links.dataLS.url}] : null;
+	program.video.ls = !isEmpty(program.video.links.dataLS) ? ["LSF"] : null;
 	program.video.audiosList = this.getProgramDetails.getAudiosList(program.video.links);
 	
 	program.video.hasEA3DIStream = program.video.links.dataEA.url && program.video.links.dataDI.url ? true : false;

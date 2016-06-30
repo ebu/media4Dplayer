@@ -521,7 +521,7 @@ Search.filters.show = function(type, button){
 				.data("index", i)
 				.on("click", _onclick);
 			
-			if(type === "subtitle" && inputsArray[i] !== "Aucun"){
+			if(type === "subtitle" && ["Aucun","Tout"].indexOf(inputsArray[i]) === -1){
 				$bt.append('<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
 			}
 			tabIndex++;

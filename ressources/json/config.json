@@ -11,9 +11,9 @@
 	"TSPWS":"http://157.159.160.210:8080/artemisSearch/ArtemisMoteur",
 	"filtersLanguages":{
 		"audio":["Français","Anglais"],
-		"subtitle":["Français","Anglais"],
+		"subtitle":["Français"],
 		"ad":["Français","Anglais"],
-		"ls":["LSF","LSA"]
+		"ls":["LSF","LPL"]
 	},
 	"programTypes":{
 		"documentary":"Documentaire",
