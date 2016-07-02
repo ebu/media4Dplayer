@@ -1,4 +1,6 @@
-var Navigation = {};
+var Navigation = {
+	blockNavigation:false
+};
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
