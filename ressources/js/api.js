@@ -68,6 +68,7 @@ API.getUserTokens = function(callback_function){
 
 API.getFavorites = function(callback_function){
 	if(typeOf(callback_function) === "function"){
+		Navigation.blockNavigation = true;
 		json.load({
 			url: Config.perfectMemoryWS + "medias?auth_token=" + User.tokens.auth_token + "&types=movie&max_count=10&offset=0&sort_fields=created_at&sort_order=-1",
 			callback: function(data) {
@@ -104,6 +105,7 @@ API.getFavorites = function(callback_function){
 						}else{
 							callback_function();
 						}
+						Navigation.blockNavigation = false;
 					});
 				}else{
 					callback_function();

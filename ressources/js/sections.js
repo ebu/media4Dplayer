@@ -215,6 +215,11 @@ Section.change.toAppPlaylist = function(newSection, rubric, index){
 		return;
 	}
 	
+	if(Navigation.blockNavigation){
+		log("La navigation est bloquée. Annulation!!!");
+		return;
+	}
+	
 	// TEMPORAIRE
 	if(rubric && rubric !== Section.rubrics[newSection][0]){
 		Section.change(Section.sections[24]);
