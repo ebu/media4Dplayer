@@ -13,6 +13,7 @@ var Settings = {
 	change:{},
 	defaultVolumeValue:70,
 	defaultDialogEnhancementBalance:50,
+	defaultADVolumeValue:50,
 	adGainRange:[0,100],
 	backToPlayerFromSettings:false,
 	minDistance:30
@@ -90,6 +91,9 @@ Settings.init.audio = function(){
 
 	/* La zone des commentaires */
 	this.audio.azimDistance($(document.getElementById("comments-spatialisation-zone")));
+
+	/* Le niveau de l'AD */
+	this.audio.AD($(document.getElementById("comments-spatialisation-zone")));
 };
 
 /**
@@ -249,6 +253,29 @@ Settings.init.audio.azimDistance = function($drag){
 			}
 		});
 	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Initializes the parameters of the font size for the interface screen
+ */
+
+Settings.init.audio.AD = function(){
+	var valueMinSize = getHtmlStorage("extendedADVolume") || 0;
+	var $slider = $(document.getElementById(Main.simplifiedMode ? "extendedCommentsSlide-sm" : "extendedCommentsSlide"));
+
+	$slider.children("a").attr("aria-valuemin", -60).attr("aria-valuemax", 30);
+	$slider.slider({
+		range: "min",
+		value: valueMinSize,
+		step:0.1,
+
+		slide: function(event, ui){
+			Settings.change.ADVolume(ui.value, this);
+		}
+	});
+
+	Settings.change.ADVolume(valueMinSize, $slider);
 };
 
 /**
@@ -832,6 +859,21 @@ Settings.change.audioDistance = function(value, el){
 
 	if(Main.simplifiedMode){
 		$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + " mètre");
+	}
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Changes the app font size
+ * @param {Integer} newValue The new font size
+ * @param {jQuery Object} el The slider element (for SM mode)
+ */
+
+Settings.change.ADVolume = function(newValue, el){
+	setHtmlStorage("extendedADVolume", newValue);
+
+	if(Main.simplifiedMode){
+		$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue + " décibel");
 	}
 };
 

@@ -346,11 +346,15 @@ h2{font-size:1.6em;font-weight:600}
 #audio-settings .active{background-color:#82c174}
 #audio-settings .button{transition:background-color .2s;}
 #spatialisation-options-ctn, #audio-profils-options-ctn{margin-top:40px;}
+#option-extended-comments{width: 405px;float: right;}
+#option-extended-comments .min-value, #option-extended-comments .max-value{width: 15%;}
+.slider-horizontal.extended-comments{width: 70%;}
 #spatialisation-options, #audio-profils-options{width:100%}
 .ui-selectmenu-button{background:#fff;border:#e7e8e8 2px solid;border-radius:0;box-sizing:border-box}
 .ui-widget{font-family:inherit}
 .ui-selectmenu-text{font-weight:500}
 .ui-selectmenu-button span.ui-icon{background:url(../img/fleche_menu_deroulant.png) center center no-repeat}
+#spatialisations-ctn{float: left;}
 .spatialisation-control{margin-top:25px;float: left;}
 .spatialisation-control .title{margin-bottom: 15px;}
 .spatialisation-control .control-container{float:left}
