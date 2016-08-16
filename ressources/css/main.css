@@ -295,7 +295,7 @@ h2{font-size:1.6em;font-weight:600}
 .ui-subtitles{width:884px;height:227px}
 .pip-video{position:relative;box-shadow:0 0 5px #000;background-color:#4d4d4d}
 .ui-subtitles .pip-video{left:0;width:100%;height:33%;text-align:center;line-height:60px}
-.pip-text{display:inline-block;vertical-align:middle;line-height:normal;color:#fff}
+.pip-text{display:inline-block;vertical-align:middle;line-height:normal;color:#fff;overflow: hidden;max-height: 100%;}
 .ui-icon{width:20px;height:20px;background-size:contain}
 .ui-icon-gripsmall-diagonal-se{background-position:0 0}
 .ui-resizable-ne, .ui-resizable-se{right:-11px}
