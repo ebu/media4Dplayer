@@ -346,7 +346,8 @@ h2{font-size:1.6em;font-weight:600}
 #audio-settings .active{background-color:#82c174}
 #audio-settings .button{transition:background-color .2s;}
 #spatialisation-options-ctn, #audio-profils-options-ctn{margin-top:40px;}
-#option-extended-comments{width: 405px;float: right;}
+#option-extended-comments{width: 405px;float: right;position: relative;}
+#option-extended-comments .tooltip{background-color: #000;top: 35px;}
 #option-extended-comments .min-value, #option-extended-comments .max-value{width: 15%;}
 .slider-horizontal.extended-comments{width: 70%;}
 #spatialisation-options, #audio-profils-options{width:100%}

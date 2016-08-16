@@ -1296,7 +1296,7 @@ Player.activeOptionAudio = function(index) {
 
 Player.updateActiveStreams = function(){
 
-	extendedCommentsASD.trim = M4DPAudioModules.utilities.scale(parseInt(getHtmlStorage("extendedADVolume"), 10) || 0, 0, 100, -60, 30);
+	extendedCommentsASD.trim = Math.round(M4DPAudioModules.utilities.scale(parseInt(getHtmlStorage("extendedADVolume"), 10) || 0, 0, 100, -60, 30));
 
 	/// notify the modification of active streams
 	streamSelector.streamsTrimChanged();

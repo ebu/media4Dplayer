@@ -263,15 +263,21 @@ Settings.init.audio.azimDistance = function($drag){
 Settings.init.audio.AD = function(){
 	var valueMinSize = getHtmlStorage("extendedADVolume") || 0;
 	var $slider = $(document.getElementById(Main.simplifiedMode ? "extendedCommentsSlide-sm" : "extendedCommentsSlide"));
-
+	var $tooltip = $(document.getElementById("extendedComments-tooltip")).hide();
 	$slider.children("a").attr("aria-valuemin", -60).attr("aria-valuemax", 30);
 	$slider.slider({
 		range: "min",
 		value: valueMinSize,
 		step:0.1,
+		start: function(){
+			$tooltip.fadeIn('fast');
+		},
 
 		slide: function(event, ui){
 			Settings.change.ADVolume(ui.value, this);
+		},
+		stop: function(){
+			//$tooltip.fadeOut('fast');
 		}
 	});
 
@@ -870,10 +876,12 @@ Settings.change.audioDistance = function(value, el){
  */
 
 Settings.change.ADVolume = function(newValue, el){
+	var dB = Math.round(M4DPAudioModules.utilities.scale(newValue, 0, 100, -60, 30));
+	$(document.getElementById("extendedComments-tooltip")).css('left', $(el).children("a")[0].offsetLeft + 40).text(dB + " dB");
 	setHtmlStorage("extendedADVolume", newValue);
 
 	if(Main.simplifiedMode){
-		$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue + " décibel");
+		$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", dB + " décibel");
 	}
 };
 
