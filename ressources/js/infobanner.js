@@ -449,7 +449,7 @@ InfoBanner.playerParams.options.getOptionsArrayForOption = function(optionID) {
 
 	switch(optionID) {
 		case "ls":
-			optionsArray = getList(Media.ls);
+			optionsArray = JSON.parse(JSON.stringify(Media.ls));
 			break;
 
 		case "ad":
