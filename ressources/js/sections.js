@@ -8,7 +8,7 @@ var Section = {
 		"app-playlists",			// 2
 		"epg-fiche",				// 3
 		"settings",					// 4
-		
+
 		"app-options",				// 5
 		"my-videos-options",		// 6
 		"search-btn",				// 7
@@ -34,7 +34,8 @@ var Section = {
 		"settings-interface-theme",			// 27
 		"settings-audio-spatialisation-mode",
 		"settings-audio-comments-spatialisation",
-		"search"],
+		"search",
+		"settings-audio-comments-level"],
 
 	"rubrics": {
 		"settings":["interface","audio","subtitles","ls"],
@@ -58,115 +59,119 @@ var Section = {
 
 Section.change = function(newSection, rubric, mixed_var){
 	if(this.sections.indexOf(newSection) !== -1){
-		
+
 		// La liste des profils
 		if(newSection === this.sections[0]){
 			this.change.toProfils(newSection);
-		
+
 		// Liste des apps
 		}else if(newSection === this.sections[1]){
 			this.change.toAppsList(newSection);
-		
+
 		// Les playlist
 		}else if(newSection === this.sections[2]){
 			this.change.toAppPlaylist(newSection, rubric, mixed_var);
-		
+
 		// Fiche EPG
 		}else if(newSection === this.sections[3]){
 			this.change.toEPG(newSection, mixed_var);
-		
+
 		// Settings
 		}else if(newSection === this.sections[4]){
 			this.change.toSettings(newSection, rubric, mixed_var);
-			
+
 		// Le player
 		}else if(newSection === this.sections[12]){
 			this.change.toPlayer(mixed_var);
-			
+
 		// Recherche
 		}else if(newSection === this.sections[30]){
 			this.change.toSearch(newSection, rubric);
-			
+
 		// Ecran "en construction"
 		}else if(newSection === this.sections[24]){
 			this.change.toInConstructionScreen();
-		
+
 		// SM - Les options d'une appli : Mes vidéos, recherche, réglages et mon profil
 		}else if(newSection === this.sections[5]){
 			this.change.toAppOptions(newSection, mixed_var);
-		
+
 		// SM - Les options de "Mes vidéos" : Mes vidéos favorites, mes signets, mon historique
 		}else if(newSection === this.sections[6]){
 			this.change.toMyVideosOptions(newSection);
-			
+
 		// SM - Le menu réglages : Audio, interface, sous-titres, langue des signes
 		}else if(newSection === this.sections[8]){
 			this.change.toSettingsMenu();
-		
+
 		// SM - Mes vidéos favorites / signets / historiques : la liste des programmes
 		}else if(newSection === this.sections[10]){
 			this.change.toAppPlaylist(newSection, rubric, Apps.indexAppInSM);
-		
+
 		// SM - Les options d'une playlist : Lire la vidéo, accéder à la fiche, supprimer des favoris
 		}else if(newSection === this.sections[11]){
-			this.change.toPlaylistOptions(mixed_var);	
-		
+			this.change.toPlaylistOptions(mixed_var);
+
 		// SM - Les options d'un programme : accéder à la vidéo, mettre en favoris, lire le résumé, les vidéos sur le même thème, partager sur les réseaux
 		}else if(newSection === this.sections[13]){
 			this.change.toProgramOptions();
-		
+
 		// SM - Le synopsis en fullscreen
 		}else if(newSection === this.sections[15]){
 			this.change.toFullscreenSynopsis();
-			
+
 		// SM - Le menu réglages de l'audio : mode de spatialisation, spatialisation des commentaires et dialogues
 		}else if(newSection === this.sections[26]){
 			this.change.toSettingsAudioMenu();
-			
+
 		// SM - Le menu réglages de l'interface : Taille de texte
 		}else if(newSection === this.sections[16]){
 			this.change.toSettingsInterfaceMenu();
-			
+
 		// SM - Le menu réglages des sous-titres : Audio, interface, sous-titres, langue des signes
 		}else if(newSection === this.sections[17]){
 			this.change.toSettingsSubtitlesMenu();
-			
+
 		// SM - Les réglages du positionnement de la LS
 		}else if(newSection === this.sections[18]){
 			this.change.toSettingsLS();
-			
+
 		// SM - Le choix de la taille des polices
 		}else if(newSection === this.sections[19]){
 			this.change.toSettingsFontSize();
-			
+
 		// SM - Le choix de la police de caractère pour les sous-titres
 		}else if(newSection === this.sections[20]){
 			this.change.toSettingsFontFamily();
-			
+
 		// SM - Le choix de la couleur des sous-titres
 		}else if(newSection === this.sections[21]){
 			this.change.toSettingsSubtitlesColor();
-			
+
 		// SM - Le choix de la couleur d'arrière plan des sous-titres
 		}else if(newSection === this.sections[22]){
 			this.change.toSettingsSubtitlesBGColor();
-			
+
 		// SM - Les réglages du positionnement des sous-titres
 		}else if(newSection === this.sections[23]){
 			this.change.toSettingsSubtitlesPIP();
-			
+
 		// SM - Les réglages du mode de spatialisation
 		}else if(newSection === this.sections[28]){
 			this.change.toSettingsAudioSpatialisationMode();
-			
+
 		// SM - Les réglages de la spatialisation des commentaires
 		}else if(newSection === this.sections[29]){
 			this.change.toSettingsAudioCommentsSpatialisation();
-			
+
 		// SM - Les réglages de la spatialisation des dialogues
 		}else if(newSection === this.sections[30]){
 			this.change.toSettingsAudioDialoguesSpatialisation();
-			
+
+		// SM - Les réglages du niveau des commentaires
+		}else if(newSection === this.sections[31]){
+			this.change.toSettingsAudioCommentsLevel();
+
 		}else{
 			this.change.toInConstructionScreen();
 		}
@@ -210,22 +215,22 @@ Section.change.toAppsList = function(){
  */
 
 Section.change.toAppPlaylist = function(newSection, rubric, index){
-	
+
 	if(Main.simplifiedMode && !rubric){
 		return;
 	}
-	
+
 	if(Navigation.blockNavigation){
 		log("La navigation est bloquée. Annulation!!!");
 		return;
 	}
-	
+
 	// TEMPORAIRE
 	if(rubric && rubric !== Section.rubrics[newSection][0]){
 		Section.change(Section.sections[24]);
 		return;
 	}
-	
+
 	Apps.programs.load(index, {onSuccess:function(){
 		Section.save();
 		Section.addClass("app-playlists");
@@ -246,7 +251,7 @@ Section.change.toAppPlaylist = function(newSection, rubric, index){
 Section.change.toEPG = function(newSection, data){
 	Dashboard.load(data, function(){
 		Section.addClass("epg-fiche");
-	});	
+	});
 };
 
 /**
@@ -275,12 +280,12 @@ Section.change.toSettings = function(newSection, rubric){
 
 Section.change.toPlayer = function(data){
 	if(typeOf(data) === "object" && typeOf(data.video) === "object" && data.video.links.dataMain && data.video.links.dataMain.url){
-		
+
 		Dashboard.data = data;
-		
+
 		Player.load(data.video, function(){
 			Section.save();
-			Section.addClass("player");		
+			Section.addClass("player");
 		});
 	}
 };
@@ -293,12 +298,12 @@ Section.change.toPlayer = function(data){
  */
 
 Section.change.toSearch = function(newSection, rubric){
-	
+
 	Search.reset(rubric);
-	
+
 	Section.handleMenuSel(newSection);
 	Section.addClass(newSection + " " + rubric);
-	
+
 	if(rubric === Section.rubrics[newSection][1]){
 		Search.results.load();
 	}
@@ -343,7 +348,7 @@ Section.change.toAppOptions = function(newSection, index){
 
 Section.change.toMyVideosOptions = function(){
 	Section.save();
-	
+
 	var title = Apps.list[Apps.indexAppInSM].title;
 	$(document.getElementById("my-videos-options-container")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Mes vidéos '+title+'</span>');
 	Section.addClass("my-videos-options");
@@ -358,13 +363,13 @@ Section.change.toMyVideosOptions = function(){
  */
 
 Section.change.toPlaylistOptions = function(params){
-	
+
 	var rubrics = Section.rubrics[Section.sections[10]];
 	var className = params.type === rubrics[0] ? "options-favorites" : params.type === rubrics[1] ? "options-signets" : params.type === rubrics[2] ? "options-history" : null;
 	if(className){
-		
+
 		Dashboard.data = params.data;
-		
+
 		Section.save();
 		Section.addClass(className);
 	}
@@ -380,7 +385,7 @@ Section.change.toPlaylistOptions = function(params){
 
 Section.change.toProgramOptions = function(){
 	var data = Dashboard.data;
-	
+
 	Section.save();
 	var title = data.subtitle ? data.title+' : '+data.subtitle : data.title;
 	$(document.getElementById("epg-fiche-container-sm")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Fiche de programme</span>').end()
@@ -398,9 +403,9 @@ Section.change.toProgramOptions = function(){
  */
 
 Section.change.toFullscreenSynopsis = function(){
-	
+
 	Dashboard.generateFullscreenSynopsis();
-	
+
 	Section.save();
 	Section.addClass("full-synopsis");
 };
@@ -537,9 +542,9 @@ Section.change.toSettingsSubtitlesBGColor = function(){
 
 Section.change.toSettingsSubtitlesPIP = function(){
 	Settings.init.subtitles.pip();
-	
+
 	Settings.init.subtitles();
-	
+
 	Section.save();
 	Section.addClass("settings-subtitles-pip");
 };
@@ -568,11 +573,11 @@ Section.change.toSettingsAudioSpatialisationMode = function(){
 
 Section.change.toSettingsAudioCommentsSpatialisation = function(){
 	$(document.getElementById("settings-audio-spatialisation-sm-container")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Spatialisation des commentaires</span>');
-	
+
 	Settings.init.audio.elevationLevel($(document.getElementById("elevation-lvl-sm")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel, "commentary");
 	Settings.init.audio.azim($(document.getElementById("orientation-sm")), getHtmlStorage("commentsAzim") || Player.commentsAzim, "commentary");
 	Settings.init.audio.distance($(document.getElementById("distance-sm")), getHtmlStorage("commentsDistance") || Player.commentsDistance, "commentary");
-	
+
 	Section.save();
 	Section.addClass("settings-audio-spatialisation");
 };
@@ -587,19 +592,37 @@ Section.change.toSettingsAudioCommentsSpatialisation = function(){
 
 Section.change.toSettingsAudioDialoguesSpatialisation = function(){
 	$(document.getElementById("settings-audio-spatialisation-sm-container")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Spatialisation des dialogues</span>');
-	
+
 	Settings.init.audio.elevationLevel($(document.getElementById("elevation-lvl-sm")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel, "dialogues");
 	Settings.init.audio.azim($(document.getElementById("orientation-sm")), getHtmlStorage("dialoguesAzim") || Player.dialoguesAzim, "dialogues");
 	Settings.init.audio.distance($(document.getElementById("distance-sm")), getHtmlStorage("dialoguesDistance") || Player.dialoguesDistance, "dialogues");
-	
+
 	Section.save();
 	Section.addClass("settings-audio-spatialisation");
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Launches loading of the login section
+ * @param {String} newSection The name of the new section
+ * @param {Object} callbackList Contains a success and error callback
+ * @param {jQuery Object} $item The current focused element
+ */
+
+Section.change.toSettingsAudioCommentsLevel = function(){
+	//$(document.getElementById("settings-audio-comments-level-sm-container")).children("h1").html('<span tabindex="1" class="selectable-by-chromevox">Niveau des commentaires</span>');
+
+	//Settings.init.audio.AD($(document.getElementById("extendedCommentsSlide-sm")));
+	Settings.init.audio.AD();
+
+	Section.save();
+	Section.addClass("settings-audio-comments-level");
 };
 
 Section.addClass = function(className){
 	var cn = Main.simplifiedMode ? "sm " + className : className;
 	$("body").attr("class", cn);
-	
+
 	Navigation.setFocusToFirstItem();
 };
 
@@ -608,7 +631,7 @@ Section.save = function(){
 };
 
 Section.handleMenuSel = function(newSection){
-	
+
 	if(!Main.simplifiedMode){
 		var $nav = $(document.getElementById("menu"));
 		$nav.find(".sel").removeClass("sel");
@@ -621,14 +644,14 @@ Section.handleMenuSel = function(newSection){
 			case this.sections[4]:
 				$nav.find(".settings").addClass("sel");
 				break;
-				
+
 			case this.sections[30]:
 				$nav.find(".search").addClass("sel");
 				break;
-			
+
 			default:
 				break;
-		}		
+		}
 	}
 };
 
@@ -642,7 +665,7 @@ Section.handleMenuSel = function(newSection){
  */
 
 Section.launchPlayerLoading = function(data){
-	this.change(this.sections[12], null, data);		
+	this.change(this.sections[12], null, data);
 };
 
 /**
@@ -657,9 +680,9 @@ Section.launchPlayerLoading = function(data){
 Section.launchSettingsFromPlayer = function(){
 	Player.resetPlayers();
 	InfoBanner.progressBar.reset();
-	
+
 	Settings.backToPlayerFromSettings = true;
-	
+
 	this.oldSelectionInMenu = $(document.getElementById("menu")).children(".sel");
 	this.oldClassBeforeSetings = JSON.parse(JSON.stringify(this.oldClass));
 	this.change(Section.sections[Main.simplifiedMode?8:4]);
@@ -676,11 +699,11 @@ Section.launchSettingsFromPlayer = function(){
 
 Section.launchPlayerFromSettings = function(){
 	this.launchPlayerLoading(Dashboard.data);
-	
+
 	Settings.backToPlayerFromSettings = false;
 	this.oldClass = this.oldClassBeforeSetings;
 	this.oldClassBeforeSetings = [];
-	
+
 	if($(this.oldSelectionInMenu).length){
 		$(this.oldSelectionInMenu).addClass("sel").siblings(".sel").removeClass("sel");
 	}

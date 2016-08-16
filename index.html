@@ -162,13 +162,13 @@
 								</div>
 							</div>
 								<div id="option-extended-comments" class="option-container">
-									<div class="label">Dosage du commentaire</div>
+									<div class="label">Niveau des commentaires</div>
 									<div class="option-font-size option-slider">
 										<span id="extendedComments-tooltip" class="tooltip" role="tooltip"></span>
 										<div class="min-value">-60 dB</div>
 										<div class="slider-horizontal extended-comments">
 											<div id="extendedCommentsSlide" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
-												<a class="ui-slider-handle ui-state-default ui-corner-all" title="Contrôle du dosage des commentaires" role="slider"></a>
+												<a class="ui-slider-handle ui-state-default ui-corner-all" title="Contrôle du niveau des commentaires" role="slider"></a>
 											<div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"></div></div>
 										</div>
 										<div class="max-value">30 dB</div>
@@ -461,6 +461,9 @@
 						<li class="menu-item">
 							<a tabindex="3" class="selectable-by-chromevox" onclick="Section.change(Section.sections[29]);">Changer la spatialisation des commentaires</a>
 						</li>
+						<li class="menu-item">
+							<a tabindex="4" class="selectable-by-chromevox" onclick="Section.change(Section.sections[31]);">Changer le niveau des commentaires</a>
+						</li>
 					</ul>
 					<a class="back"><span tabindex="100" class="selectable-by-chromevox">Retour</span></a>
 				</section>
@@ -558,6 +561,22 @@
 							</div>
 						</div>
 						<div class="max-value"></div>
+					</div>
+				</section>
+				<section id="settings-audio-comments-level-sm-container">
+					<h1>Niveau des commentaires</h1>
+					<div class="buttons-container">
+						<a class="back-button"><span tabindex="2" class="selectable-by-chromevox">Retour</span></a>
+					</div>
+					<div class="option-slider">
+						<div class="label"></div>
+						<div class="min-value">-60</div>
+						<div class="slider-horizontal">
+							<div id="extendedCommentsSlide-sm" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+								<a class="ui-slider-handle ui-state-default ui-corner-all selectable-by-chromevox" tabindex="3" title="Contrôle du niveau des commentaires" role="slider"></a>
+							</div>
+						</div>
+						<div class="max-value">30</div>
 					</div>
 				</section>
 				<section id="settings-font-size-sm-container">

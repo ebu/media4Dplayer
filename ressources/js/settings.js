@@ -277,7 +277,7 @@ Settings.init.audio.AD = function(){
 			Settings.change.ADVolume(ui.value, this);
 		},
 		stop: function(){
-			//$tooltip.fadeOut('fast');
+			$tooltip.fadeOut('fast');
 		}
 	});
 
