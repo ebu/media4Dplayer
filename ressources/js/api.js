@@ -70,7 +70,7 @@ API.getFavorites = function(callback_function){
 	if(typeOf(callback_function) === "function"){
 		Navigation.blockNavigation = true;
 		json.load({
-			url: Config.perfectMemoryWS + "medias?auth_token=" + User.tokens.auth_token + "&types=movie&max_count=10&offset=0&sort_fields=created_at&sort_order=-1",
+			url: Config.perfectMemoryWS + "medias?auth_token=" + User.tokens.auth_token + "&types=movie&max_count=10&offset=0&sort_fields=created_at",
 			callback: function(data) {
 				
 				if(typeOf(data) === "array" && data.length){
