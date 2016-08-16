@@ -11,7 +11,7 @@ var Model = {};
 Model.getAppsList = function(data, jqXHR, callback){
     if (typeOf(data) === "object" && typeOf(data.list) === "array") {
         callback(data.list, jqXHR);
-		
+
     }else{
         callback(null, jqXHR);
     }
@@ -56,7 +56,7 @@ Model.getProgramDetails = function(data){
 		"synopsis": data.description || "",
 		"relatedContent":[]
 	};
-	
+
 	var metadata = function(){
 		if(typeOf(data.properties) === "array"){
 			for(var i = 0;i<data.properties.length;i++){
@@ -67,7 +67,7 @@ Model.getProgramDetails = function(data){
 			}
 		}
 	}();
-	
+
 	program.video = {
 		links:this.getProgramDetails.getLinkDetails(metadata)
 	};
@@ -75,10 +75,10 @@ Model.getProgramDetails = function(data){
 	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":program.video.links.dataAD.url}] : null;
 	program.video.ls = !isEmpty(program.video.links.dataLS) ? ["LSF"] : null;
 	program.video.audiosList = this.getProgramDetails.getAudiosList(program.video.links);
-	
+
 	program.video.hasEA3DIStream = program.video.links.dataEA.url && program.video.links.dataDI.url ? true : false;
 	program.video.hasMCStream = program.video.links.dataMC.url ? true : false;
-	
+
 	return program;
 };
 
@@ -91,16 +91,16 @@ Model.getProgramDetails = function(data){
  */
 
 Model.getProgramDetails.getDetails = function(programType, startDate, duration){
-	
+
 	var type = this.getDetails.programType(programType);
-	
+
 	var date;
 	if(startDate){
 		var stringDate = startDate.split("-");
 		stringDate[2] = stringDate[2].split("T")[0];
-		date = new Date(stringDate[0], stringDate[1]-1, stringDate[2]);		
+		date = new Date(stringDate[0], stringDate[1]-1, stringDate[2]);
 	}
-	
+
 	return {type:type, date:{d:date.getDate(), m:date.getMonth()+1, y:date.getFullYear()}, duration:{h:Math.floor(duration / 60 / 60), m:Math.floor(duration / 60), s:Math.floor(duration % 60)}};
 };
 
@@ -114,7 +114,7 @@ Model.getProgramDetails.getDetails = function(programType, startDate, duration){
 
 Model.getProgramDetails.getDetails.programType = function(programType){
 	var types = Config.programTypes;
-	return types[programType] ? types[programType] : programType ? programType : "Genre inconnu";	
+	return types[programType] ? types[programType] : programType ? programType : "Genre inconnu";
 };
 
 /**
@@ -136,7 +136,7 @@ Model.getProgramDetails.getLinkDetails = function(list){
 	};
 
 	if(typeOf(list) === "array" && list.length){
-		
+
 		var convertTrackLanguage = function(value, isFiveDotOne){
 			value = typeOf(value) === "string" ? value.toLowerCase() : "";
 			var values = {fra:"Français",und:"Indéterminé"};
@@ -146,7 +146,7 @@ Model.getProgramDetails.getLinkDetails = function(list){
 			}
 			return lang;
 		};
-		
+
 		var getData = function(item){
 			return {
 				type:item.type,
@@ -158,41 +158,41 @@ Model.getProgramDetails.getLinkDetails = function(list){
 				url:item.locator
 			};
 		};
-		
+
 		var i, l = list.length, item;
 		for(i = 0;i<l;i++){
 			item = list[i];
-			
+
 			switch(item.formatName){
 				case"Main":
 					data.dataMain = getData(item);
 					data.dataMain.subtitle = item.subtitle;
 					data.dataMain.lang = convertTrackLanguage(item.trackLanguage);
 					break;
-					
+
 				case"AD":
 					data.dataAD = getData(item);
 					break;
-					
+
 				case"SL":
 					data.dataLS = getData(item);
 					break;
-					
+
 				case"DI":
 					data.dataDI = getData(item);
 					data.dataDI.lang = convertTrackLanguage(item.trackLanguage, true);
 					break;
-					
+
 				case"EA3":
 					data.dataEA = getData(item);
 					data.dataEA.lang = convertTrackLanguage(item.trackLanguage, true);
 					break;
-					
+
 				case"EA1":
 					data.dataMC = getData(item);
 					data.dataMC.lang = convertTrackLanguage(item.trackLanguage, true);
 					break;
-					
+
 				default:
 					break;
 			}
@@ -241,13 +241,13 @@ Model.getProgramDetails.getThumbnail = function(list){
  */
 
 Model.getTermsOfAffination = function(method, data, callback_function){
-	if(method === "content"){
+	if(method === "content" && typeOf(callback_function) === "function"){
 		if(typeOf(data) === "object"){
-			
+
 			data = JSON.parse(JSON.stringify(data).replace(/"sug"/gi, '"text"').replace(/"sc"/gi, '"weight"'));
-			if(typeOf(callback_function) === "function"){
-				callback_function(data);
-			}
+			callback_function(data);
+		}else{
+			callback_function();
 		}
 	}
 };
@@ -269,6 +269,6 @@ Model.getResults = function(data, callback_function){
 			}
 		}
 	}
-	
+
 	callback_function(list);
 };
