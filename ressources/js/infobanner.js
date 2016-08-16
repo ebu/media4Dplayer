@@ -4,7 +4,7 @@ var InfoBanner = {
 		none:"Aucun",
 		options:{
 			isOptionDropDownMenuDisplayed:false,
-			currentOptionDropDownMenu:""	
+			currentOptionDropDownMenu:""
 		}
 	},
 	timeoutHideBanner:null,
@@ -17,17 +17,17 @@ var InfoBanner = {
  */
 
 InfoBanner.reset = function(){
-	
+
 	var $sliderADVol = $(document.getElementById("playerControlADVolume"));
 	if(Player.dialogsEnhanced){
 		$sliderADVol.show();
 	}else{
 		$sliderADVol.hide();
 	}
-		
-	this.progressBar.reset();	
+
+	this.progressBar.reset();
 	this.playerParams.reset();
-	
+
 	this.isVisible = false;
 };
 
@@ -49,18 +49,15 @@ InfoBanner.load = function(){
  */
 
 InfoBanner.generate = function(){
-	
+
 	// OPTIONS DE LA VIDEO
 	this.playerParams.init();
-	
+
 	// PROGRESS BAR
 	this.progressBar.init();
-	
+
 	// VOLUME
-	this.initVolumeSlider();	
-	if(Player.dialogsEnhanced){
-		this.initADVolumeSlider();
-	}
+	this.initVolumeSlider();
 };
 
 /**
@@ -84,7 +81,7 @@ InfoBanner.show = function(){
 InfoBanner.hide = function(){
 	$(document.getElementById("playerTopBanner")).hide();
 	$(document.getElementById("playerBottomBanner")).hide();
-	$(document.getElementById("playerUI")).css("background-image","none");	
+	$(document.getElementById("playerUI")).css("background-image","none");
 	this.isVisible = false;
 };
 
@@ -122,7 +119,7 @@ InfoBanner.isDisplayed = function(){
  */
 
 InfoBanner.launchMaskingAfterDelay = function(){
-	
+
 	this.suspendMaskingAfterDelay();
 	this.timeoutHideBanner = setTimeout(function(){
 		InfoBanner.executeMaskingAfterDelay();
@@ -144,26 +141,26 @@ InfoBanner.suspendMaskingAfterDelay = function(){
  */
 
 InfoBanner.executeMaskingAfterDelay = function(){
-	this.hide();
+	//this.hide();
 };
-	
+
 																	/* **************************************************/
 																	/*	 FONCTIONS POUR LES BOUTONS D'OPTION DU PLAYER	*/
 																	/* **************************************************/
-		
+
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Executes the hiding the info banner
  */
 
 InfoBanner.playerParams.reset = function(){
-	
+
 	$(document.getElementById("playerOptionAudioCurrentValue")).empty();
 	$(document.getElementById("playerOptionSubCurrentValue")).empty();
 	$(document.getElementById("playerOptionDescriptionCurrentValue")).empty();
 	$(document.getElementById("playerOptionSigneCurrentValue")).empty();
 	$(document.getElementById("playerOptions")).children(".opaque").removeClass("opaque");
-	
+
 	this.options.reset();
 };
 
@@ -174,13 +171,13 @@ InfoBanner.playerParams.reset = function(){
 
 InfoBanner.playerParams.init = function(){
 	var value, none = this.none;
-	
+
 	// AUDIO
 	var $audio = $(document.getElementById("playerOptionAudioCurrentValue"));
 	if(Media.audioEnabled){
 		value = Media.audiosList[Media.currentAudioIndex];
 		$audio.text(value);
-		
+
 	}else{
 		$audio.text(none);
 
@@ -188,27 +185,27 @@ InfoBanner.playerParams.init = function(){
 			$audio.parent().addClass("opaque");
 		}
 	}
-	
+
 	// SOUS-TITRES
 	var $subtitles = $(document.getElementById("playerOptionSubCurrentValue"));
 	if(Media.subtitleEnabled){
 		value = Media.subtitlesList[Media.currentSubtitleIndex];
 		$subtitles.html(value + '<img alt="" src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
-		
+
 	}else{
 		$subtitles.text(none);
-		
+
 		if(typeOf(Media.subtitlesList) !== "array" || !Media.subtitlesList.length){
 			$subtitles.parent().addClass("opaque");
 		}
 	}
-	
+
 	// AD
 	var $ad = $(document.getElementById("playerOptionDescriptionCurrentValue"));
 	if(Media.audioDescriptionEnabled){
 		value = Media.audioDescriptions[Media.currentAudioDescriptionIndex].lang;
 		$ad.text(value);
-		
+
 	}else{
 		$ad.text(none);
 
@@ -216,21 +213,21 @@ InfoBanner.playerParams.init = function(){
 			$ad.parent().addClass("opaque");
 		}
 	}
-	
+
 	// LS
 	var $ls = $(document.getElementById("playerOptionSigneCurrentValue"));
 	if(Media.LSFEnabled){
 		value = Media.ls[Media.currentLSFIndex];
 		$ls.text(value);
-		
+
 	}else{
 		$ls.text(none);
 
 		if(typeOf(Media.ls) !== "array" || !Media.ls.length){
 			$ls.parent().addClass("opaque");
 		}
-	}	
-	
+	}
+
 	this.initLabels();
 };
 
@@ -241,46 +238,46 @@ InfoBanner.playerParams.init = function(){
 
 InfoBanner.playerParams.initLabels = function(){
 	var none = this.none;
-	
+
 	// AUDIO
 	var $labelAudio = $(document.getElementById("label-option-audio"));
 	if(Media.audioEnabled){
 		var value = Media.audiosList[Media.currentAudioIndex];
 		$labelAudio.text("Choix de langue audio : " + value + " sélectionné");
-		
+
 	}else{
 		$labelAudio.text("Choix de langue audio : " + none + " sélectionné");
-	}	
-	
+	}
+
 	// SOUS-TITRES
 	var $labelSubtitle = $(document.getElementById("label-option-subtitle"));
 	if(Media.subtitleEnabled){
 		value = Media.subtitlesList[Media.currentSubtitleIndex];
 		$labelSubtitle.text("Choix du sous-titre : " + value + " sélectionné");
-		
+
 	}else{
 		$labelSubtitle.text("Choix du sous-titre : " + none + " sélectionné");
-	}	
-	
+	}
+
 	// AD
 	var $labelAD = $(document.getElementById("label-option-ad"));
 	if(Media.audioDescriptionEnabled){
 		value = Media.audioDescriptions[Media.currentAudioDescriptionIndex].lang;
 		$labelAD.text("Choix de langue pour les commentaires : " + value + " sélectionné");
-		
+
 	}else{
 		$labelAD.text("Choix de langue pour les commentaires : " + none + " sélectionné");
 	}
-	
+
 	// LS
 	var $labelLS = $(document.getElementById("label-option-ls"));
 	if(Media.LSFEnabled){
 		value = Media.ls[Media.currentLSFIndex];
 		$labelLS.text("Choix de langue pour la langue des signes : " + value + " sélectionné");
-		
+
 	}else{
 		$labelLS.text("Choix de langue pour la langue des signes : " + none + " sélectionné");
-	}	
+	}
 };
 
 /**
@@ -289,11 +286,11 @@ InfoBanner.playerParams.initLabels = function(){
  */
 
 InfoBanner.playerParams.options.reset = function(){
-	
+
 	$(document.getElementById("optionDropDownMenu")).empty();
-	
+
 	this.hide();
-	this.currentOptionDropDownMenu = "";	
+	this.currentOptionDropDownMenu = "";
 };
 
 /**
@@ -303,25 +300,25 @@ InfoBanner.playerParams.options.reset = function(){
 
 InfoBanner.playerParams.options.show = function(type, button){
 	if(type && $(button).length && !$(button).hasClass("opaque")){
-		
+
 		var $ctn = $(document.getElementById("optionDropDownMenu"));
-		
+
 		if(this.isOptionDropDownMenuDisplayed && type === this.currentOptionDropDownMenu) {
 			this.hide();
 			return;
-			
+
 		}else if(!this.isOptionDropDownMenuDisplayed) {
 			$ctn.removeClass("hidden");
 			this.isOptionDropDownMenuDisplayed = true;
 		}
 		this.currentOptionDropDownMenu = type;
-		
+
 		$ctn.empty();
-		
+
 		var inputsArray = this.getOptionsArrayForOption(type);
 		$ctn.css("left", this.getOptionsDropDownMenuLeft(type))
 			.css("height", this.getOptionsDropDownMenuHeight(inputsArray));
-		
+
 		var getLabel = function(type, optionName){
 			if(type === "audio"){
 				return optionName === "Aucun" ? "Désactiver l'audio" : "Audio " + optionName;
@@ -340,7 +337,7 @@ InfoBanner.playerParams.options.show = function(type, button){
 		var _onclick = function(){
 			InfoBanner.playerParams.options.onClick(this, type);
 		};
-		
+
 		var tabIndex = button.tabIndex + 1;
 		var i, l = inputsArray.length, $bt;
 		for (i = 0; i < l; i++) {
@@ -348,19 +345,19 @@ InfoBanner.playerParams.options.show = function(type, button){
 				.appendTo($ctn)
 				.data("index", i)
 				.on("click", _onclick);
-			
+
 			if(type === "subtitle" && inputsArray[i] !== "Aucun"){
 				$bt.append('<img src="ressources/img/sourd.png" height="100%" style="vertical-align:top;margin-left:10px;"/>');
 			}
 			tabIndex++;
 		}
-		
+
 		this.select(type, $ctn);
-		
+
 		if(Main.simplifiedMode){
 			Navigation.moveSelecteur($ctn.children(":first-child"));
 		}
-	}	
+	}
 };
 
 /**
@@ -370,7 +367,7 @@ InfoBanner.playerParams.options.show = function(type, button){
 
 InfoBanner.playerParams.options.onClick = function(bt, optionID){
 	if($(bt).length && optionID){
-		
+
 		var index = $(bt).data("index");
 		if(optionID === "ls"){
 			Player.activeOptionSigne(index);
@@ -384,7 +381,7 @@ InfoBanner.playerParams.options.onClick = function(bt, optionID){
 		}else if(optionID === "audio") {
 			Player.activeOptionAudio(index);
 		}
-		
+
 		InfoBanner.launchMaskingAfterDelay();
 		this.hide();
 
@@ -392,8 +389,8 @@ InfoBanner.playerParams.options.onClick = function(bt, optionID){
 			var ids = {ls:"playerOptionSigne",subtitle:"playerOptionSub",ad:"playerOptionDescription",audio:"playerOptionAudio"};
 			Navigation.moveSelecteur(document.getElementById(ids[optionID]));
 		}
-		
-		InfoBanner.playerParams.initLabels();	
+
+		InfoBanner.playerParams.initLabels();
 	}
 };
 
@@ -403,11 +400,11 @@ InfoBanner.playerParams.options.onClick = function(bt, optionID){
  */
 
 InfoBanner.playerParams.options.select = function(type, $ctn){
-		
+
 	var setSel = function($el){
 		$el.css("color", "orange");
 	};
-	
+
 	if(type === "audio" && Media.audioEnabled){
 		setSel($ctn.children(":eq("+Media.currentAudioIndex+")"));
 
@@ -432,7 +429,7 @@ InfoBanner.playerParams.options.select = function(type, $ctn){
 
 InfoBanner.playerParams.options.hide = function(){
 	$(document.getElementById("optionDropDownMenu")).addClass("hidden");
-	this.isOptionDropDownMenuDisplayed = false;		
+	this.isOptionDropDownMenuDisplayed = false;
 };
 
 /**
@@ -466,7 +463,7 @@ InfoBanner.playerParams.options.getOptionsArrayForOption = function(optionID) {
 		case "audio":
 			optionsArray = JSON.parse(JSON.stringify(Media.audiosList));
 			break;
-			
+
 		default:
 			break;
 	}
@@ -480,7 +477,7 @@ InfoBanner.playerParams.options.getOptionsArrayForOption = function(optionID) {
  */
 
 InfoBanner.playerParams.options.getOptionsDropDownMenuHeight = function(inputsArray) {
-	// +1 for border 
+	// +1 for border
 	return inputsArray.length * (50 + 1);
 };
 
@@ -515,11 +512,11 @@ InfoBanner.playerParams.options.getOptionsDropDownMenuLeft = function(optionID) 
 	var leftDDM = leftOption + 57;
 	return leftDDM + "px";
 };
-	
+
 																	/* ******************************/
 																	/*	 LES CONTROLES DE VOLUME	*/
 																	/* ******************************/
-		
+
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Executes the hiding the info banner
@@ -530,14 +527,14 @@ InfoBanner.initVolumeSlider = function(){
 	var defaultValue = getHtmlStorage("volumeValue") || Settings.defaultVolumeValue;
 	var $tooltip = $(document.getElementById("volume-tooltip")).hide();
 	var _onSlide = function(el, value) {
-		
+
 		InfoBanner.launchMaskingAfterDelay();
 
 		var $volume = $(document.getElementById("up-volume"));
 		var $sliderControl = $(el).children("a");
 		$tooltip.css('left', $sliderControl.css("left")).text(value);
 
-		if(value <= 5) { 
+		if(value <= 5) {
 			$volume.css('background-position', '0 0');
 
 		}else if (value <= 25) {
@@ -562,27 +559,27 @@ InfoBanner.initVolumeSlider = function(){
 			}
 		}catch(e){
 			log(e);
-		}			
+		}
 	};
 	var $slider = $( document.getElementById("slider") ).slider({
         range: "min",
         min: 0,
         value: defaultValue,
- 
+
         start: function() {
           $tooltip.fadeIn('fast');
         },
- 
+
         slide: function(event, ui){
 			_onSlide(this, ui.value);
 		},
- 
+
         stop: function() {
           $tooltip.fadeOut('fast');
         }
 	});
 	_onSlide($slider, defaultValue);
-};	
+};
 
 /**
  * @author Johny EUGENE (DOTSCREEN)
@@ -591,7 +588,7 @@ InfoBanner.initVolumeSlider = function(){
 
 InfoBanner.initADVolumeSlider = function(){
 
-	var defaultValue = getHtmlStorage("dialogEnhancementBalance") || Settings.defaultDialogEnhancementBalance;
+	var defaultValue = dialogEnhancement.balance;
 	var $tooltip = $(document.getElementById("ad-volume-tooltip")).hide();
 	var range = Settings.adGainRange;
 	var $slider = $( document.getElementById("ad-volume-slider") ).slider({
@@ -599,20 +596,20 @@ InfoBanner.initADVolumeSlider = function(){
         min: range[0],
 		max: range[1],
         value: defaultValue,
- 
+
         start: function() {
           $tooltip.fadeIn('fast');
         },
-		
+
         slide: function(event, ui){
 			InfoBanner.initADVolumeSlider.onSlide(this, ui.value);
-		}, 
-		
+		},
+
         stop: function() {
           $tooltip.fadeOut('fast');
         }
 	});
-	
+
 	this.initADVolumeSlider.onSlide($slider, parseInt(defaultValue, 10));
 };
 
@@ -629,14 +626,14 @@ InfoBanner.initADVolumeSlider.onSlide = function(el, value){
 	var _getTextValue = function(getBruteVal){
 		var mode = dialogEnhancement.mode, val;
 		if(mode > 0){
-			
+
 			if( mode === 1 ){
-				val = Math.round(value).toString();
+				val = Math.round(M4DPAudioModules.utilities.scale( Math.round(value), 0, 100, -50, 50 )).toFixed(1);
 				if(getBruteVal){
-					return val;
+					return val + " dB";
 				}else{
-					log('Je passe la balance à ' + val + ' % (ambiance | dialog)');
-					return val + " %";
+					log('Je passe la balance à ' + val + ' décibel');
+					return val + " décibel";
 				}
 
 			}else{
@@ -646,9 +643,9 @@ InfoBanner.initADVolumeSlider.onSlide = function(el, value){
 				}else if( mode === 3 ){
 					val = Math.round(M4DPAudioModules.utilities.scale( value, 0, 100, 0, 6 )).toFixed(1);
 				}
-				
+
 				if(getBruteVal){
-					return val;
+					return val + " dB";
 				}else{
 					log('Je passe la balance à ' + val + ' décibel');
 					return val + " décibel";
@@ -656,11 +653,11 @@ InfoBanner.initADVolumeSlider.onSlide = function(el, value){
 			}
 		}else{
 			return "";
-		}		
+		}
 	};
 	$(document.getElementById("ad-volume-tooltip")).css('left', $sliderControl.css("left")).text(_getTextValue(true));
 
-	if(value <= 5) { 
+	if(value <= 5) {
 		$volume.css('background-position', '0 -25px');
 
 	}else if (value <= 15) {
@@ -676,10 +673,10 @@ InfoBanner.initADVolumeSlider.onSlide = function(el, value){
 	$sliderControl.attr("aria-valuenow", _getTextValue(true)).attr("aria-valuetext", _getTextValue());
 
 	try{
-		Player.onChangeADVolume(value);			
+		Player.onChangeADVolume(value);
 	}catch(e){
 		log(e);
-	}	
+	}
 };
 
 																								/********************************
@@ -692,16 +689,16 @@ InfoBanner.initADVolumeSlider.onSlide = function(el, value){
  */
 
 InfoBanner.progressBar.reset = function(){
-	
+
 	Player.stopCheckVideoPosition();
-	
+
 	$(document.getElementById("playerProgressCurrent")).children().empty();
 	$(document.getElementById("playerProgressTotal")).children().empty();
-	
+
 	if($(document.getElementById("playerProgressBar")).slider( "instance" )){
 		$(document.getElementById("playerProgressBar")).slider("value", 0);
 	}
-	
+
 	InfoBanner.hidePauseBtn();
 };
 
@@ -721,10 +718,10 @@ InfoBanner.progressBar.init = function(){
 			Player.pause();
 		},
 		slide:function(){
-			InfoBanner.launchMaskingAfterDelay();			
+			InfoBanner.launchMaskingAfterDelay();
 		},
         stop: function(event, ui) {
-			
+
 			var value = ui.value;
 
 			// Récupère la temps
@@ -736,12 +733,12 @@ InfoBanner.progressBar.init = function(){
 				// check if the new position is seekable
 				Player.doSeek(time);
 				Player.play();
-			
+
 				$(document.getElementById("playerProgressCursor")).attr("aria-valuenow", value).attr("aria-valuetext", Math.round(value) + " pourcent");
-				
+
 			}catch(e){
 				log(e);
-			}			
+			}
         }
 	});
 };
@@ -759,9 +756,9 @@ InfoBanner.progressBar.update = function(time, tT){
 	var timePercent         = (100 * time) / tT,
 		timeC               = " - ",
 		timeT               = " - ",
-		timeMinute          = 0,   
+		timeMinute          = 0,
 		timeSecond          = 0,
-		totalTimeMinute     = 0,   
+		totalTimeMinute     = 0,
 		totalTimeSecond     = 0,
 
 	percent = (!isNaN(timePercent)?timePercent:0);
@@ -769,12 +766,12 @@ InfoBanner.progressBar.update = function(time, tT){
 	$(document.getElementById("playerProgressBar")).slider("value", percent);
 
 	totalTimeMinute = Math.floor(tT / 60000);
-	timeMinute      = Math.floor(time / 60000);                
+	timeMinute      = Math.floor(time / 60000);
 	totalTimeSecond = Math.floor((tT % 60000) / 1000);
 	timeSecond      = Math.floor((time % 60000) / 1000);
 	timeC = (!isNaN(timeMinute) && !isNaN(timeSecond)) ? pad(timeMinute) + " : " + pad(timeSecond) : timeC;
 	timeT = (!isNaN(totalTimeMinute) && !isNaN(totalTimeSecond)) ? pad(totalTimeMinute) + " : " + pad(totalTimeSecond) : timeT;
-	
+
 	var scT = 'Temps actuel '+getTimeText(timeMinute, timeSecond),
 		stT = 'Temps total '+getTimeText(totalTimeMinute, totalTimeSecond);
 	$(document.getElementById("playerProgressCurrent")).attr("title", scT).children("span:first-child").text(timeC).end().children("span:last-child").text(scT);

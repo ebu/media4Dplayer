@@ -12,16 +12,16 @@ var Settings = {
 	init:{},
 	change:{},
 	defaultVolumeValue:70,
-	defaultDialogEnhancementBalance:100,
+	defaultDialogEnhancementBalance:50,
 	adGainRange:[0,100],
 	backToPlayerFromSettings:false,
 	minDistance:30
 };
-	
+
 																	/* **************************************************/
 																	/*	 FONCTIONS POUR L'INITIALISATION DES PARAMETRES	*/
 																	/* **************************************************/
-	
+
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Initializes the parameters screen
@@ -31,7 +31,7 @@ var Settings = {
 
 Settings.init = function(section, rubric){
 	$(document.getElementById("settings")).attr("class", "section-with-topbar " + (rubric || Section.rubrics[section][0]));
-	
+
 	var $backToPlayerCtn = $(document.getElementById("back-to-player-button-container"));
 	if(this.backToPlayerFromSettings){
 		$backToPlayerCtn.show();
@@ -42,16 +42,16 @@ Settings.init = function(section, rubric){
 	var rubrics = Section.rubrics[section];
 	if(rubric === rubrics[1]){
 		this.init.audio();
-		
+
 	}else if(rubric === rubrics[2]){
 		this.init.subtitles();
-		
+
 	}else if(rubric === rubrics[3]){
 		this.init.ls();
-		
+
 	}else{
 		this.init.interface();
-	}	
+	}
 };
 
 /**
@@ -69,7 +69,7 @@ Settings.init.interface = function(){
  */
 
 Settings.init.audio = function(){
-	
+
 	/* Le bouton Renforcement des dialogues */
 	var $dE = $(document.getElementById("dialogues-extended-btn"));
 	Player.dialogsEnhanced = Player.getDialogsEnhancedState();
@@ -78,16 +78,16 @@ Settings.init.audio = function(){
 	}else{
 		$dE.removeClass("active");
 	}
-		
+
 	/* Le choix du mode de spatialisation */
 	this.audio.spatialisationMode();
-		
+
 	/* Le choix d'un profil */
 	this.audio.audioProfil();
-	
+
 	/* Le niveau des commentaires */
 	this.audio.elevationLevel($(document.getElementById("comments-elevation-level")), getHtmlStorage("commentsElevationLevel") || Player.commentsElevationLevel);
-	
+
 	/* La zone des commentaires */
 	this.audio.azimDistance($(document.getElementById("comments-spatialisation-zone")));
 };
@@ -101,16 +101,16 @@ Settings.init.audio.spatialisationMode = function(){
 	var spatMode = getHtmlStorage("spatializationMode") || Player.spatializationMode,
 		binauralEQ = getHtmlStorage("binauralEQ") || Player.binauralEQ,
 		val = spatMode === Player.spatializationModes[0] && binauralEQ === "true" ? "binaural-EQ" : spatMode;
-	
+
 	Settings.change.audioSpatialisationMode(val);
-	
+
 	if(!Main.simplifiedMode){
 		$(document.getElementById("spatialisation-options")).selectmenu({
 			select: function( event, ui ) {
 				Settings.change.audioSpatialisationMode(ui.item.value);
 			}
 		});
-	}	
+	}
 };
 
 /**
@@ -119,24 +119,24 @@ Settings.init.audio.spatialisationMode = function(){
  */
 
 Settings.init.audio.audioProfil = function(){
-	
+
 	var _callback = function(list){
-		
+
 		if(!Main.simplifiedMode){
-			
+
 			var $select = $(document.getElementById("audio-profils-options")), $option;
-			if(!$select.children().length){	
-				
+			if(!$select.children().length){
+
 				list.forEach( function (url) {
 					$option = document.createElement('option');
 					$option.textContent = url.replace("http://bili2.ircam.fr/SimpleFreeFieldHRIR/", ".../").replace("_C_HRIR.sofa", "");
 					$option.value = url;
 					$select.append($option);
 				});
-			}			
-			
+			}
+
 			Settings.init.audio.audioProfil.setAudioProfil(list);
-				
+
 			$select.selectmenu({
 				select: function( event, ui ) {
 					Settings.change.audioProfil(ui.item.value);
@@ -144,7 +144,7 @@ Settings.init.audio.audioProfil = function(){
 			}).selectmenu( "menuWidget" ).addClass( "overflow" );
 		}
 	};
-	
+
 	if(Player.catalogue.length){
 		_callback(Player.catalogue);
 	}else{
@@ -176,15 +176,15 @@ Settings.init.audio.audioProfil.setAudioProfil = function(list){
 Settings.init.audio.elevationLevel = function($slider, lvl, type){
 	var range = Player.elevationRange, value;
 	if(Main.simplifiedMode){
-		
+
 		lvl = parseInt(lvl, 10);
 		value = lvl >= 45 ? 3 : lvl <= 0 ? 1 : 2;
-		
+
 		$slider.data("type", type);
 		$slider.parent().siblings(".min-value").text(range[0]+"°").end()
-			.siblings(".max-value").text(range[1]+"°");		
+			.siblings(".max-value").text(range[1]+"°");
 		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
-		
+
 		$slider.slider({
 			range: "min",
 			min: 1,
@@ -195,7 +195,7 @@ Settings.init.audio.elevationLevel = function($slider, lvl, type){
 				Settings.change.audioElevationLevel(ui.value, this);
 			}
 		});
-		
+
 	}else{
 		value = lvl;
 		$slider.slider({
@@ -234,14 +234,14 @@ Settings.init.audio.azimDistance = function($drag){
 
 		var azim = getHtmlStorage("commentsAzim") || Player.commentsAzim,
 			dist = getHtmlStorage("commentsDistance") || Player.commentsDistance;
-		
+
 		dist = getDistance(dist, Player.distanceRange, [minDistance, canvas.radius]);
 		var acos = parseInt(azim, 10) * Math.PI / Player.azimRadius;
 		var cosinus = Math.cos(acos);
 		var sinus = Math.sin(acos);
 		var top = -cosinus * dist + canvas.center[1];
 		var left = sinus * dist + canvas.center[0];
-		
+
 		$drag.css({top:top,left:left}).draggable({
 			scroll:false,
 			drag: function(e, ui){
@@ -261,7 +261,7 @@ Settings.init.audio.azimDistance = function($drag){
 
 Settings.onDragAzimDistance = function(ui, item, canvas){
 	if(typeOf(ui) === "object" && typeOf(canvas) === "object"){
-		
+
 		var minDistance = Settings.minDistance;
 
 		var limit = function(x, y){
@@ -277,11 +277,11 @@ Settings.onDragAzimDistance = function(ui, item, canvas){
 				return {
 					x: Math.cos(radians) * radius + canvas.center[0],
 					y: Math.sin(radians) * radius + canvas.center[1]
-				};		
+				};
 			}
 		};
 
-		var result = limit(ui.position.left, ui.position.top);			
+		var result = limit(ui.position.left, ui.position.top);
 		ui.position.left = result.x;
 		ui.position.top = result.y;
 
@@ -327,13 +327,13 @@ Settings.init.audio.azim = function($slider, value, type){
 		value = parseInt(value, 10);
 		var valueStep = value > 90 ? 5 : value > 0 ? 4 : value > -90 ? 3 : value > -180 ? 2 : 1;
 		log("Orientation : "+value+"°. Crant "+valueStep);
-		
+
 		var range = [-180, 180];
 		$slider.data("type", type);
 		$slider.parent().siblings(".min-value").text(range[0]+"°").end()
-			.siblings(".max-value").text(range[1]+"°");		
+			.siblings(".max-value").text(range[1]+"°");
 		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
-		
+
 		$slider.slider({
 			range: "min",
 			min: 1,
@@ -344,7 +344,7 @@ Settings.init.audio.azim = function($slider, value, type){
 				Settings.change.audioAzim(ui.value, this);
 			}
 		});
-		
+
 		Settings.change.audioAzim(valueStep, $slider);
 	}
 };
@@ -361,9 +361,9 @@ Settings.init.audio.distance = function($slider, value, type){
 	if(Main.simplifiedMode){
 		var range = Player.distanceRange;
 		$slider.data("type", type).parent().siblings(".min-value").text(range[0]+"m").end()
-			.siblings(".max-value").text(range[1]+"m");		
+			.siblings(".max-value").text(range[1]+"m");
 		$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
-		
+
 		$slider.slider({
 			range: "min",
 			min: range[0],
@@ -388,7 +388,7 @@ Settings.init.interface.fontSize = function(){
 	var range = Settings.fontSizeRange;
 	var valueMinSize = getHtmlStorage("settings_min_size") || range[0];
 	var $slider = $(document.getElementById(Main.simplifiedMode ? "fontSlide-sm" : "fontSlide"));
-	
+
 	$slider.children("a").attr("aria-valuemin", range[0]).attr("aria-valuemax", range[1]);
 	$slider.slider({
 		range: "min",
@@ -401,7 +401,7 @@ Settings.init.interface.fontSize = function(){
 			Settings.change.fontSize(ui.value, this);
 		}
 	});
-	
+
 	Settings.change.fontSize(valueMinSize, $slider);
 };
 
@@ -411,16 +411,16 @@ Settings.init.interface.fontSize = function(){
  */
 
 Settings.init.subtitles = function(){
-	
+
 	/* CHOIX DE POLICE */
 	this.subtitles.fontFamily();
-	
+
 	/* COULEUR D'ARRIERE PLAN */
 	this.subtitles.BGColor();
-	
+
 	/* COULEUR DU TEXTE */
 	this.subtitles.color();
-	
+
 	/* OPACITE DE L'ARRIERE PLAN DES SOUS-TITRES */
 	var valueMinOpacity = getHtmlStorage("subtitleBackgroundOpacity") || Settings.minOpacity;
 	var $opacitySlider = $(document.getElementById("opacitySlide")).slider({
@@ -433,10 +433,10 @@ Settings.init.subtitles = function(){
 		slide: function(event, ui){
 			Settings.change.subtitlesOpacity(ui.value, this);
 		}
-		
+
 	}).children("a").attr("aria-valuemin", 0).attr("aria-valuemax", 1);
 	Settings.change.subtitlesOpacity(valueMinOpacity, $opacitySlider);
-	
+
 	/* TAILLE DES SOUS-TITRES */
 	var valueMinSize = getHtmlStorage("subtitleFontSize") || Settings.minSubtitlesSize;
 	var subRange = Settings.subtitlesSizeRange;
@@ -450,10 +450,10 @@ Settings.init.subtitles = function(){
 		slide: function(event, ui){
 			Settings.change.subtitlesFontSize(ui.value, this);
 		}
-		
-	}).children("a").attr("aria-valuemin", subRange[0]).attr("aria-valuemax", subRange[1]);	
+
+	}).children("a").attr("aria-valuemin", subRange[0]).attr("aria-valuemax", subRange[1]);
 	Settings.change.subtitlesFontSize(valueMinSize, $subtitlesSizeSlider);
-	
+
 	/* POSITION DES SOUS-TITRES */
 	this.subtitles.pip();
 };
@@ -467,11 +467,11 @@ Settings.init.subtitles.fontFamily = function(){
 	var selectedFont = getHtmlStorage("subtitleFont");
 	if(selectedFont && Settings.fontList.indexOf(selectedFont) !== -1){
 		Settings.change.subtitlesFontFamily(selectedFont);
-		
+
 	}else{
 		setHtmlStorage("subtitleFont", Settings.defaultFont);
 		Settings.change.subtitlesFontFamily(Settings.defaultFont);
-	}	
+	}
 };
 
 /**
@@ -504,22 +504,22 @@ Settings.init.subtitles.BGColor = function(){
  */
 
 Settings.init.subtitles.pip = function(){
-	
+
 	var coordonates = Settings.getCurrentCoordonates("sub");
-	var $container = $(document.getElementById(Main.simplifiedMode ? "uiSubtitles-sm-container" : "uiSubtitles-container")); 
+	var $container = $(document.getElementById(Main.simplifiedMode ? "uiSubtitles-sm-container" : "uiSubtitles-container"));
 	var $pipVideo = $container.find(".pip-video").css("top", coordonates.y+"%");
-	$pipVideo.draggable({ 	
+	$pipVideo.draggable({
 		containment: $container,
 		scroll:false,
 		axis: "y",
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
 			Settings.saveSubtitlesPIPPosition($( this ).draggable( "option", "containment" ));
-			
+
 			Settings.updateARIAPropertiesForPIP($(this), "sub");
 		}
 	});
-	
+
 	requestAnimationFrame(function(){
 		Settings.updateARIAPropertiesForPIP($pipVideo, "sub");
 	});
@@ -530,10 +530,10 @@ Settings.init.subtitles.pip = function(){
  * @description Initializes the screen of the LS parameters
  */
 
-Settings.init.ls = function(){	
+Settings.init.ls = function(){
 	var coordonates = Settings.getCurrentCoordonates("ls");
-	
-	var $container = $(document.getElementById(Main.simplifiedMode ? "uiLS-container-sm" : "uiLS-container")); 
+
+	var $container = $(document.getElementById(Main.simplifiedMode ? "uiLS-container-sm" : "uiLS-container"));
 	var $pipVideo = $container.find(".pip-video").attr("style",'left: '+coordonates.x+'%; top: '+coordonates.y+'%; width:'+coordonates.w+'%; height:'+ coordonates.h +'%');
 	$pipVideo.draggable({
 		containment: $container,
@@ -541,7 +541,7 @@ Settings.init.ls = function(){
 		handle:".ui-icon-gripsmall-center",
 		stop: function() {
 			Settings.saveLSPIPPosition($( this ).draggable( "option", "containment" ), $(this));
-			
+
 			Settings.updateARIAPropertiesForPIP($(this), "ls");
 		}
 	}).resizable( {
@@ -554,21 +554,21 @@ Settings.init.ls = function(){
 			var $parent = $( this ).draggable( "option", "containment" );
 			Settings.saveLSPIPSize($parent, $(this));
 			Settings.saveLSPIPPosition($parent, $(this));
-			
+
 			Settings.updateARIAPropertiesForPIP($(this), "ls");
 		}
 	});
-	
+
 	$container.find('.ui-resizable-nw').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le haut et la gauche","aria-valuenow":0}).addClass('ui-icon ui-icon-gripsmall-diagonal-nw').end()
 		.find('.ui-resizable-ne').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le haut et la droite","aria-valuenow":0}).addClass('ui-icon ui-icon-gripsmall-diagonal-ne').end()
 		.find('.ui-resizable-sw').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le bas et la gauche","aria-valuenow":0}).addClass('ui-icon ui-icon-gripsmall-diagonal-sw').end()
 		.find('.ui-resizable-se').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le bas et la droite","aria-valuenow":0}).addClass('ui-icon ui-icon-gripsmall-diagonal-se').end()
-	
+
 		.find('.ui-resizable-n').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le haut"}).end()
 		.find('.ui-resizable-e').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers la droite"}).end()
 		.find('.ui-resizable-s').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers le bas"}).end()
 		.find('.ui-resizable-w').attr({role:"slider","aria-valuemin":0,"aria-valuemax":"100","aria-label":"Redimensionnez vers la gauche"});
-	
+
 	Settings.updateARIAPropertiesForPIP($pipVideo, "ls");
 };
 
@@ -586,14 +586,14 @@ Settings.getCurrentCoordonates = function(PIPType){
 		var pipLeftPercent = (getHtmlStorage("LSFPip_position_x") && !isNaN(getHtmlStorage("LSFPip_position_x"))) ? getHtmlStorage("LSFPip_position_x") : defaultCoordonates.x;
 		pipTopPercent = (getHtmlStorage("LSFPip_position_y") && !isNaN(getHtmlStorage("LSFPip_position_y"))) ? getHtmlStorage("LSFPip_position_y") : defaultCoordonates.y;
 		var pipWidthReal = getHtmlStorage("LSFPip_size_width") || defaultCoordonates.w;
-		var pipHeightReal = getHtmlStorage("LSFPip_size_height") || defaultCoordonates.h;	
-		
+		var pipHeightReal = getHtmlStorage("LSFPip_size_height") || defaultCoordonates.h;
+
 		return {x: pipLeftPercent, y: pipTopPercent, w: pipWidthReal, h: pipHeightReal};
-		
+
 	}else if(PIPType === "sub"){
 		pipTopPercent = (getHtmlStorage("subtitlePositionY") && !isNaN(getHtmlStorage("subtitlePositionY"))) ? getHtmlStorage("subtitlePositionY") : Settings.subtitlesDefaultPosition;
 		return {y: pipTopPercent};
-		
+
 	}else{
 		return {};
 	}
@@ -602,7 +602,7 @@ Settings.getCurrentCoordonates = function(PIPType){
 																	/* ******************************************/
 																	/*	 FONCTIONS POUR LA MAJ DES PARAMETRES	*/
 																	/* ******************************************/
-	
+
 /**
  * @author Johny EUGENE (DOTSCREEN)
  * @description Changes the app font size
@@ -610,10 +610,10 @@ Settings.getCurrentCoordonates = function(PIPType){
  * @param {jQuery Object} el The slider element (for SM mode)
  */
 
-Settings.change.fontSize = function(newValue, el){	
+Settings.change.fontSize = function(newValue, el){
 	setHtmlStorage("settings_min_size", newValue);
 	$("main > div").css("font-size", (newValue / 16) + "em");
-	
+
 	if(Main.simplifiedMode){
 		$(el).children("a").attr("aria-valuenow", newValue).attr("aria-valuetext", newValue + " pixel");
 	}
@@ -628,9 +628,9 @@ Settings.change.fontSize = function(newValue, el){
 Settings.change.subtitlesFontFamily = function(ff){
 	setHtmlStorage("subtitleFont", ff);
 	$(".ui-subtitles .pip-text").removeClass("Arial OpenDyslexic Andika Helvetica Verdana").addClass(ff);
-	
+
 	if(Main.simplifiedMode){
-		$(document.getElementById("font-family")).children(".menu-item."+ff).attr("aria-checked", true).addClass("selected").siblings().attr("aria-checked", false).removeClass("selected");		
+		$(document.getElementById("font-family")).children(".menu-item."+ff).attr("aria-checked", true).addClass("selected").siblings().attr("aria-checked", false).removeClass("selected");
 	}else{
 		$(".option-font-family .font-family."+ff).addClass("selected").siblings().removeClass("selected");
 	}
@@ -693,13 +693,13 @@ Settings.change.subtitlesFontSize = function(newValue, el){
  */
 
 Settings.change.audioSpatialisationMode = function(value){
-	
+
 	var setMode = function(val){
 		var values = Player.spatializationModes;
 
 		var _save = function(){
 			setHtmlStorage("spatializationMode", Player.spatializationMode);
-			setHtmlStorage("binauralEQ", Player.binauralEQ);				
+			setHtmlStorage("binauralEQ", Player.binauralEQ);
 		};
 
 		if(values.indexOf(val) !== -1){
@@ -710,16 +710,16 @@ Settings.change.audioSpatialisationMode = function(value){
 		}else if(val === "binaural-EQ"){
 			Player.spatializationMode = values[0];
 			Player.binauralEQ = true;
-			_save();		
-		}	
+			_save();
+		}
 	};
-	
+
 	if(Main.simplifiedMode){
 		$(document.getElementById("spatialisation-options-sm")).children(".menu-item").filter(function(){
 			return $(this).data("value") === value;
 		}).addClass("selected").attr("aria-checked", true).siblings().removeClass("selected").attr("aria-checked", false);
 		setMode(value);
-		
+
 	}else{
 		$(document.getElementById("spatialisation-options")).val(value);
 		setMode(value);
@@ -733,19 +733,19 @@ Settings.change.audioSpatialisationMode = function(value){
  */
 
 Settings.change.audioProfil = function(value){
-	
+
 	var setMode = function(val){
 		Player.profilLoaded =  false;
 		Player.selectedProfil = val;
 		setHtmlStorage("audioProfil", val);
 	};
-	
+
 	if(Main.simplifiedMode){
 		/*$(document.getElementById("spatialisation-options-sm")).children(".menu-item").filter(function(){
 			return $(this).data("value") === value;
 		}).addClass("selected").attr("aria-checked", true).siblings().removeClass("selected").attr("aria-checked", false);
 		setMode(value);*/
-		
+
 	}else{
 		$(document.getElementById("audio-profils-options")).val(value);
 		setMode(value);
@@ -764,7 +764,7 @@ Settings.change.audioElevationLevel = function(value, el){
 	// Converti les steps en leur valeur correspondante
 	if(Main.simplifiedMode){
 		var range = Player.elevationRange;
-		value = value === 2 ? parseInt((range[1] - Math.abs(range[0])) / 2, 10) : value === 1 ? range[0] : range[1];	
+		value = value === 2 ? parseInt((range[1] - Math.abs(range[0])) / 2, 10) : value === 1 ? range[0] : range[1];
 	}
 
 	Player.commentsElevationLevel = value;
@@ -803,7 +803,7 @@ Settings.change.audioElevationLevel = function(value, el){
  */
 
 Settings.change.audioAzim = function(value, el){
-		
+
 	// Converti les steps en leur valeur correspondante
 	if(Main.simplifiedMode){
 		value = value === 5 ? 180 : value === 4 ? 90 : value === 3 ? 0 : value === 2 ? -90 : -180;
@@ -826,13 +826,13 @@ Settings.change.audioAzim = function(value, el){
  */
 
 Settings.change.audioDistance = function(value, el){
-	
+
 	Player.commentsDistance = value;
 	setHtmlStorage("commentsDistance", value);
-		
+
 	if(Main.simplifiedMode){
 		$(el).children("a").attr("aria-valuenow", value).attr("aria-valuetext", value + " mètre");
-	}		
+	}
 };
 
 /**
@@ -860,7 +860,7 @@ Settings.saveSubtitlesPIPPosition = function($container){
 
 Settings.saveLSPIPPosition = function($container, $pip){
 	if($($container).length && $($pip).length){
-	
+
 		var newLeftPercent = ($pip.position().left / $container.width()) * 100;
 		var newTopPercent = ($pip.position().top / $container.height()) * 100;
 
@@ -880,7 +880,7 @@ Settings.saveLSPIPPosition = function($container, $pip){
 
 Settings.saveLSPIPSize = function($container, $pip){
 	if($($container).length && $($pip).length){
-		
+
 		var pipWidth = $pip.width();
 		var pipHeight = $pip.height();
 		var containerWidth = $container.width();
@@ -922,7 +922,7 @@ Settings.updateARIAPropertiesForPIP = function($pip, PIPType){
 			.find('.ui-resizable-e').attr({"aria-valuenow":rightPercent,"aria-valuetext":rightPercent + "% depuis la droite"}).end()
 			.find('.ui-resizable-s').attr({"aria-valuenow":bottomPercent,"aria-valuetext":bottomPercent + "% depuis le bas"}).end()
 			.find('.ui-resizable-w').attr({"aria-valuenow":leftPercent,"aria-valuetext":leftPercent + "% depuis la gauche"});
-		
+
 	}else if(PIPType === "sub"){
 		var $parent = $pip.parent();
 		var padding = parseFloat($parent.css("padding").replace("px",""));
@@ -930,7 +930,7 @@ Settings.updateARIAPropertiesForPIP = function($pip, PIPType){
 		var hPercent = ($pip.height() / parentHeight) * 100;
 		var distanceToTop = (($pip[0].offsetTop - padding) / parentHeight * 100);
 		bottomPercent = Math.round(100 - distanceToTop - hPercent);
-		
+
 		//log("Je suis à " + distanceToTop + " du haut et à " + bottomPercent + " du bas");
 		$pip.attr({"aria-valuetext":(bottomPercent<0?0:bottomPercent) + "% depuis le bas"});
 	}
