@@ -173,7 +173,7 @@ h2{font-size:1.6em;font-weight:600}
 /* PLAYER */
 #videoPlayerContainer{display:none;background-color:#000;font-family:arial,sans-serif}
 #videoPlayerContainer video{position:absolute;top:0;left:0;width:100%;height:100%}
-#video-caption{height:66%!important}
+#video-caption{height:33%!important}
 #playerUI{position:absolute;top:0;width:100%;height:100%;background:rgba(0,0,0,0) url(../img/player/degrade.png) repeat-x scroll 0 0 / contain}
 #playerTopBanner, #playerBottomBanner{width:100%;position:absolute;z-index:1}
 #playerTopBanner{top:0}
@@ -294,7 +294,7 @@ h2{font-size:1.6em;font-weight:600}
 .ui-subtitles, .pip-limit{border:#aaa solid 1px}
 .ui-subtitles{width:884px;height:227px}
 .pip-video{position:relative;box-shadow:0 0 5px #000;background-color:#4d4d4d}
-.ui-subtitles .pip-video{left:0;width:100%;height:28%;text-align:center;line-height:53px}
+.ui-subtitles .pip-video{left:0;width:100%;height:33%;text-align:center;line-height:60px}
 .pip-text{display:inline-block;vertical-align:middle;line-height:normal;color:#fff}
 .ui-icon{width:20px;height:20px;background-size:contain}
 .ui-icon-gripsmall-diagonal-se{background-position:0 0}

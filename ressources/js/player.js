@@ -274,9 +274,9 @@ Player.launch = function(){
 			var top = Math.round(yPos);
 			if(top <= 0){
 				top = 0;
-			}else if(top >= 65){
+			}/*else if(top >= 65){
 				top = 65 / 2;
-			}else{
+			}*/else{
 				top = top / 2;
 			}
 			$(Player.ttmlDiv).css({top:top + "%"});
