@@ -207,6 +207,7 @@ h2{font-size:1.6em;font-weight:600}
 .volume-control-ctn .volume-mute{background-position:0 0}
 #playerBottomBanner .ui-slider-handle{width:25px;height:25px;cursor:pointer;background:url(../img/volume/handle.png) no-repeat 50% 50%;font-weight:700;color:#1C94C4;top:-10px;margin-left:-12px;border:0 none}
 #playerBottomBanner .ui-slider-range{background:#fff;position:absolute;border:0;top:0;height:100%}
+#playerControlVolume .ui-slider-range{background:url("../img/volume/bg.png") no-repeat 0 center;}
 #playerControlTrickMode{left:556.5px}
 #playerControlTrickMode > div{display:inline-block;margin-left:15px;vertical-align:middle;background-repeat:no-repeat;background-size:contain}
 #playerControlFF, #playerControlRW{width:37px;height:37px}
