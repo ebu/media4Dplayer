@@ -141,7 +141,7 @@ InfoBanner.suspendMaskingAfterDelay = function(){
  */
 
 InfoBanner.executeMaskingAfterDelay = function(){
-	//this.hide();
+	this.hide();
 };
 
 /* **************************************************/
