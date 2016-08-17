@@ -283,7 +283,7 @@ Player.launch = function(){
 			}*/else{
 				top = top / 2;
 			}
-			$(Player.ttmlDiv).css({top:(Math.round(yPos) - 10) + "%"});
+			$(Player.ttmlDiv).css({top:(Math.round(yPos) - 20) + "%"});
 		}
 	});
 	var updateCurrentTime = function(media, cTime){
