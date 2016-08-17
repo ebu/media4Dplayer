@@ -5,7 +5,7 @@ var Search = {
 	method: "content",
 	methods: ["term", "content"],
 	autocomplete: {
-		limit: 5
+		limit: 10
 	},
 	termsOfAffination: {
 		limit: 6,
@@ -261,7 +261,9 @@ Search.termsOfAffination.init = function(list){
 		this.showList(list);
 
 	}else{
-		$(document.getElementById("search-message")).children("span").text("Aucun résultat trouvé pour " + Search.term);
+		this.hideLoader();
+
+		Section.change.toSearch(Section.sections[30], Section.rubrics[Section.sections[30]][1]);
 	}
 };
 
@@ -388,7 +390,11 @@ Search.results.load = function(){
 	this.reset();
 	this.showLoader();
 
-	var params = (Search.method === Search.methods[0]) ? "TODO" : {type: "queryANDGroup", phrase: Search.term, groupID: Search.termsOfAffination.groupID};
+	var params;
+	if(Search.method === Search.methods[1]){
+		params = Search.termsOfAffination.groupID ? {type: "queryANDGroup", phrase: Search.term, groupID: Search.termsOfAffination.groupID} : {type:"query",phrase:Search.term};
+	}
+
 	API.getResults(params, Search.method, function(list){
 		Search.results.init(list);
 	});

@@ -9,24 +9,30 @@ var Navigation = {
  */
 
 Navigation.goBack = function(){
-	
+
 	if(Settings.backToPlayerFromSettings && $("body").hasClass("sm settings")){
 		Section.launchPlayerFromSettings();
-		
+
 	}else if($("body").hasClass("search terms-search")){
 		$(document.getElementById("terms-search-container")).removeClass("terms-of-affination-list");
 		$(document.getElementById("terms-of-affination")).hide();
 		$(document.getElementById("search-message")).show().children("span").text(Search.initialMessage);
-		
+
 	}else if($("body").hasClass("search full-result")){
-		$("body").attr("class", "search terms-search");		
-		Search.termsOfAffination.groupID = null;
-		
+		if(Search.termsOfAffination.groupID){
+			$("body").attr("class", "search terms-search");
+			Search.termsOfAffination.groupID = null;
+		}else{
+			$("body").attr("class", "search terms-search");
+			$(document.getElementById("terms-search-container")).removeClass("terms-of-affination-list");
+			$(document.getElementById("search-message")).show().children("span").text(Search.initialMessage);
+		}
+
 	}else if(Section.oldClass.length){
 		$("body").attr("class", Section.oldClass[Section.oldClass.length-1]);
 		Section.oldClass.pop();
 	}
-	
+
 	Navigation.setFocusToFirstItem();
 };
 
