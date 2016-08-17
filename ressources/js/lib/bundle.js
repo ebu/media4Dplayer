@@ -56,7 +56,7 @@ function writeTextDataToFile(text) {
 /**
  * Writes a buffer to a text file and returns the URL of the downloadable file
  * The text file is formatted so that it can be easily copy/paste into Matlab
- * 
+ *
  * @type {AudioBuffer} buffer
  */
 function writeBufferToTextFileWithMatlabFormat(buffer) {
@@ -301,7 +301,7 @@ var AbstractNode = function () {
             this._output.connect(node);
         }
         /**
-         * Disconnect the audio node     
+         * Disconnect the audio node
          */
 
     }, {
@@ -371,7 +371,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
     }, {
         key: 'streamsTrimChanged',
         value: function streamsTrimChanged() {}
-        /// nothing to do in the base class  
+        /// nothing to do in the base class
 
 
         //==============================================================================
@@ -387,7 +387,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         //==============================================================================
         /**
          * Returns true if this channel index corresponds to the extended dialog
-         *      
+         *
          */
         value: function isChannelForExtendedDialog(channelIndex) {
 
@@ -441,7 +441,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         //==============================================================================
         /**
          * Returns true if this channel index corresponds to the extended ambiance
-         *      
+         *
          */
 
     }, {
@@ -498,7 +498,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         //==============================================================================
         /**
          * Returns true if this channel index corresponds to a center channel (of 5.0 or 5.1 stream)
-         *      
+         *
          */
 
     }, {
@@ -723,7 +723,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         }
 
         /**
-         * Returns true if there is at least one dialog among all the streams     
+         * Returns true if there is at least one dialog among all the streams
          */
 
     }, {
@@ -760,7 +760,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         }
 
         /**
-         * Returns true if there is at least one dialog among all the streams     
+         * Returns true if there is at least one dialog among all the streams
          */
 
     }, {
@@ -798,7 +798,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
 
         //==============================================================================
         /**
-         * Returns true if there is at least one ambiance among all the streams     
+         * Returns true if there is at least one ambiance among all the streams
          */
 
     }, {
@@ -835,7 +835,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         }
 
         /**
-         * Returns true if there is at least one ambiance among all the streams     
+         * Returns true if there is at least one ambiance among all the streams
          */
 
     }, {
@@ -873,7 +873,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
 
         //==============================================================================
         /**
-         * Returns true if there is at least one commentary among all the streams     
+         * Returns true if there is at least one commentary among all the streams
          */
 
     }, {
@@ -911,7 +911,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
 
         /**
          * Returns true if there is at least one commentary among all the streams,
-         * and if it is currently active     
+         * and if it is currently active
          */
 
     }, {
@@ -1026,7 +1026,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         //==============================================================================
         /**
          * This function returns the index of the source which corresponds to the mono commentary
-         * 
+         *
          * Returns -1 if there is no commentary
          */
 
@@ -1080,7 +1080,7 @@ var AudioStreamDescriptionCollection = exports.AudioStreamDescriptionCollection 
         //==============================================================================
         /**
          * This function returns the index of the source which corresponds to the mono dialog
-         * 
+         *
          * Returns -1 if there is no commentary
          */
 
@@ -1176,7 +1176,7 @@ var AudioStreamDescription = exports.AudioStreamDescription = function () {
     //==============================================================================
     /// if one of the value is NaN, this most likely means the stream was
     /// actually not in the EBU core.
-    /// it should thus be considered as inactive   
+    /// it should thus be considered as inactive
 
 
     _createClass(AudioStreamDescription, [{
@@ -1830,7 +1830,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /************************************************************************************/
 /*!
- *   @file       
+ *   @file
  *   @brief      Implements the DialogEnhancement of M4DP
  *   @author     Thibaut Carpentier
  *   @date       01/2016
@@ -1847,7 +1847,7 @@ var DialogEnhancement = function (_AbstractNode) {
     //==============================================================================
     /**
      * @param {AudioContext} audioContext - audioContext instance.
-     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.     
+     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.
      */
 
     function DialogEnhancement(audioContext, audioStreamDescriptionCollection) {
@@ -2099,10 +2099,10 @@ var DialogEnhancement = function (_AbstractNode) {
             return this._mode;
         }
 
-        //==============================================================================       
+        //==============================================================================
         /**
          * Sets the balance (in 0 - 100 %) between dialogs and ambiance
-         *      
+         *
          */
 
     }, {
@@ -2116,7 +2116,7 @@ var DialogEnhancement = function (_AbstractNode) {
 
         /**
          * Returns the balance (in 0 - 100 %) between dialogs and ambiance
-         * @type {number}     
+         * @type {number}
          */
         ,
         get: function get() {
@@ -2135,7 +2135,7 @@ var DialogEnhancementProcessorMode1 = function (_AbstractNode2) {
     //==============================================================================
     /**
      * @param {AudioContext} audioContext - audioContext instance.
-     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.     
+     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.
      */
 
     function DialogEnhancementProcessorMode1(audioContext, audioStreamDescriptionCollection) {
@@ -2175,10 +2175,10 @@ var DialogEnhancementProcessorMode1 = function (_AbstractNode2) {
             return this._gainsNode.getNumChannels();
         }
 
-        //==============================================================================       
+        //==============================================================================
         /**
          * Sets the balance (in 0 - 100 %) between dialogs and ambiance
-         *      
+         *
          */
 
     }, {
@@ -2188,7 +2188,7 @@ var DialogEnhancementProcessorMode1 = function (_AbstractNode2) {
         //==============================================================================
         /**
          * Returns true if this channel index corresponds to the extended dialog
-         *      
+         *
          */
         value: function isChannelForExtendedDialog(channelIndex) {
 
@@ -2198,7 +2198,7 @@ var DialogEnhancementProcessorMode1 = function (_AbstractNode2) {
         //==============================================================================
         /**
          * Returns true if this channel index corresponds to the extended ambiance
-         *      
+         *
          */
 
     }, {
@@ -2210,7 +2210,7 @@ var DialogEnhancementProcessorMode1 = function (_AbstractNode2) {
         //==============================================================================
         /**
          * Updates the gains for each channel
-         *      
+         *
          */
 
     }, {
@@ -2277,7 +2277,7 @@ var DialogEnhancementProcessorMode2 = function (_AbstractNode3) {
     //==============================================================================
     /**
      * @param {AudioContext} audioContext - audioContext instance.
-     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.     
+     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.
      */
 
     function DialogEnhancementProcessorMode2(audioContext, audioStreamDescriptionCollection) {
@@ -2317,10 +2317,10 @@ var DialogEnhancementProcessorMode2 = function (_AbstractNode3) {
             return this._gainsNode.getNumChannels();
         }
 
-        //==============================================================================       
+        //==============================================================================
         /**
          * Sets the balance (in 0 - 100 %) between dialogs and ambiance
-         *      
+         *
          */
 
     }, {
@@ -2330,7 +2330,7 @@ var DialogEnhancementProcessorMode2 = function (_AbstractNode3) {
         //==============================================================================
         /**
          * Returns true if this channel index corresponds to a center channel (of 5.0 or 5.1 stream)
-         *      
+         *
          */
         value: function isChannelCenter(channelIndex) {
             return this._audioStreamDescriptionCollection.isChannelCenter(channelIndex);
@@ -2339,7 +2339,7 @@ var DialogEnhancementProcessorMode2 = function (_AbstractNode3) {
         //==============================================================================
         /**
          * Updates the gains for each channel
-         *      
+         *
          */
 
     }, {
@@ -2405,7 +2405,7 @@ var DialogEnhancementProcessorMode3 = function (_AbstractNode4) {
     //==============================================================================
     /**
      * @param {AudioContext} audioContext - audioContext instance.
-     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.     
+     * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.
      */
 
     function DialogEnhancementProcessorMode3(audioContext, audioStreamDescriptionCollection) {
@@ -2459,10 +2459,10 @@ var DialogEnhancementProcessorMode3 = function (_AbstractNode4) {
             return this._audioStreamDescriptionCollection.totalNumberOfChannels;
         }
 
-        //==============================================================================       
+        //==============================================================================
         /**
          * Sets the balance (in 0 - 100 %) between dialogs and ambiance
-         *      
+         *
          */
 
     }, {
@@ -2472,7 +2472,7 @@ var DialogEnhancementProcessorMode3 = function (_AbstractNode4) {
         //==============================================================================
         /**
          * Updates the gains for each channel
-         *      
+         *
          */
         value: function _update() {
 
@@ -3271,15 +3271,15 @@ var MultichannelCompressorNode = function (_AbstractNode) {
      * @param {AudioContext} audioContext - audioContext instance.
      * @param {int} numChannels - number of channels to instanciate
      *
-     * @details It turns out the standard DynamicsCompressorNode from the WAA 
+     * @details It turns out the standard DynamicsCompressorNode from the WAA
      *          does some weird stuff when the number of channels is 10 ( > 5.1 ?? )
      *
      *  So we created this class which just instanciate 10 mono compressor nodes in parallel
      *
-     *  NB : the issues with DynamicsCompressorNode might come from the fact that 
+     *  NB : the issues with DynamicsCompressorNode might come from the fact that
      *  its default Channel count mode is "explicit"
      *  It could be possible (but not tested), to solve the issue
-     *  by specifying : 
+     *  by specifying :
      *  DynamicsCompressorNode.channelCountMode = "max"
      *  DynamicsCompressorNode.channelCount = 10;
      *
@@ -3526,7 +3526,7 @@ var MultichannelCompressorNode = function (_AbstractNode) {
                 this._input.connect(this._output);
             } else {
 
-                /// split the input streams into N independent channels           
+                /// split the input streams into N independent channels
                 this._input.connect(this._splitterNode);
                 this._input.connect(this._gainDry);
 
@@ -3742,7 +3742,7 @@ var HeadphonesEqualization = function (_CascadeNode) {
     //==============================================================================
     /**
      * Loads a new headphones equalization preset
-     * @type {string} value : the name of the preset (they are hard-coded) 
+     * @type {string} value : the name of the preset (they are hard-coded)
      */
 
 
@@ -4690,7 +4690,7 @@ var TransauralFeedforwardNode = exports.TransauralFeedforwardNode = function (_T
 
         return _possibleConstructorReturn(this, Object.getPrototypeOf(TransauralFeedforwardNode).call(this, audioContext));
 
-        ///@todo : not yet implemented 
+        ///@todo : not yet implemented
     }
 
     return TransauralFeedforwardNode;
@@ -4880,12 +4880,17 @@ var VirtualSpeakersNode = function (_AbstractNode) {
                 } else {
                     console.log('loaded hrtf from ' + url);
                 }
+				Main.profilsLoaded.push(url);
+				Player.hideLoader();
+				if(videos.a){
+					videos.a.play();
+				}
 
                 /// update the listener yaw
                 _this2.listenerYaw = _this2._listenerYaw;
             }).catch(function () {
                 console.log('could not access bili2.ircam.fr...');
-                /// using default data instead                   
+                /// using default data instead
 
                 var sampleRate = _this2._audioContext.sampleRate;
 
@@ -5150,7 +5155,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /************************************************************************************/
 /*!
- *   @file       
+ *   @file
  *   @brief      Implements the MultichannelSpatialiser of M4DP
  *   @author     Thibaut Carpentier, Samuel Goldszmidt
  *   @date       01/2016
@@ -5165,8 +5170,8 @@ var MultichannelSpatialiser = function (_AbstractNode) {
     /**
      * @param {AudioContext} audioContext - audioContext instance.
      * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.
-     * @param {string} outputType - output type 'binaural' or 'transaural' or 'multichannel'     
-     * @param {string} headphoneEqPresetName - the name of the headphone equalization preset (they are hard-coded) 
+     * @param {string} outputType - output type 'binaural' or 'transaural' or 'multichannel'
+     * @param {string} headphoneEqPresetName - the name of the headphone equalization preset (they are hard-coded)
      * @param {number} offsetGain - the offset gain (expressed in dB)
      * @param {number} listenerYaw - yaw angle in degrees
      */
@@ -5344,7 +5349,7 @@ var MultichannelSpatialiser = function (_AbstractNode) {
         //==============================================================================
         /**
          * Loads a new headphones equalization preset
-         * @type {string} presetName : the name of the preset (they are hard-coded) 
+         * @type {string} presetName : the name of the preset (they are hard-coded)
          */
 
     }, {
@@ -5484,7 +5489,7 @@ var StreamRouting = function (_AbstractNode) {
      * @param {AudioContext} audioContext - audioContext instance.
      * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection
      *
-     * @details With the WebAudioAPI specifications, the 5.1 output stream is arranged as : 
+     * @details With the WebAudioAPI specifications, the 5.1 output stream is arranged as :
      *
      *   0: L: left
      *   1: R: right
@@ -5741,7 +5746,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /************************************************************************************/
 /*!
- *   @file       
+ *   @file
  *   @brief      Implements the ObjectSpatialiserAndMixer of M4DP
  *   @author     Thibaut Carpentier, Samuel Goldszmidt
  *   @date       01/2016
@@ -5757,8 +5762,8 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
     /**
      * @param {AudioContext} audioContext - audioContext instance.
      * @param {AudioStreamDescriptionCollection} audioStreamDescriptionCollection - audioStreamDescriptionCollection.
-     * @param {string} outputType - output type 'binaural' or 'transaural' or 'multichannel'     
-     * @param {string} headphoneEqPresetName - the name of the headphone equalization preset (they are hard-coded) 
+     * @param {string} outputType - output type 'binaural' or 'transaural' or 'multichannel'
+     * @param {string} headphoneEqPresetName - the name of the headphone equalization preset (they are hard-coded)
      * @param {number} offsetGain - the offset gain (expressed in dB)
      * @param {number} listenerYaw - yaw angle in degrees
      */
@@ -5781,7 +5786,7 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 
     //==============================================================================
     /**
-     * Set the position of the additionnal mono commentary     
+     * Set the position of the additionnal mono commentary
      * @param {number} azimuth - azimuth @todo values to be defined
      * @param {number} elevation - elevation @todo values to be defined
      * @param {number} distance - distance @todo values to be defined
@@ -5883,7 +5888,7 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
         }
 
         /**
-         * Returns the position of the additionnal mono commentary     
+         * Returns the position of the additionnal mono commentary
          * @return {array}
          *
          * @details The values are expressed with Spat4 navigational coordinates
@@ -5948,7 +5953,7 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
 
         //==============================================================================
         /**
-         * Set the position of the additionnal mono dialog     
+         * Set the position of the additionnal mono dialog
          * @param {number} azimuth - azimuth @todo values to be defined
          * @param {number} elevation - elevation @todo values to be defined
          * @param {number} distance - distance @todo values to be defined
@@ -6049,7 +6054,7 @@ var ObjectSpatialiserAndMixer = function (_MultichannelSpatiali) {
         }
 
         /**
-         * Returns the position of the additionnal mono dialog     
+         * Returns the position of the additionnal mono dialog
          * @return {array}
          *
          * @details The values are expressed with Spat4 navigational coordinates
@@ -6182,7 +6187,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /************************************************************************************/
 /*!
  *   @file       index.js
- *   @brief      Implements the Receiver-Mix : the so-called Receiver-Mix 
+ *   @brief      Implements the Receiver-Mix : the so-called Receiver-Mix
  *				 corresponds to the 2nd part of the “OBJECT SPATIALISER AND MIXER”
  *				 This module inspects the RMS of the main programme, the RMS of the commentary
  *				 and it applies dynamic compression on the main programme if necessary
@@ -6313,7 +6318,7 @@ var ReceiverMix = function (_AbstractNode) {
 
         //==============================================================================
         /**
-         * Returns true if there is at least one commentary among all the streams     
+         * Returns true if there is at least one commentary among all the streams
          */
 
     }, {
@@ -6323,7 +6328,7 @@ var ReceiverMix = function (_AbstractNode) {
         //==============================================================================
         /**
          * Returns the number of channels in the "main" programme.
-         * The 
+         * The
          */
         value: function getNumberOfChannelsInTheProgramme() {
 
@@ -6424,7 +6429,7 @@ var ReceiverMix = function (_AbstractNode) {
 
         /**
          * Get the dB range
-         * @type {array}     
+         * @type {array}
          */
 
     }, {
@@ -6492,7 +6497,7 @@ var ReceiverMix = function (_AbstractNode) {
 
         /**
          * Get the dB range
-         * @type {array}     
+         * @type {array}
          */
 
     }, {
@@ -6511,7 +6516,7 @@ var ReceiverMix = function (_AbstractNode) {
 
         /**
          * Get the compression threshold range
-         * @type {array}     
+         * @type {array}
          */
 
     }, {
@@ -7171,7 +7176,7 @@ var ReceiverMix = function (_AbstractNode) {
         value: function _updateCompressor() {
             var _this2 = this;
 
-            /// execute this function again, after a given interval       
+            /// execute this function again, after a given interval
             window.setTimeout(function () {
                 _this2._updateCompressor();
             }, this._rmsRefreshInterval);
@@ -7434,7 +7439,7 @@ var ReceiverMix = function (_AbstractNode) {
 
         /**
          * Returns true if there is at least one commentary among all the streams,
-         * and if it is currently active     
+         * and if it is currently active
          */
 
     }, {
@@ -7592,7 +7597,7 @@ var ReceiverMix = function (_AbstractNode) {
 
         /**
          * Get the compression ratio range
-         * @type {array}     
+         * @type {array}
          */
 
     }, {
@@ -7624,7 +7629,7 @@ var ReceiverMix = function (_AbstractNode) {
 
         /**
          * Get the attack time range (in msec)
-         * @type {array}     
+         * @type {array}
          */
 
     }, {
@@ -7634,7 +7639,7 @@ var ReceiverMix = function (_AbstractNode) {
         }
 
         /**
-         * Returns the minimum attack time (in msec)  
+         * Returns the minimum attack time (in msec)
          */
 
     }, {
@@ -7644,7 +7649,7 @@ var ReceiverMix = function (_AbstractNode) {
         }
 
         /**
-         * Returns the maximum attack time (in msec)  
+         * Returns the maximum attack time (in msec)
          */
 
     }, {
@@ -7667,7 +7672,7 @@ var ReceiverMix = function (_AbstractNode) {
 
         /**
          * Get the release time range (in msec)
-         * @type {array}     
+         * @type {array}
          */
 
     }, {
@@ -7677,7 +7682,7 @@ var ReceiverMix = function (_AbstractNode) {
         }
 
         /**
-         * Returns the minimum release time (in msec)  
+         * Returns the minimum release time (in msec)
          */
 
     }, {
@@ -7687,7 +7692,7 @@ var ReceiverMix = function (_AbstractNode) {
         }
 
         /**
-         * Returns the maximum release time (in msec)  
+         * Returns the maximum release time (in msec)
          */
 
     }, {
@@ -8141,9 +8146,9 @@ var SmartFader = function (_AbstractNode) {
             /**
             Matthieu :
             Dans mon papier sur le sujet j'avais défini les ordres de grandeur d'une matrice pour expliciter
-            la progression de la compression en fonction du niveau d'entrée. 
-            Ça donne un ratio de 2:1 sur les premiers 6 dB de dépassement puis 3:1 au delà. 
-            Est-ce plus simple pour vous d'user de cette matrice ou d'appeler un compresseur multicanal 
+            la progression de la compression en fonction du niveau d'entrée.
+            Ça donne un ratio de 2:1 sur les premiers 6 dB de dépassement puis 3:1 au delà.
+            Est-ce plus simple pour vous d'user de cette matrice ou d'appeler un compresseur multicanal
             et lui passer des paramètres classiques ?
              On aurait alors :
             Threshold à -18 dBFS
@@ -8285,7 +8290,7 @@ var SmartFader = function (_AbstractNode) {
         }
 
         /**
-         * Returns the compression ratio     
+         * Returns the compression ratio
          */
         ,
         get: function get() {
@@ -8294,7 +8299,7 @@ var SmartFader = function (_AbstractNode) {
 
         /**
          * Get the compression ratio range
-         * @type {array}     
+         * @type {array}
          */
 
     }, {
@@ -8312,7 +8317,7 @@ var SmartFader = function (_AbstractNode) {
         }
 
         /**
-         * Returns the attack time (in msec)  
+         * Returns the attack time (in msec)
          */
         ,
         get: function get() {
@@ -8321,7 +8326,7 @@ var SmartFader = function (_AbstractNode) {
 
         /**
          * Get the attack time range (in msec)
-         * @type {array}     
+         * @type {array}
          */
 
     }, {
@@ -8339,7 +8344,7 @@ var SmartFader = function (_AbstractNode) {
         }
 
         /**
-         * Returns the release time (in msec)  
+         * Returns the release time (in msec)
          */
         ,
         get: function get() {
@@ -8348,7 +8353,7 @@ var SmartFader = function (_AbstractNode) {
 
         /**
          * Get the release time range (in msec)
-         * @type {array}     
+         * @type {array}
          */
 
     }], [{
@@ -8439,7 +8444,7 @@ var SmartFader = function (_AbstractNode) {
         }
 
         /**
-         * Returns the minimum attack time (in msec)  
+         * Returns the minimum attack time (in msec)
          */
 
     }, {
@@ -8449,7 +8454,7 @@ var SmartFader = function (_AbstractNode) {
         }
 
         /**
-         * Returns the maximum attack time (in msec)  
+         * Returns the maximum attack time (in msec)
          */
 
     }, {
@@ -8476,7 +8481,7 @@ var SmartFader = function (_AbstractNode) {
         }
 
         /**
-         * Returns the minimum release time (in msec)  
+         * Returns the minimum release time (in msec)
          */
 
     }, {
@@ -8486,7 +8491,7 @@ var SmartFader = function (_AbstractNode) {
         }
 
         /**
-         * Returns the maximum release time (in msec)  
+         * Returns the maximum release time (in msec)
          */
 
     }, {
@@ -13887,9 +13892,9 @@ glMatrix.toRadian = function(a){
 
 /**
  * Tests whether or not the arguments have approximately the same value, within an absolute
- * or relative tolerance of glMatrix.EPSILON (an absolute tolerance is used for values less 
+ * or relative tolerance of glMatrix.EPSILON (an absolute tolerance is used for values less
  * than or equal to 1.0, and a relative tolerance is used for larger values)
- * 
+ *
  * @param {Number} a The first number to test.
  * @param {Number} b The second number to test.
  * @returns {Boolean} True if the numbers are approximately equal, false otherwise.
@@ -14043,7 +14048,7 @@ mat2.transpose = function(out, a) {
         out[2] = a[1];
         out[3] = a[3];
     }
-    
+
     return out;
 };
 
@@ -14064,7 +14069,7 @@ mat2.invert = function(out, a) {
         return null;
     }
     det = 1.0 / det;
-    
+
     out[0] =  a3 * det;
     out[1] = -a1 * det;
     out[2] = -a2 * det;
@@ -14224,19 +14229,19 @@ mat2.frob = function (a) {
 
 /**
  * Returns L, D and U matrices (Lower triangular, Diagonal and Upper triangular) by factorizing the input matrix
- * @param {mat2} L the lower triangular matrix 
- * @param {mat2} D the diagonal matrix 
- * @param {mat2} U the upper triangular matrix 
+ * @param {mat2} L the lower triangular matrix
+ * @param {mat2} D the diagonal matrix
+ * @param {mat2} U the upper triangular matrix
  * @param {mat2} a the input matrix to factorize
  */
 
-mat2.LDU = function (L, D, U, a) { 
-    L[2] = a[2]/a[0]; 
-    U[0] = a[0]; 
-    U[1] = a[1]; 
-    U[3] = a[3] - L[2] * U[1]; 
-    return [L, D, U];       
-}; 
+mat2.LDU = function (L, D, U, a) {
+    L[2] = a[2]/a[0];
+    U[0] = a[0];
+    U[1] = a[1];
+    U[3] = a[3] - L[2] * U[1];
+    return [L, D, U];
+};
 
 /**
  * Adds two mat2's
@@ -14364,8 +14369,8 @@ var glMatrix = require("./common.js");
 /**
  * @class 2x3 Matrix
  * @name mat2d
- * 
- * @description 
+ *
+ * @description
  * A mat2d contains six elements defined as:
  * <pre>
  * [a, c, tx,
@@ -14685,7 +14690,7 @@ mat2d.fromTranslation = function(out, v) {
  * @returns {String} string representation of the matrix
  */
 mat2d.str = function (a) {
-    return 'mat2d(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
+    return 'mat2d(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' +
                     a[3] + ', ' + a[4] + ', ' + a[5] + ')';
 };
 
@@ -14695,9 +14700,9 @@ mat2d.str = function (a) {
  * @param {mat2d} a the matrix to calculate Frobenius norm of
  * @returns {Number} Frobenius norm
  */
-mat2d.frob = function (a) { 
+mat2d.frob = function (a) {
     return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
-}; 
+};
 
 /**
  * Adds two mat2d's
@@ -15020,7 +15025,7 @@ mat3.transpose = function(out, a) {
         out[7] = a[5];
         out[8] = a[8];
     }
-    
+
     return out;
 };
 
@@ -15043,8 +15048,8 @@ mat3.invert = function(out, a) {
         // Calculate the determinant
         det = a00 * b01 + a01 * b11 + a02 * b21;
 
-    if (!det) { 
-        return null; 
+    if (!det) {
+        return null;
     }
     det = 1.0 / det;
 
@@ -15387,8 +15392,8 @@ mat3.normalFromMat4 = function (out, a) {
         // Calculate the determinant
         det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
-    if (!det) { 
-        return null; 
+    if (!det) {
+        return null;
     }
     det = 1.0 / det;
 
@@ -15414,8 +15419,8 @@ mat3.normalFromMat4 = function (out, a) {
  * @returns {String} string representation of the matrix
  */
 mat3.str = function (a) {
-    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
-                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + 
+    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' +
+                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' +
                     a[6] + ', ' + a[7] + ', ' + a[8] + ')';
 };
 
@@ -15528,7 +15533,7 @@ mat3.multiplyScalarAndAdd = function(out, a, b, scale) {
  * @returns {Boolean} True if the matrices are equal, false otherwise.
  */
 mat3.exactEquals = function (a, b) {
-    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && 
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] &&
            a[3] === b[3] && a[4] === b[4] && a[5] === b[5] &&
            a[6] === b[6] && a[7] === b[7] && a[8] === b[8];
 };
@@ -17074,25 +17079,25 @@ mat4.getRotation = function (out, mat) {
   var trace = mat[0] + mat[5] + mat[10];
   var S = 0;
 
-  if (trace > 0) { 
+  if (trace > 0) {
     S = Math.sqrt(trace + 1.0) * 2;
     out[3] = 0.25 * S;
     out[0] = (mat[6] - mat[9]) / S;
-    out[1] = (mat[8] - mat[2]) / S; 
-    out[2] = (mat[1] - mat[4]) / S; 
-  } else if ((mat[0] > mat[5])&(mat[0] > mat[10])) { 
+    out[1] = (mat[8] - mat[2]) / S;
+    out[2] = (mat[1] - mat[4]) / S;
+  } else if ((mat[0] > mat[5])&(mat[0] > mat[10])) {
     S = Math.sqrt(1.0 + mat[0] - mat[5] - mat[10]) * 2;
     out[3] = (mat[6] - mat[9]) / S;
     out[0] = 0.25 * S;
-    out[1] = (mat[1] + mat[4]) / S; 
-    out[2] = (mat[8] + mat[2]) / S; 
-  } else if (mat[5] > mat[10]) { 
+    out[1] = (mat[1] + mat[4]) / S;
+    out[2] = (mat[8] + mat[2]) / S;
+  } else if (mat[5] > mat[10]) {
     S = Math.sqrt(1.0 + mat[5] - mat[0] - mat[10]) * 2;
     out[3] = (mat[8] - mat[2]) / S;
-    out[0] = (mat[1] + mat[4]) / S; 
+    out[0] = (mat[1] + mat[4]) / S;
     out[1] = 0.25 * S;
-    out[2] = (mat[6] + mat[9]) / S; 
-  } else { 
+    out[2] = (mat[6] + mat[9]) / S;
+  } else {
     S = Math.sqrt(1.0 + mat[10] - mat[0] - mat[5]) * 2;
     out[3] = (mat[1] - mat[4]) / S;
     out[0] = (mat[8] + mat[2]) / S;
@@ -17649,8 +17654,8 @@ mat4.multiplyScalarAndAdd = function(out, a, b, scale) {
  * @returns {Boolean} True if the matrices are equal, false otherwise.
  */
 mat4.exactEquals = function (a, b) {
-    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && 
-           a[4] === b[4] && a[5] === b[5] && a[6] === b[6] && a[7] === b[7] && 
+    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] &&
+           a[4] === b[4] && a[5] === b[5] && a[6] === b[6] && a[7] === b[7] &&
            a[8] === b[8] && a[9] === b[9] && a[10] === b[10] && a[11] === b[11] &&
            a[12] === b[12] && a[13] === b[13] && a[14] === b[14] && a[15] === b[15];
 };
@@ -17664,13 +17669,13 @@ mat4.exactEquals = function (a, b) {
  */
 mat4.equals = function (a, b) {
     var a0  = a[0],  a1  = a[1],  a2  = a[2],  a3  = a[3],
-        a4  = a[4],  a5  = a[5],  a6  = a[6],  a7  = a[7], 
-        a8  = a[8],  a9  = a[9],  a10 = a[10], a11 = a[11], 
+        a4  = a[4],  a5  = a[5],  a6  = a[6],  a7  = a[7],
+        a8  = a[8],  a9  = a[9],  a10 = a[10], a11 = a[11],
         a12 = a[12], a13 = a[13], a14 = a[14], a15 = a[15];
 
     var b0  = b[0],  b1  = b[1],  b2  = b[2],  b3  = b[3],
-        b4  = b[4],  b5  = b[5],  b6  = b[6],  b7  = b[7], 
-        b8  = b[8],  b9  = b[9],  b10 = b[10], b11 = b[11], 
+        b4  = b[4],  b5  = b[5],  b6  = b[6],  b7  = b[7],
+        b8  = b[8],  b9  = b[9],  b10 = b[10], b11 = b[11],
         b12 = b[12], b13 = b[13], b14 = b[14], b15 = b[15];
 
     return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
@@ -17975,7 +17980,7 @@ quat.scale = vec4.scale;
  * @returns {quat} out
  */
 quat.rotateX = function (out, a, rad) {
-    rad *= 0.5; 
+    rad *= 0.5;
 
     var ax = a[0], ay = a[1], az = a[2], aw = a[3],
         bx = Math.sin(rad), bw = Math.cos(rad);
@@ -17996,7 +18001,7 @@ quat.rotateX = function (out, a, rad) {
  * @returns {quat} out
  */
 quat.rotateY = function (out, a, rad) {
-    rad *= 0.5; 
+    rad *= 0.5;
 
     var ax = a[0], ay = a[1], az = a[2], aw = a[3],
         by = Math.sin(rad), bw = Math.cos(rad);
@@ -18017,7 +18022,7 @@ quat.rotateY = function (out, a, rad) {
  * @returns {quat} out
  */
 quat.rotateZ = function (out, a, rad) {
-    rad *= 0.5; 
+    rad *= 0.5;
 
     var ax = a[0], ay = a[1], az = a[2], aw = a[3],
         bz = Math.sin(rad), bw = Math.cos(rad);
@@ -18105,8 +18110,8 @@ quat.slerp = function (out, a, b, t) {
         sinom  = Math.sin(omega);
         scale0 = Math.sin((1.0 - t) * omega) / sinom;
         scale1 = Math.sin(t * omega) / sinom;
-    } else {        
-        // "from" and "to" quaternions are very close 
+    } else {
+        // "from" and "to" quaternions are very close
         //  ... so we can do a linear interpolation
         scale0 = 1.0 - t;
         scale1 = t;
@@ -18116,7 +18121,7 @@ quat.slerp = function (out, a, b, t) {
     out[1] = scale0 * ay + scale1 * by;
     out[2] = scale0 * az + scale1 * bz;
     out[3] = scale0 * aw + scale1 * bw;
-    
+
     return out;
 };
 
@@ -18134,12 +18139,12 @@ quat.slerp = function (out, a, b, t) {
 quat.sqlerp = (function () {
   var temp1 = quat.create();
   var temp2 = quat.create();
-  
+
   return function (out, a, b, c, d, t) {
     quat.slerp(temp1, a, d, t);
     quat.slerp(temp2, b, c, t);
     quat.slerp(out, temp1, temp2, 2 * t * (1 - t));
-    
+
     return out;
   };
 }());
@@ -18155,7 +18160,7 @@ quat.invert = function(out, a) {
     var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
         dot = a0*a0 + a1*a1 + a2*a2 + a3*a3,
         invDot = dot ? 1.0/dot : 0;
-    
+
     // TODO: Would be faster to return [0,0,0,0] immediately if dot == 0
 
     out[0] = -a0*invDot;
@@ -18255,7 +18260,7 @@ quat.fromMat3 = function(out, m) {
           i = 2;
         var j = (i+1)%3;
         var k = (i+2)%3;
-        
+
         fRoot = Math.sqrt(m[i*3+i]-m[j*3+j]-m[k*3+k] + 1.0);
         out[i] = 0.5 * fRoot;
         fRoot = 0.5 / fRoot;
@@ -18263,7 +18268,7 @@ quat.fromMat3 = function(out, m) {
         out[j] = (m[j*3+i] + m[i*3+j]) * fRoot;
         out[k] = (m[k*3+i] + m[i*3+k]) * fRoot;
     }
-    
+
     return out;
 };
 
@@ -18801,7 +18806,7 @@ vec2.transformMat3 = function(out, a, m) {
  * @returns {vec2} out
  */
 vec2.transformMat4 = function(out, a, m) {
-    var x = a[0], 
+    var x = a[0],
         y = a[1];
     out[0] = m[0] * x + m[4] * y + m[12];
     out[1] = m[1] * x + m[5] * y + m[13];
@@ -18832,7 +18837,7 @@ vec2.forEach = (function() {
         if(!offset) {
             offset = 0;
         }
-        
+
         if(count) {
             l = Math.min((count * stride) + offset, a.length);
         } else {
@@ -18844,7 +18849,7 @@ vec2.forEach = (function() {
             fn(vec, vec, arg);
             a[i] = vec[0]; a[i+1] = vec[1];
         }
-        
+
         return a;
     };
 })();
@@ -19362,11 +19367,11 @@ vec3.hermite = function (out, a, b, c, d, t) {
       factor2 = factorTimes2 * (t - 2) + t,
       factor3 = factorTimes2 * (t - 1),
       factor4 = factorTimes2 * (3 - 2 * t);
-  
+
   out[0] = a[0] * factor1 + b[0] * factor2 + c[0] * factor3 + d[0] * factor4;
   out[1] = a[1] * factor1 + b[1] * factor2 + c[1] * factor3 + d[1] * factor4;
   out[2] = a[2] * factor1 + b[2] * factor2 + c[2] * factor3 + d[2] * factor4;
-  
+
   return out;
 };
 
@@ -19389,11 +19394,11 @@ vec3.bezier = function (out, a, b, c, d, t) {
       factor2 = 3 * t * inverseFactorTimesTwo,
       factor3 = 3 * factorTimes2 * inverseFactor,
       factor4 = factorTimes2 * t;
-  
+
   out[0] = a[0] * factor1 + b[0] * factor2 + c[0] * factor3 + d[0] * factor4;
   out[1] = a[1] * factor1 + b[1] * factor2 + c[1] * factor3 + d[1] * factor4;
   out[2] = a[2] * factor1 + b[2] * factor2 + c[2] * factor3 + d[2] * factor4;
-  
+
   return out;
 };
 
@@ -19521,17 +19526,17 @@ vec3.rotateY = function(out, a, b, c){
   	p[0] = a[0] - b[0];
   	p[1] = a[1] - b[1];
   	p[2] = a[2] - b[2];
-  
+
   	//perform rotation
   	r[0] = p[2]*Math.sin(c) + p[0]*Math.cos(c);
   	r[1] = p[1];
   	r[2] = p[2]*Math.cos(c) - p[0]*Math.sin(c);
-  
+
   	//translate to correct position
   	out[0] = r[0] + b[0];
   	out[1] = r[1] + b[1];
   	out[2] = r[2] + b[2];
-  
+
   	return out;
 };
 
@@ -19549,17 +19554,17 @@ vec3.rotateZ = function(out, a, b, c){
   	p[0] = a[0] - b[0];
   	p[1] = a[1] - b[1];
   	p[2] = a[2] - b[2];
-  
+
   	//perform rotation
   	r[0] = p[0]*Math.cos(c) - p[1]*Math.sin(c);
   	r[1] = p[0]*Math.sin(c) + p[1]*Math.cos(c);
   	r[2] = p[2];
-  
+
   	//translate to correct position
   	out[0] = r[0] + b[0];
   	out[1] = r[1] + b[1];
   	out[2] = r[2] + b[2];
-  
+
   	return out;
 };
 
@@ -19587,7 +19592,7 @@ vec3.forEach = (function() {
         if(!offset) {
             offset = 0;
         }
-        
+
         if(count) {
             l = Math.min((count * stride) + offset, a.length);
         } else {
@@ -19599,7 +19604,7 @@ vec3.forEach = (function() {
             fn(vec, vec, arg);
             a[i] = vec[0]; a[i+1] = vec[1]; a[i+2] = vec[2];
         }
-        
+
         return a;
     };
 })();
@@ -19611,20 +19616,20 @@ vec3.forEach = (function() {
  * @returns {Number} The angle in radians
  */
 vec3.angle = function(a, b) {
-   
+
     var tempA = vec3.fromValues(a[0], a[1], a[2]);
     var tempB = vec3.fromValues(b[0], b[1], b[2]);
- 
+
     vec3.normalize(tempA, tempA);
     vec3.normalize(tempB, tempB);
- 
+
     var cosine = vec3.dot(tempA, tempB);
 
     if(cosine > 1.0){
         return 0;
     } else {
         return Math.acos(cosine);
-    }     
+    }
 };
 
 /**
@@ -20220,7 +20225,7 @@ vec4.forEach = (function() {
         if(!offset) {
             offset = 0;
         }
-        
+
         if(count) {
             l = Math.min((count * stride) + offset, a.length);
         } else {
@@ -20232,7 +20237,7 @@ vec4.forEach = (function() {
             fn(vec, vec, arg);
             a[i] = vec[0]; a[i+1] = vec[1]; a[i+2] = vec[2]; a[i+3] = vec[3];
         }
-        
+
         return a;
     };
 })();
@@ -20301,7 +20306,7 @@ function Node(obj, dimension, parent) {
 function KdTree(points, metric, dimensions) {
 
   var self = this;
-  
+
   function buildTree(points, depth, parent) {
     var dim = depth % dimensions.length,
       median,

@@ -139,7 +139,7 @@ Model.getProgramDetails.getLinkDetails = function(list){
 
 		var convertTrackLanguage = function(value, isFiveDotOne){
 			value = typeOf(value) === "string" ? value.toLowerCase() : "";
-			var values = {fra:"Français",und:"Indéterminé"};
+			var values = {fra:"Français",und:"Français"};
 			var lang = values[value] ? values[value] : value;
 			if(isFiveDotOne){
 				lang+= " 5.1";

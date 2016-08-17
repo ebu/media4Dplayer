@@ -59,7 +59,6 @@ var Player = {
 	binauralEQ:false,
 	catalogue:[],
 	selectedProfil:null,
-	profilLoaded:false,
 	defaultSampleRate:48000,
 	config:null,
 	attackTime:10,
@@ -90,6 +89,7 @@ Player.load = function(videoData, callback, onClose){
 	if(!this.alreadyInit || (videoData.links.dataMain.url !== Media.links.dataMain.url)){
 
 		Media = videoData;
+		Main.profilsLoaded = [];
 
 		/*if(isEmpty(Media.links.dataMain) || isEmpty(Media.links.dataEA) || isEmpty(Media.links.dataAD) || isEmpty(Media.links.dataDI)){
 			log("Lecture annulée car il n'y a pas tout flux audio (isEmpty(Media.links.dataMain)="+isEmpty(Media.links.dataMain)+"; isEmpty(Media.links.dataEA)="+isEmpty(Media.links.dataEA)+";isEmpty(Media.links.dataAD)="+isEmpty(Media.links.dataAD)+";)");
@@ -177,6 +177,10 @@ Player.load = function(videoData, callback, onClose){
 	this.onChangeSpatilisationMode();
 
 	InfoBanner.show();
+
+	if(Main.profilsLoaded.indexOf(Player.selectedProfil) === -1){
+		Player.showLoader();
+	}
 
 	if(typeOf(callback) === "function"){
 		callback();
@@ -279,7 +283,7 @@ Player.launch = function(){
 			}*/else{
 				top = top / 2;
 			}
-			$(Player.ttmlDiv).css({top:top + "%"});
+			$(Player.ttmlDiv).css({top:(Math.round(yPos) - 10) + "%"});
 		}
 	});
 	var updateCurrentTime = function(media, cTime){
@@ -335,7 +339,7 @@ Player.launch = function(){
 				events.forEach(function (event) {
 
 					videos.a.on(event, function () {
-						//log("event name = " + event+"------------------------------------------------");
+						log("event name = " + event+"------------------------------------------------");
 						// Avoid overkill events, trigger timeupdate manually
 
 						var cTime = this.currentTime();
@@ -388,11 +392,16 @@ Player.launch = function(){
 								break;
 
 							default:
-								log("évènement non géré");
+								log("évènement "+event+" non géré");
 								break;
 						}
 					});
 				});
+
+				if(Main.profilsLoaded.indexOf(Player.selectedProfil) !== -1){
+					Player.hideLoader();
+					videos.a.play();
+				}
 			}
 		});
 	});
@@ -952,15 +961,10 @@ Player.onChangeProfil = function(){
         }
 
         /// load the URL in the spatialiser
-		if(this.profilLoaded){
+		currentProcessor.loadHrtfSet( url )
+		.then( function(){
 			objectSpatialiserAndMixer._updateCommentaryPosition();
-		}else{
-			currentProcessor.loadHrtfSet( url )
-			.then( function(){
-				Player.profilLoaded =  true;
-				objectSpatialiserAndMixer._updateCommentaryPosition();
-			});
-		}
+		});
 	}else{
 		log("Il n'y pas d'url de profil");
 	}
@@ -1330,4 +1334,12 @@ Player.disableLogs = function(){
 	this.playerManager.playerAudioFiveDotOne.getDebug().setLogToBrowserConsole(false);
 	this.playerManager.playerAudioFiveDotOne2.getDebug().setLogToBrowserConsole(false);
 	this.playerManager.playerAudio.getDebug().setLogToBrowserConsole(false);
+};
+
+Player.showLoader = function(){
+	document.getElementById("player-loader").style.display = "block";
+};
+
+Player.hideLoader = function(){
+	document.getElementById("player-loader").style.display = "none";
 };
