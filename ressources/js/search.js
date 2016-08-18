@@ -364,7 +364,7 @@ Search.results.reset = function(){
  */
 
 Search.results.showLoader = function(){
-	$(document.getElementById("full-results-message")).children("span").text("Veuillez patienter...");
+	$(document.getElementById("full-results-message")).show().children("span").text("Veuillez patienter...");
 };
 
 /**
