@@ -276,15 +276,7 @@ Player.launch = function(){
 
 		var yPos = getHtmlStorage("subtitlePositionY");
 		if(yPos !== "undefined"){
-			var top = Math.round(yPos);
-			if(top <= 0){
-				top = 0;
-			}/*else if(top >= 65){
-				top = 65 / 2;
-			}*/else{
-				top = top / 2;
-			}
-			$(Player.ttmlDiv).css({top:(Math.round(yPos) - 20) + "%"});
+			$(Player.ttmlDiv).css({top:Math.round(yPos) + "%"});
 		}
 	});
 	var updateCurrentTime = function(media, cTime){
@@ -665,7 +657,7 @@ Player.launchPlaying = function(){
 			this.doSeek(this.positionForSeek);
 			videos.a.play();
 			this.positionForSeek = 0;
-			
+
 		}else{
 			videos.a.play();
 		}
@@ -904,16 +896,7 @@ Player.initSubtitlesParams = function(){
 
 	var yPos = getHtmlStorage("subtitlePositionY") || Settings.subtitlesDefaultPosition;
 	if(yPos !== "undefined"){
-		var top = Math.round(yPos);
-		if(top <= 0){
-			top = 0;
-		}else if(top>= 65){
-			top = 65 / 2;
-		}else{
-			top = top / 2;
-		}
-		$container.css("top", top + "%")
-			.css("width", "100%");
+		$container.css({top:Math.round(yPos) + "%"});
 	}
 };
 
