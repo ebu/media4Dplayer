@@ -658,6 +658,10 @@ Player.launchPlaying = function(){
 			videos.a.play();
 			this.positionForSeek = 0;
 
+		}else if(Media.subWordPos){
+			var arrayTime = Media.subWordPos.capBegin.replace(/\.[0-9]+/, "").split(":");
+			this.doSeek(getDurationInSec(arrayTime));
+			videos.a.play();
 		}else{
 			videos.a.play();
 		}

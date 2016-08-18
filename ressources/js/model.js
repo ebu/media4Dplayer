@@ -69,7 +69,8 @@ Model.getProgramDetails = function(data){
 	}();
 
 	program.video = {
-		links:this.getProgramDetails.getLinkDetails(metadata)
+		links:this.getProgramDetails.getLinkDetails(metadata),
+		subWordPos:data.subWordPos || null
 	};
 	program.video.subtitlesList = program.video.links.dataMain.subtitle ? ["Français"] : null;
 	program.video.audioDescriptions = !isEmpty(program.video.links.dataAD) ? [{"lang":"Français", "url":program.video.links.dataAD.url}] : null;

@@ -210,6 +210,9 @@ API.getItemsListForSearch = function(limit, data, callback){
 	var list = [];
 	if(typeOf(data) === "array" && limit && typeOf(callback) === "function"){
 
+		// Mémorise la position du texte dans les ST
+		var subtitleWordPos = {};
+
 		var l = data.length, count = 0;
 		var _onLoadMediaData = function(jqXHR, textStatus){
 			if(textStatus === "success" && jqXHR.responseJSON){
@@ -218,6 +221,15 @@ API.getItemsListForSearch = function(limit, data, callback){
 				var _onLoadTitle = function(title){
 					if(title){
 						data.title = title;
+						if(typeOf(data.types) === "array"){
+							for(var i=0;i<data.types.length;i++){
+								if(["audiovisual_programme","documentary","info_magazine"].indexOf(data.types[i]) !== -1){
+									data.subWordPos = subtitleWordPos[data.root_id];
+									break;
+								}
+							}
+						}
+						//data.subWordPos = typeOf(data.types) === "array" && ["audiovisual_programme","documentary","info_magazine"].indexOf(data.types) !== -1 ? subtitleWordPos[data.root_id] : null;
 						list.push(data);
 					}else{
 						log("L'item avec ce label n'a pas de titre : "+data.label);
@@ -243,6 +255,10 @@ API.getItemsListForSearch = function(limit, data, callback){
 		var i, media;
 		for(i=0;i<data.length&&i<limit;i++){
 			media = data[i];
+
+			if(typeOf(media.morceaux_soustitre) === "array" && typeOf(media.morceaux_soustitre[0]) === "object" && media.morceaux_soustitre[0].capBegin && media.morceaux_soustitre[0].capEnd){
+				subtitleWordPos[media.FTV_UID] = media.morceaux_soustitre[0];
+			}
 			if(typeOf(media) === "object" && media.FTV_UID){
 				$.ajax({
 					url: Config.perfectMemoryWS + "medias/root_id:"+media.FTV_UID+"?auth_token=" + User.tokens.auth_token,

@@ -219,7 +219,8 @@ h2{font-size:1.6em;font-weight:600}
 #playerControlFF{margin-left:15px}
 #playerControlConfig{right:45px}
 #video-caption *{font-size:inherit!important;text-align:center!important}
-#video-caption div{top: 0 !important;}
+#video-caption > div{top: 0 !important;}
+#video-caption > div > div{display: block !important;}
 #playerUI .ui-ls{height:100%}
 #pipContainer{border-style:hidden}
 .optionDropDownMenu{position:absolute;bottom:280px;left:130px;width:180px;transition: left 500ms;}

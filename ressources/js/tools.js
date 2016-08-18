@@ -10,7 +10,7 @@ function log(msg, type){
 					$log.children("p:first-child").remove();
 				}
 				$log.append(ligne);
-				
+
 				if(type){
 					ligne.addClass(type);
 				}
@@ -28,14 +28,14 @@ function log(msg, type){
 }
 
 /**
- * 
+ *
  * @author Johny EUGENE
  * @description Affiche une exception
  * @version 1.0
  * @create 2011
  * par jeugene
  * modifier 05-12-2011
- * 
+ *
  */
 
 function showExceptionMessage(e, text) {
@@ -53,14 +53,14 @@ function showExceptionMessage(e, text) {
 }
 
 /**
- * 
+ *
  * @author Johny EUGENE
  * @description Retourne le nombre d'éléments contenu dans un object
  * @version 1.0
  * @create 2012
  * par jeugene
  * modifier 23-01-2012
- * 
+ *
  */
 
 Object.size = function (obj) {
@@ -113,14 +113,14 @@ function getTimestamp() {
 }
 
 /**
- * 
+ *
  * @author Johny EUGENE
  * @description Retourne le type d'une variable
  * @version 1.0
  * @create 2012
  * par jeugene
  * modifier 08-11-2012
- * 
+ *
  */
 
 function typeOf(obj) {
@@ -202,7 +202,7 @@ function getStringDate2(year, month, day) {
 function getStringDuration(hour, min, seconde) {
 	var stringDuration = "";
 	if(hour || min || seconde){
-		
+
 		var hasHour, hasMin;
 		if(hour){
 			hasHour = true;
@@ -229,7 +229,7 @@ function getStringDuration(hour, min, seconde) {
 	return stringDuration;
 }
 
-//Covert datetime by GMT offset 
+//Covert datetime by GMT offset
 //If toUTC is true then return UTC time other wise return local time
 function convertLocalDateToUTCDate(date, toUTC) {
 	date = new Date(date);
@@ -244,7 +244,19 @@ function convertLocalDateToUTCDate(date, toUTC) {
 	date = new Date(date);
 	return date;
 }
+function getDurationInSec(arrayTime){
+	var hasHour = parseInt(arrayTime[0],10) > 0,
+		hasMin = parseInt(arrayTime[1],10) > 0,
+		hasSec = parseInt(arrayTime[2],10) > 0;
 
+	var hour, min, sec;
+	var i = 0;
+	hour = hasHour ? parseInt(arrayTime[0]) : 0;
+	min = hasMin ? parseInt(arrayTime[1],10) : 0;
+	sec = hasSec ? parseInt(arrayTime[2],10) : 0;
+
+	return (hour * 60 * 60) + (min * 60) + sec;
+}
 function pad(thing) {
 	return (thing < 10) ? "0" + String(thing) : thing;
 }
@@ -263,7 +275,7 @@ function setDefaultThumb(img, srcDefaultImg, $title) {
 
 var loadAImg = function (url, $img, defaultPicName, $title) {
 	if(url){
-		
+
 		$img.css("opacity",$img[0].src===url?1:0)
 		.on("load", function(){
 			$(this).fadeTo("fast", 1);
@@ -306,14 +318,14 @@ function convertArrayToObject(list) {
 }
 
 /**
- * 
+ *
  * @author Johny EUGENE
  * @description Retourne une liste de variables GET avec leurs valeurs
  * @version 1.0
  * @create 2013
  * par jeugene
  * modifier 29-04-2013
- * 
+ *
  */
 
 function getVariablesToUrl(urlParamsList) {
@@ -351,7 +363,7 @@ function getDomainFromUrl(url, returnProtocol) {
 }
 
 /**
- * 
+ *
  * @author Johny EUGENE
  * @description Compare 2 dates.
  * Retourne :
@@ -362,7 +374,7 @@ function getDomainFromUrl(url, returnProtocol) {
  * @create 2012
  * par jeugene
  * modifier 09-05-2012
- * 
+ *
  */
 
 function compareDates(date_1, date_2) {
@@ -371,14 +383,14 @@ function compareDates(date_1, date_2) {
 }
 
 /**
- * 
+ *
  * @author Johny EUGENE
  * @description Convertie des secondes en chaine de caractères (ex: 1j 20h 30mn 5s)
  * @version 1.0
  * @create 2012
  * par jeugene
  * modifier 09-05-2012
- * 
+ *
  */
 
 function conversionSecondeHeure(time) {
@@ -429,14 +441,14 @@ dateIsAfterNow = function (endDate) {
 };
 
 /**
- * 
+ *
  * @author Johny EUGENE
  * @description Précharge une image et lance une fonction callback une fois l'image chargée
  * @version 1.0
  * @create 2012
  * par jeugene
  * modifier 20-10-2012
- * 
+ *
  */
 
 function preloadImage(src, callback) {
@@ -456,17 +468,17 @@ function removeHtmlStorage(name){
     localStorage.removeItem(name);
     localStorage.removeItem(name+'_time');
 }
- 
+
 function setHtmlStorage(name, value, expires){
- 
+
     if(!expires){
 		// default: 1h
 		expires = 60 * 60 * 24 * 365;
 	}
- 
+
     var date = new Date();
     var schedule = Math.round((date.setSeconds(date.getSeconds()+expires))/1000);
- 
+
     localStorage.setItem(name, value);
     localStorage.setItem(name+'_time', schedule);
 }
@@ -478,24 +490,24 @@ function getHtmlStorage(name){
 }
 
 function statusHtmlStorage(name){
- 
+
     var date = new Date();
     var current = Math.round(+date/1000);
- 
+
     // Get Schedule
     var stored_time = localStorage.getItem(name+'_time');
     if(!stored_time){
 		stored_time = 0;
 	}
- 
+
     // Expired
     if(stored_time < current){
- 
+
         // Remove
         removeHtmlStorage(name);
 
         return 0;
- 
+
     }else{
         return 1;
     }
@@ -516,11 +528,11 @@ function each(object, start) {
 var getWSResponseForMultipleRequests = function(data, l, noError){
 	var i, dataList = [];
 	for(i=0;i<l;i++){
-		
+
 		if(noError && (typeOf(data[i][1]) === "string" && data[i][1] !== "success") || (l === 1 && typeOf(data[1]) === "string" && data[1] !== "success")){
 			return data[i][2] || data[2];
 		}
-		
+
 		if(typeOf(data[i]) === "array" && data[i][1] === "success" && data[i][0]){
 			dataList.push(data[i][0]);
 
@@ -533,10 +545,10 @@ var getWSResponseForMultipleRequests = function(data, l, noError){
 
 var getAMediaListID = function(list, context){
 	if(typeOf(list) === "array" && context){
-		
+
 		var i, l = list.length;
 		for(i=0;i<l;i++){
-			
+
 			if(typeOf(list[i]) === "object" && list[i].context === context){
 				return list[i].id;
 			}
@@ -590,32 +602,32 @@ getTimeText = function(min, sec){
 
 var getElementFromXML = function(item, ns, prefix, attr){
 	if($(item).length){
-		
+
 		// Ne doit pas utiliser getElementsByTagName avec un object jQuery
 		if(item.length){
 			item = item[0];
 		}
-		
+
 		// Méthode pour Chrome
 		var collection = $(item).find(ns).filter(function(){
 			if($(this)[0].prefix === prefix){
 				return true;
 			}
 		});
-		
+
 		// Méthode pour Firefox
 		if(!collection.length){
 			collection = $(item.getElementsByTagName(prefix+':'+ns));
 		}
-		
-		if(collection.length){			
+
+		if(collection.length){
 			return collection.filter(function(){
 				if(typeOf(attr) === "object" && attr.type && attr.value){
 					return $(this).attr(attr.type) === attr.value;
 				}else{
 					return true;
 				}
-			}).eq(0);		
+			}).eq(0);
 		}
 	}
 };
@@ -634,12 +646,12 @@ function checkMediaControllerSupport() {
     } else {
         return "partially supported";
     }
-}	
+}
 
 var getDistance = function(d, rangePx, rangeMeter){
 	var distance = ((d - rangePx[0]) * (rangeMeter[1] - rangeMeter[0]) / (rangePx[1] - rangePx[0])) + rangeMeter[0];
 	return Math.round(distance * Math.pow(10,2)) / Math.pow(10,2);
-};			
+};
 
 var distance = function(dot1, dot2){
 	var x1 = dot1[0],
@@ -650,7 +662,7 @@ var distance = function(dot1, dot2){
 };
 
 var getFallbackUrls = function(sampleRate) {
-	
+
 	var sofaUrl = [];
 
 	sofaUrl.push('./hrtf/IRC_1147_C_HRIR_M_' + sampleRate + '.sofa.json');
@@ -661,7 +673,7 @@ var getFallbackUrls = function(sampleRate) {
 };
 
 var getSofaCatalogue = function(sampleRate, callback){
-	
+
 	/// retrieves the catalog of URLs from the OpenDAP server
 	var serverDataBase = new M4DPAudioModules.binaural.sofa.ServerDataBase();
 	serverDataBase
@@ -718,16 +730,16 @@ var getMediaLabel = function(detail){
 };
 
 var removeDuplicateItemInList = function(list, property){
-	
+
 	var newList = [];
 	if(typeOf(list) === "array" && property){
-		
+
 		var i, l = list.length, item, itemPassed = [];
 		for(i=0;i<l;i++){
-			
+
 			item = list[i];
 			if(item[property] && itemPassed.indexOf(item[property]) === -1){
-				
+
 				itemPassed.push(item[property]);
 				newList.push(item);
 			}
@@ -737,7 +749,7 @@ var removeDuplicateItemInList = function(list, property){
 };
 
 var getItemByAttr = function(list, attr, value, childrenProperty){
-	
+
 	if(typeOf(list) === "array"){
 		var i, l = list.length, item;
 		for(i=0;i<l;i++){
