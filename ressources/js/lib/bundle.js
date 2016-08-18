@@ -4881,11 +4881,8 @@ var VirtualSpeakersNode = function (_AbstractNode) {
                     console.log('loaded hrtf from ' + url);
                 }
 				Main.profilsLoaded.push(url);
-				Player.hideLoader();
-				if(videos.a){
-					videos.a.play();
-				}
-
+				Player.launchPlaying();
+				
                 /// update the listener yaw
                 _this2.listenerYaw = _this2._listenerYaw;
             }).catch(function () {

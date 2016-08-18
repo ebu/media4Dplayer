@@ -678,6 +678,7 @@ Section.launchPlayerLoading = function(data){
  */
 
 Section.launchSettingsFromPlayer = function(){
+	Player.positionForSeek = videos.a.currentTime();
 	Player.resetPlayers();
 	InfoBanner.progressBar.reset();
 

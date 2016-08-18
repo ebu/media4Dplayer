@@ -46,6 +46,7 @@ var Player = {
 	currentPipMode:null,
 	pipControlTimeout:null,
 	checkPositionVideo:null,
+	positionForSeek:0,
 
 	mode:"5.1",
 	spatializationMode:"binaural",
@@ -399,8 +400,7 @@ Player.launch = function(){
 				});
 
 				if(Main.profilsLoaded.indexOf(Player.selectedProfil) !== -1){
-					Player.hideLoader();
-					videos.a.play();
+					Player.launchPlaying();
 				}
 			}
 		});
@@ -645,6 +645,31 @@ Player.initWAA = function(){
 	log(extendedAmbienceASD);
 	log(extendedDialogsASD);
 	log(extendedCommentsASD);
+};
+
+/**
+ * @author Johny EUGENE (DOTSCREEN)
+ * @description Generates the parental rating rubric of the settings section
+ * @param {String} name The user's name
+ * @param {Object} userDetails The user's data
+ * @param {Array} thresholds Thresholds list
+ * @param {Object} callbackList Contains a success and error callback
+ */
+
+Player.launchPlaying = function(){
+
+	this.hideLoader();
+	if(videos.a){
+		if(this.positionForSeek){
+
+			this.doSeek(this.positionForSeek);
+			videos.a.play();
+			this.positionForSeek = 0;
+			
+		}else{
+			videos.a.play();
+		}
+	}
 };
 
 /**
