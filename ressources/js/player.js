@@ -370,6 +370,7 @@ Player.launch = function(){
 								updateCurrentTime(videos.c, cTime);
 								updateCurrentTime(videos.d, cTime);
 								updateCurrentTime(videos.e, cTime);
+								Player.hideLoader();
 								break;
 
 							case "pause":
