@@ -274,10 +274,10 @@ Player.launch = function(){
 			Player.playerManager.playerMain.setTextTrack(Media.currentSubtitleIndex);
 		}
 
-		var yPos = getHtmlStorage("subtitlePositionY");
+		/*var yPos = getHtmlStorage("subtitlePositionY");
 		if(yPos !== "undefined"){
 			$(Player.ttmlDiv).css({top:Math.round(yPos) + "%"});
-		}
+		}*/
 	});
 	var updateCurrentTime = function(media, cTime){
 		if(media){
@@ -908,7 +908,9 @@ Player.initSubtitlesParams = function(){
 
 	var yPos = getHtmlStorage("subtitlePositionY") || Settings.subtitlesDefaultPosition;
 	if(yPos !== "undefined"){
-		$container.css({top:Math.round(yPos) + "%"});
+		var s = selectedFontSize * 4.7;
+		var newY = (100 * (yPos - 0.5) * (720 - s)) / (720 * 68.5);
+		$container.css({top: newY + "%"});
 	}
 };
 
