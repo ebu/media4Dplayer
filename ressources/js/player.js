@@ -1194,7 +1194,7 @@ Player.activeOptionSigne = function(index) {
 		Media.currentLSFIndex = index;
 		Media.LSFEnabled = true;
 		removeHtmlStorage("LSFDisabled");
-		$textContent.html(Media.ls[index].lang);
+		$textContent.html(Media.ls[index]);
 
 	}else{
 		if(videos.e){
