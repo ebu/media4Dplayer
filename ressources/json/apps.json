@@ -1,0 +1,18 @@
+{
+	"list":[{
+		"title":"pluzz",
+		"picture":"ressources/img/temp/home/pluzz.png"
+	},{
+		"title":"baddp",
+		"picture":"ressources/img/temp/home/baddp.png",
+		"disabled":true
+	},{
+		"title":"lesite.tv",
+		"picture":"ressources/img/temp/home/lesitetv.png",
+		"disabled":true
+	},{
+		"title":"Médiathèque",
+		"picture":"ressources/img/temp/home/media.png",
+		"disabled":true
+	}]
+}
